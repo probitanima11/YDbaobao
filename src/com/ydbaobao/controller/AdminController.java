@@ -13,7 +13,8 @@ public class AdminController {
 	private static String password = "1111";
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public String home() {
+	public String home(HttpSession session) {
+		if(session.getAttribute("sessionAdmin") == null) return "adminCheck";
 		return "admin";
 	}
 	

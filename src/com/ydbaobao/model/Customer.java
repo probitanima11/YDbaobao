@@ -7,13 +7,10 @@ public class Customer {
 	private String customerGrade;
 	private String customerPhone;
 	private String customerEmail;
+	private String customerAddress;
 	
 	public Customer() {
 		
-	}
-
-	public Customer(String customerId, String customerName, String customerPassword) {
-		this(customerId, customerName, customerPassword, null, null, null);
 	}
 
 	public Customer(String customerId, String customerName, String customerPassword, String customerGrade,
@@ -50,6 +47,10 @@ public class Customer {
 		return customerEmail;
 	}
 
+	public String getCustomerAddress() {
+		return customerAddress;
+	}
+
 	public void setCustomerId(String customerId) {
 		this.customerId = customerId;
 	}
@@ -74,10 +75,15 @@ public class Customer {
 		this.customerEmail = customerEmail;
 	}
 
+	public void setCustomerAddress(String customerAddress) {
+		this.customerAddress = customerAddress;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((customerAddress == null) ? 0 : customerAddress.hashCode());
 		result = prime * result + ((customerEmail == null) ? 0 : customerEmail.hashCode());
 		result = prime * result + ((customerGrade == null) ? 0 : customerGrade.hashCode());
 		result = prime * result + ((customerId == null) ? 0 : customerId.hashCode());
@@ -96,6 +102,11 @@ public class Customer {
 		if (getClass() != obj.getClass())
 			return false;
 		Customer other = (Customer) obj;
+		if (customerAddress == null) {
+			if (other.customerAddress != null)
+				return false;
+		} else if (!customerAddress.equals(other.customerAddress))
+			return false;
 		if (customerEmail == null) {
 			if (other.customerEmail != null)
 				return false;
@@ -133,6 +144,6 @@ public class Customer {
 	public String toString() {
 		return "Customer [customerId=" + customerId + ", customerName=" + customerName + ", customerPassword="
 				+ customerPassword + ", customerGrade=" + customerGrade + ", customerPhone=" + customerPhone
-				+ ", customerEmail=" + customerEmail + "]";
+				+ ", customerEmail=" + customerEmail + ", customerAddress=" + customerAddress + "]";
 	}
 }
