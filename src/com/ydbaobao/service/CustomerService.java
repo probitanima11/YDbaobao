@@ -9,6 +9,7 @@ import com.ydbaobao.model.Customer;
 
 @Service
 public class CustomerService {
+
 	@Resource
 	private CustomerDao customerDao;
 

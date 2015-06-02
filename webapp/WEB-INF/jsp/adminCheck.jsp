@@ -9,8 +9,8 @@
 <body>
 <h1>관리자페이지 접근</h1>
 <form method="post" action="check">
-	<label for="adminPassword">관리자 비밀번호 입력</label>
-	<input type="password" name="adminPassword" /> <br/>
+	<label for="adminPassword">관리자 비밀번호 입력: 1111</label>
+	<input type="password" name="adminPassword" value="1111"/><br/>
 	<button type="submit">확인</button>
 </form>
 </body>
