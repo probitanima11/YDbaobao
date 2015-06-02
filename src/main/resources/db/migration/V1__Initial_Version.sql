@@ -19,18 +19,16 @@ Create Table GRADES(
  discount int NOT NULL
 );
 
-
 Create Table CUSTOMERS(
  customerId varchar(50) PRIMARY KEY NOT NULL,
  customerName varchar(50) NOT NULL,
  customerPassword varchar(50) NOT NULL,
- gradeId int DEFAULT 6,
+ gradeId int DEFAULT 0,
  customerPhone varchar(50) NOT NULL,
  customerEmail varchar(50),
  customerAddress varchar(100),
  customerCreateDate DATETIME DEFAULT CURRENT_TIMESTAMP,
- customerUpdateDate DATETIME DEFAULT CURRENT_TIMESTAMP,
- Foreign Key(gradeId) REFERENCES GRADES(gradeId)
+ customerUpdateDate DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
 Create Table BRANDS(
