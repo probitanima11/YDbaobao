@@ -1,4 +1,4 @@
-package com.tsingtao;
+package com;
 import java.io.File;
 
 import org.apache.catalina.startup.Tomcat;

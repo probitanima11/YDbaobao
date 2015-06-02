@@ -20,3 +20,5 @@
 .DS_store
 
 .idea
+
+webapp/WEB-INF/classes/*
