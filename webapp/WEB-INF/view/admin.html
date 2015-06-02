@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>관리자페이지</title>
+<title>관리자페이지::회원관리</title>
 </head>
 <style>
 html,body {
@@ -30,6 +30,31 @@ html,body {
 	z-index:9;
 }
 
+#menu ul {
+	list-style:none;
+	padding:0;
+	margin:0;
+}
+
+#menu ul li a {
+	text-decoration:none;
+}
+
+#menu ul li a span:hover {
+	position:relative;
+	left:15px;
+}
+
+#menu ul li a span {
+	position:relative;
+	display:block;
+	padding:10px 15px;
+	left:0;
+	color:#454545;
+	transition-property:left;
+	transition-duration:.3s;
+}
+
 #content {
 	position:relative;
 	padding:20px;
@@ -37,20 +62,25 @@ html,body {
 	min-height:200px;
 }
 
+h1 {
+	margin:0;
+}
+
 </style>
 <body>
 <div id="container">
 	<div id="menu">
+	<div style="padding:15px 15px; color:#fff; background-color:#EA6576">관리자메뉴</div>
 	<ul>
-		<li><a href="#"><span>회원관리</span></a></li>
-		<li><a href="#"><span>상품등록</span></a></li>
-		<li><a href="#"><span>상품관리</span></a></li>
-		<li><a href="#"><span>브랜드관리</span></a></li>
-		<li><a href="#"><span>카테고리관리</span></a></li>
-		<li><a href="#"><span>관리자설정</span></a></li>
+		<li><a href="/admin/manage/member"><span>회원관리</span></a></li>
+		<li><a href="/admin/add/product"><span>상품등록</span></a></li>
+		<li><a href="/admin/manage/product"><span>상품관리</span></a></li>
+		<li><a href="/admin/manage/brand"><span>브랜드관리</span></a></li>
+		<li><a href="/admin/manage/category"><span>카테고리관리</span></a></li>
+		<li><a href="/admin/config"><span>관리자설정</span></a></li>
 	</ul>
 	</div>
-	<div id="content"><h1>이곳은 관리자 페이지입니다.</h1></div>
+	<div id="content"><h1>관리자페이지</h1></div>
 </div>
 </body>
 </html>

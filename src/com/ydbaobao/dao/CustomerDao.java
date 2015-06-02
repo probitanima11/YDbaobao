@@ -31,17 +31,19 @@ public class CustomerDao extends JdbcDaoSupport {
 				customer.getCustomerAddress());
 	}
 
-	public Customer findByCustomerId(String customerId) {
-		String sql = "select * from CUSTOMERS where customerId = ?";
+	public Customer findCustomerByCustomerId(String customerId) {
+		String sql = "select * from CUSTOMERS where customerId=?";
 		try {
-		return getJdbcTemplate().queryForObject(
-				sql,
-				(rs, rowNum) -> new Customer(rs.getString("customerId"), rs.getString("customerName"), rs
-						.getString("customerPassword"), rs.getString("customerPhone"), rs.getString("customerEmail"),
-						rs.getString("customerAddress")), customerId);
-		} catch(EmptyResultDataAccessException e) {
+			return getJdbcTemplate().queryForObject(sql, (rs, rowNum) -> new Customer(
+					rs.getString("customerId"), 
+					rs.getString("customerName"), 
+					rs.getString("customerPassword"),
+					rs.getString("customerGrade"),
+					rs.getString("customerPhone"),
+					rs.getString("customerEmail")
+					), customerId);
+		} catch (EmptyResultDataAccessException e) {
 			return null;
 		}
 	}
-
 }
