@@ -7,9 +7,11 @@ import javax.sql.DataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
+import org.springframework.stereotype.Repository;
 
 import com.ydbaobao.model.Customer;
 
+@Repository
 public class CustomerDao extends JdbcDaoSupport {
 	private static final Logger logger = LoggerFactory.getLogger(CustomerDao.class);
 	
