@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>관리자페이지::회원관리</title>
-</head>
+<meta charset="UTF-8" />
+<title>관리자페이지::카테고리관리</title>
 <style>
 html, body {
 	margin: 0;
@@ -67,29 +66,33 @@ h1 {
 }
 
 table {
-	padding-top:25px;
+	padding-top: 25px;
 }
 
-table th{
-	background-color:#EA6576;
-	color:#fff;
-	font-weight:200;
-	padding:5px 0;
+table th {
+	background-color: #EA6576;
+	color: #fff;
+	font-weight: 200;
+	padding: 5px 0;
 }
 
-table td{
-	text-align:center;
-	font-size:13px;
+table td {
+	text-align: center;
+	font-size: 13px;
 }
 
+#confirm {
+	float: right;
+}
 </style>
+</head>
 <body>
 	<div id="container">
 		<div id="menu">
 			<a href="/admin" style="text-decoration: none;"> <span
 				style="display: block; padding: 15px 15px; color: #fff; background-color: #EA6576">관리자메뉴</span>
 			</a>
-				<ul>
+			<ul>
 				<li><a href="/admin/manage/member"><span>회원관리</span></a></li>
 				<li><a href="/admin/add/product"><span>상품등록</span></a></li>
 				<li><a href="/admin/manage/product"><span>상품관리</span></a></li>
@@ -99,78 +102,57 @@ table td{
 			</ul>
 		</div>
 		<div id="content">
-			<h1>회원관리</h1>
+			<h1>카테고리 관리</h1>
 			<table style="width: 800px;">
 				<tr>
-					<th>회원아이디</th>
-					<th>회원이름</th>
-					<th>연락처</th>
-					<th>등급</th>
-					<th>승인</th>
-					<th>가입일</th>
-					<th>  </th>
+					<th>카테고리명</th>
+					<th></th>
 				</tr>
 				<tr>
-					<td>id1@email.com</td>
-					<td>John</td>
-					<td>000-1231-1231</td>
-					<td>준비</td>
-					<td>불가</td>
-					<td>2015.05.12</td>
+					<td>상의 일반</td>
 					<td>
-						<button>상세정보</button>
+						<button>수정</button>
 						<button>삭제</button>
 					</td>
 				</tr>
 				<tr>
-					<td>id1@email.com</td>
-					<td>John</td>
-					<td>000-1231-1231</td>
-					<td>준비</td>
-					<td>불가</td>
-					<td>2015.05.12</td>
+					<td>하의 일반</td>
 					<td>
-						<button>상세정보</button>
+						<button>수정</button>
 						<button>삭제</button>
 					</td>
 				</tr>
 				<tr>
-					<td>id1@email.com</td>
-					<td>John</td>
-					<td>000-1231-1231</td>
-					<td>준비</td>
-					<td>불가</td>
-					<td>2015.05.12</td>
+					<td>티셔츠</td>
 					<td>
-						<button>상세정보</button>
+						<button>수정</button>
 						<button>삭제</button>
 					</td>
 				</tr>
 				<tr>
-					<td>id1@email.com</td>
-					<td>John</td>
-					<td>000-1231-1231</td>
-					<td>준비</td>
-					<td>불가</td>
-					<td>2015.05.12</td>
+					<td>아우터</td>
 					<td>
-						<button>상세정보</button>
+						<button>수정</button>
 						<button>삭제</button>
 					</td>
 				</tr>
 				<tr>
-					<td>id1@email.com</td>
-					<td>John</td>
-					<td>000-1231-1231</td>
-					<td>준비</td>
-					<td>불가</td>
-					<td>2015.05.12</td>
+					<td>반바지</td>
 					<td>
-						<button>상세정보</button>
+						<button>수정</button>
 						<button>삭제</button>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<button>추가</button>
 					</td>
 				</tr>
 			</table>
+		</div>
+		<div id="confirm">
+			<button>저장</button>
+			<button>취소</button>
 		</div>
 	</div>
 </body>
