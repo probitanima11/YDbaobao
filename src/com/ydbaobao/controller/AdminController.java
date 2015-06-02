@@ -31,4 +31,14 @@ public class AdminController {
 		}
 		return "adminCheck";
 	}
+	
+	@RequestMapping(value = "/manage/member", method = RequestMethod.GET)
+	public String manageMember() {
+		return "memberManager";
+	}
+	
+	@RequestMapping(value = "/manage/category", method = RequestMethod.GET)
+	public String manageCategory() {
+		return "categoryManager";
+	}
 }
