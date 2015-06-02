@@ -13,19 +13,6 @@
 		<org.springframework.version>4.1.6.RELEASE</org.springframework.version>
 	</properties>
 	<dependencies>
-		<!-- thymeleaf -->
-		<dependency>
-			<groupId>org.thymeleaf</groupId>
-			<artifactId>thymeleaf-spring3</artifactId>
-			<version>2.0.14</version>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.thymeleaf</groupId>
-			<artifactId>thymeleaf</artifactId>
-			<version>2.0.14</version>
-			<scope>compile</scope>
-		</dependency>
 		<!-- File Upload -->
 		<dependency>
 			<groupId>commons-fileupload</groupId>
