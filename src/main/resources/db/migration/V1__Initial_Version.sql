@@ -1,15 +1,15 @@
 drop database YDBAOBAO;
 
-drop user 'link413'@'localhost';
+drop user 'ydbaobao'@'localhost';
 
 /* DB 생성 */
 
 Create DATABASE YDBAOBAO DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 /* User 생성 및 DB권한 주기 */
-Create User link413@'localhost' identified by 'link413';
+Create User ydbaobao@'localhost' identified by 'ydbaobao';
 
-Grant all privileges on YDBAOBAO.* to link413@'localhost' identified by 'link413';
+Grant all privileges on YDBAOBAO.* to ydbaobao@'localhost' identified by 'ydbaobao';
 
 /* Table 생성 */
 
