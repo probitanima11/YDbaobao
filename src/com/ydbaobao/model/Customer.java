@@ -12,6 +12,10 @@ public class Customer {
 		
 	}
 
+	public Customer(String customerId, String customerName, String customerPassword) {
+		this(customerId, customerName, customerPassword, null, null, null);
+	}
+
 	public Customer(String customerId, String customerName, String customerPassword, String customerGrade,
 			String customerPhone, String customerEmail) {
 		this.customerId = customerId;
