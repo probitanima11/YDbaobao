@@ -15,7 +15,26 @@
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		p:driverClassName="${database.driverClassName}" p:url="${database.url}"
 		p:username="${database.username}" p:password="${database.password}" />
-	
-	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
-        p:dataSource-ref="dataSource" />
+
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
+		p:dataSource-ref="dataSource" />
+		
+	<bean id="templateLoader" class="de.neuland.jade4j.spring.template.SpringTemplateLoader">
+		<property name="basePath" value="/WEB-INF/view/" />
+		<property name="encoding" value="UTF-8" />
+		<property name="suffix" value=".jade" />
+	</bean>
+
+	<bean id="jadeConfiguration" class="de.neuland.jade4j.JadeConfiguration">
+		<property name="prettyPrint" value="true" />
+		<property name="caching" value="false" />
+		<property name="templateLoader" ref="templateLoader" />
+	</bean>
+
+	<bean id="viewResolver" class="de.neuland.jade4j.spring.view.JadeViewResolver">
+		<property name="order" value="1 " />
+		<property name="configuration" ref="jadeConfiguration" />
+		<property name="renderExceptions" value="true" />
+	</bean>
 </beans>
