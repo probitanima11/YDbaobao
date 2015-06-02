@@ -19,7 +19,7 @@
 				<li><a href='#'><span>장바구니</span></a></li>
 				<li><a href='#'><span>주문내역</span></a></li>
 				<li><a href='#'><span>문의</span></a></li>-->
-				<li style='font-weight:bold;' ><a href='#'><span style='color:#EA6576;'>관리자</span></a></li>
+				<li style='font-weight:bold;' ><a href='/admin'><span style='color:#EA6576;'>관리자</span></a></li>
 			</ul>
 		</div>
 	</div>
