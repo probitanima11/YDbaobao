@@ -41,4 +41,14 @@ public class AdminController {
 	public String manageCategory() {
 		return "categoryManager";
 	}
+	
+	@RequestMapping(value = "/manage/product", method = RequestMethod.GET)
+	public String manageProduct() {
+		return "productManager";
+	}
+	
+	@RequestMapping(value = "/manage/brand", method = RequestMethod.GET)
+	public String manageBrand() {
+		return "brandManager";
+	}
 }
