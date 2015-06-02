@@ -13,9 +13,8 @@ public class Customer {
 		
 	}
 
-	public Customer(String customerId, String customerName, String customerPassword, String customerGrade,
-			String customerPhone, String customerEmail) {
-		this(customerId, customerName, customerPassword, customerGrade, customerPhone, customerEmail, null);
+	public Customer(String customerId, String customerName, String customerPassword, String customerPhone, String customerEmail, String customerAddress) {
+		this(customerId, customerName, customerPassword, null, customerPhone, customerEmail, customerAddress);
 	}
 	
 	public Customer(String customerId, String customerName, String customerPassword, String customerGrade,

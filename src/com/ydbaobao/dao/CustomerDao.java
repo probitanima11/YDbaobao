@@ -39,7 +39,8 @@ public class CustomerDao extends JdbcDaoSupport {
 					rs.getString("customerPassword"),
 					rs.getString("gradeId"),
 					rs.getString("customerPhone"),
-					rs.getString("customerEmail")
+					rs.getString("customerEmail"),
+					rs.getString("customerAddress")
 					), customerId);
 		} catch (EmptyResultDataAccessException e) {
 			return null;

@@ -39,10 +39,10 @@ public class CustomerController {
 	}
 	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	protected @ResponseBody boolean login(@RequestParam String customerId, @RequestParam String customerPassword, HttpSession session) {
+	protected String login(@RequestParam String customerId, @RequestParam String customerPassword, HttpSession session) {
 		SessionCustomer sessionCustomer = (customerService.login(customerId, customerPassword)).createSessionCustomer();
 		session.setAttribute("sessionCustomer", sessionCustomer);
-		return true;
+		return "index";
 	}
 	
 	@RequestMapping("/logout")
