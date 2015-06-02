@@ -1,4 +1,6 @@
-<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -86,16 +88,16 @@ table td{
 <body>
 	<div id="container">
 		<div id="menu">
-			<a href="/admin" style="text-decoration: none;"> <span
+			<a href="admin.html" style="text-decoration: none;"> <span
 				style="display: block; padding: 15px 15px; color: #fff; background-color: #EA6576">관리자메뉴</span>
 			</a>
-				<ul>
-				<li><a href="/admin/manage/member"><span>회원관리</span></a></li>
-				<li><a href="/admin/add/product"><span>상품등록</span></a></li>
-				<li><a href="/admin/manage/product"><span>상품관리</span></a></li>
-				<li><a href="/admin/manage/brand"><span>브랜드관리</span></a></li>
-				<li><a href="/admin/manage/category"><span>카테고리관리</span></a></li>
-				<li><a href="/admin/config"><span>관리자설정</span></a></li>
+			<ul>
+				<li><a href="memberManager.html"><span>회원관리</span></a></li>
+				<li><a href="addProduct.html"><span>상품등록</span></a></li>
+				<li><a href="productManager.html"><span>상품관리</span></a></li>
+				<li><a href="brandManager.html"><span>브랜드관리</span></a></li>
+				<li><a href="categoryManager.html"><span>카테고리관리</span></a></li>
+				<li><a href="adminConfig.html"><span>관리자설정</span></a></li>
 			</ul>
 		</div>
 		<div id="content">

@@ -23,7 +23,7 @@ Create Table CUSTOMERS(
  customerId varchar(50) PRIMARY KEY NOT NULL,
  customerName varchar(50) NOT NULL,
  customerPassword varchar(50) NOT NULL,
- gradeId int NOT NULL DEFAULT 0,
+ gradeId int DEFAULT 0,
  customerPhone varchar(50) NOT NULL,
  customerEmail varchar(50),
  customerAddress varchar(100),
@@ -57,7 +57,7 @@ Create Table PRODUCTS(
 
 Create Table STOCKS(
  stockId int PRIMARY KEY AUTO_INCREMENT,
- productId int NOT NULL,
+ productId int,
  size varchar(50) NOT NULL,
  quantity int NOT NULL DEFAULT 0,
  productUpdateDate DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -68,7 +68,7 @@ Create Table STOCKS(
 Create Table ORDERS(
  orderId int PRIMARY KEY AUTO_INCREMENT,
  orderStatus varchar(50) NOT NULL,
- customerId varchar(50) NOT NULL,
+ customerId varchar(50),
  enuri int,
  realPrice int NOT NULL,
  orderAddress varchar(100) NOT NULL,
@@ -79,10 +79,10 @@ Create Table ORDERS(
 
 Create Table ITEMS(
  itemId int PRIMARY KEY AUTO_INCREMENT,
- productId int NOT NULL,
- orderId int NOT NULL,
+ productId int,
+ orderId int,
  size varchar(50) NOT NULL,
- quantity int NOT NULL DEFAULT 0,
+ quantity int NOT NULL,
  Foreign Key(orderId) REFERENCES ORDERS(orderId) on delete cascade,
  Foreign Key(productId) REFERENCES PRODUCTS(productId) on delete cascade
 );
