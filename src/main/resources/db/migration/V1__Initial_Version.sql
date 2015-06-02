@@ -132,16 +132,6 @@ CREATE TABLE IF NOT EXISTS `YDBAOBAO`.`STOCKS` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-
--- -----------------------------------------------------
--- Table `YDBAOBAO`.`Carts`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `YDBAOBAO`.`Carts` (
-  `cartId` INT NOT NULL,
-  PRIMARY KEY (`cartId`))
-ENGINE = InnoDB;
-
-
 -- -----------------------------------------------------
 -- Table `YDBAOBAO`.`ORDERS`
 -- -----------------------------------------------------

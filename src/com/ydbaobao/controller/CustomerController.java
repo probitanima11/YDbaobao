@@ -24,8 +24,8 @@ public class CustomerController {
 	}
 	
 	@RequestMapping(value ="/create", method = RequestMethod.POST)
-	public String create(Customer customer, @RequestParam String customerAgainPassword) {
-		customerService.join(customer);
+	public String create(@RequestParam String customerId, @RequestParam String customerName, @RequestParam String customerPassword, @RequestParam String customerAgainPassword, @RequestParam String customerPhone, @RequestParam String customerEmail, @RequestParam String customerAddress) {
+		customerService.join(new Customer(customerId, customerName, customerPassword, customerPhone, customerEmail, customerAddress));
 		return "index";
 	}
 	
