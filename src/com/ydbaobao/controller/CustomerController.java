@@ -39,7 +39,6 @@ public class CustomerController {
 		return "redirect:/";
 	}
 	
-	
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public String form(Model model) {
 		model.addAttribute("customer", new Customer());
@@ -52,8 +51,4 @@ public class CustomerController {
 		return "index";
 	}
 	
-	@RequestMapping(value="/login", method = RequestMethod.POST)
-	public String login() {
-		return "index";
-	}
 }
