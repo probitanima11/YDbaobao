@@ -1,14 +1,17 @@
 package com.ydbaobao.controller;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ydbaobao.model.Customer;
+import com.ydbaobao.model.SessionCustomer;
 import com.ydbaobao.service.CustomerService;
 
 @Controller
@@ -29,8 +32,22 @@ public class CustomerController {
 		return "index";
 	}
 	
-	@RequestMapping(value="/login", method = RequestMethod.POST)
-	public String login() {
-		return "index";
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	public String login(Model model) {
+		model.addAttribute("customer", new Customer());
+		return "login";
+	}
+	
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	protected @ResponseBody boolean login(@RequestParam String customerId, @RequestParam String customerPassword, HttpSession session) {
+		SessionCustomer sessionCustomer = (customerService.login(customerId, customerPassword)).createSessionCustomer();
+		session.setAttribute("sessionCustomer", sessionCustomer);
+		return true;
+	}
+	
+	@RequestMapping("/logout")
+	protected String logout(HttpSession session) {
+		session.invalidate();
+		return "redirect:/";
 	}
 }

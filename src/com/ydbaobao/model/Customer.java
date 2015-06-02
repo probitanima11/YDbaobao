@@ -15,12 +15,18 @@ public class Customer {
 
 	public Customer(String customerId, String customerName, String customerPassword, String customerGrade,
 			String customerPhone, String customerEmail) {
+		this(customerId, customerName, customerPassword, customerGrade, customerPhone, customerEmail, null);
+	}
+	
+	public Customer(String customerId, String customerName, String customerPassword, String customerGrade,
+			String customerPhone, String customerEmail, String customerAddress) {
 		this.customerId = customerId;
 		this.customerName = customerName;
 		this.customerPassword = customerPassword;
 		this.customerGrade = customerGrade;
 		this.customerPhone = customerPhone;
 		this.customerEmail = customerEmail;
+		this.customerAddress = customerAddress;
 	}
 
 	public String getCustomerId() {
@@ -78,6 +84,15 @@ public class Customer {
 	public void setCustomerAddress(String customerAddress) {
 		this.customerAddress = customerAddress;
 	}
+	
+	public boolean isCorrectPassword(String customerPassword) {
+		return this.customerPassword.equals(customerPassword);
+	}
+	
+	public SessionCustomer createSessionCustomer() {
+		return new SessionCustomer(customerId, customerName);
+	}
+	
 
 	@Override
 	public int hashCode() {
