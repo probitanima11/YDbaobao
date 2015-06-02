@@ -1,6 +1,5 @@
 package com.ydbaobao.model;
 
-
 public class Customer {
 	private String customerId;
 	private String customerName;
@@ -78,14 +77,6 @@ public class Customer {
 
 	public void setCustomerAddress(String customerAddress) {
 		this.customerAddress = customerAddress;
-	}
-	
-	public boolean isCorrectPassword(String customerPassword) {
-		return this.customerPassword.equals(customerPassword);
-	}
-	
-	public SessionCustomer createSessionCustomer() {
-		return new SessionCustomer(customerId, customerName);
 	}
 
 	@Override
