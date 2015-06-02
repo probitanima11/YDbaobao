@@ -24,8 +24,9 @@ public class CustomerDao extends JdbcDaoSupport {
 	}
 	
 	public void createCustomer(Customer customer) {
-		String sql = "insert into CUSTOMERS (customerName, customerPassword, customerPhone, customerEmail) values(?, ?, ?, ?)";
-		getJdbcTemplate().update(sql, customer.getCustomerName(), customer.getCustomerPassword(), customer.getCustomerPhone(), customer.getCustomerEmail());
+		String sql = "insert into CUSTOMERS values(?, ?, ?, default, ?, ?, ?, default, default)";
+//		String sql = "insert into CUSTOMERS (customerId, customerName, customerPassword, customerPhone, customerEmail) values(?, ?, ?, ?)";
+		getJdbcTemplate().update(sql, customer.getCustomerId(), customer.getCustomerName(), customer.getCustomerPassword(), customer.getCustomerPhone(), customer.getCustomerEmail(), customer.getCustomerAddress());
 	}
 	
 	
