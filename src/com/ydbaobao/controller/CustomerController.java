@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ydbaobao.model.Customer;
-import com.ydbaobao.servece.CustomerService;
+import com.ydbaobao.service.CustomerService;
 
 @Controller
 @RequestMapping("/customer")
