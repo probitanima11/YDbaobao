@@ -15,7 +15,7 @@
 		<div id='util-bar' class='wrap content' style='height:35px;'>
 			<ul id='util'>
 				<li><a href='#'><span>로그인</span></a></li>
-				<li><a href='/user/create'><span>회원가입</span></a></li><!-- 
+				<li><a href='/customer/create'><span>회원가입</span></a></li><!-- 
 				<li><a href='#'><span>장바구니</span></a></li>
 				<li><a href='#'><span>주문내역</span></a></li>
 				<li><a href='#'><span>문의</span></a></li>-->
