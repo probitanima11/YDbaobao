@@ -41,4 +41,8 @@ public class BrandService {
 	public List<Brand> read() {
 		return brandDao.read();
 	}
+
+	public List<Brand> search(String firstLetter) {
+		return brandDao.search(firstLetter);
+	}
 }

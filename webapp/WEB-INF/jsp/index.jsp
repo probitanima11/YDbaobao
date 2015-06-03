@@ -27,7 +27,7 @@
 		<div id='second-section' style="padding-top: 25px;">
 			<!-- 브랜드 탭(A~Z) 메뉴 -->
 			<%@ include file="./commons/_brand.jsp" %>
-			
+
 			<div id='item-container' class='wrap content'>
 				<ul>
 					<li class='item'>
@@ -97,5 +97,47 @@
 	<div id="footer">
 		<div class="content wrap">Footer...</div>
 	</div>
+	<script>
+		window.addEventListener('load', function() {
+			setBrandSearchEvent();
+		}, false)
+
+		function setBrandSearchEvent() {
+			var firstLetterList = document.querySelectorAll('.first-letter');
+			
+			for(var i = 0, length = firstLetterList.length; i < length; i++) {
+				firstLetterList[i].addEventListener('click', function(e) {
+					searchBrand(e.target);
+				}, false);
+			}
+		}
+
+		function searchBrand(target) {
+			console.log(target.innerText);
+			ydbaobao.ajax({
+				method:'get',
+				url:'/brand/search?firstLetter=' + target.innerText,
+				success: function(req) {
+					changeBrandList(JSON.parse(req.responseText));
+				}
+			});
+		}
+
+		function changeBrandList(brands) {
+			// 기존 brand list 삭제
+			var ul = document.querySelector('#brand-list > ul');
+			while(ul.firstChild) {
+				ul.removeChild(ul.firstChild);
+			}
+
+			// 검색된 브랜드 리스트 출력
+			for(var i = 0, length = brands.length; i < length; i++) {
+				var li = document.createElement('li');
+				li.innerHTML += "<span>" + brands[i].brandName + "</span>";
+				ul.appendChild(li);
+			}
+		}
+	</script>
+	<script src="/js/ydbaobao.js"></script>
 </body>
 </html>

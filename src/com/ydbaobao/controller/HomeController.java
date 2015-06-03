@@ -1,5 +1,8 @@
 package com.ydbaobao.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
@@ -20,7 +23,12 @@ public class HomeController {
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Model model) {
+		List<Character> firstLetterList = new ArrayList<Character>();
+		for(char ch = 'A'; ch <= 'Z'; ch++) {
+			firstLetterList.add(ch);	
+		}
 		model.addAttribute("categories", categorySevice.read());
+		model.addAttribute("firstLetterList", firstLetterList);
 		model.addAttribute("brands", brandService.readBrands());
 		return "index";
 	}

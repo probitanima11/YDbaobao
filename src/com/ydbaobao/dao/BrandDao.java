@@ -18,7 +18,6 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import com.ydbaobao.model.Brand;
-import com.ydbaobao.model.Category;
 
 @Repository
 public class BrandDao extends JdbcDaoSupport {
@@ -74,6 +73,13 @@ public class BrandDao extends JdbcDaoSupport {
 		String sql = "select * from BRANDS";
 		return getJdbcTemplate().query(sql, (rs, rowNum) -> new Brand(
 				rs.getInt("brandId"),
+				rs.getString("brandName")));
+	}
+
+	public List<Brand> search(String firstLetter) {
+		String sql = "select * from BRANDS where brandName like \"" + firstLetter + "%\"";
+		return getJdbcTemplate().query(sql, (rs, rowNum) -> new Brand(
+				rs.getInt("brandId"), 
 				rs.getString("brandName")));
 	}
 }
