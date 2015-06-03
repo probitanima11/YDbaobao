@@ -23,6 +23,6 @@ public class CategoryDao extends JdbcDaoSupport {
 
 	public List<Category> read() {
 		String sql = "select categoryName from CATEGORY";
-		return null;
+		return getJdbcTemplate().query(sql, (rs, rowNum) -> new Category(rs.getString("categoryName")));
 	}
 }
