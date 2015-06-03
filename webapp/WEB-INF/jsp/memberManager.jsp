@@ -5,101 +5,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>관리자페이지::회원관리</title>
+<link rel="stylesheet" href="/css/admin.css">
 </head>
-<style>
-html, body {
-	margin: 0;
-	padding: 0;
-	width: 100%;
-	height: 100%;
-	background-color: #f8f8f8;
-}
-
-#container {
-	width: 980px;
-	height: 100%;
-	background-color: #fff;
-	border: 1px solid #ccc;
-	margin: 0 auto;
-}
-
-#menu {
-	position: relative;
-	float: left;
-	width: 150px;
-	height: 100%;
-	border-right: 1px solid #ccc;
-	z-index: 9;
-}
-
-#menu ul {
-	list-style: none;
-	padding: 0;
-	margin: 0;
-}
-
-#menu ul li a {
-	text-decoration: none;
-}
-
-#menu ul li a span:hover {
-	position: relative;
-	left: 15px;
-}
-
-#menu ul li a span {
-	position: relative;
-	display: block;
-	padding: 10px 15px;
-	left: 0;
-	color: #454545;
-	transition-property: left;
-	transition-duration: .3s;
-}
-
-#content {
-	position: relative;
-	padding: 20px;
-	padding-left: 170px;
-	min-height: 200px;
-}
-
-h1 {
-	margin: 0;
-}
-
-table {
-	padding-top:25px;
-}
-
-table th{
-	background-color:#EA6576;
-	color:#fff;
-	font-weight:200;
-	padding:5px 0;
-}
-
-table td{
-	text-align:center;
-	font-size:13px;
-}
-
-</style>
 <body>
 	<div id="container">
-		<div id="menu">
-			<a href="admin.html" style="text-decoration: none;"> <span
-				style="display: block; padding: 15px 15px; color: #fff; background-color: #EA6576">관리자메뉴</span>
-			</a>
-			<ul>
-				<li><a href="memberManager.html"><span>회원관리</span></a></li>
-				<li><a href="addProduct.html"><span>상품등록</span></a></li>
-				<li><a href="productManager.html"><span>상품관리</span></a></li>
-				<li><a href="brandManager.html"><span>브랜드관리</span></a></li>
-				<li><a href="categoryManager.html"><span>카테고리관리</span></a></li>
-				<li><a href="adminConfig.html"><span>관리자설정</span></a></li>
-			</ul>
-		</div>
+		<%@ include file="./commons/_adminNav.jsp" %>
 		<div id="content">
 			<h1>회원관리</h1>
 			<table style="width: 800px;">
