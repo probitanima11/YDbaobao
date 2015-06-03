@@ -16,6 +16,7 @@ import com.ydbaobao.dao.CustomerDao;
 import com.ydbaobao.exception.ExceptionForMessage;
 import com.ydbaobao.model.Customer;
 import com.ydbaobao.model.SessionCustomer;
+import com.ydbaobao.service.CategoryService;
 import com.ydbaobao.service.CustomerService;
 
 @Controller
@@ -23,6 +24,8 @@ import com.ydbaobao.service.CustomerService;
 public class CustomerController {
 	@Resource
 	private CustomerService customerService;
+	@Resource
+	private CategoryService categoryService;
 	@Resource
 	private CustomerDao customerDao;
 	
@@ -75,6 +78,7 @@ public class CustomerController {
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String login(Model model) {
 		model.addAttribute("customer", new Customer());
+		model.addAttribute("categories", categoryService.read());
 		return "login";
 	}
 	
