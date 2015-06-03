@@ -26,7 +26,11 @@ public class AdminController {
 
 	@Resource
 	private CategoryService categoryService;
-
+	
+	/**
+	 * 관리자 페이지 접근을 위한 GET 요청을 응답.
+	 * session 체크를 하여 sessionAdmin이 Null일 경우 관리자 번호 체크 페이지로 포워딩.
+	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView home(HttpSession session) {
 		ModelAndView mv = new ModelAndView();
@@ -110,9 +114,16 @@ public class AdminController {
 		return mv;
 	}
 	
+
 	@RequestMapping(value = "/add/product", method = RequestMethod.GET)
 	public ModelAndView addProduct() {
 		ModelAndView mv = new ModelAndView("admin/productRegistration");
+		return mv;
+	}
+
+	@RequestMapping(value = "/config", method = RequestMethod.GET)
+	public ModelAndView config() {
+		ModelAndView mv = new ModelAndView("admin/config");
 		return mv;
 	}
 }

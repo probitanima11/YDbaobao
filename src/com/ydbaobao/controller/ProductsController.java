@@ -1,6 +1,6 @@
 package com.ydbaobao.controller;
 
-import java.util.List;
+import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,13 +9,23 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ydbaobao.service.CategoryService;
+import com.ydbaobao.service.ProductsService;
+
 @Controller
 @RequestMapping("/products")
 public class ProductsController {
 	
+	@Resource
+	private CategoryService categoryService;
+	
+	@Resource
+	private ProductsService productsService;
+	
 	@RequestMapping(value="", method=RequestMethod.GET)
-	public String load(Model model, @RequestParam String category) {
-		//service를 통해 category에 따른 products 리스트를 받아 model에 담는다.
+	public String load(Model model, @RequestParam int categoryId) {
+		model.addAttribute("category", categoryService.readByCategoryId(categoryId));
+		model.addAttribute("productList", productsService.readListByCategory(categoryId));
 		return "products";
 	}
 	
