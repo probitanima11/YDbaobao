@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -24,41 +25,9 @@
 				아마도 신상품 페이지</div>
 		</div>
 		<div id='second-section' style="padding-top: 25px;">
-			<div id='brand-selector' class='wrap content'
-				style='height: 200px; outline: 1px solid #EA6576;'>
-				<div id='brand-initial-tab'>
-					<label>브랜드 선택</label>
-					<ul>
-						<li class='active'><span>A</span></li>
-						<li><span>B</span></li>
-						<li><span>C</span></li>
-						<li><span>D</span></li>
-						<li><span>E</span></li>
-						<li><span>F</span></li>
-						<li><span>G</span></li>
-						<li><span>H</span></li>
-						<li><span>I</span></li>
-						<li><span>J</span></li>
-						<li><span>K</span></li>
-						<li><span>L</span></li>
-						<li><span>M</span></li>
-						<li><span>N</span></li>
-						<li><span>O</span></li>
-						<li><span>P</span></li>
-						<li><span>Q</span></li>
-						<li><span>R</span></li>
-						<li><span>S</span></li>
-						<li><span>T</span></li>
-						<li><span>U</span></li>
-						<li><span>V</span></li>
-						<li><span>W</span></li>
-						<li><span>X</span></li>
-						<li><span>Y</span></li>
-						<li><span>Z</span></li>
-						<li><span>#</span></li>
-					</ul>
-				</div>
-			</div>
+			<!-- 브랜드 탭(A~Z) 메뉴 -->
+			<%@ include file="./commons/_brand.jsp" %>
+			
 			<div id='item-container' class='wrap content'>
 				<ul>
 					<li class='item'>
