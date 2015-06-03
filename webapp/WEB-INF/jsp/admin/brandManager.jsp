@@ -3,7 +3,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta charset="UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>관리자페이지::브랜드관리</title>
 <link rel="stylesheet" href="/css/admin.css">
 </head>
@@ -16,7 +16,7 @@
 		
 		<div style=" margin: 0 auto; width: 500px;">
 			<div>
-				<input type="text"/>
+				<input type="text" id="new-brand"/>
 				<input type="button" id="brand-add" value="추가"/>
 			</div>
 			<div style="margin-left: 135px;">
@@ -31,10 +31,6 @@
 				
 			</div>
 		</div>
-		<div id="confirm">
-			<button>저장</button>
-			<button>취소</button>
-		</div>
 	</div>
 	<script>
 		// 브랜드 리스트에서 브랜드 선택 시 해당 정보 띄우기 위한 이벤트
@@ -42,16 +38,43 @@
 			if(e.target.className === "brands-item")
 				console.log(e.target.value);
 		}, false);
-		document.querySelector("#brand-add").addEventListener("click", function(e) {
-			if(e.target.className === "brands-item")
-				console.log(e.target.value);
-		}, false);
-		document.querySelector("#brand-delete").addEventListener("click", function(e) {
-			if(e.target.className === "brands-item")
-				console.log(e.target.value);
-		}, false);
 		
+		// 브랜드 추가 이벤트 
+		document.querySelector("#brand-add").addEventListener("click", function(e) {
+			var brandName = document.querySelector("#new-brand").value
+			ydbaobao.ajax({
+				method:'post',
+				param:'brandName='+brandName,
+				url:'/api/admin/brandManager',
+				success: function(req) {
+					var optionEl = ydbaobao.createElement({
+				        name: "option",
+				        attrs: {
+				            'class': "brands-item",
+				            'value': req.responseText
+				        }
+				    });
+					optionEl.innerHTML = brandName;
+					document.querySelector("#brands-list").add(optionEl)
+				}
+			});
+		}, false);
+		// 브랜드 삭제 이벤트 
+		document.querySelector("#brand-delete").addEventListener("click", function(e) {
+			var selectEl = document.querySelector("#brands-list");
+			ydbaobao.ajax({
+				method:'delete',
+				url:"/api/admin/brandManager/"+selectEl.selectedOptions[0].value,
+				success: function(req) {
+					selectEl.remove(selectEl.selectedIndex)
+				}
+			});
+			
+			if(e.target.className === "brands-item")
+				console.log(e.target.value);
+		}, false);
 			
 	</script>
+	<script src="/js/ydbaobao.js"></script>
 </body>
 </html>

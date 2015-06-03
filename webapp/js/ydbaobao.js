@@ -16,8 +16,23 @@ ydbaobao.ajax = function(o) {
 	};
 	if (o.async === undefined) o.async = true;
 	req.open(o.method, o.url, o.async);
-	if (o.method.toLowerCase() == "post" || o.method.toLowerCase() == "put") {
+	if (o.method.toLowerCase() == "post" || o.method.toLowerCase() == "put" || o.method.toLowerCase() == "delete") {
 		req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	}
 	req.send(o.param);
+};
+
+ydbaobao.createElement = function(o) {
+	var el = document.createElement(o.name);
+	if (o.attrs !== undefined) {
+		for ( var attr in o.attrs) {
+			if (o.attrs.hasOwnProperty(attr)) {
+				el.setAttribute(attr, o.attrs[attr]);
+			}
+		}
+	}
+	if (o.content) {
+		el.innerHTML = o.content;
+	}
+	return el;
 };

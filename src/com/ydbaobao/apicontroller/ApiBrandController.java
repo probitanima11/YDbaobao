@@ -5,6 +5,7 @@ import javax.annotation.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,8 +26,7 @@ public class ApiBrandController {
 	
 	@RequestMapping(method=RequestMethod.POST)
 	public ResponseEntity<Object> create(@RequestParam String brandName) {
-		brandService.createBrand(brandName);
-		return JSONResponseUtil.getJSONResponse("", HttpStatus.OK);
+		return JSONResponseUtil.getJSONResponse(brandService.createBrand(brandName), HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/{brandId}", method=RequestMethod.PUT)
@@ -36,7 +36,7 @@ public class ApiBrandController {
 	}
 	
 	@RequestMapping(value="/{brandId}", method=RequestMethod.DELETE)
-	public ResponseEntity<Object> delete(@RequestParam String brandId) {
+	public ResponseEntity<Object> delete(@PathVariable String brandId) {
 		brandService.deleteBrand(brandId);
 		return JSONResponseUtil.getJSONResponse("", HttpStatus.OK);
 	}
