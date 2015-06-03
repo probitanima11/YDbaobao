@@ -8,8 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ydbaobao.exception.ExceptionForMessage;
 import com.ydbaobao.model.Customer;
 import com.ydbaobao.model.SessionCustomer;
 import com.ydbaobao.service.CustomerService;
@@ -27,8 +27,18 @@ public class CustomerController {
 	}
 	
 	@RequestMapping(value ="/create", method = RequestMethod.POST)
-	public String create(@RequestParam String customerId, @RequestParam String customerName, @RequestParam String customerPassword, @RequestParam String customerAgainPassword, @RequestParam String customerPhone, @RequestParam String customerEmail, @RequestParam String customerAddress) {
-		customerService.join(new Customer(customerId, customerName, customerPassword, customerPhone, customerEmail, customerAddress));
+	public String create(Customer customer, @RequestParam String customerAgainPassword, Model model) throws ExceptionForMessage{
+		//TODO VALIDATION CHECK
+//	public String create(@Valid Customer customer, BindingResult result, @RequestParam String customerAgainPassword, Model model) throws ExceptionForMessage{
+//		if(result.hasErrors()) {
+//			throw new JoinValidationException(extractValidationMessages(result));
+//        }
+		if(!customer.getCustomerPassword().equals(customerAgainPassword)) {
+			model.addAttribute("customer", new Customer());
+			model.addAttribute("message", "아이디와 비밀번호가 일치하지 않습니다.");
+			return "form";
+		}
+		customerService.join(customer);
 		return "index";
 	}
 	
