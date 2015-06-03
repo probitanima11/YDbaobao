@@ -53,6 +53,6 @@ public class CategoryDao extends JdbcDaoSupport {
 		String sql = "select * from CATEGORY where categoryId = ?";
 		return getJdbcTemplate().queryForObject(sql, (rs, rowNum) -> new Category(
 				rs.getInt("categoryId"),
-				rs.getString("categoryName")));
+				rs.getString("categoryName")), categoryId);
 	}
 }
