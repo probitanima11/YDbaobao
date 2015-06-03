@@ -17,4 +17,13 @@ public class CategoryService {
 	public List<Category> read() {
 		return categoryDao.read();
 	}
+
+	public Category create(Category category) {
+		int categoryKey = categoryDao.create(category);
+		return categoryDao.readByCategoryId(categoryKey);
+	}
+	
+	public Category readByCategoryId(int categoryId) {
+		return categoryDao.readByCategoryId(categoryId);
+	}
 }

@@ -5,7 +5,6 @@ public class Category {
 	private String categoryName;
 	
 	public Category() {
-		
 	}
 	
 	public Category(int categoryId, String categoryName) {
