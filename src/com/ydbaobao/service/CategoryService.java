@@ -17,4 +17,11 @@ public class CategoryService {
 	public List<Category> read() {
 		return categoryDao.read();
 	}
+
+	public boolean update(long categoryId, String categoryName) {
+		if(categoryDao.update(categoryId, categoryName) == 1) {
+			return true;
+		}
+		return false;
+	}
 }

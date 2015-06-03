@@ -5,10 +5,14 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ydbaobao.model.Category;
@@ -17,33 +21,34 @@ import com.ydbaobao.service.CategoryService;
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
+	private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
 	private static String password = "1111";
-	
+
 	@Resource
 	private CategoryService categoryService;
-	
+
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView home(HttpSession session) {
 		ModelAndView mv = new ModelAndView();
 
-		if(session.getAttribute("sessionAdmin") == null) {
+		if (session.getAttribute("sessionAdmin") == null) {
 			mv.setViewName("admin/adminCheck");
 			return mv;
 		}
 		mv.setViewName("admin/admin");
 		return mv;
 	}
-	
+
 	@RequestMapping(value = "/check", method = RequestMethod.GET)
 	public ModelAndView check() {
 		ModelAndView mv = new ModelAndView("admin/adminCheck");
 		return mv;
 	}
-	
+
 	@RequestMapping(value = "/check", method = RequestMethod.POST)
 	public ModelAndView checkForm(@RequestParam String adminPassword, HttpSession session) {
 		ModelAndView mv = new ModelAndView();
-		if(adminPassword.equals(password)) {
+		if (adminPassword.equals(password)) {
 			session.setAttribute("sessionAdmin", adminPassword);
 			mv.setViewName("admin/admin");
 			return mv;
@@ -51,19 +56,19 @@ public class AdminController {
 		mv.setViewName("admin/adminCheck");
 		return mv;
 	}
-	
+
 	@RequestMapping(value = "/manage/member", method = RequestMethod.GET)
 	public ModelAndView manageMember() {
 		ModelAndView mv = new ModelAndView("admin/memberManager");
 		return mv;
 	}
-	
+
 	@RequestMapping(value = "/manage/brand", method = RequestMethod.GET)
 	public ModelAndView manageBrand() {
 		ModelAndView mv = new ModelAndView("admin/brandManager");
 		return mv;
 	}
-	
+
 	@RequestMapping(value = "/manage/category", method = RequestMethod.GET)
 	public ModelAndView manageCategory() {
 		ModelAndView mv = new ModelAndView("admin/categoryManager");
@@ -71,7 +76,16 @@ public class AdminController {
 		mv.addObject("categories", list);
 		return mv;
 	}
-	
+
+	@RequestMapping(value = "/manage/category/{categoryId}/{categoryName}", method = RequestMethod.PUT)
+	public @ResponseBody String updateCategory(@PathVariable long categoryId, @PathVariable String categoryName) {
+		logger.debug("Id : {}, Name : {}", categoryId, categoryName);
+		if(categoryService.update(categoryId, categoryName)) {
+			return "success";
+		}
+		return "fail";
+	}
+
 	@RequestMapping(value = "/manage/product", method = RequestMethod.GET)
 	public ModelAndView manageProduct() {
 		ModelAndView mv = new ModelAndView("admin/productManager");

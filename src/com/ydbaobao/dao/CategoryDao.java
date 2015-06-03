@@ -27,4 +27,9 @@ public class CategoryDao extends JdbcDaoSupport {
 				rs.getInt("categoryId"),
 				rs.getString("categoryName")));
 	}
+
+	public int update(long categoryId, String categoryName) {
+		String sql = "update CATEGORY set categoryName = ? where categoryId = ?";
+		return getJdbcTemplate().update(sql, categoryName, categoryId);
+	}
 }

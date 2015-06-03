@@ -19,26 +19,77 @@
 					<th></th>
 				</tr>
 				<c:forEach var="category" items="${categories}">
-					<tr>
-						<td>${category.categoryName}</td>
+					<tr id="${category.categoryId}">
+						<td><input type="text" value="${category.categoryName}" data-id="${category.categoryId}" /></td>
 						<td>
-							<button>수정</button>
-							<button>삭제</button>
+							<button class="update-category-btn">수정</button>
+							<button class="delete-category-btn">삭제</button>
 						</td>
 					</tr>
 				</c:forEach>
 				<tr>
 					<td><input type="text"></td>	
 					<td>
-						<button>추가</button>
+						<button class="create-category-btn">추가</button>
 					</td>
 				</tr>
 			</table>
 		</div>
-		<div id="confirm">
-			<button>저장</button>
+		<div>
 			<button>취소</button>
 		</div>
 	</div>
+	<script>
+		window.addEventListener('load', function() {
+			setCategoryEvent();
+		}, false);
+
+		function setCategoryEvent() {
+			var updateBtn = document.querySelectorAll('.update-category-btn');
+			var deleteBtn = document.querySelectorAll('.delete-category-btn');
+			var createBtn = document.querySelector('.create-category-btn');
+	
+			// for문 조건문용 변수
+			var length;
+
+			for(var i = 0, length = updateBtn.length; i < length; i++) {
+				updateBtn[i].addEventListener('click', function(e) {
+					updateCategory(e);
+				}, false);
+			}
+
+			for(var j = 0, length = deleteBtn.length; j < length; j++) {
+				deleteBtn[j].addEventListener('click', function(e) {
+					deleteCategory(e);
+				}), false;
+			}
+
+			createBtn.addEventListener('click', function(e) {
+				createCategory(e);
+			}, false);
+		}
+
+		function updateCategory(e) {
+			var categoryId = e.target.parentElement.parentElement.id;
+			var categoryName = document.querySelector('input[data-id="' + categoryId + '"]').value;
+			console.log(categoryName);
+			ydbaobao.ajax({
+				method:"put",
+				url:"/admin/manage/category/" + categoryId + "/" + categoryName,
+				success: function(req) {
+					console.log(req.responseText);
+				}
+			});
+		}
+
+		function deleteCategory(e) {
+			console.log(e.target.parentElement.parentElement.id);
+		}
+
+		function createCategory(e) {
+			console.log(e.target.parentElement.parentElement.id);
+		}
+	</script>
+	<script src="/js/ydbaobao.js"></script>
 </body>
 </html>
