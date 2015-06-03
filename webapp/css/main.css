@@ -144,6 +144,10 @@ ul#util li a span{
 	outline:1px solid #EA6576;
 }
 
+.item a {
+	text-decoration:none;
+}
+
 .item img {
 	width:230px;
 }
