@@ -34,4 +34,8 @@ public class CustomerService {
 		}
 		return customer;
 	}
+
+	public void update(Customer customer) {
+		customerDao.updateCustomer(customer);
+	}
 }

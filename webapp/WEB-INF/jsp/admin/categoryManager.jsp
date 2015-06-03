@@ -9,7 +9,7 @@
 </head>
 <body>
 	<div id="container">
-		<%@ include file="./commons/_adminNav.jsp" %>
+		<%@ include file="./_adminNav.jsp" %>
 		<div id="content">
 			<h1>카테고리 관리</h1>
 			<table style="width: 800px;">

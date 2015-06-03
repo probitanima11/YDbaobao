@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/admin")
@@ -13,22 +14,56 @@ public class AdminController {
 	private static String password = "1111";
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public String home(HttpSession session) {
-		if(session.getAttribute("sessionAdmin") == null) return "adminCheck";
-		return "admin";
+	public ModelAndView home(HttpSession session) {
+		ModelAndView mv = new ModelAndView();
+
+		if(session.getAttribute("sessionAdmin") == null) {
+			mv.setViewName("admin/adminCheck");
+			return mv;
+		}
+		mv.setViewName("admin/admin");
+		return mv;
 	}
 	
 	@RequestMapping(value = "/check", method = RequestMethod.GET)
-	public String check() {
-		return "adminCheck";
+	public ModelAndView check() {
+		ModelAndView mv = new ModelAndView("admin/adminCheck");
+		return mv;
 	}
 	
 	@RequestMapping(value = "/check", method = RequestMethod.POST)
-	public String checkForm(@RequestParam String adminPassword, HttpSession session) {
+	public ModelAndView checkForm(@RequestParam String adminPassword, HttpSession session) {
+		ModelAndView mv = new ModelAndView();
 		if(adminPassword.equals(password)) {
 			session.setAttribute("sessionAdmin", adminPassword);
-			return "admin";
+			mv.setViewName("admin/admin");
+			return mv;
 		}
-		return "adminCheck";
+		mv.setViewName("admin/adminCheck");
+		return mv;
+	}
+	
+	@RequestMapping(value = "/manage/member", method = RequestMethod.GET)
+	public ModelAndView manageMember() {
+		ModelAndView mv = new ModelAndView("admin/memberManager");
+		return mv;
+	}
+	
+	@RequestMapping(value = "/manage/brand", method = RequestMethod.GET)
+	public ModelAndView manageBrand() {
+		ModelAndView mv = new ModelAndView("admin/brandManager");
+		return mv;
+	}
+	
+	@RequestMapping(value = "/manage/category", method = RequestMethod.GET)
+	public ModelAndView manageCategory() {
+		ModelAndView mv = new ModelAndView("admin/categoryManager");
+		return mv;
+	}
+	
+	@RequestMapping(value = "/manage/product", method = RequestMethod.GET)
+	public ModelAndView manageProduct() {
+		ModelAndView mv = new ModelAndView("admin/productManager");
+		return mv;
 	}
 }
