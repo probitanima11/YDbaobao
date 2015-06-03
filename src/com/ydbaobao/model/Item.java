@@ -2,6 +2,7 @@ package com.ydbaobao.model;
 
 public class Item {
 	private int itemId;
+	private Customer customer;
 	private Product product;
 	private Order order;
 	private String size;
@@ -10,10 +11,10 @@ public class Item {
 	public Item() {
 		
 	}
-	
-	public Item(int itemId, Product product, Order order, String size, int quantity) {
-		super();
+
+	public Item(int itemId, Customer customer, Product product, Order order, String size, int quantity) {
 		this.itemId = itemId;
+		this.customer = customer;
 		this.product = product;
 		this.order = order;
 		this.size = size;
@@ -22,6 +23,10 @@ public class Item {
 
 	public int getItemId() {
 		return itemId;
+	}
+
+	public Customer getCustomer() {
+		return customer;
 	}
 
 	public Product getProduct() {
@@ -44,6 +49,10 @@ public class Item {
 		this.itemId = itemId;
 	}
 
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
+
 	public void setProduct(Product product) {
 		this.product = product;
 	}
@@ -64,6 +73,7 @@ public class Item {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((customer == null) ? 0 : customer.hashCode());
 		result = prime * result + itemId;
 		result = prime * result + ((order == null) ? 0 : order.hashCode());
 		result = prime * result + ((product == null) ? 0 : product.hashCode());
@@ -81,6 +91,11 @@ public class Item {
 		if (getClass() != obj.getClass())
 			return false;
 		Item other = (Item) obj;
+		if (customer == null) {
+			if (other.customer != null)
+				return false;
+		} else if (!customer.equals(other.customer))
+			return false;
 		if (itemId != other.itemId)
 			return false;
 		if (order == null) {
@@ -105,7 +120,8 @@ public class Item {
 
 	@Override
 	public String toString() {
-		return "Item [itemId=" + itemId + ", product=" + product + ", order=" + order + ", size=" + size
-				+ ", quantity=" + quantity + "]";
+		return "Item [itemId=" + itemId + ", customer=" + customer + ", product=" + product + ", order=" + order
+				+ ", size=" + size + ", quantity=" + quantity + "]";
 	}
+	
 }
