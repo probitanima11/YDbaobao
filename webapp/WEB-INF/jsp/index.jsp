@@ -11,38 +11,16 @@
 </head>
 <body>
 	<div id='header' style='width: 100%;'>
+		<!-- 상단 navigator -->
 		<%@ include file="./commons/_topNav.jsp"%>
-		<div id='brand-search-container'
-			style='border-bottom: 2px solid #EA6576;'>
-			<div id='brand-search-bar' class='wrap content'>
-				<div id='search-bar-container' style='padding: 25px;'>
-					<input id='search-bar' type='text' style='' />
-					<button
-						style='background-color: #EA6576; border-radius: 2px; border: 0; font-size: 20px; color: white; padding: 11px 15px; margin: 0'>검색</button>
-				</div>
-			</div>
-		</div>
+		<!-- 브랜드/제품 검색바 -->
+		<%@ include file="./commons/_search.jsp" %>
+		
 		<div id='main-container'>
 			<div id='first-section' class='wrap content' style='height: 500px;'>
-				<div id='category-menu'
-					style='width: 20%; height: 100%; display: table; float: left;'>
-					<div id='category-menu-header'>카테고리</div>
-					<ul>
-						<li><a href='#'><span>상의일반</span></a></li>
-						<li><a href='#'><span>하의일반</span></a></li>
-						<li><a href='#'><span>티셔츠</span></a></li>
-						<li><a href='#'><span>아우터</span></a></li>
-						<li><a href='#'><span>반바지</span></a></li>
-						<li><a href='#'><span>멜빵바지</span></a></li>
-						<li><a href='#'><span>원피스</span></a></li>
-						<li><a href='#'><span>스커트</span></a></li>
-						<li><a href='#'><span>상하정장</span></a></li>
-						<li><a href='#'><span>양말/스타킹</span></a></li>
-						<li><a href='#'><span>속옷/수영복</span></a></li>
-						<li><a href='#'><span>액세서리</span></a></li>
-						<li><a href='#'><span>신발</span></a></li>
-					</ul>
-				</div>
+				<!-- 카테고리 메뉴 -->
+				<%@ include file="./commons/_category.jsp" %>
+				
 				<div id=''
 					style='width: 80%; height: 100%; outline: 1px solid #ccc; display: table; float: left;'>
 					아마도 신상품 페이지</div>
