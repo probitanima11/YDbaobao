@@ -42,4 +42,28 @@ public class AdminController {
 		mv.setViewName("admin/adminCheck");
 		return mv;
 	}
+	
+	@RequestMapping(value = "/manage/member", method = RequestMethod.GET)
+	public ModelAndView manageMember() {
+		ModelAndView mv = new ModelAndView("admin/memberManager");
+		return mv;
+	}
+	
+	@RequestMapping(value = "/manage/brand", method = RequestMethod.GET)
+	public ModelAndView manageBrand() {
+		ModelAndView mv = new ModelAndView("admin/brandManager");
+		return mv;
+	}
+	
+	@RequestMapping(value = "/manage/category", method = RequestMethod.GET)
+	public ModelAndView manageCategory() {
+		ModelAndView mv = new ModelAndView("admin/categoryManager");
+		return mv;
+	}
+	
+	@RequestMapping(value = "/manage/product", method = RequestMethod.GET)
+	public ModelAndView manageProduct() {
+		ModelAndView mv = new ModelAndView("admin/productManager");
+		return mv;
+	}
 }
