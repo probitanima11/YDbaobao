@@ -73,7 +73,7 @@ public class CustomerController {
 	}
 	
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public String login(Model model) {
+	public String loginView(Model model) {
 		model.addAttribute("customer", new Customer());
 		return "login";
 	}
