@@ -8,7 +8,7 @@
 			<c:choose>
 				<c:when test="${not empty sessionCustomer}">
 					<li><a href='/customer/logout'><span>로그아웃</span></a></li>
-					<li><a href='#'><span>개인정보수정</span></a></li>
+					<li><a href='/customer/update'><span>개인정보수정</span></a></li>
 					<li><a href='#'><span>장바구니</span></a></li>
 					<li><a href='#'><span>주문내역</span></a></li>
 					<li><a href='#'><span>문의</span></a></li>

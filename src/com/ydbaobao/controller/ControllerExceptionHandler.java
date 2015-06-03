@@ -9,11 +9,11 @@ import com.ydbaobao.model.Customer;
 
 @ControllerAdvice
 public class ControllerExceptionHandler {
-	// 메시지 전달을 위한 exception
+	// 메시지 전달을 위한 exception	
 	@ExceptionHandler(ExceptionForMessage.class)
 	public ModelAndView exceptionForMessage(ExceptionForMessage e) {
 		ModelAndView mav = new ModelAndView(e.getLocation());
-		mav.addObject("message", "존재하지 않는 이메일입니다.");
+		mav.addObject("message", e.getMessage());
 		mav.addObject("customer", new Customer());
 		return mav;
 	}
