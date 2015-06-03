@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ydbaobao.model.Category;
+import com.ydbaobao.service.BrandService;
 import com.ydbaobao.service.CategoryService;
 
 @Controller
@@ -26,6 +27,9 @@ public class AdminController {
 
 	@Resource
 	private CategoryService categoryService;
+	
+	@Resource
+	private BrandService brandService;
 	
 	/**
 	 * 관리자 페이지 접근을 위한 GET 요청을 응답.
@@ -118,6 +122,8 @@ public class AdminController {
 	@RequestMapping(value = "/add/product", method = RequestMethod.GET)
 	public ModelAndView addProduct() {
 		ModelAndView mv = new ModelAndView("admin/productRegistration");
+		List<Category> list = brandService.read();
+		mv.addObject("brands", list);
 		return mv;
 	}
 
