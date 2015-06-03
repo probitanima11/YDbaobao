@@ -1,0 +1,105 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" type="text/css" href="/css/main.css">
+<title>YDbaobao:: 상품페이지</title>
+<style>
+	#product-container {
+	}
+	
+	#product-info-container {
+		position:relative;
+		width:620px;
+		padding:25px 0;
+		margin-bottom:100px;
+		outline:1px solid #EA6576;
+	}
+
+	#product-photo {
+		position:relative;
+		width:500px;
+		height:500px;
+		margin:0 auto;
+		overflow:hidden;
+		outline:1px solid #ccc;
+	}
+	
+	#product-photo img {
+		width:100%;
+	}
+	
+	h1 {
+		margin:0;
+		padding:0;
+		font-size:35px;
+	}
+	
+	#product-buy-container .product-price {
+		font-size:30px;
+		margin-top:10px;
+		margin-left:15px;
+		font-weight:800;
+		color:#EA7565;
+	}
+	
+	.button-group {
+		padding:15px;
+	}
+	
+	.btn {
+		padding:15px;
+		border:0;
+		font-size:20px;
+		color:white;
+		border-radius:2px;
+		margin-right:10px;
+	}
+	
+	.btn.buyitnow {
+		background-color:#EA6576;
+	}
+	
+	#product-display {}
+	
+	#product-display img {
+		width:100%;
+	}
+	
+</style>
+</head>
+<body>
+	<div id='header' style='width: 100%;'>
+		<!-- 상단 navigator -->
+		<%@ include file="./commons/_topNav.jsp"%>
+		<!-- 브랜드/제품 검색바 -->
+		<%@ include file="./commons/_search.jsp"%>
+	</div>
+	<div id="product-container" class="content wrap" style="position:relative;">
+		<div id="product-info-container" style="">
+			<div id="product-photo">
+				<img src="http://www.stylenoriter.co.kr/web/product/medium/201505/4027_shop1_259692.jpg">
+			</div>
+			
+			<div id="product-display">
+				<img src="http://stylenoriter.co.kr/web/2015/15su200_01.jpg">
+				<img src="http://stylenoriter.co.kr/web/2015/15su200_02.jpg">
+				<img src="http://stylenoriter.co.kr/web/2015/15su200_04.jpg">
+			</div>
+		</div>
+		<div id="product-buy-container" style="position:absolute; top:0; left:100%; margin-left:-350px;  width:350px; outline:1px solid green;">
+			<h1 class="product-name" style="margin-top:25px; margin-left:15px;">퓨어레스 스커트</h1>
+			<div class="product-price">19,800</div>
+			<div class="button-group">
+				<button class="btn addtocart">장바구니</button>
+				<button class="btn buyitnow">바로주문</button>
+			</div>
+		</div>
+	</div>
+	<div id="footer">
+		footer...
+	</div>
+</body>
+</html>
