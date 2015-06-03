@@ -30,5 +30,23 @@ public class CategoryDaoTest {
 			logger.debug(category.toString());
 		}
 	}
+	
+	@Test
+	public void update() {
+		int result = categoryDao.update(1, "수정됨");
+		assertEquals(1, result);
+	}
+	
+	@Test
+	public void delete() {
+		int result = categoryDao.delete(20);
+		assertEquals(1, result);
+	}
+	
+	@Test
+	public void create() {
+		int result = categoryDao.create("새로운 카테고리");
+		assertEquals(1, result);
+	}
 
 }

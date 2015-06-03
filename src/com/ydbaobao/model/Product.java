@@ -1,6 +1,6 @@
 package com.ydbaobao.model;
 
-public class Products {
+public class Product {
 	
 	private int productId;
 	private String productName;
@@ -11,6 +11,27 @@ public class Products {
 	private String productDescription;
 	private long productCreateDate;
 	private long productUpdateDate;
+	
+	public Product() {
+		
+	}
+	
+	public Product(int productId) {
+		this(productId, null, null, null, 0, null, null, 0, 0);
+	}
+
+	public Product(int productId, String productName, Category category, Brand brand, int productPrice,
+			String productImage, String productDescription, long productCreateDate, long productUpdateDate) {
+		this.productId = productId;
+		this.productName = productName;
+		this.category = category;
+		this.brand = brand;
+		this.productPrice = productPrice;
+		this.productImage = productImage;
+		this.productDescription = productDescription;
+		this.productCreateDate = productCreateDate;
+		this.productUpdateDate = productUpdateDate;
+	}
 	
 	public int getProductId() {
 		return productId;
@@ -91,7 +112,7 @@ public class Products {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Products other = (Products) obj;
+		Product other = (Product) obj;
 		if (brand == null) {
 			if (other.brand != null)
 				return false;

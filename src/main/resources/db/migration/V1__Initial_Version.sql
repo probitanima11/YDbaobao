@@ -79,10 +79,13 @@ Create Table ORDERS(
 
 Create Table ITEMS(
  itemId int PRIMARY KEY AUTO_INCREMENT,
+ customerId varchar(50),
  productId int,
  orderId int,
  size varchar(50) NOT NULL,
  quantity int NOT NULL,
+ Foreign Key(customerId) REFERENCES CUSTOMERS(customerId) on delete cascade,
  Foreign Key(orderId) REFERENCES ORDERS(orderId) on delete cascade,
  Foreign Key(productId) REFERENCES PRODUCTS(productId) on delete cascade
 );
+
