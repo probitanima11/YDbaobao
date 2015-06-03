@@ -4,9 +4,12 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.springframework.stereotype.Service;
+
 import com.ydbaobao.dao.ItemDao;
 import com.ydbaobao.model.Item;
 
+@Service
 public class ItemService {
 
 	@Resource

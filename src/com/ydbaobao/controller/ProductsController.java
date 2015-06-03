@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ydbaobao.service.BrandService;
 import com.ydbaobao.service.CategoryService;
 import com.ydbaobao.service.ProductsService;
 
@@ -18,13 +19,15 @@ public class ProductsController {
 	
 	@Resource
 	private CategoryService categoryService;
-	
+	@Resource
+	private BrandService brandService;
 	@Resource
 	private ProductsService productsService;
 	
 	@RequestMapping(value="", method=RequestMethod.GET)
 	public String load(Model model, @RequestParam int categoryId) {
 		model.addAttribute("category", categoryService.readByCategoryId(categoryId));
+		model.addAttribute("brands", brandService.readBrands());
 		model.addAttribute("productList", productsService.readListByCategory(categoryId));
 		return "products";
 	}
