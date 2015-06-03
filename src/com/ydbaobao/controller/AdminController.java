@@ -1,5 +1,8 @@
 package com.ydbaobao.controller;
 
+import java.util.List;
+
+import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -8,10 +11,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ydbaobao.model.Category;
+import com.ydbaobao.service.CategoryService;
+
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
 	private static String password = "1111";
+	
+	@Resource
+	private CategoryService categoryService;
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView home(HttpSession session) {
@@ -58,6 +67,8 @@ public class AdminController {
 	@RequestMapping(value = "/manage/category", method = RequestMethod.GET)
 	public ModelAndView manageCategory() {
 		ModelAndView mv = new ModelAndView("admin/categoryManager");
+		List<Category> list = categoryService.read();
+		mv.addObject("categories", list);
 		return mv;
 	}
 	
