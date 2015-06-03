@@ -17,7 +17,7 @@ public class CustomerService {
 
 	public void join(Customer customer) throws ExceptionForMessage{
 		if(customerDao.findCustomerByCustomerId(customer.getCustomerId()) != null)
-			throw new ExceptionForMessage("이미 존재하는 아이디 입니다.");
+			throw new ExceptionForMessage("이미 존재하는 아이디 입니다.", "/form");
 		customerDao.createCustomer(customer);
 	}
 

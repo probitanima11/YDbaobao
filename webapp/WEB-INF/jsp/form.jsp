@@ -14,9 +14,6 @@
 		action="/customer/create">
 		<label for="customerId">아이디</label>
 		<form:input path="customerId" />
-		<c:if test="${not empty message}">
-			<label class="error">${message}</label>
-		</c:if>
 		<br />
 		<label for="customerName">이름</label>
 		<form:input path="customerName" />
@@ -36,6 +33,9 @@
 		<label for="customerAddress">주소</label>
 		<form:input path="customerAddress" />
 		<br />
+		<c:if test="${not empty message}">
+			<label class="error">${message}</label><br />
+		</c:if>
 		<button type="submit">가입</button>
 	</form:form>
 </body>

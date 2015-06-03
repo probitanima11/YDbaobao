@@ -28,9 +28,12 @@ public class CustomerController {
 	}
 	
 	@RequestMapping(value ="/create", method = RequestMethod.POST)
-	public String create(Customer customer, @RequestParam String customerAgainPassword) throws ExceptionForMessage{
-		if(!customer.getCustomerPassword().equals(customerAgainPassword))
-			return "index";
+	public String create(Customer customer, @RequestParam String customerAgainPassword, Model model) throws ExceptionForMessage{
+		if(!customer.getCustomerPassword().equals(customerAgainPassword)) {
+			model.addAttribute("customer", new Customer());
+			model.addAttribute("message", "아이디와 비밀번호가 일치하지 않습니다.");
+			return "form";
+		}
 		customerService.join(customer);
 		return "index";
 	}
