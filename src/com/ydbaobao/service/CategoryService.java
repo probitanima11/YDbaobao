@@ -18,9 +18,25 @@ public class CategoryService {
 		return categoryDao.read();
 	}
 
-	public Category create(Category category) {
-		int categoryKey = categoryDao.create(category);
-		return categoryDao.readByCategoryId(categoryKey);
+	public boolean update(long categoryId, String categoryName) {
+		if(categoryDao.update(categoryId, categoryName) == 1) {
+			return true;
+		}
+		return false;
+	}
+
+	public boolean delete(long categoryId) {
+		if(categoryDao.delete(categoryId) == 1) {
+			return true;
+		}
+		return false;
+	}
+
+	public boolean create(String categoryName) {
+		if(categoryDao.create(categoryName) == 1) {
+			return true;
+		}
+		return false;
 	}
 	
 	public Category readByCategoryId(int categoryId) {
