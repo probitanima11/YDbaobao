@@ -25,18 +25,7 @@
 		<%@ include file="./commons/_brand.jsp"%>
 	</div>
 	<div id='item-container' class='wrap content'>
-		<ul>
-			<c:forEach var="product" items="${productList}" varStatus="status">
-				<li class='item'><a href="/product?productId=${product.productId}">
-					<img src="${product.productImage}" />
-					<div class='item-info'>
-						<div class='item-desc'><c:out value="${product.productDescription}" /></div>
-						<div class='item-name'><c:out value="${product.productName}" /></div>
-						<div class='item-price'><c:out value="${product.productPrice}" /></div>
-					</div>
-				</a></li>
-			</c:forEach>
-		</ul>
+		<%@ include file="./commons/_productsBox.jsp" %>
 	</div>
 </body>
 </html>

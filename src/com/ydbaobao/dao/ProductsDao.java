@@ -24,6 +24,18 @@ public class ProductsDao extends JdbcDaoSupport {
 		setDataSource(dataSource);
 	}
 	
+	public List<Product> readByCount(int count) {
+		String sql ="select * from PRODUCTS ORDER BY productCreateDate ASC LIMIT ?";
+		return getJdbcTemplate().query(
+				sql, (rs, rowNum) -> new Product(
+						rs.getInt("productId"), rs.getString("productName"),
+						new Category(rs.getInt("categoryId"), null),
+						new Brand(rs.getInt("brandId"), null),
+						rs.getInt("productPrice"), rs.getString("productImage"),
+						rs.getString("productDescription"), rs.getLong("productCreateDate"),
+						rs.getLong("productUpdateDate")), count);
+	}
+	
 	public List<Product> readListByCategory(int categoryId) {
 		String sql = "select * from PRODUCTS where categoryId=?";
 		return getJdbcTemplate().query(

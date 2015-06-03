@@ -17,4 +17,8 @@ public class ProductsService {
 	public List<Product> readListByCategory(int categoryId) {
 		return productsDao.readListByCategory(categoryId);
 	}
+	
+	public List<Product> readByCount(int count) {
+		return productsDao.readByCount(count);
+	}
 }
