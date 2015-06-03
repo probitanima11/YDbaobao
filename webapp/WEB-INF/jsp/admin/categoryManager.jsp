@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -17,6 +18,15 @@
 					<th>카테고리명</th>
 					<th></th>
 				</tr>
+				<c:forEach var="category" items="${categories}">
+					<tr>
+						<td>${category.categoryName}</td>
+						<td>
+							<button>수정</button>
+							<button>삭제</button>
+						</td>
+					</tr>
+				</c:forEach>
 				<tr>
 					<td>
 						<button>추가</button>

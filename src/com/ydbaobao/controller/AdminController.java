@@ -68,6 +68,7 @@ public class AdminController {
 	public ModelAndView manageCategory() {
 		ModelAndView mv = new ModelAndView("admin/categoryManager");
 		List<Category> list = categoryService.read();
+		mv.addObject("categories", list);
 		return mv;
 	}
 	
