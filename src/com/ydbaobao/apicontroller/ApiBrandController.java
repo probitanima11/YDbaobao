@@ -30,28 +30,15 @@ public class ApiBrandController {
 		return JSONResponseUtil.getJSONResponse("", HttpStatus.OK);
 	}
 	
-//	@RequestMapping(value ="/create", method = RequestMethod.POST)
-//	public String create(@RequestParam String customerId, @RequestParam String customerName, @RequestParam String customerPassword, @RequestParam String customerAgainPassword, @RequestParam String customerPhone, @RequestParam String customerEmail, @RequestParam String customerAddress) {
-//		customerService.join(new Customer(customerId, customerName, customerPassword, customerPhone, customerEmail, customerAddress));
-//		return "index";
-//	}
-//	
-//	@RequestMapping(value = "/login", method = RequestMethod.GET)
-//	public String login(Model model) {
-//		model.addAttribute("customer", new Customer());
-//		return "login";
-//	}
-//	
-//	@RequestMapping(value = "/login", method = RequestMethod.POST)
-//	protected String login(@RequestParam String customerId, @RequestParam String customerPassword, HttpSession session) {
-//		SessionCustomer sessionCustomer = (customerService.login(customerId, customerPassword)).createSessionCustomer();
-//		session.setAttribute("sessionCustomer", sessionCustomer);
-//		return "index";
-//	}
-//	
-//	@RequestMapping("/logout")
-//	protected String logout(HttpSession session) {
-//		session.invalidate();
-//		return "redirect:/";
-//	}
+	@RequestMapping(value="/{brandId}", method=RequestMethod.PUT)
+	public ResponseEntity<Object> update(@RequestParam String brandId, @RequestParam String brandName) {
+		brandService.updateBrand(brandId, brandName);
+		return JSONResponseUtil.getJSONResponse("", HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/{brandId}", method=RequestMethod.DELETE)
+	public ResponseEntity<Object> delete(@RequestParam String brandId) {
+		brandService.deleteBrand(brandId);
+		return JSONResponseUtil.getJSONResponse("", HttpStatus.OK);
+	}
 }

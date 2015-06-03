@@ -43,4 +43,14 @@ public class BrandDao extends JdbcDaoSupport {
 			return null;
 		}
 	}
+
+	public void updateBrand(String brandId, String brandName) {
+		String sql = "update BRANDS set brandName = ? where brandId = ?";
+		getJdbcTemplate().update(sql, brandName, brandId);
+	}
+
+	public void deleteBrand(String brandId) {
+		String sql = "delete from BRANDS where brandId = ?";
+		getJdbcTemplate().update(sql, brandId);
+	}
 }

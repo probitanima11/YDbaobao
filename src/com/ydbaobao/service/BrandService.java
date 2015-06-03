@@ -21,8 +21,19 @@ public class BrandService {
 
 	public void createBrand(String brandName) {
 		if(brandDao.readBrandByBrandName(brandName) != null) {
-			// TODO 예외처리
+			// TODO 브랜드명 중복 예외처리
 		}
 		brandDao.createBrand(brandName);
+	}
+
+	public void updateBrand(String brandId, String brandName) {
+		if(brandDao.readBrandByBrandName(brandName) != null) {
+			// TODO 브랜드명 중복 예외처리
+		}
+		brandDao.updateBrand(brandId, brandName);
+	}
+
+	public void deleteBrand(String brandId) {
+		brandDao.deleteBrand(brandId);
 	}
 }
