@@ -6,8 +6,12 @@
 	<div id='brand-initial-tab'>
 		<label>브랜드 선택</label>
 		<ul>
-			<li class='active'><span>A</span></li>
-			<li><span>B</span></li>
+			<c:forEach var="firstLetter" items="${firstLetterList}">
+				<li class="first-letter"><span>${firstLetter}</span></a></li>
+			</c:forEach>
+
+			<!-- <li class='active'><span>A</span></li>
+			<li><a href="#"><span>B</span></a></li>
 			<li><span>C</span></li>
 			<li><span>D</span></li>
 			<li><span>E</span></li>
@@ -32,7 +36,14 @@
 			<li><span>X</span></li>
 			<li><span>Y</span></li>
 			<li><span>Z</span></li>
-			<li><span>#</span></li>
+			<li><span>#</span></li> -->
 		</ul>
 	</div>
+	<div id="brand-list">
+		<ul>
+			<c:forEach var="brand" items="${brands}">
+				<li><span>${brand.brandName}</span></li>
+			</c:forEach>
+		</ul>
+	</div>	
 </div>

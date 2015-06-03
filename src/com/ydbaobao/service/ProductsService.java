@@ -43,4 +43,8 @@ public class ProductsService {
 		Product product = new Product(brand.getBrandName(), brand, productImage);
 		productsDao.create(brand, product);
 	}
+	
+	public List<Product> readByCount(int count) {
+		return productsDao.readByCount(count);
+	}
 }

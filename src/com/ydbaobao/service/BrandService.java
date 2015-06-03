@@ -37,4 +37,8 @@ public class BrandService {
 	public void deleteBrand(String brandId) {
 		brandDao.deleteBrand(brandId);
 	}
+
+	public List<Brand> search(String firstLetter) {
+		return brandDao.search(firstLetter);
+	}
 }
