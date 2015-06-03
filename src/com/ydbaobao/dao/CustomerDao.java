@@ -45,4 +45,9 @@ public class CustomerDao extends JdbcDaoSupport {
 			return null;
 		}
 	}
+
+	public void updateCustomer(Customer customer) {
+		String sql = "update USERS set password = ?, name = ?, email = ? where userId = ?";
+//		getJdbcTemplate().update(sql, user.getPassword(), user.getName(), user.getEmail(), user.getUserId());		
+	}
 }

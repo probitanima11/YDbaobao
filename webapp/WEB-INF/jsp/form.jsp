@@ -9,11 +9,30 @@
 <title>YDbaobao</title>
 </head>
 <body>
-	<h1>회원가입</h1>
+
+	<c:set var="pageName" value="회원가입" />
+	<c:if test="${isUpdate}">
+		<c:set var="pageName" value="개인정보수정" />
+	</c:if>
+	<h1>${pageName}</h1>
+
+	<c:set var="actionUrl" value="/customer/create" />
+	<c:if test="${isUpdate}">
+		<c:set var="actionUrl" value="/customer/update" />
+	</c:if>
+
 	<form:form modelAttribute="customer" method="post"
-		action="/customer/create">
+		action="${actionUrl}">
+
 		<label for="customerId">아이디</label>
-		<form:input path="customerId" />
+		<c:choose>
+			<c:when test="${isUpdate}">
+				<form:input path="customerId" readonly="true" />
+			</c:when>
+			<c:otherwise>
+				<form:input path="customerId" />
+			</c:otherwise>
+		</c:choose>
 		<br />
 		<label for="customerName">이름</label>
 		<form:input path="customerName" />
@@ -34,9 +53,10 @@
 		<form:input path="customerAddress" />
 		<br />
 		<c:if test="${not empty message}">
-			<label class="error">${message}</label><br />
+			<label class="error">${message}</label>
+			<br />
 		</c:if>
-		<button type="submit">가입</button>
+		<button type="submit">확인</button>
 	</form:form>
 </body>
 </html>

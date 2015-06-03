@@ -13,7 +13,7 @@ public class ControllerExceptionHandler {
 	@ExceptionHandler(ExceptionForMessage.class)
 	public ModelAndView exceptionForMessage(ExceptionForMessage e) {
 		ModelAndView mav = new ModelAndView(e.getLocation());
-		mav.addObject("message", "존재하지 않는 이메일입니다.");
+		mav.addObject("message", e.getMessage());
 		mav.addObject("customer", new Customer());
 		return mav;
 	}

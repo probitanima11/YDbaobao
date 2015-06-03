@@ -10,15 +10,15 @@ public class ServletRequestUtil {
 	private ServletRequestUtil() {
 	}
 	
-	public static boolean existedUserIdFromSession(HttpSession session) throws IOException {
-		if (session.getAttribute("sessionUser") == null) {
+	public static boolean existedCustomerIdFromSession(HttpSession session) throws IOException {
+		if (session.getAttribute("sessionCustomer") == null) {
 			return Boolean.FALSE;
 		}
 		return Boolean.TRUE;
 	}
 	
-	public static String getUserIdFromSession(HttpSession session) throws IOException {
-		if(!existedUserIdFromSession(session)){
+	public static String getCustomerIdFromSession(HttpSession session) throws IOException {
+		if(!existedCustomerIdFromSession(session)){
 			return null;
 		}
 		return ((SessionCustomer)session.getAttribute("sessionCustomer")).getSessionId();
