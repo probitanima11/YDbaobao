@@ -35,9 +35,6 @@
 				</tr>
 			</table>
 		</div>
-		<div>
-			<button>취소</button>
-		</div>
 	</div>
 	<script>
 		window.addEventListener('load', function() {
