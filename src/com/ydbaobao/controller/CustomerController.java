@@ -56,7 +56,7 @@ public class CustomerController {
 		return "index";
 	}
 	
-	@RequestMapping(value ="/create", method = RequestMethod.POST)
+	@RequestMapping(value ="/update", method = RequestMethod.POST)
 	public String update(Customer customer, @RequestParam String customerAgainPassword, Model model) throws ExceptionForMessage{
 		//TODO VALIDATION CHECK
 //	public String create(@Valid Customer customer, BindingResult result, @RequestParam String customerAgainPassword, Model model) throws ExceptionForMessage{
