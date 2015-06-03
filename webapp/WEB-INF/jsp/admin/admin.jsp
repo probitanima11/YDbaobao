@@ -11,7 +11,7 @@
 </style>
 <body>
 <div id="container">
-	<%@ include file="./commons/_adminNav.jsp" %>
+	<%@ include file="./_adminNav.jsp" %>
 	<div id="content"><h1>관리자페이지</h1></div>
 </div>
 </body>
