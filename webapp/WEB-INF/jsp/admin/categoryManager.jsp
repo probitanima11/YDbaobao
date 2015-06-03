@@ -13,7 +13,7 @@
 		<%@ include file="./_adminNav.jsp" %>
 		<div id="content">
 			<h1>카테고리 관리</h1>
-			<table style="width: 800px;">
+			<table id="categories" style="width: 800px;">
 				<tr>
 					<th>카테고리명</th>
 					<th></th>
@@ -28,6 +28,7 @@
 					</tr>
 				</c:forEach>
 				<tr>
+					<td><input type="text"></td>	
 					<td>
 						<button>추가</button>
 					</td>
@@ -39,15 +40,5 @@
 			<button>취소</button>
 		</div>
 	</div>
-	
-	<script type="template">
-		<tr>
-			<td></td>
-			<td>
-				<button>수정</button>
-				<button>삭제</button>
-			</td>
-		</tr>
-	</script>
 </body>
 </html>
