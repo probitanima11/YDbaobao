@@ -1,6 +1,6 @@
 package com.ydbaobao.model;
 
-public class Products {
+public class Product {
 	
 	private int productId;
 	private String productName;
@@ -91,7 +91,7 @@ public class Products {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Products other = (Products) obj;
+		Product other = (Product) obj;
 		if (brand == null) {
 			if (other.brand != null)
 				return false;
