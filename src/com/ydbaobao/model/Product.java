@@ -12,6 +12,27 @@ public class Product {
 	private long productCreateDate;
 	private long productUpdateDate;
 	
+	public Product() {
+		
+	}
+	
+	public Product(int productId) {
+		this(productId, null, null, null, 0, null, null, 0, 0);
+	}
+
+	public Product(int productId, String productName, Category category, Brand brand, int productPrice,
+			String productImage, String productDescription, long productCreateDate, long productUpdateDate) {
+		this.productId = productId;
+		this.productName = productName;
+		this.category = category;
+		this.brand = brand;
+		this.productPrice = productPrice;
+		this.productImage = productImage;
+		this.productDescription = productDescription;
+		this.productCreateDate = productCreateDate;
+		this.productUpdateDate = productUpdateDate;
+	}
+	
 	public int getProductId() {
 		return productId;
 	}

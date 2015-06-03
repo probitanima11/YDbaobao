@@ -12,6 +12,10 @@ public class Order {
 		
 	}
 	
+	public Order(int orderId) {
+		this(orderId, null, null, 0, 0, null);
+	}
+
 	public Order(int orderId, String orderStatus, Customer customer, int enuri, int realPrice, String orderAddress) {
 		super();
 		this.orderId = orderId;

@@ -5,8 +5,10 @@
 	style='width: 20%; height: 100%; display: table; float: left;'>
 	<div id='category-menu-header'>카테고리</div>
 	<ul>
-		<c:forEach var="category" items="${categoryList}" varStatus="status">
-			<li><a href="/products?categoryId=${category.categoryId}"><span><c:out value="${category.categoryName}"/></span></a></li>
+		<c:forEach var="category" items="${categories}" varStatus="status">
+			<li><a href="/products?categoryId=${category.categoryId}">
+				<span><c:out value="${category.categoryName}"/></span>
+			</a></li>
 		</c:forEach>
 	</ul>
 </div>
