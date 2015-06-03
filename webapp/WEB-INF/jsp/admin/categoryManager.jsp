@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -12,47 +13,22 @@
 		<%@ include file="./_adminNav.jsp" %>
 		<div id="content">
 			<h1>카테고리 관리</h1>
-			<table style="width: 800px;">
+			<table id="categories" style="width: 800px;">
 				<tr>
 					<th>카테고리명</th>
 					<th></th>
 				</tr>
+				<c:forEach var="category" items="${categories}">
+					<tr>
+						<td>${category.categoryName}</td>
+						<td>
+							<button>수정</button>
+							<button>삭제</button>
+						</td>
+					</tr>
+				</c:forEach>
 				<tr>
-					<td>상의 일반</td>
-					<td>
-						<button>수정</button>
-						<button>삭제</button>
-					</td>
-				</tr>
-				<tr>
-					<td>하의 일반</td>
-					<td>
-						<button>수정</button>
-						<button>삭제</button>
-					</td>
-				</tr>
-				<tr>
-					<td>티셔츠</td>
-					<td>
-						<button>수정</button>
-						<button>삭제</button>
-					</td>
-				</tr>
-				<tr>
-					<td>아우터</td>
-					<td>
-						<button>수정</button>
-						<button>삭제</button>
-					</td>
-				</tr>
-				<tr>
-					<td>반바지</td>
-					<td>
-						<button>수정</button>
-						<button>삭제</button>
-					</td>
-				</tr>
-				<tr>
+					<td><input type="text"></td>	
 					<td>
 						<button>추가</button>
 					</td>
