@@ -2,9 +2,9 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.tsingtao</groupId>
+	<groupId>com.ydbaobao</groupId>
 	<artifactId>ydbaobao</artifactId>
-	<name>TSINGTAO</name>
+	<name>YDBAOBAO</name>
 	<packaging>war</packaging>
 	<version>1.0.0-BUILD-SNAPSHOT</version>
 	<properties>
@@ -148,7 +148,7 @@
 		</dependency>
 	</dependencies>
 	<build>
-		<finalName>TSINGTAO</finalName>
+		<finalName>YDBAOBAO</finalName>
 		<sourceDirectory>src</sourceDirectory>
 		<testSourceDirectory>test</testSourceDirectory>
 		<outputDirectory>webapp/WEB-INF/classes</outputDirectory>
@@ -159,9 +159,9 @@
 				<artifactId>flyway-maven-plugin</artifactId>
 				<version>3.2.1</version>
 				<configuration>
-					<url>jdbc:mysql://localhost:3306/TSINGTAO</url>
-					<user>link413</user>
-					<password>link413</password>
+					<url>jdbc:mysql://localhost:3306/YDBAOBAO</url>
+					<user>ydbaobao</user>
+					<password>ydbaobao</password>
 				</configuration>
 			</plugin>
 			<plugin>

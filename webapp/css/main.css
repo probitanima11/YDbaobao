@@ -81,4 +81,95 @@ ul#util li a span{
 	transition-duration:.3s;
 }
 
+#brand-initial-tab {
+	background-color:#EA6576;
+	color:#fff;
+}
+
+#brand-initial-tab label {
+	display:inline-block;
+	padding:15px;
+}
+
+#brand-initial-tab ul {
+	list-style:none;
+	display:inline-block;
+	padding:0;
+	margin:0;
+	font-weight:100;
+}
+
+#brand-initial-tab ul li {
+	display:inline-block;
+	margin:0;
+	padding:1px;
+}
+
+#brand-initial-tab ul li span{
+	display:block;
+	width:25px;
+	height:25px;
+	text-align:center;
+	line-height:25px;
+	cursor:pointer;
+}
+
+#brand-initial-tab ul li.active span{
+	background-color:#BB4F5D;
+}
+
+
+
+#item-container {
+	margin-top:25px; min-height:600px;
+	padding-bottom:80px;
+}
+
+#item-container ul {
+	list-style:none;
+	padding:0;
+	margin:0;
+}
+
+.item {
+	width:230px;
+	margin-left:9px;
+	margin-top:9px;
+	outline:1px solid #ccc;
+	display:inline-block;
+	cursor:pointer;
+}
+
+.item:hover {
+	outline:1px solid #EA6576;
+}
+
+.item img {
+	width:230px;
+}
+
+.item .item-info {
+	padding:10px;
+	background-color:#454545;
+	color:#fff;
+}
+
+.item .item-info .item-desc {
+	font-size:12px;
+}
+
+.item .item-info .item-price {
+	color:#EA6576;
+	font-weight:500;
+	font-size:20px;
+}
+
+#footer {
+	position:relative;s
+	min-height:200px;
+	padding:20px;
+	background-color:#888;
+	color:#fff;
+}
+
 
