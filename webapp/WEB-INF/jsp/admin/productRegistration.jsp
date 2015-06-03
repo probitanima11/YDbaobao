@@ -17,18 +17,18 @@
 			<h1>상품 등록</h1>
 		</div>
 		<div id="imageFiles">
-			<form method="post" action="products/imageUpload">
-<%-- 				<label class="control-label" >브랜드 선택</label>
-				<form:select path="#">
-					<c:forEach items="${brands}" var="brand">
-						<form:option value="${brand.brandId}" label="${brand.brandName} ( ${brand.brandId})" />
+			<form:form class="imageUploadForm" method="post" action="/products/imageUpload" modelAttribute="product" enctype="multipart/form-data">
+				<label class="control-label" >브랜드 선택 :</label>
+				<form:select path="brand.brandId">
+					<c:forEach items="${brandList}" var="brand">
+						<form:option value="${brand.brandId}" label="${brand.brandName}" />
 					</c:forEach>
-				</form:select> --%>
-				<span>이미지 선택 :</span> <input class="imageFile" type="file"
-					name="image" accept="image/x-png, image/gif, image/jpeg" multiple>
-				<input type="submit" value="저장">
-			</form>
-
+				</form:select>
+				<br/>
+				<label class="control-label" >이미지 선택 :</label>
+				<input class="imageFile" type="file" name="imageFile" accept="image/x-png, image/gif, image/jpeg" multiple />
+				<input type="submit" value="저장" />
+			</form:form>
 			<div class="imageList"></div>
 		</div>
 	</div>

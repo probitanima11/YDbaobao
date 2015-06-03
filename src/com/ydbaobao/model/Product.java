@@ -19,6 +19,13 @@ public class Product {
 	public Product(int productId) {
 		this(productId, null, null, null, 0, null, null, 0, 0);
 	}
+	
+	public Product(String productName, Brand brand, String productImage){
+		super();
+		this.productName = productName;
+		this.brand=brand;
+		this.productImage = productImage;
+	}
 
 	public Product(int productId, String productName, Category category, Brand brand, int productPrice,
 			String productImage, String productDescription, long productCreateDate, long productUpdateDate) {
