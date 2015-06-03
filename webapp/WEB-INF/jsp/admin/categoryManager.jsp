@@ -20,7 +20,7 @@
 				</tr>
 				<c:forEach var="category" items="${categories}">
 					<tr id="${category.categoryId}">
-						<td><input type="text" value="${category.categoryName}" data-id="${category.categoryId}" /></td>
+						<td><input type="text" value="${category.categoryName}" data-id="${category.categoryId}"></td>
 						<td>
 							<button class="update-category-btn">수정</button>
 							<button class="delete-category-btn">삭제</button>
@@ -74,20 +74,28 @@
 				method:'put',
 				url:'/admin/manage/category/' + categoryId + '/' + categoryName,
 				success: function(req) {
-					console.log(req.responseText);
+					if(req.responseText === 'success') {
+						alert('카테고리가 수정되었습니다')
+					}
 				}
 			});
 		}
 
 		function deleteCategory(e) {
 			var categoryId = e.target.parentElement.parentElement.id;
-			ydbaobao.ajax({
-				method:'delete',
-				url:'/admin/manage/category/' + categoryId,
-				success: function(req) {
-					console.log(req.responseText);
-				}
-			});
+			if(confirm('정말 카테고리를 삭제하시겠습니까?') === true) {
+				ydbaobao.ajax({
+					method:'delete',
+					url:'/admin/manage/category/' + categoryId,
+					success: function(req) {
+						if(req.responseText === 'success') {
+							alert('카테고리가 삭제되었습니다');
+							document.getElementById(categoryId).remove();
+						}
+					}
+				});
+				e.target.removeEventListener('click', deleteCategory, false);
+			}
 		}
 
 		function createCategory() {
@@ -98,7 +106,10 @@
 				url:'/admin/manage/category',
 				param: 'categoryName=' + categoryName,
 				success: function(req) {
-					console.log(req.responseText);
+					if(req.responseText === 'success') {
+						alert('카테고리가 추가되었습니다');
+						location.reload();
+					}
 				}
 			});
 		}
