@@ -8,7 +8,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ydbaobao.exception.ExceptionForMessage;
 import com.ydbaobao.model.Customer;
@@ -29,6 +28,11 @@ public class CustomerController {
 	
 	@RequestMapping(value ="/create", method = RequestMethod.POST)
 	public String create(Customer customer, @RequestParam String customerAgainPassword, Model model) throws ExceptionForMessage{
+		//TODO VALIDATION CHECK
+//	public String create(@Valid Customer customer, BindingResult result, @RequestParam String customerAgainPassword, Model model) throws ExceptionForMessage{
+//		if(result.hasErrors()) {
+//			throw new JoinValidationException(extractValidationMessages(result));
+//        }
 		if(!customer.getCustomerPassword().equals(customerAgainPassword)) {
 			model.addAttribute("customer", new Customer());
 			model.addAttribute("message", "아이디와 비밀번호가 일치하지 않습니다.");
