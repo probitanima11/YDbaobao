@@ -94,6 +94,15 @@ public class AdminController {
 		}
 		return "fail";
 	}
+	
+	@RequestMapping(value = "/manage/category", method = RequestMethod.POST)
+	public @ResponseBody String createCategory(@RequestParam String categoryName) {
+		logger.debug("Create CategoryName : {}", categoryName);
+		if(categoryService.create(categoryName)) {
+			return "success";
+		}
+		return "fail";
+	}
 
 	@RequestMapping(value = "/manage/product", method = RequestMethod.GET)
 	public ModelAndView manageProduct() {

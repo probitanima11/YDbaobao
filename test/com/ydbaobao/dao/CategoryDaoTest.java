@@ -42,5 +42,11 @@ public class CategoryDaoTest {
 		int result = categoryDao.delete(20);
 		assertEquals(1, result);
 	}
+	
+	@Test
+	public void create() {
+		int result = categoryDao.create("새로운 카테고리");
+		assertEquals(1, result);
+	}
 
 }

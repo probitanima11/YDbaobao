@@ -91,7 +91,16 @@
 		}
 
 		function createCategory() {
-			console.log(document.querySelector('#new-category'));
+			console.log(document.querySelector('#new-category').value);
+			var categoryName = document.querySelector('#new-category').value;
+			ydbaobao.ajax({
+				method:'post',
+				url:'/admin/manage/category',
+				param: 'categoryName=' + categoryName,
+				success: function(req) {
+					console.log(req.responseText);
+				}
+			});
 		}
 	</script>
 	<script src="/js/ydbaobao.js"></script>

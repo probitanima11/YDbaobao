@@ -32,9 +32,11 @@ public class CategoryService {
 		return false;
 	}
 
-	public Category create(Category category) {
-		int categoryKey = categoryDao.create(category);
-		return categoryDao.readByCategoryId(categoryKey);
+	public boolean create(String categoryName) {
+		if(categoryDao.create(categoryName) == 1) {
+			return true;
+		}
+		return false;
 	}
 	
 	public Category readByCategoryId(int categoryId) {
