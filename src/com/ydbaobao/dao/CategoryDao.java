@@ -32,4 +32,9 @@ public class CategoryDao extends JdbcDaoSupport {
 		String sql = "update CATEGORY set categoryName = ? where categoryId = ?";
 		return getJdbcTemplate().update(sql, categoryName, categoryId);
 	}
+
+	public int delete(long categoryId) {
+		String sql = "delete from CATEGORY where categoryId = ?";
+		return getJdbcTemplate().update(sql, categoryId);
+	}
 }

@@ -79,8 +79,17 @@ public class AdminController {
 
 	@RequestMapping(value = "/manage/category/{categoryId}/{categoryName}", method = RequestMethod.PUT)
 	public @ResponseBody String updateCategory(@PathVariable long categoryId, @PathVariable String categoryName) {
-		logger.debug("Id : {}, Name : {}", categoryId, categoryName);
+		logger.debug("Update CategoryId : {}, CategoryName : {}", categoryId, categoryName);
 		if(categoryService.update(categoryId, categoryName)) {
+			return "success";
+		}
+		return "fail";
+	}
+	
+	@RequestMapping(value = "/manage/category/{categoryId}", method = RequestMethod.DELETE)
+	public @ResponseBody String deleteCategory(@PathVariable long categoryId) {
+		logger.debug("Delete CategoryId : {}", categoryId);
+		if(categoryService.delete(categoryId)) {
 			return "success";
 		}
 		return "fail";

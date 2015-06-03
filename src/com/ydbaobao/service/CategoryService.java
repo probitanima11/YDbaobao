@@ -24,4 +24,11 @@ public class CategoryService {
 		}
 		return false;
 	}
+
+	public boolean delete(long categoryId) {
+		if(categoryDao.delete(categoryId) == 1) {
+			return true;
+		}
+		return false;
+	}
 }

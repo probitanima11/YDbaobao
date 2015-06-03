@@ -36,5 +36,11 @@ public class CategoryDaoTest {
 		int result = categoryDao.update(1, "수정됨");
 		assertEquals(1, result);
 	}
+	
+	@Test
+	public void delete() {
+		int result = categoryDao.delete(20);
+		assertEquals(1, result);
+	}
 
 }

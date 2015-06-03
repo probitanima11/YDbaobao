@@ -72,7 +72,6 @@
 		function updateCategory(e) {
 			var categoryId = e.target.parentElement.parentElement.id;
 			var categoryName = document.querySelector('input[data-id="' + categoryId + '"]').value;
-			console.log(categoryName);
 			ydbaobao.ajax({
 				method:"put",
 				url:"/admin/manage/category/" + categoryId + "/" + categoryName,
@@ -83,7 +82,14 @@
 		}
 
 		function deleteCategory(e) {
-			console.log(e.target.parentElement.parentElement.id);
+			var categoryId = e.target.parentElement.parentElement.id;
+			ydbaobao.ajax({
+				method:'delete',
+				url:'/admin/manage/category/' + categoryId,
+				success: function(req) {
+					console.log(req.responseText);
+				}
+			});
 		}
 
 		function createCategory(e) {
