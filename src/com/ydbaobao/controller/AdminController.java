@@ -77,4 +77,10 @@ public class AdminController {
 		ModelAndView mv = new ModelAndView("admin/productManager");
 		return mv;
 	}
+	
+	@RequestMapping(value = "/add/product", method = RequestMethod.GET)
+	public ModelAndView addProduct() {
+		ModelAndView mv = new ModelAndView("admin/productRegistration");
+		return mv;
+	}
 }
