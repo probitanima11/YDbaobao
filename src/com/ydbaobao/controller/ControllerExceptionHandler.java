@@ -9,7 +9,7 @@ import com.ydbaobao.model.Customer;
 
 @ControllerAdvice
 public class ControllerExceptionHandler {
-	// 메시지 전달을 위한 exception
+	// 메시지 전달을 위한 exception	
 	@ExceptionHandler(ExceptionForMessage.class)
 	public ModelAndView exceptionForMessage(ExceptionForMessage e) {
 		ModelAndView mav = new ModelAndView(e.getLocation());
