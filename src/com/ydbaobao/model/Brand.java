@@ -1,18 +1,19 @@
 package com.ydbaobao.model;
 
 public class Brand {
-	private long brandId;
+	private int brandId;
 	private String brandName;
 	
 	public Brand() {
 	}
 
-	public Brand(long brandId, String brandName) {
+	public Brand(int brandId, String brandName) {
+		super();
 		this.brandId = brandId;
 		this.brandName = brandName;
 	}
 
-	public long getBrandId() {
+	public int getBrandId() {
 		return brandId;
 	}
 
@@ -20,7 +21,7 @@ public class Brand {
 		return brandName;
 	}
 
-	public void setBrandId(long brandId) {
+	public void setBrandId(int brandId) {
 		this.brandId = brandId;
 	}
 
@@ -32,7 +33,7 @@ public class Brand {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + (int) (brandId ^ (brandId >>> 32));
+		result = prime * result + brandId;
 		result = prime * result
 				+ ((brandName == null) ? 0 : brandName.hashCode());
 		return result;

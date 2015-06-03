@@ -6,7 +6,9 @@
 	<div id='category-menu-header'>카테고리</div>
 	<ul>
 		<c:forEach var="category" items="${categories}" varStatus="status">
-			<li><a href="/products?categoryId=${category.categoryId}"><span><c:out value="${category.categoryName}"/></span></a></li>
+			<li><a href="/products?categoryId=${category.categoryId}">
+				<span><c:out value="${category.categoryName}"/></span>
+			</a></li>
 		</c:forEach>
 	</ul>
 </div>
