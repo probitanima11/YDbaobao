@@ -2,15 +2,17 @@ package com.ydbaobao.service;
 
 import javax.annotation.Resource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.ydbaobao.dao.CustomerDao;
 import com.ydbaobao.exception.ExceptionForMessage;
-import com.ydbaobao.exception.FailedLoginException;
 import com.ydbaobao.model.Customer;
 
 @Service
 public class CustomerService {
+	private static final Logger logger = LoggerFactory.getLogger(CustomerService.class);
 
 	@Resource
 	private CustomerDao customerDao;
@@ -21,10 +23,14 @@ public class CustomerService {
 		customerDao.createCustomer(customer);
 	}
 
-	public Customer login(String customerId, String customerPassword) {
+	public Customer login(String customerId, String customerPassword) throws ExceptionForMessage{
 		Customer customer = customerDao.findCustomerByCustomerId(customerId);
-		if (customer == null || !customer.isCorrectPassword(customerPassword)) {
-			throw new FailedLoginException();
+		
+		if (customer == null) {
+			throw new ExceptionForMessage("존재하지 않는 아이디 입니다.", "/login");
+		}
+		if(!customer.isCorrectPassword(customerPassword)){
+			throw new ExceptionForMessage("비밀번호가 일치하지 않습니다.", "/login");
 		}
 		return customer;
 	}

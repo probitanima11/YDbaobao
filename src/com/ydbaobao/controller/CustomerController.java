@@ -45,7 +45,7 @@ public class CustomerController {
 	}
 	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	protected String login(@RequestParam String customerId, @RequestParam String customerPassword, HttpSession session) {
+	protected String login(@RequestParam String customerId, @RequestParam String customerPassword, HttpSession session, Model model) throws ExceptionForMessage {
 		SessionCustomer sessionCustomer = (customerService.login(customerId, customerPassword)).createSessionCustomer();
 		session.setAttribute("sessionCustomer", sessionCustomer);
 		return "index";
