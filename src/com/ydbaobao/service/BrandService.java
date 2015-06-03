@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.ydbaobao.dao.BrandDao;
 import com.ydbaobao.model.Brand;
+import com.ydbaobao.model.Category;
 
 @Service
 public class BrandService {
@@ -19,10 +20,25 @@ public class BrandService {
 		return brandDao.readBrands();
 	}
 
-	public void createBrand(String brandName) {
+	public int createBrand(String brandName) {
 		if(brandDao.readBrandByBrandName(brandName) != null) {
-			// TODO 예외처리
+			// TODO 브랜드명 중복 예외처리
 		}
-		brandDao.createBrand(brandName);
+		return brandDao.createBrand(brandName);
+	}
+
+	public void updateBrand(String brandId, String brandName) {
+		if(brandDao.readBrandByBrandName(brandName) != null) {
+			// TODO 브랜드명 중복 예외처리
+		}
+		brandDao.updateBrand(brandId, brandName);
+	}
+
+	public void deleteBrand(String brandId) {
+		brandDao.deleteBrand(brandId);
+	}
+
+	public List<Brand> read() {
+		return brandDao.read();
 	}
 }

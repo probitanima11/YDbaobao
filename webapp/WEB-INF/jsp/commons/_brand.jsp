@@ -35,4 +35,11 @@
 			<li><span>#</span></li>
 		</ul>
 	</div>
+	<div id="brand-list">
+		<ul>
+			<c:forEach var="brand" items="${brands}">
+				<li><span>${brand.brandName}</span></li>
+			</c:forEach>
+		</ul>
+	</div>	
 </div>
