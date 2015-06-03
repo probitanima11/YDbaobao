@@ -6,6 +6,7 @@ import javax.sql.DataSource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.stereotype.Repository;
 
@@ -29,5 +30,20 @@ public class CustomerDao extends JdbcDaoSupport {
 		getJdbcTemplate().update(sql, customer.getCustomerId(), customer.getCustomerName(), customer.getCustomerPassword(), customer.getCustomerPhone(), customer.getCustomerEmail(), customer.getCustomerAddress());
 	}
 	
-	
+	public Customer findCustomerByCustomerId(String customerId) {
+		String sql = "select * from CUSTOMERS where customerId=?";
+		try {
+			return getJdbcTemplate().queryForObject(sql, (rs, rowNum) -> new Customer(
+					rs.getString("customerId"), 
+					rs.getString("customerName"), 
+					rs.getString("customerPassword"),
+					rs.getString("gradeId"),
+					rs.getString("customerPhone"),
+					rs.getString("customerEmail"),
+					rs.getString("customerAddress")
+					), customerId);
+		} catch (EmptyResultDataAccessException e) {
+			return null;
+		}
+	}
 }
