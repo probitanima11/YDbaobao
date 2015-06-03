@@ -28,7 +28,7 @@
 					</tr>
 				</c:forEach>
 				<tr>
-					<td><input type="text"></td>	
+					<td><input id="new-category" type="text"></td>	
 					<td>
 						<button class="create-category-btn">추가</button>
 					</td>
@@ -64,17 +64,15 @@
 				}), false;
 			}
 
-			createBtn.addEventListener('click', function(e) {
-				createCategory(e);
-			}, false);
+			createBtn.addEventListener('click', createCategory, false);
 		}
 
 		function updateCategory(e) {
 			var categoryId = e.target.parentElement.parentElement.id;
 			var categoryName = document.querySelector('input[data-id="' + categoryId + '"]').value;
 			ydbaobao.ajax({
-				method:"put",
-				url:"/admin/manage/category/" + categoryId + "/" + categoryName,
+				method:'put',
+				url:'/admin/manage/category/' + categoryId + '/' + categoryName,
 				success: function(req) {
 					console.log(req.responseText);
 				}
@@ -92,8 +90,8 @@
 			});
 		}
 
-		function createCategory(e) {
-			console.log(e.target.parentElement.parentElement.id);
+		function createCategory() {
+			console.log(document.querySelector('#new-category'));
 		}
 	</script>
 	<script src="/js/ydbaobao.js"></script>
