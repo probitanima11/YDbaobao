@@ -18,41 +18,6 @@
 					<th></th>
 				</tr>
 				<tr>
-					<td>상의 일반</td>
-					<td>
-						<button>수정</button>
-						<button>삭제</button>
-					</td>
-				</tr>
-				<tr>
-					<td>하의 일반</td>
-					<td>
-						<button>수정</button>
-						<button>삭제</button>
-					</td>
-				</tr>
-				<tr>
-					<td>티셔츠</td>
-					<td>
-						<button>수정</button>
-						<button>삭제</button>
-					</td>
-				</tr>
-				<tr>
-					<td>아우터</td>
-					<td>
-						<button>수정</button>
-						<button>삭제</button>
-					</td>
-				</tr>
-				<tr>
-					<td>반바지</td>
-					<td>
-						<button>수정</button>
-						<button>삭제</button>
-					</td>
-				</tr>
-				<tr>
 					<td>
 						<button>추가</button>
 					</td>
@@ -64,5 +29,15 @@
 			<button>취소</button>
 		</div>
 	</div>
+	
+	<script type="template">
+		<tr>
+			<td></td>
+			<td>
+				<button>수정</button>
+				<button>삭제</button>
+			</td>
+		</tr>
+	</script>
 </body>
 </html>
