@@ -5,7 +5,6 @@ import javax.annotation.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,13 +13,13 @@ import com.ydbaobao.service.BrandService;
 import com.ydbaobao.util.JSONResponseUtil;
 
 @Controller
-@RequestMapping("/api/admin/manage/brand")
+@RequestMapping("/api/admin/brandManager")
 public class ApiBrandController {
 	@Resource
 	private BrandService brandService;
 	
 	@RequestMapping()
-	public ResponseEntity<Object> show(Model model) {
+	public ResponseEntity<Object> show() {
 		return JSONResponseUtil.getJSONResponse(brandService.readBrands(), HttpStatus.OK);
 	}
 	

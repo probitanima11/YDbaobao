@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ydbaobao.model.Category;
+import com.ydbaobao.service.BrandService;
 import com.ydbaobao.service.CategoryService;
 
 @Controller
@@ -21,6 +22,8 @@ public class AdminController {
 	
 	@Resource
 	private CategoryService categoryService;
+	@Resource
+	private BrandService brandService;
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView home(HttpSession session) {
@@ -61,6 +64,7 @@ public class AdminController {
 	@RequestMapping(value = "/manage/brand", method = RequestMethod.GET)
 	public ModelAndView manageBrand() {
 		ModelAndView mv = new ModelAndView("admin/brandManager");
+		mv.addObject("brands", brandService.readBrands());
 		return mv;
 	}
 	
