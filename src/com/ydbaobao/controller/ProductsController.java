@@ -28,7 +28,7 @@ public class ProductsController {
 	public String load(Model model, @RequestParam int categoryId) {
 		model.addAttribute("category", categoryService.readByCategoryId(categoryId));
 		model.addAttribute("brands", brandService.readBrands());
-		model.addAttribute("productList", productsService.readListByCategory(categoryId));
+		model.addAttribute("productList", productsService.readListByCategoryId(categoryId));
 		return "products";
 	}
 	

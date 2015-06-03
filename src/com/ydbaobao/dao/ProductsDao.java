@@ -24,7 +24,7 @@ public class ProductsDao extends JdbcDaoSupport {
 		setDataSource(dataSource);
 	}
 	
-	public List<Product> readByCount(int count) {
+	public List<Product> readAsQuantity(int count) {
 		String sql ="select * from PRODUCTS ORDER BY productCreateDate ASC LIMIT ?";
 		return getJdbcTemplate().query(
 				sql, (rs, rowNum) -> new Product(
@@ -36,7 +36,7 @@ public class ProductsDao extends JdbcDaoSupport {
 						rs.getLong("productUpdateDate")), count);
 	}
 	
-	public List<Product> readListByCategory(int categoryId) {
+	public List<Product> readListByCategoryId(int categoryId) {
 		String sql = "select * from PRODUCTS where categoryId=?";
 		return getJdbcTemplate().query(
 				sql, (rs, rowNum) -> new Product(

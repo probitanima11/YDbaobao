@@ -14,11 +14,11 @@ public class ProductsService {
 	@Resource
 	private ProductsDao productsDao;
 	
-	public List<Product> readListByCategory(int categoryId) {
-		return productsDao.readListByCategory(categoryId);
+	public List<Product> readListByCategoryId(int categoryId) {
+		return productsDao.readListByCategoryId(categoryId);
 	}
 	
-	public List<Product> readByCount(int count) {
-		return productsDao.readByCount(count);
+	public List<Product> readAsQuantity(int count) {
+		return productsDao.readAsQuantity(count);
 	}
 }
