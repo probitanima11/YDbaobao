@@ -105,6 +105,7 @@ insert into STOCKS (productId, size, quantity, productUpdateDate) values("2", "M
 insert into STOCKS (productId, size, quantity, productUpdateDate) values("2", "XL", 30, default);
 
 insert into ORDERS (orderStatus, customerId, enuri, realPrice, orderAddress, orderCreateDate, orderUpdateDate) values("입금완료", "test", 1000, 100000, "경기도 분당 삼평동", default, default);
-
 insert into ORDERS (orderStatus, customerId, enuri, realPrice, orderAddress, orderCreateDate, orderUpdateDate) values("입금대기", "test", 500, 30000, "경기도 분당 서현동", default, default);
 
+insert into ITEMS (productId, orderId, size, quantity) values(1, 1, "S", 5);
+insert into ITEMS (productId, orderId, size, quantity) values(1, null, "S", 5);

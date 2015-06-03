@@ -9,7 +9,7 @@ import javax.sql.DataSource;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.stereotype.Repository;
 
-import com.ydbaobao.model.Products;
+import com.ydbaobao.model.Product;
 
 @Repository
 public class ProductsDao extends JdbcDaoSupport {
@@ -32,7 +32,7 @@ public class ProductsDao extends JdbcDaoSupport {
 //		return pc;
 //	}
 	
-	public List<Products> readListByCategory(String categoryId) {
+	public List<Product> readListByCategory(String categoryId) {
 		
 		return null;
 	}
