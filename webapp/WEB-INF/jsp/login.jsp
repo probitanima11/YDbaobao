@@ -9,14 +9,14 @@
 <title>YDbaobao</title>
 </head>
 <body>
-	<div id='header' style='width: 100%;'>
+	<div id="header" style="width: 100%;">
 		<!-- 상단 navigator -->
 		<%@ include file="./commons/_topNav.jsp"%>
 		<!-- 브랜드/제품 검색바 -->
 		<%@ include file="./commons/_search.jsp"%>
 	</div>
-	<div id='main-container'>
-		<div id='first-section' class='wrap content' style='height: 500px;'>
+	<div id="main-container">
+		<div id="first-section" class="wrap content" style="height: 500px;">
 			<!-- 카테고리 메뉴 -->
 			<%@ include file="./commons/_category.jsp"%>
 
