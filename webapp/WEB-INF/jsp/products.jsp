@@ -10,7 +10,7 @@
 <title>카테고리 별 상품 보기</title>
 </head>
 <body>
-	<div id='header' style='width: 100%;'>
+	<div id="header" style="width: 100%;">
 		<!-- 상단 navigator -->
 		<%@ include file="./commons/_topNav.jsp"%>
 		<!-- 브랜드/제품 검색바 -->
@@ -20,11 +20,11 @@
 		<div id="categoryBar" class="wrap content" style="height: 40px;">카테고리
 			메뉴 바</div>
 	</div>
-	<div id='main-container' class="wrap content">
+	<div id="main-container" class="wrap content">
 		<div style="font-size: 50px;">${category.categoryName}</div>
 		<%@ include file="./commons/_brand.jsp"%>
 	</div>
-	<div id='item-container' class='wrap content'>
+	<div id="item-container" class="wrap content">
 		<%@ include file="./commons/_productsBox.jsp" %>
 	</div>
 </body>

@@ -8,7 +8,7 @@
 <title>YDbaobao:: 장바구니</title>
 </head>
 <body>
-	<div id='header' style='width: 100%;'>
+	<div id="header" style="width: 100%;">
 		<!-- 상단 navigator -->
 		<%@ include file="./commons/_topNav.jsp"%>
 		<!-- 브랜드/제품 검색바 -->
@@ -17,7 +17,7 @@
 
 	<div>
 		<div>
-			<ul id='cart-list'>
+			<ul id="cart-list">
 			</ul>
 		</div>
 	</div>
@@ -49,7 +49,7 @@
 		        name: "li",
 		        attrs: {
 		            /* 'class': "brands-item", */
-		            'value': item.itemId
+		            'id': "itemId"+item.itemId
 		        },
 		    });
 			ul.appendChild(el);
@@ -62,8 +62,15 @@
 		  	
 		    el.appendChild(elDiv);
 		  	el.querySelector(".delete").addEventListener('click', function(e) {
-		  		e.target.parentElement.parentElement.parentElement.value;
-		  		debugger;
+		  		var itemId = e.target.parentElement.parentElement.parentElement.id;
+		  		itemId = itemId.substr(6);
+				ydbaobao.ajax({
+					method:'post',
+					url:'/item/delete/'+itemId,
+					success: function(req) {
+						document.getElementById("itemId"+itemId).remove();
+					}
+				});
 		  		
 		  		/* var target = document.querySelector("#cart-list")
 	        	var el = e.target.parentElement.parentElement;
