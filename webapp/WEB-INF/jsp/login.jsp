@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -9,14 +9,14 @@
 <title>YDbaobao</title>
 </head>
 <body>
-	<div id='header' style='width: 100%;'>
+	<div id="header" style="width: 100%;">
 		<!-- 상단 navigator -->
 		<%@ include file="./commons/_topNav.jsp"%>
 		<!-- 브랜드/제품 검색바 -->
 		<%@ include file="./commons/_search.jsp"%>
 	</div>
-	<div id='main-container'>
-		<div id='first-section' class='wrap content' style='height: 500px;'>
+	<div id="main-container">
+		<div id="first-section" class="wrap content" style="height: 500px;">
 			<!-- 카테고리 메뉴 -->
 			<%@ include file="./commons/_category.jsp"%>
 

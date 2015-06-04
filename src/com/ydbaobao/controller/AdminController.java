@@ -79,6 +79,11 @@ public class AdminController {
 		return mv;
 	}
 
+	/**
+	 * 관리자 페이지에서 카테고리 목록을 불러옴
+	 * @author jyb
+	 * @return WEB-INF/jsp/admin 폴더의 파일을 불러오기 위해 ModelAndView 타입 사용
+	 */
 	@RequestMapping(value = "/manage/category", method = RequestMethod.GET)
 	public ModelAndView manageCategory() {
 		ModelAndView mv = new ModelAndView("admin/categoryManager");
@@ -87,6 +92,12 @@ public class AdminController {
 		return mv;
 	}
 
+	/**
+	 * 관리자 페이지에서 카테고리 이름 변경 기능
+	 * @author jyb
+	 * @param DB에 저장된 categoryId와 변경할 categoryName
+	 * @return 성공/실패 여부만 전달하기 위해 success, fail string 전달
+	 */
 	@RequestMapping(value = "/manage/category/{categoryId}/{categoryName}", method = RequestMethod.PUT)
 	public @ResponseBody String updateCategory(@PathVariable long categoryId, @PathVariable String categoryName) {
 		logger.debug("Update CategoryId : {}, CategoryName : {}", categoryId, categoryName);
@@ -96,6 +107,12 @@ public class AdminController {
 		return "fail";
 	}
 	
+	/**
+	 * 관리자 페이지에서 카테고리 삭제 기능
+	 * @author jyb
+	 * @param DB에 저장된 categoryId
+	 * @return 성공/실패 여부만 전달하기 위해 success, fail string 전달
+	 */
 	@RequestMapping(value = "/manage/category/{categoryId}", method = RequestMethod.DELETE)
 	public @ResponseBody String deleteCategory(@PathVariable long categoryId) {
 		logger.debug("Delete CategoryId : {}", categoryId);
@@ -105,6 +122,11 @@ public class AdminController {
 		return "fail";
 	}
 	
+	/**
+	 * 관리자 페이지에서 카테고리 추가 기능
+	 * @author jyb
+	 * @return 성공/실패 여부만 전달하기 위해 success, fail string 전달
+	 */
 	@RequestMapping(value = "/manage/category", method = RequestMethod.POST)
 	public @ResponseBody String createCategory(@RequestParam String categoryName) {
 		logger.debug("Create CategoryName : {}", categoryName);

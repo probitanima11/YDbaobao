@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -73,7 +73,7 @@ h1 {
 </style>
 </head>
 <body>
-	<div id='header' style='width: 100%;'>
+	<div id="header" style="width: 100%;">
 		<!-- 상단 navigator -->
 		<%@ include file="./commons/_topNav.jsp"%>
 		<!-- 브랜드/제품 검색바 -->
@@ -81,7 +81,7 @@ h1 {
 	</div>
 	<div id="product-container" class="content wrap"
 		style="position: relative;">
-		<div id="product-info-container" style="">
+		<div id="product-info-container">
 			<div id="product-photo">
 				<img
 					src="http://www.stylenoriter.co.kr/web/product/medium/201505/4027_shop1_259692.jpg">
@@ -108,13 +108,13 @@ h1 {
 
 	<script>
 		window.addEventListener('load', function() {
-			document.querySelector(".addtocart").addEventListener('click', function(e) {
+			document.querySelector('.addtocart').addEventListener('click', function(e) {
 				addToCart(e);
 			}, false);
 		}, false);
 
 		function addToCart(e) {
-			var param = "productId=1" + "&size=S" + "&quantity=1";
+			var param = 'productId=1' + '&size=S' + '&quantity=1';
 			ydbaobao.ajax({
 				/* TODO productId, size, quantity 전달. */
 				method : 'post',

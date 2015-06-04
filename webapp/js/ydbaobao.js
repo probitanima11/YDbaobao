@@ -16,8 +16,8 @@ ydbaobao.ajax = function(o) {
 	};
 	if (o.async === undefined) o.async = true;
 	req.open(o.method, o.url, o.async);
-	if (o.method.toLowerCase() == "post" || o.method.toLowerCase() == "put" || o.method.toLowerCase() == "delete") {
-		req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	if (o.method.toLowerCase() == 'post' || o.method.toLowerCase() == 'put' || o.method.toLowerCase() == 'delete') {
+		req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 	}
 	req.send(o.param);
 };
@@ -35,4 +35,17 @@ ydbaobao.createElement = function(o) {
 		el.innerHTML = o.content;
 	}
 	return el;
+};
+
+Element.prototype.remove = function() {
+	if (this.parentElement !== null)
+		this.parentElement.removeChild(this);
+};
+
+Element.prototype.show = function() {
+	this.style.display = "block";
+};
+
+Element.prototype.hide = function() {
+	this.style.display = "none";
 };

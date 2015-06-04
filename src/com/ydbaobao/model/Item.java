@@ -11,6 +11,10 @@ public class Item {
 	public Item() {
 		
 	}
+	
+	public Item(int itemId) {
+		this(itemId, null, null, null, null, 0);
+	}
 
 	public Item(int itemId, Customer customer, Product product, Order order, String size, int quantity) {
 		this.itemId = itemId;
