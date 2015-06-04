@@ -21,6 +21,10 @@ html,body {
   margin-right: 10px;
 }
 
+.selectedIndex {
+	color: red;
+}
+
 .contentsNav {
   display: table;
   margin: 0 auto;

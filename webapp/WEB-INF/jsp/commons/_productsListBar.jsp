@@ -5,7 +5,16 @@
 	<ul>
 		<c:forEach var="digit" items="${range}" varStatus="status">
 			<li><a href="?index=${digit+1}">
-				<span><c:out value="${digit+1}"/></span>
+			<c:choose>
+				<c:when test="${(digit eq selectedIndex) || ((digit eq 0) && (empty selectedIndex))}">
+        			<span class="selectedIndex">
+    			</c:when>
+    			<c:otherwise>
+					<span>
+			    </c:otherwise>
+			</c:choose>
+					<c:out value="${digit+1}"/>
+				</span>
 			</a></li>
 		</c:forEach>
 	</ul>

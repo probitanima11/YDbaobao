@@ -39,6 +39,7 @@ public class HomeController {
 		int index = 0;
 		if (null != req.getParameter("index")) {
 			index = Integer.parseInt(req.getParameter("index"));
+			model.addAttribute("selectedIndex", index-1);
 			index = (index-1)*16;
 		}
 		
