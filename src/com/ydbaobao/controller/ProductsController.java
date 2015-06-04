@@ -41,7 +41,7 @@ public class ProductsController {
 	
 	@RequestMapping(value="/imageUpload", method=RequestMethod.POST)
 	public ModelAndView imageUpload(HttpSession session, Product product, @RequestParam("imageFile") MultipartFile... imageFile) {
-		String savingPath = session.getServletContext().getRealPath("/") + "/img/products/unclassified/";
+		String savingPath = session.getServletContext().getRealPath("/") + "/img/products/";
 		for(MultipartFile file:imageFile){
 			productsService.uplodeImage(product,savingPath, file);
 			productsService.create(product.getBrand().getBrandId(), file.getOriginalFilename());
