@@ -33,7 +33,7 @@ public class ProductsDao extends JdbcDaoSupport {
 				product.getProductImage());
 	}
 	
-	public List<Product> readRange(int start, int range) {
+	public List<Product> readRange(int start, int quantity) {
 		String sql ="select * from PRODUCTS ORDER BY productCreateDate ASC LIMIT ?, ?";
 		return getJdbcTemplate().query(
 				sql, (rs, rowNum) -> new Product(
@@ -42,11 +42,23 @@ public class ProductsDao extends JdbcDaoSupport {
 						new Brand(rs.getInt("brandId"), null),
 						rs.getInt("productPrice"), rs.getString("productImage"),
 						rs.getString("productDescription"), rs.getLong("productCreateDate"),
-						rs.getLong("productUpdateDate")), start, range);
+						rs.getLong("productUpdateDate")), start, quantity);
 	}
 
+	public List<Product> readListByCategoryId(int categoryId, int index, int quantity) {
+		String sql = "select * from PRODUCTS where categoryId=? limit ?, ?";
+		return getJdbcTemplate().query(
+				sql, (rs, rowNum) -> new Product(
+						rs.getInt("productId"), rs.getString("productName"),
+						new Category(rs.getInt("categoryId"), null),
+						new Brand(rs.getInt("brandId"), null),
+						rs.getInt("productPrice"), rs.getString("productImage"),
+						rs.getString("productDescription"), rs.getLong("productCreateDate"),
+						rs.getLong("productUpdateDate")), categoryId, index, quantity);
+	}
+	
 	public List<Product> readListByCategoryId(int categoryId) {
-		String sql = "select * from PRODUCTS where categoryId=?";
+		String sql = "select * from PRODUCTS where categoryId=? limit ?, ?";
 		return getJdbcTemplate().query(
 				sql, (rs, rowNum) -> new Product(
 						rs.getInt("productId"), rs.getString("productName"),
