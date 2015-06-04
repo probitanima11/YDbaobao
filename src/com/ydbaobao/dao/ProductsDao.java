@@ -66,6 +66,24 @@ public class ProductsDao extends JdbcDaoSupport {
 		String sql = "select count(1) from PRODUCTS where categoryId=?";
 		return getJdbcTemplate().queryForObject(sql, Integer.class, categoryId);
 	}
+
+	/**
+	 * brand 이름 클릭시 brandId로 상품 검색
+	 * @author jyb
+	 * @param 검색에 사용될 브랜드Id
+	 * @return DB에 저장된 Product 결과를 List<Product>로 반환
+	 */
+	public List<Product> readListByBrandId(int brandId) {
+		String sql = "select * from PRODUCTS where brandId = ?";
+		return getJdbcTemplate().query(
+				sql, (rs, rowNum) -> new Product(
+						rs.getInt("productId"), rs.getString("productName"),
+						new Category(rs.getInt("categoryId"), null),
+						new Brand(rs.getInt("brandId"), null),
+						rs.getInt("productPrice"), rs.getString("productImage"),
+						rs.getString("productDescription"), rs.getLong("productCreateDate"),
+						rs.getLong("productUpdateDate")), brandId);
+	}
 	
 	public boolean isExistImageName(String imageName) {
 		String sql = "select count(1) from PRODUCTS where productImage = ?";

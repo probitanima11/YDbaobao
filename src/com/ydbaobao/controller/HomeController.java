@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.context.request.WebRequest;
 
 import com.ydbaobao.service.BrandService;
 import com.ydbaobao.service.CategoryService;
@@ -29,16 +30,23 @@ public class HomeController {
 	private ProductsService productsService;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Model model) {
+	public String home(Model model, WebRequest req) {
 		List<Character> firstLetterList = new ArrayList<Character>();
 		for(char ch = 'A'; ch <= 'Z'; ch++) {
 			firstLetterList.add(ch);	
 		}
 		
+		int index = 0;
+		if (null != req.getParameter("index")) {
+			index = Integer.parseInt(req.getParameter("index"));
+			model.addAttribute("selectedIndex", index-1);
+			index = (index-1)*16;
+		}
+		
 		model.addAttribute("categories", categorySevice.read());
 		model.addAttribute("firstLetterList", firstLetterList);
 		model.addAttribute("brands", brandService.readBrands());
-		model.addAttribute("productList", productsService.readRange(0, 16));
+		model.addAttribute("productList", productsService.readRange(index, 16));
 		int productsCount = productsService.count();
 		int range = productsCount/16;
 		if (productsCount%16 > 0) {

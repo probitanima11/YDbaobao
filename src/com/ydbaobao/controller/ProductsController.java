@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -35,10 +36,15 @@ public class ProductsController {
 	private ProductsService productsService;
 	
 	@RequestMapping(value="", method=RequestMethod.GET)
-	public String load(Model model, @RequestParam int categoryId) {
+	public String load(Model model, WebRequest req, @RequestParam int categoryId) {
 		List<Character> firstLetterList = new ArrayList<Character>();
 		for(char ch = 'A'; ch <= 'Z'; ch++) {
 			firstLetterList.add(ch);	
+		}
+		int index = 0;
+		if (null != req.getParameter("index")) {
+			index = Integer.parseInt(req.getParameter("index"));
+			index = (index-1)*16;
 		}
 		model.addAttribute("category", categoryService.readByCategoryId(categoryId));
 		model.addAttribute("categories", categoryService.read());

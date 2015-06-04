@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,7 +22,15 @@
 		<%@ include file="./commons/_horizontalCategory.jsp"%>
 	</div>
 	<div id="main-container" class="wrap content">
-		<div style="font-size: 50px;">${category.categoryName}</div>
+		<c:choose>
+			<c:when test="${not empty brand}">
+				<div style="font-size: 50px;">${brand.brandName}</div>
+			</c:when>
+
+			<c:otherwise>
+				<div style="font-size: 50px;">${category.categoryName}</div>
+			</c:otherwise>
+		</c:choose>
 		<%@ include file="./commons/_brand.jsp"%>
 	</div>
 	<div id="item-container" class="wrap content">
@@ -64,7 +73,7 @@
 			// 검색된 브랜드 리스트 출력
 			for(var i = 0, length = brands.length; i < length; i++) {
 				var li = document.createElement('li');
-				li.innerHTML += '<span>' + brands[i].brandName + '</span>';
+				li.innerHTML += '<a href="/brand/products/' + brands[i].brandId + '"><span>' + brands[i].brandName + '</span></a>';
 				ul.appendChild(li);
 			}
 		}

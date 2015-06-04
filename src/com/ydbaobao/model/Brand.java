@@ -62,4 +62,11 @@ public class Brand {
 	public String toString() {
 		return "Brand [brandId=" + brandId + ", brandName=" + brandName + "]";
 	}
+
+	public Brand getBrandByBrandId(int brandId) {
+		if(this.brandId == brandId) {
+			return this;
+		}
+		return null;
+	}
 }
