@@ -27,7 +27,7 @@
 				<br/>
 				<label class="control-label" >이미지 선택 :</label>
 				<input class="imageFile" type="file" name="imageFile" accept="image/x-png, image/gif, image/jpeg" multiple />
-				<input type="submit" value="저장" />
+				<input type="submit" class='submitBtn' value="저장" disabled='true'/>
 			</form:form>
 			<div class="imageList"></div>
 		</div>
@@ -37,12 +37,13 @@
 		var imageFile = document.body.querySelector('.imageFile');
 		imageFile.addEventListener('change', function(e) {
 			appendImageList();
+			disableSubmitBtn();
 		}, false);
 
 		function appendImageList() {
 			refreshImageList();
 			var el = undefined;
-			var selectedFileList = document.body.querySelector(".imageFile").files;
+			var selectedFileList = document.body.querySelector('.imageFile').files;
 			for (var i = 0; i < selectedFileList.length; i++) {
 				el = document.createElement("li");
 				el.setAttribute("class", "file-list");
@@ -55,6 +56,16 @@
 		function refreshImageList() {
 			document.body.querySelector('.imageList').innerHTML = "";
 		}
+		
+		function disableSubmitBtn(){
+			if(document.body.querySelector('.imageFile').files.length > 0){
+				document.body.querySelector('.submitBtn').disabled=false;
+			}
+			if(document.body.querySelector('.imageFile').files.length === 0){
+				document.body.querySelector('.submitBtn').disabled=true;
+			}
+		}
+		
 	</script>
 </body>
 </html>
