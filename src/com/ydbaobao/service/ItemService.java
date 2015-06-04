@@ -22,4 +22,12 @@ public class ItemService {
 		
 		return null;
 	}
+
+	public void deleteCartList(String customerId, int itemId) {
+		if(!itemDao.readItemByItemId(itemId).getCustomer().getCustomerId().equals(customerId)){
+			//TODO 아이템 고객아이디와 삭제하려는 고객아이디가 다를경우 예외처리.
+			
+		}
+		itemDao.deleteCartList(itemId);
+	}
 }

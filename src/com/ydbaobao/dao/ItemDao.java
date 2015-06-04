@@ -26,12 +26,12 @@ public class ItemDao extends JdbcDaoSupport {
 	}
 
 	public List<Item> readCartList(String customerId) {
-		String sql = "select * from ITEMS where customerId=? and orderId is NULL";
+		String sql = "select * from ITEMS A, PRODUCTS B where A.customerId=? and A.orderId is NULL AND A.productId = B.productId";
 		try {
 			return getJdbcTemplate().query(sql, (rs, rowNum) -> new Item(
 					rs.getInt("itemId"),
 					new Customer(rs.getString("customerId")),
-					new Product(rs.getInt("productId")),
+					new Product(rs.getInt("productId"),rs.getString("productName"), rs.getInt("productPrice")),
 					new Order(rs.getInt("orderId")),
 					rs.getString("size"),
 					rs.getInt("quantity")
@@ -41,7 +41,7 @@ public class ItemDao extends JdbcDaoSupport {
 		}
 	}
 	
-	public void deleteCartList(String itemId) {
+	public void deleteCartList(int itemId) {
 		String sql = "delete from ITEMS where itemId = ?";
 		getJdbcTemplate().update(sql, itemId);
 	}
@@ -49,5 +49,14 @@ public class ItemDao extends JdbcDaoSupport {
 	public void addCart(String customerId, String productId, String size, int quantity) {
 		String sql = "insert into ITEMS (customerId, productId, size, quantity) values(?, ?, ?, ?)";
 		getJdbcTemplate().update(sql, customerId, productId, size, quantity);
+	}
+
+	public Item readItemByItemId(int itemId) {
+		String sql = "select * from ITEMS where itemId=?";
+		return getJdbcTemplate().queryForObject(sql, (rs, rowNum) -> new Item(
+				rs.getInt("itemId"), new Customer(rs.getString("customerId")),
+				new Product(),
+				new Order(),
+				rs.getString("size"), rs.getInt("quantity")), itemId);
 	}
 }

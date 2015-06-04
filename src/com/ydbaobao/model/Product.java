@@ -16,8 +16,8 @@ public class Product {
 		
 	}
 	
-	public Product(int productId) {
-		this(productId, null, null, null, 0, null, null, 0, 0);
+	public Product(int productId, String productName, int productPrice) {
+		this(productId, productName, null, null, productPrice, null, null, 0, 0);
 	}
 	
 	public Product(String productName, Category category, Brand brand, String productImage){
