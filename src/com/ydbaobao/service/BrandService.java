@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import com.ydbaobao.dao.BrandDao;
 import com.ydbaobao.model.Brand;
-import com.ydbaobao.model.Category;
 
 @Service
 public class BrandService {
@@ -36,10 +35,6 @@ public class BrandService {
 
 	public void deleteBrand(String brandId) {
 		brandDao.deleteBrand(brandId);
-	}
-
-	public List<Brand> read() {
-		return brandDao.read();
 	}
 
 	public List<Brand> search(String firstLetter) {

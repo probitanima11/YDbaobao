@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.ydbaobao.model.Brand;
 import com.ydbaobao.model.Category;
+import com.ydbaobao.model.Product;
 import com.ydbaobao.service.BrandService;
 import com.ydbaobao.service.CategoryService;
 
@@ -124,8 +124,8 @@ public class AdminController {
 	@RequestMapping(value = "/add/product", method = RequestMethod.GET)
 	public ModelAndView addProduct() {
 		ModelAndView mv = new ModelAndView("admin/productRegistration");
-		List<Brand> list = brandService.read();
-		mv.addObject("brands", list);
+		mv.addObject("brandList", brandService.readBrands());
+		mv.addObject("product", new Product());
 		return mv;
 	}
 

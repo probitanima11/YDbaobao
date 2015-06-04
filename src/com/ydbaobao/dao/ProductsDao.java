@@ -35,7 +35,7 @@ public class ProductsDao extends JdbcDaoSupport {
 						rs.getString("productDescription"), rs.getLong("productCreateDate"),
 						rs.getLong("productUpdateDate")), count);
 	}
-	
+
 	public List<Product> readListByCategoryId(int categoryId) {
 		String sql = "select * from PRODUCTS where categoryId=?";
 		return getJdbcTemplate().query(
@@ -46,5 +46,14 @@ public class ProductsDao extends JdbcDaoSupport {
 						rs.getInt("productPrice"), rs.getString("productImage"),
 						rs.getString("productDescription"), rs.getLong("productCreateDate"),
 						rs.getLong("productUpdateDate")), categoryId);
+	}
+
+	public void create(Product product) {
+		String sql = "insert into PRODUCTS values(default, ?, ?, ?, default, ?, default, default, default)";
+		getJdbcTemplate().update(sql, 
+				product.getProductName(), 
+				product.getCategory().getCategoryId(),
+				product.getBrand().getBrandId(),
+				product.getProductImage());
 	}
 }

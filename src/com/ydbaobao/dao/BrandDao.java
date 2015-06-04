@@ -69,11 +69,15 @@ public class BrandDao extends JdbcDaoSupport {
 		getJdbcTemplate().update(sql, brandId);
 	}
 	
-	public List<Brand> read() {
-		String sql = "select * from BRANDS";
-		return getJdbcTemplate().query(sql, (rs, rowNum) -> new Brand(
-				rs.getInt("brandId"),
-				rs.getString("brandName")));
+	public Brand readBrandByBrandId(int brandId) {
+		String sql = "select * from BRANDS where brandId=?";
+		try {
+			return getJdbcTemplate().queryForObject(sql, (rs, rowNum) -> new Brand(
+					rs.getInt("brandId"), 
+					rs.getString("brandName")), brandId);
+		} catch (EmptyResultDataAccessException e) {
+			return null;
+		}
 	}
 
 	public List<Brand> search(String firstLetter) {
