@@ -35,22 +35,27 @@ public class HomeController {
 		for(char ch = 'A'; ch <= 'Z'; ch++) {
 			firstLetterList.add(ch);	
 		}
-		
 		int index = 0;
+		int selectedIndex = 0;
 		if (null != req.getParameter("index")) {
 			index = Integer.parseInt(req.getParameter("index"));
-			model.addAttribute("selectedIndex", index-1);
+			selectedIndex = index-1;
 			index = (index-1)*16;
 		}
 		
+		model.addAttribute("selectedIndex", selectedIndex);
 		model.addAttribute("categories", categorySevice.read());
 		model.addAttribute("firstLetterList", firstLetterList);
 		model.addAttribute("brands", brandService.readBrands());
 		model.addAttribute("productList", productsService.readRange(index, 16));
+		
 		int productsCount = productsService.count();
 		int range = productsCount/16;
 		if (productsCount%16 > 0) {
 			range++;
+		}
+		if (range > 10) {
+			int temp = range/index;
 		}
 		model.addAttribute("range", IntStream.range(0, range).toArray());
 		return "index";

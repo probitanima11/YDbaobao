@@ -6,7 +6,7 @@
 		<c:forEach var="digit" items="${range}" varStatus="status">
 			<li><a href="?index=${digit+1}">
 			<c:choose>
-				<c:when test="${(digit eq selectedIndex) || ((digit eq 0) && (empty selectedIndex))}">
+				<c:when test="${digit eq selectedIndex}">
         			<span class="selectedIndex">
     			</c:when>
     			<c:otherwise>

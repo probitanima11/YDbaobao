@@ -57,6 +57,7 @@ public class ProductsController {
 		if (productsCount%16 > 0) {
 			range++;
 		}
+		
 		model.addAttribute("range", IntStream.range(0, range).toArray());
 		return "products";
 	}
