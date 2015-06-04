@@ -12,7 +12,7 @@ html,body {
 	width:980px;
 }
 
-.contentsNav li {
+.contents-nav li {
   list-style: none;
   display: table;
   text-align: center;
@@ -25,12 +25,12 @@ html,body {
 	color: red;
 }
 
-.contentsNav {
+.contents-nav {
   display: table;
   margin: 0 auto;
 }
 
-.contentsNav > ul {
+.contents-nav > ul {
   float: left;
   display: inline-flex;
 }
