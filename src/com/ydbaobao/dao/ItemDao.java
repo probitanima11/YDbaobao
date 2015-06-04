@@ -26,12 +26,12 @@ public class ItemDao extends JdbcDaoSupport {
 	}
 
 	public List<Item> readCartList(String customerId) {
-		String sql = "select * from ITEMS where customerId=? and orderId is NULL";
+		String sql = "select * from ITEMS A, PRODUCTS B where A.customerId=? and A.orderId is NULL AND A.productId = B.productId";
 		try {
 			return getJdbcTemplate().query(sql, (rs, rowNum) -> new Item(
 					rs.getInt("itemId"),
 					new Customer(rs.getString("customerId")),
-					new Product(rs.getInt("productId")),
+					new Product(rs.getInt("productId"),rs.getString("productName"), rs.getInt("productPrice")),
 					new Order(rs.getInt("orderId")),
 					rs.getString("size"),
 					rs.getInt("quantity")
