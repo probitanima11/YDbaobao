@@ -16,8 +16,8 @@ ydbaobao.ajax = function(o) {
 	};
 	if (o.async === undefined) o.async = true;
 	req.open(o.method, o.url, o.async);
-	if (o.method.toLowerCase() == "post" || o.method.toLowerCase() == "put" || o.method.toLowerCase() == "delete") {
-		req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	if (o.method.toLowerCase() == 'post' || o.method.toLowerCase() == 'put' || o.method.toLowerCase() == 'delete') {
+		req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 	}
 	req.send(o.param);
 };

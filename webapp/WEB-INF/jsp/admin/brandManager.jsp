@@ -34,43 +34,43 @@
 	</div>
 	<script>
 		// 브랜드 리스트에서 브랜드 선택 시 해당 정보 띄우기 위한 이벤트
-		document.querySelector("#brands-list").addEventListener("click", function(e) {
-			if(e.target.className === "brands-item")
+		document.querySelector('#brands-list').addEventListener('click', function(e) {
+			if(e.target.className === 'brands-item')
 				console.log(e.target.value);
 		}, false);
 		
 		// 브랜드 추가 이벤트 
-		document.querySelector("#brand-add").addEventListener("click", function(e) {
-			var brandName = document.querySelector("#new-brand").value
+		document.querySelector('#brand-add').addEventListener('click', function(e) {
+			var brandName = document.querySelector('#new-brand').value
 			ydbaobao.ajax({
 				method:'post',
 				param:'brandName='+brandName,
 				url:'/api/admin/brandManager',
 				success: function(req) {
 					var optionEl = ydbaobao.createElement({
-				        name: "option",
+				        name: 'option',
 				        attrs: {
-				            'class': "brands-item",
+				            'class': 'brands-item',
 				            'value': req.responseText
 				        }
 				    });
 					optionEl.innerHTML = brandName;
-					document.querySelector("#brands-list").add(optionEl)
+					document.querySelector('#brands-list').add(optionEl)
 				}
 			});
 		}, false);
 		// 브랜드 삭제 이벤트 
-		document.querySelector("#brand-delete").addEventListener("click", function(e) {
-			var selectEl = document.querySelector("#brands-list");
+		document.querySelector('#brand-delete').addEventListener('click', function(e) {
+			var selectEl = document.querySelector('#brands-list');
 			ydbaobao.ajax({
 				method:'delete',
-				url:"/api/admin/brandManager/"+selectEl.selectedOptions[0].value,
+				url:'/api/admin/brandManager/'+selectEl.selectedOptions[0].value,
 				success: function(req) {
 					selectEl.remove(selectEl.selectedIndex)
 				}
 			});
 			
-			if(e.target.className === "brands-item")
+			if(e.target.className === 'brands-item')
 				console.log(e.target.value);
 		}, false);
 			
