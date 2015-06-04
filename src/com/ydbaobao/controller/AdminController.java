@@ -153,6 +153,7 @@ public class AdminController {
 		mv.addObject("brandList", brandService.readBrands());
 		mv.addObject("productList", productsService.readUnclassifiedProducts());
 		mv.addObject("product", new Product());
+		mv.addObject("categoryList", categoryService.read());
 		return mv;
 	}
 

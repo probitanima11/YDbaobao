@@ -19,7 +19,7 @@
 				<form:form class="imageUploadForm" method="post" action="/products/imageUpload" modelAttribute="product" enctype="multipart/form-data">
 					<label class="control-label">브랜드 선택 :</label>
 					<form:select path="brand.brandId">
-						<c:forEach items="${brandList}" var="brand">
+						<c:forEach var="brand" items="${brandList}">
 							<form:option value="${brand.brandId}" label="${brand.brandName}" />
 						</c:forEach>
 					</form:select>
@@ -33,19 +33,32 @@
 			
 			<table id="categories" style="width: 800px;">
 				<tr>
-					<th>상품ID</th>
-					<th>상품이미지</th>
-					<th>브랜드명</th>
-					<th>가격</th>
-					<th>수량</th>
+					<th width="50">상품ID</th>
+					<th width="150">상품이미지</th>
+					<th>상세내역</th>
+					<th width="50">선택</th>
 				</tr>
 				<c:forEach var="product" items="${productList}">
 					<tr id="${product.productId}">
 						<td>${product.productId}</td>
-						<td><img class="productImg" src="/img/products/${product.productImage}" width="100"></td>
-						<td>${product.productName}</td>
-						<td><input type="number" value="${product.productPrice}" data-id="${product.productId}"></td>
-						<td></td>
+						<td><img class="productImg" src="/img/products/${product.productImage}" width="150"></td>
+						<td>
+						<ul>
+							<li><span>브랜드명 : </span>${product.productName}</li>
+							<li><span>카테고리 : </span> 
+								<select>
+									<c:forEach var="category" items="${categoryList}">
+										<option value="${category.categoryId}" label="${category.categoryName}" />
+									</c:forEach>
+								</select>
+							</li>
+							<li><span>상품명 : </span><input type="text" value="" data-id="${product.productName}"></li>
+							<li><span>상품가격 : </span><input type="number" value="${product.productPrice}" data-id="${product.productPrice}"></li>
+							<li><span>상품소개 : </span><textarea rows="5" cols="60"></textarea></li>
+							<li><span>사이즈 : </span><input type="text" class="product-size-input"><span> 수량: </span><input type="number" class="product-quantity-input"><button class="add-size_quantity-btn">추가</button></li>
+						</ul>
+						</td>
+						<td><input type="checkbox" class="checkBtn"></td>
 					</tr>
 				</c:forEach>
 			</table>
@@ -55,6 +68,7 @@
 	</div>
 
 	<script>
+
 		var imageFile = document.body.querySelector('.imageFile');
 		imageFile.addEventListener('change', function(e) {
 			appendImageList();
@@ -77,16 +91,21 @@
 		function refreshImageList() {
 			document.body.querySelector('.imageList').innerHTML = '';
 		}
-		
-		function disableSubmitBtn(){
-			if(document.body.querySelector('.imageFile').files.length > 0){
-				document.body.querySelector('.submitBtn').disabled=false;
+
+		function disableSubmitBtn() {
+			if (document.body.querySelector('.imageFile').files.length > 0) {
+				document.body.querySelector('.submitBtn').disabled = false;
 			}
-			if(document.body.querySelector('.imageFile').files.length === 0){
-				document.body.querySelector('.submitBtn').disabled=true;
+			if (document.body.querySelector('.imageFile').files.length === 0) {
+				document.body.querySelector('.submitBtn').disabled = true;
 			}
 		}
+
 		
+		document.querySelector('.add-size_quantity-btn').addEventListener('click', function(e){addSizeQuantity(e);}, false);
+		function addSizeQuantity(e) {
+			
+		}
 	</script>
 </body>
 </html>
