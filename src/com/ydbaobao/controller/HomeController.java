@@ -49,15 +49,24 @@ public class HomeController {
 		model.addAttribute("brands", brandService.readBrands());
 		model.addAttribute("productList", productsService.readRange(index, 16));
 		
+		int start = 0, end = 0;
 		int productsCount = productsService.count();
 		int range = productsCount/16;
+		end = range;
 		if (productsCount%16 > 0) {
 			range++;
 		}
 		if (range > 10) {
-			int temp = range/index;
+			start = index/16/10*10;
 		}
-		model.addAttribute("range", IntStream.range(0, range).toArray());
+		if (range > start+10) {
+			end = start+10;
+		}
+		if (end < range) {
+			model.addAttribute("nextBtn", true);
+		}
+		logger.debug("start={} end={} list={}", start, end, IntStream.range(start, end).toArray());
+		model.addAttribute("range", IntStream.range(start, end).toArray());
 		return "index";
 	}
 }
