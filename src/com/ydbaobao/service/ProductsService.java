@@ -23,20 +23,13 @@ public class ProductsService {
 
 	@Resource
 	private ProductsDao productsDao;
-<<<<<<< HEAD
 
 	@Resource
 	private BrandDao brandDao;
-
-	public List<Product> readListByCategory(int categoryId) {
-		return productsDao.readListByCategory(categoryId);
-=======
 	
 	public List<Product> readListByCategoryId(int categoryId) {
 		return productsDao.readListByCategoryId(categoryId);
->>>>>>> branch 'master' of https://github.com/HelloMocca/YDbaobao.git
 	}
-<<<<<<< HEAD
 
 	public void uplodeImage(Product product, String savingPath, MultipartFile productImage) {
 
@@ -45,7 +38,7 @@ public class ProductsService {
 			productImage.transferTo(new File(savingPath + fileName));
 			product.setProductImage(fileName);
 		} catch (IllegalStateException | IOException e) {
-			// TODO Auto-generated catch block
+			// TODO 예외처리 추가 예정. (giyatto)
 			e.printStackTrace();
 		}
 	}
@@ -56,12 +49,7 @@ public class ProductsService {
 		productsDao.create(product);
 	}
 
-	public List<Product> readByCount(int count) {
-		return productsDao.readByCount(count);
-=======
-	
 	public List<Product> readAsQuantity(int count) {
 		return productsDao.readAsQuantity(count);
->>>>>>> branch 'master' of https://github.com/HelloMocca/YDbaobao.git
 	}
 }
