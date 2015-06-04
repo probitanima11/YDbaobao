@@ -36,7 +36,8 @@ public class HomeController {
 		model.addAttribute("categories", categorySevice.read());
 		model.addAttribute("firstLetterList", firstLetterList);
 		model.addAttribute("brands", brandService.readBrands());
-		model.addAttribute("productList", productsService.readAsQuantity(16));
+		model.addAttribute("productList", productsService.readRange(0, 16));
+		//model.addAttribute("count", productsService.count());
 		return "index";
 	}
 }
