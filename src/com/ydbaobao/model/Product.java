@@ -20,9 +20,10 @@ public class Product {
 		this(productId, null, null, null, 0, null, null, 0, 0);
 	}
 	
-	public Product(String productName, Brand brand, String productImage){
+	public Product(String productName, Category category, Brand brand, String productImage){
 		super();
 		this.productName = productName;
+		this.category = category;
 		this.brand=brand;
 		this.productImage = productImage;
 	}

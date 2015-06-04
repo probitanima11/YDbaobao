@@ -10,10 +10,7 @@ import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.stereotype.Repository;
 
 import com.ydbaobao.model.Brand;
-<<<<<<< HEAD
-=======
 import com.ydbaobao.model.Category;
->>>>>>> branch 'master' of https://github.com/HelloMocca/YDbaobao.git
 import com.ydbaobao.model.Product;
 
 @Repository
@@ -26,9 +23,6 @@ public class ProductsDao extends JdbcDaoSupport {
 	private void initialize() {
 		setDataSource(dataSource);
 	}
-<<<<<<< HEAD
-
-=======
 	
 	public List<Product> readByCount(int count) {
 		String sql ="select * from PRODUCTS ORDER BY productCreateDate ASC LIMIT ?";
@@ -41,8 +35,7 @@ public class ProductsDao extends JdbcDaoSupport {
 						rs.getString("productDescription"), rs.getLong("productCreateDate"),
 						rs.getLong("productUpdateDate")), count);
 	}
-	
->>>>>>> branch 'master' of https://github.com/HelloMocca/YDbaobao.git
+
 	public List<Product> readListByCategory(int categoryId) {
 		String sql = "select * from PRODUCTS where categoryId=?";
 		return getJdbcTemplate().query(
@@ -55,7 +48,7 @@ public class ProductsDao extends JdbcDaoSupport {
 						rs.getLong("productUpdateDate")), categoryId);
 	}
 
-	public void create(Brand brand, Product product) {
+	public void create(Product product) {
 		String sql = "insert into PRODUCTS values(default, ?, ?, ?, default, ?, default, default, default)";
 		getJdbcTemplate().update(sql, 
 				product.getProductName(), 

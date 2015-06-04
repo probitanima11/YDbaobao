@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import com.ydbaobao.dao.BrandDao;
 import com.ydbaobao.model.Brand;
-import com.ydbaobao.model.Category;
 
 @Service
 public class BrandService {
