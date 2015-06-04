@@ -12,6 +12,25 @@ html,body {
 	width:980px;
 }
 
+.contentsNav li {
+  list-style: none;
+  display: table;
+  text-align: center;
+  margin-top: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.contentsNav {
+  display: table;
+  margin: 0 auto;
+}
+
+.contentsNav > ul {
+  float: left;
+  display: inline-flex;
+}
+
 ul#util {
 	padding:0;
 	margin:0;
@@ -79,6 +98,29 @@ ul#util li a span{
 	padding:7px 15px;
 	transition-property:left;
 	transition-duration:.3s;
+}
+
+/* horizontalCategory.jsp */
+#horizontal-category-menu {
+	width:100%;
+	outline:1px solid #EA6576;
+}
+
+#horizontal-category-menu ul {
+	list-style:none;
+	text-align:center;
+	padding:10px 0px 10px 0px;
+	margin:0;
+}
+
+#horizontal-category-menu ul li {
+	display:inline-block;
+	margin:0px 0px 0px 10px;
+}
+
+#horizontal-category-menu ul li a {
+	color:#EA6576;
+	text-decoration:none;
 }
 
 #brand-initial-tab {

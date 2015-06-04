@@ -30,6 +30,7 @@
 
 			<div id="item-container" class="wrap content">
 				<%@ include file="./commons/_productsBox.jsp" %>
+				<%@ include file="./commons/_productsListBar.jsp" %>
 			</div>
 		</div>
 	</div>
@@ -72,7 +73,7 @@
 			// 검색된 브랜드 리스트 출력
 			for(var i = 0, length = brands.length; i < length; i++) {
 				var li = document.createElement('li');
-				li.innerHTML += "<span>" + brands[i].brandName + "</span>";
+				li.innerHTML += '<span>' + brands[i].brandName + '</span>';
 				ul.appendChild(li);
 			}
 		}

@@ -45,16 +45,16 @@
 			var el = undefined;
 			var selectedFileList = document.body.querySelector('.imageFile').files;
 			for (var i = 0; i < selectedFileList.length; i++) {
-				el = document.createElement("li");
-				el.setAttribute("class", "file-list");
-				el.setAttribute("value", selectedFileList[i].name);
+				el = document.createElement('li');
+				el.setAttribute('class', 'file-list');
+				el.setAttribute('value', selectedFileList[i].name);
 				el.innerHTML = selectedFileList[i].name;
 				document.body.querySelector('.imageList').appendChild(el);
 			}
 		}
 
 		function refreshImageList() {
-			document.body.querySelector('.imageList').innerHTML = "";
+			document.body.querySelector('.imageList').innerHTML = '';
 		}
 		
 		function disableSubmitBtn(){

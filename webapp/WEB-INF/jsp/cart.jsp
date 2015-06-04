@@ -43,36 +43,36 @@
 	}, false);
 
 	function loadCartList(itemList) {
-		var ul = document.querySelector("#cart-list");
+		var ul = document.querySelector('#cart-list');
 		for (item of itemList) {
 			var el = ydbaobao.createElement({
-		        name: "li",
+		        name: 'li',
 		        attrs: {
 		            /* 'class': "brands-item", */
-		            'id': "itemId"+item.itemId
+		            'id': 'itemId'+item.itemId
 		        },
 		    });
 			ul.appendChild(el);
 			var cartTemplate = document.querySelector("#cartListTemplate").content;
 			var elDiv = document.importNode(cartTemplate, true);
-		  	elDiv.querySelector(".productName").innerHTML = "상품명 : " + item.product.productName;
-		  	elDiv.querySelector(".productSize").innerHTML = "사이즈 : " + item.size;
-		  	elDiv.querySelector(".productQuantity").innerHTML = "수량 : " + item.quantity;
-		  	elDiv.querySelector(".productTotalPrice").innerHTML = "판매가 : " + item.product.productPrice*item.quantity;
+		  	elDiv.querySelector('.productName').innerHTML = '상품명 : ' + item.product.productName;
+		  	elDiv.querySelector('.productSize').innerHTML = '사이즈 : ' + item.size;
+		  	elDiv.querySelector('.productQuantity').innerHTML = '수량 : ' + item.quantity;
+		  	elDiv.querySelector('.productTotalPrice').innerHTML = '판매가 : ' + item.product.productPrice*item.quantity;
 		  	
 		    el.appendChild(elDiv);
-		  	el.querySelector(".delete").addEventListener('click', function(e) {
+		  	el.querySelector('.delete').addEventListener('click', function(e) {
 		  		var itemId = e.target.parentElement.parentElement.parentElement.id;
 		  		itemId = itemId.substr(6);
 				ydbaobao.ajax({
 					method:'post',
 					url:'/item/delete/'+itemId,
 					success: function(req) {
-						document.getElementById("itemId"+itemId).remove();
+						document.getElementById('itemId'+itemId).remove();
 					}
 				});
 		  		
-		  		/* var target = document.querySelector("#cart-list")
+		  		/* var target = document.querySelector('#cart-list')
 	        	var el = e.target.parentElement.parentElement;
 	        	var commentText = el.querySelector('.pComment-text').innerHTML;
 	        	var pCommnetId = el.id.slice(4);

@@ -108,13 +108,13 @@ h1 {
 
 	<script>
 		window.addEventListener('load', function() {
-			document.querySelector(".addtocart").addEventListener('click', function(e) {
+			document.querySelector('.addtocart').addEventListener('click', function(e) {
 				addToCart(e);
 			}, false);
 		}, false);
 
 		function addToCart(e) {
-			var param = "productId=1" + "&size=S" + "&quantity=1";
+			var param = 'productId=1' + '&size=S' + '&quantity=1';
 			ydbaobao.ajax({
 				/* TODO productId, size, quantity 전달. */
 				method : 'post',
