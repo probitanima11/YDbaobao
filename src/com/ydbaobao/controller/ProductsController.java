@@ -59,8 +59,8 @@ public class ProductsController {
 	public ModelAndView imageUpload(HttpSession session, Product product, @RequestParam("imageFile") MultipartFile... imageFile) {
 		String savingPath = session.getServletContext().getRealPath("/") + "/img/products/";
 		for(MultipartFile file:imageFile){
-			productsService.uplodeImage(product,savingPath, file);
-			productsService.create(product.getBrand().getBrandId(), file.getOriginalFilename());
+			String imageName = productsService.uplodeImage(product,savingPath, file);
+			productsService.create(product.getBrand().getBrandId(), imageName);
 		}
 		
 		// 아래부분 리펙토링 필요. (AdminController.java와 중복)

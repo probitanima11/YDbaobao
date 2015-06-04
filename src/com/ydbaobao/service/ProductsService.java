@@ -16,6 +16,7 @@ import com.ydbaobao.dao.ProductsDao;
 import com.ydbaobao.model.Brand;
 import com.ydbaobao.model.Category;
 import com.ydbaobao.model.Product;
+import com.ydbaobao.util.RandomFactory;
 
 @Service
 public class ProductsService {
@@ -38,17 +39,28 @@ public class ProductsService {
 		return productsDao.count();
 	}
 
-	public void uplodeImage(Product product, String savingPath, MultipartFile productImage) {
-
-		String fileName = productImage.getOriginalFilename();
+	public String uplodeImage(Product product, String savingPath, MultipartFile productImage) {
+		String[] imageSplitName = productImage.getOriginalFilename().split("\\.");
+		String extension = imageSplitName[imageSplitName.length-1];
+		String imageName = createImageName(extension);
 		try {
-			productImage.transferTo(new File(savingPath + fileName));
-			product.setProductImage(fileName);
+			productImage.transferTo(new File(savingPath + imageName));
+			product.setProductImage(imageName);
 		} catch (IllegalStateException | IOException e) {
 			// TODO 예외처리 추가 예정. (giyatto)
 			e.printStackTrace();
 		}
+		return imageName;
 	}
+	
+	private String createImageName(String extension) {
+		String imageName = RandomFactory.getRandomId(5)+"."+extension;
+		if (productsDao.isExistImageName(imageName)) {
+			return createImageName(extension);
+		}
+		return imageName;
+	}
+	
 
 	public void create(int brandId, String productImage) {
 		Brand brand = brandDao.readBrandByBrandId(brandId);
