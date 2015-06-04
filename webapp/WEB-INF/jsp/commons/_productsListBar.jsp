@@ -4,7 +4,7 @@
 <div class="contentsNav">
 	<ul>
 		<c:forEach var="digit" items="${range}" varStatus="status">
-			<li><a href="#">
+			<li><a href="?index=${digit+1}">
 				<span><c:out value="${digit+1}"/></span>
 			</a></li>
 		</c:forEach>
