@@ -39,7 +39,12 @@ public class HomeController {
 		model.addAttribute("firstLetterList", firstLetterList);
 		model.addAttribute("brands", brandService.readBrands());
 		model.addAttribute("productList", productsService.readRange(0, 16));
-		model.addAttribute("range", IntStream.range(0, productsService.count()).toArray());
+		int productsCount = productsService.count();
+		int range = productsCount/16;
+		if (productsCount%16 > 0) {
+			range++;
+		}
+		model.addAttribute("range", IntStream.range(0, range).toArray());
 		return "index";
 	}
 }
