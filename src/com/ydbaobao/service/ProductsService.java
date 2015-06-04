@@ -30,11 +30,11 @@ public class ProductsService {
 		return productsDao.readListByCategoryId(categoryId);
 	}
 	
-	public int countByCategoryId(int categoryId) {
+	public long countByCategoryId(int categoryId) {
 		return productsDao.countByCategoryId(categoryId);
 	}
 	
-	public int count() {
+	public long count() {
 		return productsDao.count();
 	}
 

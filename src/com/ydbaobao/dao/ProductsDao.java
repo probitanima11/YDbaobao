@@ -57,13 +57,13 @@ public class ProductsDao extends JdbcDaoSupport {
 						rs.getLong("productUpdateDate")), categoryId);
 	}
 	
-	public int count() {
+	public long count() {
 		String sql = "select count(1) from PRODUCTS";
-		return getJdbcTemplate().queryForObject(sql, int.class);
+		return getJdbcTemplate().queryForObject(sql, long.class);
 	}
 	
-	public int countByCategoryId(int categoryId) {
+	public long countByCategoryId(int categoryId) {
 		String sql = "select count(1) from PRODUCTS where categoryId=?";
-		return getJdbcTemplate().queryForObject(sql, int.class);
+		return getJdbcTemplate().queryForObject(sql, long.class);
 	}
 }
