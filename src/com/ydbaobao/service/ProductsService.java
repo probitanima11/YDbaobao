@@ -49,7 +49,7 @@ public class ProductsService {
 		productsDao.create(product);
 	}
 
-	public List<Product> readAsQuantity(int count) {
-		return productsDao.readAsQuantity(count);
+	public List<Product> readRange(int start, int range) {
+		return productsDao.readRange(start, range);
 	}
 }

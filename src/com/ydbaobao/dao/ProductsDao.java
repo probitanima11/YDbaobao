@@ -24,8 +24,8 @@ public class ProductsDao extends JdbcDaoSupport {
 		setDataSource(dataSource);
 	}
 	
-	public List<Product> readAsQuantity(int count) {
-		String sql ="select * from PRODUCTS ORDER BY productCreateDate ASC LIMIT ?";
+	public List<Product> readRange(int start, int range) {
+		String sql ="select * from PRODUCTS ORDER BY productCreateDate ASC LIMIT ?, ?";
 		return getJdbcTemplate().query(
 				sql, (rs, rowNum) -> new Product(
 						rs.getInt("productId"), rs.getString("productName"),
@@ -33,7 +33,7 @@ public class ProductsDao extends JdbcDaoSupport {
 						new Brand(rs.getInt("brandId"), null),
 						rs.getInt("productPrice"), rs.getString("productImage"),
 						rs.getString("productDescription"), rs.getLong("productCreateDate"),
-						rs.getLong("productUpdateDate")), count);
+						rs.getLong("productUpdateDate")), start, range);
 	}
 
 	public List<Product> readListByCategoryId(int categoryId) {
