@@ -73,7 +73,7 @@ h1 {
 </style>
 </head>
 <body>
-	<div id='header' style='width: 100%;'>
+	<div id="header" style="width: 100%;">
 		<!-- 상단 navigator -->
 		<%@ include file="./commons/_topNav.jsp"%>
 		<!-- 브랜드/제품 검색바 -->
@@ -81,7 +81,7 @@ h1 {
 	</div>
 	<div id="product-container" class="content wrap"
 		style="position: relative;">
-		<div id="product-info-container" style="">
+		<div id="product-info-container">
 			<div id="product-photo">
 				<img
 					src="http://www.stylenoriter.co.kr/web/product/medium/201505/4027_shop1_259692.jpg">

@@ -8,7 +8,7 @@
 <title>YDbaobao:: 장바구니</title>
 </head>
 <body>
-	<div id='header' style='width: 100%;'>
+	<div id="header" style="width: 100%;">
 		<!-- 상단 navigator -->
 		<%@ include file="./commons/_topNav.jsp"%>
 		<!-- 브랜드/제품 검색바 -->
@@ -17,7 +17,7 @@
 	
 	<div>
 		<div>
-			<ul id='cart-list'>
+			<ul id="cart-list">
 			</ul>
 		</div>
 	</div>
