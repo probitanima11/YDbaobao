@@ -33,6 +33,7 @@ public class ProductsController {
 	@RequestMapping(value="", method=RequestMethod.GET)
 	public String load(Model model, @RequestParam int categoryId) {
 		model.addAttribute("category", categoryService.readByCategoryId(categoryId));
+		model.addAttribute("categories", categoryService.read());
 		model.addAttribute("brands", brandService.readBrands());
 		model.addAttribute("productList", productsService.readListByCategoryId(categoryId));
 		//model.addAttribute("count", productsService.countByCategoryId(categoryId));

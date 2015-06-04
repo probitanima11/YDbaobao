@@ -16,9 +16,9 @@
 		<!-- 브랜드/제품 검색바 -->
 		<%@ include file="./commons/_search.jsp"%>
 	</div>
-	<div style="outline: 1px solid red; width: 100%">
-		<div id="categoryBar" class="wrap content" style="height: 40px;">카테고리
-			메뉴 바</div>
+	<div>
+		<!-- 수평 카테고리 메뉴 -->
+		<%@ include file="./commons/_horizontalCategory.jsp"%>
 	</div>
 	<div id="main-container" class="wrap content">
 		<div style="font-size: 50px;">${category.categoryName}</div>
