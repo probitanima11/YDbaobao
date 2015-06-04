@@ -49,7 +49,7 @@
 		        name: "li",
 		        attrs: {
 		            /* 'class': "brands-item", */
-		            'value': item.itemId
+		            'id': "itemId"+item.itemId
 		        },
 		    });
 			ul.appendChild(el);
@@ -62,13 +62,13 @@
 		  	
 		    el.appendChild(elDiv);
 		  	el.querySelector(".delete").addEventListener('click', function(e) {
-		  		var itemId = e.target.parentElement.parentElement.parentElement.value;
-		  		debugger;
+		  		var itemId = e.target.parentElement.parentElement.parentElement.id;
+		  		itemId = itemId.substr(6);
 				ydbaobao.ajax({
 					method:'post',
 					url:'/item/delete/'+itemId,
 					success: function(req) {
-						debugger;
+						document.getElementById("itemId"+itemId).remove();
 					}
 				});
 		  		
