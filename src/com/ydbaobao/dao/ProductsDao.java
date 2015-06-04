@@ -66,4 +66,13 @@ public class ProductsDao extends JdbcDaoSupport {
 		String sql = "select count(1) from PRODUCTS where categoryId=?";
 		return getJdbcTemplate().queryForObject(sql, Integer.class, categoryId);
 	}
+	
+	public boolean isExistImageName(String imageName) {
+		String sql = "select count(1) from PRODUCTS where productImage = ?";
+		if (getJdbcTemplate().queryForObject(sql, Integer.class, imageName) == 0) {
+			return Boolean.FALSE;
+		}
+		return Boolean.TRUE;
+	}
+	
 }
