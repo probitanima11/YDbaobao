@@ -72,6 +72,7 @@ public class ProductsController {
 		// 아래부분 리펙토링 필요. (AdminController.java와 중복)
 		ModelAndView mv = new ModelAndView("admin/productRegistration");
 		mv.addObject("brandList", brandService.readBrands());
+		mv.addObject("productList", productsService.readUnclassifiedProducts());
 		mv.addObject("product", new Product());
 		return mv;
 	}

@@ -72,6 +72,10 @@ public class ProductsService {
 		return productsDao.readRange(start, range);
 	}
 
+	public List<Product> readUnclassifiedProducts() {
+		return productsDao.readListByCategoryId(0);
+	}
+
 	public List<Product> readListByBrandId(int brandId) {
 		return productsDao.readListByBrandId(brandId);
 	}
