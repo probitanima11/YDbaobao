@@ -62,10 +62,12 @@ public class HomeController {
 		if (range > start+10) {
 			end = start+10;
 		}
+		if (end == start) {
+			end++;
+		}
 		if (end < range) {
 			model.addAttribute("nextBtn", true);
 		}
-		logger.debug("start={} end={} list={}", start, end, IntStream.range(start, end).toArray());
 		model.addAttribute("range", IntStream.range(start, end).toArray());
 		return "index";
 	}
