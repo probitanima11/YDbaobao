@@ -19,6 +19,7 @@ import com.ydbaobao.model.Category;
 import com.ydbaobao.model.Product;
 import com.ydbaobao.service.BrandService;
 import com.ydbaobao.service.CategoryService;
+import com.ydbaobao.service.ProductsService;
 
 @Controller
 @RequestMapping("/admin")
@@ -31,6 +32,9 @@ public class AdminController {
 	
 	@Resource
 	private BrandService brandService;
+	
+	@Resource
+	private ProductsService productsService;
 	
 	/**
 	 * 관리자 페이지 접근을 위한 GET 요청을 응답.
@@ -147,6 +151,7 @@ public class AdminController {
 	public ModelAndView addProduct() {
 		ModelAndView mv = new ModelAndView("admin/productRegistration");
 		mv.addObject("brandList", brandService.readBrands());
+		mv.addObject("productList", productsService.readUnclassifiedProducts());
 		mv.addObject("product", new Product());
 		return mv;
 	}

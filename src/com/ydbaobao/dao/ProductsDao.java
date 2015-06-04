@@ -74,5 +74,4 @@ public class ProductsDao extends JdbcDaoSupport {
 		}
 		return Boolean.TRUE;
 	}
-	
 }

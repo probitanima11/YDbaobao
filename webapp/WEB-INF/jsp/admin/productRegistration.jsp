@@ -15,21 +15,42 @@
 		<%@ include file="./_adminNav.jsp"%>
 		<div id="content">
 			<h1>상품 등록</h1>
-		</div>
-		<div id="imageFiles">
-			<form:form class="imageUploadForm" method="post" action="/products/imageUpload" modelAttribute="product" enctype="multipart/form-data">
-				<label class="control-label" >브랜드 선택 :</label>
-				<form:select path="brand.brandId">
-					<c:forEach items="${brandList}" var="brand">
-						<form:option value="${brand.brandId}" label="${brand.brandName}" />
-					</c:forEach>
-				</form:select>
-				<br/>
-				<label class="control-label" >이미지 선택 :</label>
-				<input class="imageFile" type="file" name="imageFile" accept="image/x-png, image/gif, image/jpeg" multiple />
-				<input type="submit" class='submitBtn' value="저장" disabled='true'/>
-			</form:form>
-			<div class="imageList"></div>
+			<div id="imageFiles">
+				<form:form class="imageUploadForm" method="post" action="/products/imageUpload" modelAttribute="product" enctype="multipart/form-data">
+					<label class="control-label">브랜드 선택 :</label>
+					<form:select path="brand.brandId">
+						<c:forEach items="${brandList}" var="brand">
+							<form:option value="${brand.brandId}" label="${brand.brandName}" />
+						</c:forEach>
+					</form:select>
+					<br />
+					<label class="control-label">이미지 선택 :</label>
+					<input class="imageFile" type="file" name="imageFile" accept="image/x-png, image/gif, image/jpeg" multiple />
+					<input type="submit" class='submitBtn' value="저장" disabled='true' />
+				</form:form>
+				<div class="imageList"></div>
+			</div>
+			
+			<table id="categories" style="width: 800px;">
+				<tr>
+					<th>상품ID</th>
+					<th>상품이미지</th>
+					<th>브랜드명</th>
+					<th>가격</th>
+					<th>수량</th>
+				</tr>
+				<c:forEach var="product" items="${productList}">
+					<tr id="${product.productId}">
+						<td>${product.productId}</td>
+						<td><img class="productImg" src="/img/products/${product.productImage}" width="100"></td>
+						<td>${product.productName}</td>
+						<td><input type="number" value="${product.productPrice}" data-id="${product.productId}"></td>
+						<td></td>
+					</tr>
+				</c:forEach>
+			</table>
+			
+			
 		</div>
 	</div>
 
