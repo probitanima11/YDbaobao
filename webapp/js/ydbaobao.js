@@ -36,3 +36,16 @@ ydbaobao.createElement = function(o) {
 	}
 	return el;
 };
+
+Element.prototype.remove = function() {
+	if (this.parentElement !== null)
+		this.parentElement.removeChild(this);
+};
+
+Element.prototype.show = function() {
+	this.style.display = "block";
+};
+
+Element.prototype.hide = function() {
+	this.style.display = "none";
+};
