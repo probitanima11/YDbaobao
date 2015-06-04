@@ -62,8 +62,15 @@
 		  	
 		    el.appendChild(elDiv);
 		  	el.querySelector(".delete").addEventListener('click', function(e) {
-		  		e.target.parentElement.parentElement.parentElement.value;
+		  		var itemId = e.target.parentElement.parentElement.parentElement.value;
 		  		debugger;
+				ydbaobao.ajax({
+					method:'post',
+					url:'/item/delete/'+itemId,
+					success: function(req) {
+						debugger;
+					}
+				});
 		  		
 		  		/* var target = document.querySelector("#cart-list")
 	        	var el = e.target.parentElement.parentElement;
