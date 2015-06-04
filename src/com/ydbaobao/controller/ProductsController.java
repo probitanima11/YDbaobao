@@ -1,5 +1,8 @@
 package com.ydbaobao.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
@@ -32,10 +35,15 @@ public class ProductsController {
 	
 	@RequestMapping(value="", method=RequestMethod.GET)
 	public String load(Model model, @RequestParam int categoryId) {
+		List<Character> firstLetterList = new ArrayList<Character>();
+		for(char ch = 'A'; ch <= 'Z'; ch++) {
+			firstLetterList.add(ch);	
+		}
 		model.addAttribute("category", categoryService.readByCategoryId(categoryId));
 		model.addAttribute("brands", brandService.readBrands());
 		model.addAttribute("productList", productsService.readListByCategoryId(categoryId));
-		//model.addAttribute("count", productsService.countByCategoryId(categoryId));
+		model.addAttribute("firstLetterList", firstLetterList);
+		model.addAttribute("count", productsService.countByCategoryId(categoryId));
 		return "products";
 	}
 	

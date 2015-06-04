@@ -2,6 +2,7 @@ package com.ydbaobao.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 
 import javax.annotation.Resource;
 
@@ -33,11 +34,12 @@ public class HomeController {
 		for(char ch = 'A'; ch <= 'Z'; ch++) {
 			firstLetterList.add(ch);	
 		}
+		
 		model.addAttribute("categories", categorySevice.read());
 		model.addAttribute("firstLetterList", firstLetterList);
 		model.addAttribute("brands", brandService.readBrands());
 		model.addAttribute("productList", productsService.readRange(0, 16));
-		//model.addAttribute("count", productsService.count());
+		model.addAttribute("range", IntStream.range(0, productsService.count()).toArray());
 		return "index";
 	}
 }
