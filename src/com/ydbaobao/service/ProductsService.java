@@ -23,12 +23,19 @@ public class ProductsService {
 
 	@Resource
 	private ProductsDao productsDao;
-
 	@Resource
 	private BrandDao brandDao;
 	
 	public List<Product> readListByCategoryId(int categoryId) {
 		return productsDao.readListByCategoryId(categoryId);
+	}
+	
+	public int countByCategoryId(int categoryId) {
+		return productsDao.countByCategoryId(categoryId);
+	}
+	
+	public int count() {
+		return productsDao.count();
 	}
 
 	public void uplodeImage(Product product, String savingPath, MultipartFile productImage) {

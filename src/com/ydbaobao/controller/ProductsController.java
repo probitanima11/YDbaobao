@@ -35,6 +35,7 @@ public class ProductsController {
 		model.addAttribute("category", categoryService.readByCategoryId(categoryId));
 		model.addAttribute("brands", brandService.readBrands());
 		model.addAttribute("productList", productsService.readListByCategoryId(categoryId));
+		model.addAttribute("count", productsService.countByCategoryId(categoryId));
 		return "products";
 	}
 	
