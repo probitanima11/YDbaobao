@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -53,6 +54,13 @@ public class ItemController {
 	public ResponseEntity<Object> addToCart(@RequestParam String productId, @RequestParam String size, @RequestParam int quantity, HttpSession session) throws IOException {
 		String customerId = ServletRequestUtil.getCustomerIdFromSession(session);
 		itemDao.addCart(customerId, productId, size, quantity);
+		return JSONResponseUtil.getJSONResponse("", HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/delete/{itemId}")
+	public ResponseEntity<Object> addToCart(@PathVariable int itemId, HttpSession session) throws IOException {
+		String customerId = ServletRequestUtil.getCustomerIdFromSession(session);
+		itemService.deleteCartList(customerId, itemId);
 		return JSONResponseUtil.getJSONResponse("", HttpStatus.OK);
 	}
 	
