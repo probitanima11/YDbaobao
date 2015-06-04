@@ -22,6 +22,12 @@ public class BrandController {
 	@Resource
 	private BrandService brandService;
 	
+	/**
+	 * index.jsp에서 브랜드 메뉴 검색하는 곳에 사용
+	 * @author jyb
+	 * @param 검색에 사용될 브랜드 이름의 첫글자(A~Z)
+	 * @return 검색된 결과를 JSON 데이타로 전달
+	 */
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
 	public ResponseEntity<Object> search(@RequestParam String firstLetter) {
 		logger.debug("search");
