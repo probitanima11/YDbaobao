@@ -16,9 +16,33 @@
 	</div>
 	
 	<div>
-	
+		<div>
+			<ul id='cart-list'>
+			</ul>
+		</div>
 	</div>
 	
 	<div id="footer">footer...</div>
+	<script>
+	window.addEventListener('load', function() {
+		var itemList = ${list};
+		loadCartList(itemList);
+	}, false);
+
+	function loadCartList(itemList) {
+		var ul = document.querySelector("#cart-list");
+		for (item of itemList) {
+			var el = ydbaobao.createElement({
+		        name: "li",
+		        attrs: {
+		            /* 'class': "brands-item", */
+		            'value': item.product.productId
+		        }
+		    });
+			ul.appendChild(el);
+		}
+	}
+	</script>
+	<script src="/js/ydbaobao.js"></script>
 </body>
 </html>

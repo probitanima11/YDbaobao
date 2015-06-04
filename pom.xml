@@ -95,6 +95,11 @@
 			<artifactId>jackson-databind</artifactId>
 			<version>2.5.1</version>
 		</dependency>
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.3.1</version>
+		</dependency>
 
 		<!-- Annotation으로 오브젝트 기본 메소드 만들기 -->
 		<dependency>
