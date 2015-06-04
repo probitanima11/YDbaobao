@@ -27,6 +27,10 @@ public class ProductsService {
 	@Resource
 	private BrandDao brandDao;
 	
+	public List<Product> readListByCategoryId(int categoryId, int index, int quantity) {
+		return productsDao.readListByCategoryId(categoryId, index, quantity);
+	}
+	
 	public List<Product> readListByCategoryId(int categoryId) {
 		return productsDao.readListByCategoryId(categoryId);
 	}

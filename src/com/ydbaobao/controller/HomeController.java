@@ -31,33 +31,33 @@ public class HomeController {
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Model model, WebRequest req) {
+		int quantity = 16;
+		
 		List<Character> firstLetterList = new ArrayList<Character>();
 		for(char ch = 'A'; ch <= 'Z'; ch++) {
 			firstLetterList.add(ch);	
 		}
+		model.addAttribute("firstLetterList", firstLetterList);
+		
 		int index = 0;
 		int selectedIndex = 0;
 		if (null != req.getParameter("index")) {
 			index = Integer.parseInt(req.getParameter("index"));
 			selectedIndex = index-1;
-			index = (index-1)*16;
+			index = (index-1)*quantity;
 		}
-		
 		model.addAttribute("selectedIndex", selectedIndex);
-		model.addAttribute("categories", categorySevice.read());
-		model.addAttribute("firstLetterList", firstLetterList);
-		model.addAttribute("brands", brandService.readBrands());
-		model.addAttribute("productList", productsService.readRange(index, 16));
+		model.addAttribute("productList", productsService.readRange(index, quantity));
 		
 		int start = 0, end = 0;
 		int productsCount = productsService.count();
-		int range = productsCount/16;
+		int range = productsCount/quantity;
 		end = range;
-		if (productsCount%16 > 0) {
+		if (productsCount%quantity > 0) {
 			range++;
 		}
 		if (range > 10) {
-			start = index/16/10*10;
+			start = index/quantity/10*10;
 		}
 		if (range > start+10) {
 			end = start+10;
@@ -69,6 +69,9 @@ public class HomeController {
 			model.addAttribute("nextBtn", true);
 		}
 		model.addAttribute("range", IntStream.range(start, end).toArray());
+		
+		model.addAttribute("categories", categorySevice.read());
+		model.addAttribute("brands", brandService.readBrands());
 		return "index";
 	}
 }

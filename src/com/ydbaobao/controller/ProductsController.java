@@ -37,27 +37,48 @@ public class ProductsController {
 	
 	@RequestMapping(value="", method=RequestMethod.GET)
 	public String load(Model model, WebRequest req, @RequestParam int categoryId) {
+		int quantity = 16;
+		
 		List<Character> firstLetterList = new ArrayList<Character>();
 		for(char ch = 'A'; ch <= 'Z'; ch++) {
 			firstLetterList.add(ch);	
 		}
+		model.addAttribute("firstLetterList", firstLetterList);
+		
 		int index = 0;
+		int selectedIndex = 0;
 		if (null != req.getParameter("index")) {
 			index = Integer.parseInt(req.getParameter("index"));
-			index = (index-1)*16;
+			selectedIndex = index-1;
+			index = (index-1)*quantity;
 		}
-		model.addAttribute("category", categoryService.readByCategoryId(categoryId));
-		model.addAttribute("categories", categoryService.read());
-		model.addAttribute("brands", brandService.readBrands());
-		model.addAttribute("productList", productsService.readListByCategoryId(categoryId));
-		model.addAttribute("firstLetterList", firstLetterList);
-		model.addAttribute("count", productsService.countByCategoryId(categoryId));
+		model.addAttribute("selectedIndex", selectedIndex);
+		model.addAttribute("productList", productsService.readListByCategoryId(categoryId, index, quantity));
+		
+		int start = 0, end = 0;
 		int productsCount = productsService.countByCategoryId(categoryId);
-		int range = productsCount/16;
-		if (productsCount%16 > 0) {
+		int range = productsCount/quantity;
+		end = range;
+		if (productsCount%quantity > 0) {
 			range++;
 		}
-		model.addAttribute("range", IntStream.range(0, range).toArray());
+		if (range > 10) {
+			start = index/quantity/10*10;
+		}
+		if (range > start+10) {
+			end = start+10;
+		}
+		if (end == start) {
+			end++;
+		}
+		if (end < range) {
+			model.addAttribute("nextBtn", true);
+		}
+		model.addAttribute("range", IntStream.range(start, end).toArray());
+		
+		model.addAttribute("brands", brandService.readBrands());
+		model.addAttribute("category", categoryService.readByCategoryId(categoryId));
+		model.addAttribute("categories", categoryService.read());
 		return "products";
 	}
 	
