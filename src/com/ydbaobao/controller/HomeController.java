@@ -1,7 +1,5 @@
 package com.ydbaobao.controller;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.stream.IntStream;
 
 import javax.annotation.Resource;
@@ -14,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.context.request.WebRequest;
 
+import com.ydbaobao.model.Brand;
 import com.ydbaobao.service.BrandService;
 import com.ydbaobao.service.CategoryService;
 import com.ydbaobao.service.ProductsService;
@@ -32,13 +31,6 @@ public class HomeController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Model model, WebRequest req) {
 		int quantity = 16;
-		
-		List<Character> firstLetterList = new ArrayList<Character>();
-		for(char ch = 'A'; ch <= 'Z'; ch++) {
-			firstLetterList.add(ch);	
-		}
-		model.addAttribute("firstLetterList", firstLetterList);
-		
 		int index = 0;
 		int selectedIndex = 0;
 		if (null != req.getParameter("index")) {
@@ -72,6 +64,7 @@ public class HomeController {
 		
 		model.addAttribute("categories", categorySevice.read());
 		model.addAttribute("brands", brandService.readBrands());
+		model.addAttribute("firstLetterList", new Brand().getFirstLetters());
 		return "index";
 	}
 }

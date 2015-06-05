@@ -1,5 +1,8 @@
 package com.ydbaobao.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Brand {
 	private int brandId;
 	private String brandName;
@@ -11,6 +14,14 @@ public class Brand {
 		super();
 		this.brandId = brandId;
 		this.brandName = brandName;
+	}
+	
+	public List<Character> getFirstLetters() {
+		List<Character> firstLetters = new ArrayList<Character>();
+		for(char ch = 'A'; ch <= 'Z'; ch++) {
+			firstLetters.add(ch);	
+		}
+		return firstLetters;
 	}
 
 	public int getBrandId() {
