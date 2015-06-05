@@ -6,6 +6,10 @@ public class Stock {
 	private String size;
 	private int quantity;
 	
+	public Stock() {
+		
+	}
+	
 	public Stock(int stockId, Product product, String size, int quantity) {
 		super();
 		this.stockId = stockId;

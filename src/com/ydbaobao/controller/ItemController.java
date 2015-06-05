@@ -45,9 +45,6 @@ public class ItemController {
 		List<Item> list = itemDao.readCartList(customerId);
 		System.out.println(list);
 		return list;
-//		return ResponseEntity<list>;
-		
-//		return JSONResponseUtil.getJSONResponse(list, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/add")
