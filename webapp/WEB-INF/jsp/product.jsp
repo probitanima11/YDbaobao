@@ -99,19 +99,21 @@ h1 {
 			<h1 class="product-name" style="margin-top: 25px; margin-left: 15px;">퓨어레스
 				스커트</h1>
 			<div class="product-price">19,800</div>
-			<div>
+			<div style="margin-top: 25px; margin-left: 15px;">
 				<tbody>
 					<tr>
 						<th>구매수량</th>
-							<td>
-								<div>
-									<input>
-									<span class="number-control">
-										<i class="fa fa-caret-up"></i>
-										<i class="fa fa-caret-down"></i>
-									</span>
-								</div>
-							</td>
+						<td>
+							<div>
+								<input type="text" value="1" style="width: 32px;"
+									onkeypress="return isNumberKey(event);">
+								<span style="display:inline-block"
+									class="number-control"> <i id="up-btn"
+									class="fa fa-caret-up" style="display:block"></i> <i id="down-btn"
+									class="fa fa-caret-down" style="display:block"></i>
+								</span>
+							</div>
+						</td>
 					</tr>
 				</tbody>
 			</div>
@@ -142,6 +144,11 @@ h1 {
 				}
 			});
 		}
+		
+		 function isNumberKey(evt) {
+	            var charCode = (evt.which) ? evt.which : event.keyCode
+	            return !(charCode > 31 && (charCode < 48 || charCode > 57));
+	     }
 	</script>
 	<script src="/js/ydbaobao.js"></script>
 </body>
