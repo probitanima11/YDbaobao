@@ -19,34 +19,51 @@
 			</div>
 			<table id="categories" style="width: 800px;">
 				<tr>
-					<th width="50">상품ID</th>
-					<th width="150">상품이미지</th>
-					<th colspan=2>상세내역</th>
-					<th width="50">선택</th>
+					<th width="50px">상품ID</th>
+					<th width="150px">상품이미지</th>
+					<th colspan="6">상세내역</th>
+					<th width="50px">선택</th>
 				</tr>
 				<c:forEach var="product" items="${productList}">
-					<tr id="${product.productId}">
-						<td>${product.productId}</td>
-						<td><img class="productImg" src="/img/products/${product.productImage}" width="150"></td>
-						<td>
-							<span>브랜드명 : </span>${product.productName}<br/>
-							<span>카테고리 : </span> 
-								<select>
-									<c:forEach var="category" items="${categoryList}">
-										<option value="${category.categoryId}" label="${category.categoryName}" />
-									</c:forEach>
-								</select>
-							<br/>
-							<span>상품명 : </span><input type="text" value="" data-id="${product.productName}"><br/>
-							<span>상품가격 : </span><input type="number" value="${product.productPrice}" data-id="${product.productPrice}"><br/>
-							<span>사이즈 : </span><input type="text" class="product-size-input"><span> 수량: </span><input type="number" class="product-quantity-input"><button class="add-size_quantity-btn">추가</button><br/>
-							<span>상품소개 : </span><textarea rows="10" cols="60"></textarea>
-
-						</td>
-						<td><input type="checkbox" class="checkBtn"></td>
-					</tr>
+				<tr>
+					<td rowspan="3">${product.productId}</td>
+					<td rowspan="3"><img class="productImg" src="/img/${product.productImage}" width="150"></td>
+					<td width="60px">카테고리 : </td>
+					<td>
+						<select>
+							<c:forEach var="category" items="${categoryList}">
+								<option value="${category.categoryId}" label="${category.categoryName}" />
+							</c:forEach>
+						</select>
+								</td>
+					<td width="80px">브랜드 : </td>
+					<td>${product.productName}</td>
+					<td>상품명 : </td>
+					<td><input type="text" value="" data-id="${product.productName}"></td>
+					<td rowspan="3"><input type="checkbox" class="checkBtn"></td>
+				</tr>
+				<tr>
+					<td>가격 : </td>
+					<td><input type="number" value="${product.productPrice}" data-id="${product.productPrice}"  style="width: 75px"></td>
+					<td>사이즈/수량<br><button class="add-size_quantity-btn" >추가</button>
+					</td>
+					<td colspan="3"><span>사이즈 : </span><input type="text" class="product-size-input" style="width: 60px"><span> /  수량: </span><input type="number" class="product-quantity-input" style="width: 60px"></td>
+				</tr>
+				<tr>
+					<td>상품소개</td>
+					<td colspan="5"><textarea rows="10" cols="75"></textarea></td>
+				</tr>
 				</c:forEach>
 			</table>
+
+
+
+
+
+
+
+
+
 		</div>
 	</div>
 </body>
