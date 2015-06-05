@@ -1,5 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,6 +13,10 @@
 		<%@ include file="./_adminNav.jsp" %>
 		<div id="content">
 			<h1>상품 관리</h1>
+			<div id="confirm">
+				<button>저장</button>
+				<button>취소</button>
+			</div>
 			<table id="categories" style="width: 800px;">
 				<tr>
 					<th width="50">상품ID</th>
@@ -42,11 +47,6 @@
 					</tr>
 				</c:forEach>
 			</table>
-		</div>
-		
-		<div id="confirm">
-			<button>저장</button>
-			<button>취소</button>
 		</div>
 	</div>
 </body>
