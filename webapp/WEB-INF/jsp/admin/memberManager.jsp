@@ -28,7 +28,31 @@
 					<td>John</td>
 					<td>000-1231-1231</td>
 					<td>준비</td>
-					<td>불가</td>
+					<td><i class='fa fa-lock'></i></td>
+					<td>2015.05.12</td>
+					<td>
+						<button>상세정보</button>
+						<button>삭제</button>
+					</td>
+				</tr>
+				<tr>
+					<td>yun@email.com</td>
+					<td>thomas</td>
+					<td>010-231-1231</td>
+					<td>5</td>
+					<td><i class='fa fa-unlock'></i></td>
+					<td>2015.04.11</td>
+					<td>
+						<button>상세정보</button>
+						<button>삭제</button>
+					</td>
+				</tr>
+				<tr>
+					<td>id1@email.com</td>
+					<td>John</td>
+					<td>000-1231-1231</td>
+					<td>준비</td>
+					<td><i class='fa fa-lock'></i></td>
 					<td>2015.05.12</td>
 					<td>
 						<button>상세정보</button>
@@ -40,7 +64,7 @@
 					<td>John</td>
 					<td>000-1231-1231</td>
 					<td>준비</td>
-					<td>불가</td>
+					<td><i class='fa fa-lock'></i></td>
 					<td>2015.05.12</td>
 					<td>
 						<button>상세정보</button>
@@ -52,31 +76,7 @@
 					<td>John</td>
 					<td>000-1231-1231</td>
 					<td>준비</td>
-					<td>불가</td>
-					<td>2015.05.12</td>
-					<td>
-						<button>상세정보</button>
-						<button>삭제</button>
-					</td>
-				</tr>
-				<tr>
-					<td>id1@email.com</td>
-					<td>John</td>
-					<td>000-1231-1231</td>
-					<td>준비</td>
-					<td>불가</td>
-					<td>2015.05.12</td>
-					<td>
-						<button>상세정보</button>
-						<button>삭제</button>
-					</td>
-				</tr>
-				<tr>
-					<td>id1@email.com</td>
-					<td>John</td>
-					<td>000-1231-1231</td>
-					<td>준비</td>
-					<td>불가</td>
+					<td><i class='fa fa-lock'></i></td>
 					<td>2015.05.12</td>
 					<td>
 						<button>상세정보</button>

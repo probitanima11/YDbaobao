@@ -13,9 +13,7 @@
 		<%@ include file="./_adminNav.jsp"%>
 		<div id="content">
 			<h1>브랜드 관리</h1>
-		</div>
-		
-		<div style=" margin: 0 auto; width: 500px;">
+			<div style=" margin: 0 auto; ">
 			<div>
 				<input type="text" id="new-brand"/>
 				<input type="button" id="brand-add" value="추가"/>
@@ -31,6 +29,7 @@
 				</select>
 				
 			</div>
+		</div>
 		</div>
 	</div>
 	<script>

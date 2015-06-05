@@ -8,16 +8,22 @@
 <title>관리자페이지::카테고리관리</title>
 <link rel="stylesheet" href="/css/admin.css">
 <link rel="stylesheet" href="/css/font-awesome.min.css">
+<style>
+	#categories input[type='text'] {
+		width:300px;
+		font-size:20px;
+	}
+</style>
 </head>
 <body>
 	<div id="container">
 		<%@ include file="./_adminNav.jsp" %>
 		<div id="content">
 			<h1>카테고리 관리</h1>
-			<table id="categories" style="width: 800px;">
+			<table id="categories" style="width: 500px;">
 				<tr>
-					<th>카테고리명</th>
-					<th></th>
+					<th style="width:300px;">카테고리명</th>
+					<th style="width:200px;"></th>
 				</tr>
 				<c:forEach var="category" items="${categories}">
 					<tr id="${category.categoryId}">
