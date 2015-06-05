@@ -5,6 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" type="text/css" href="/css/main.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css">
 <title>YDbaobao:: 상품페이지</title>
 <style>
 #product-container {
@@ -98,6 +99,22 @@ h1 {
 			<h1 class="product-name" style="margin-top: 25px; margin-left: 15px;">퓨어레스
 				스커트</h1>
 			<div class="product-price">19,800</div>
+			<div>
+				<tbody>
+					<tr>
+						<th>구매수량</th>
+							<td>
+								<div>
+									<input>
+									<span class="number-control">
+										<i class="fa fa-caret-up"></i>
+										<i class="fa fa-caret-down"></i>
+									</span>
+								</div>
+							</td>
+					</tr>
+				</tbody>
+			</div>
 			<div class="button-group">
 				<button class="btn addtocart">장바구니</button>
 				<button class="btn buyitnow">바로주문</button>
