@@ -16,11 +16,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.support.JSONResponseUtil;
 import com.ydbaobao.model.Brand;
 import com.ydbaobao.service.BrandService;
 import com.ydbaobao.service.CategoryService;
 import com.ydbaobao.service.ProductsService;
-import com.ydbaobao.util.JSONResponseUtil;
 
 @Controller
 @RequestMapping("/brand")
