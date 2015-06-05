@@ -90,7 +90,7 @@ public class ProductsService {
 		List<Brand> brandList = brandDao.readBrands();
 		Map<String, Integer> map = new TreeMap<String, Integer>();
 		for(Brand brand:brandList){
-			map.put(brand.getBrandName(), productsDao.unregisteredProductsCountByBrand(brand.getBrandName()));
+			map.put(brand.getBrandName(), productsDao.unregisteredProductsCountByBrand(brand.getBrandId()));
 		}
 		return map;
 	}
