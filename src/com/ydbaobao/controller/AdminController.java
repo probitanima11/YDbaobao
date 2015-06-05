@@ -143,6 +143,9 @@ public class AdminController {
 	@RequestMapping(value = "/manage/product", method = RequestMethod.GET)
 	public ModelAndView manageProduct() {
 		ModelAndView mv = new ModelAndView("admin/productManager");
+		mv.addObject("product", new Product());
+		mv.addObject("productList", productsService.readUnclassifiedProducts());
+		mv.addObject("categoryList", categoryService.read());
 		return mv;
 	}
 	
@@ -150,10 +153,9 @@ public class AdminController {
 	@RequestMapping(value = "/add/product", method = RequestMethod.GET)
 	public ModelAndView addProduct() {
 		ModelAndView mv = new ModelAndView("admin/productRegistration");
-		mv.addObject("brandList", brandService.readBrands());
-		mv.addObject("productList", productsService.readUnclassifiedProducts());
 		mv.addObject("product", new Product());
-		mv.addObject("categoryList", categoryService.read());
+		mv.addObject("brandList", brandService.readBrands());
+		mv.addObject("unregisteredProductsCountByBrand", productsService.unregisteredProductsCountByBrand());
 		return mv;
 	}
 

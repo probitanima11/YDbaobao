@@ -83,8 +83,8 @@ public class ProductsController {
 	}
 	
 	@RequestMapping(value="/imageUpload", method=RequestMethod.POST)
-	public ModelAndView imageUpload(HttpSession session, Product product, @RequestParam("imageFile") MultipartFile... imageFile) {
-		String savingPath = session.getServletContext().getRealPath("/") + "/img/products/";
+	public ModelAndView imageUpload(Product product, @RequestParam("imageFile") MultipartFile... imageFile) {
+		String savingPath = "/home/baobao/products/";
 		for(MultipartFile file:imageFile){
 			String imageName = productsService.uplodeImage(product,savingPath, file);
 			productsService.create(product.getBrand().getBrandId(), imageName);
@@ -93,8 +93,7 @@ public class ProductsController {
 		// 아래부분 리펙토링 필요. (AdminController.java와 중복)
 		ModelAndView mv = new ModelAndView("admin/productRegistration");
 		mv.addObject("brandList", brandService.readBrands());
-		mv.addObject("categoryList", categoryService.read());
-		mv.addObject("productList", productsService.readUnclassifiedProducts());
+		mv.addObject("unregisteredProductsCountByBrand", productsService.unregisteredProductsCountByBrand());
 		mv.addObject("product", new Product());
 		return mv;
 	}

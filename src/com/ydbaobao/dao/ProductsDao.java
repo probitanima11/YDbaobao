@@ -58,7 +58,7 @@ public class ProductsDao extends JdbcDaoSupport {
 	}
 	
 	public List<Product> readListByCategoryId(int categoryId) {
-		String sql = "select * from PRODUCTS where categoryId=? limit ?, ?";
+		String sql = "select * from PRODUCTS where categoryId=?";
 		return getJdbcTemplate().query(
 				sql, (rs, rowNum) -> new Product(
 						rs.getInt("productId"), rs.getString("productName"),
@@ -104,4 +104,10 @@ public class ProductsDao extends JdbcDaoSupport {
 		}
 		return Boolean.TRUE;
 	}
+
+	public Integer unregisteredProductsCountByBrand(String brandName) {
+		String sql = "select count(1) from PRODUCTS where productName=?";
+		return getJdbcTemplate().queryForObject(sql, Integer.class, brandName);
+	}
+
 }
