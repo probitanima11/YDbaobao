@@ -239,6 +239,65 @@ ul#util li a span {
 	font-size: 20px;
 }
 
+.loginBox {
+	display: block;
+	float: left;
+	height: 500px;
+	width: 784px;
+}
+
+form#customer {
+	margin: 0 auto;
+	display: table;
+	position: relative;
+	top: 123px;
+	padding: 50px;
+	-webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, .4);
+	-moz-box-shadow: 0 1px 3px rgba(0, 0, 0, .4);
+	box-shadow: 0 1px 3px rgba(0, 0, 0, .4);
+}
+
+#customer input {
+	height: 25px;
+	width: 250px;
+	font-size: 14px;
+	float: left;
+	margin-bottom: 10px;
+}
+
+#customer label {
+	width: 90px;
+	display: block;
+	float: left;
+	text-align: right;
+	margin-right: 10px;
+	font-size: 17px;
+	position: relative;
+	top: 3px;
+}
+
+#customer button {
+	background-color: #EA6576;
+	border-radius: 2px;
+	border: 0;
+	font-size: 20px;
+	color: white;
+	padding: 8px 24px;
+	margin: 0;
+	float: right;
+}
+
+#customer h1 {
+	margin: 0;
+	margin-bottom: 10px;
+}
+
+.joinForm #customer {
+	-webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, .4);
+	-moz-box-shadow: 0 1px 3px rgba(0, 0, 0, .4);
+	box-shadow: 0 1px 3px rgba(0, 0, 0, .4);
+}
+
 #footer {
 	position: relative;
 	s min-height: 200px;
