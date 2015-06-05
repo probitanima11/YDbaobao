@@ -30,7 +30,7 @@ public class BrandDao extends JdbcDaoSupport {
 	}
 
 	public List<Brand> readBrands() {
-		String sql = "select * from BRANDS";
+		String sql = "select * from BRANDS order by brandName";
 		return getJdbcTemplate().query(
 				sql, (rs, rowNum) -> new Brand(rs.getInt("brandId"), rs.getString("brandName")));
 	}
