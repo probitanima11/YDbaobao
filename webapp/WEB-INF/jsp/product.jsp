@@ -99,7 +99,7 @@ h1 {
 			<div class="product-price">${product.productPrice}원</div>
 			<div style="margin-top: 25px; margin-left: 15px;">
 				<p>사이즈</p>
-				<select>
+				<select id="size-selector">
                    <c:forEach items="${stockOfProduct}" var="stock">
                          <option value="${stock.size}" label="${stock.size} ( ${stock.quantity}개 남음 )"></option>
                    </c:forEach>
@@ -111,7 +111,7 @@ h1 {
 						<th>구매수량</th>
 						<td>
 							<div>
-								<input type="text" value="1" style="width: 32px;"
+								<input id="qty-selector" type="text" value="1" style="width: 32px;"
 									onkeypress="return isNumberKey(event);">
 								<span style="display:inline-block"
 									class="number-control"> <i id="up-btn"
@@ -133,7 +133,7 @@ h1 {
 	<div id="footer">footer...</div>
 
 	<script>
-		var test = ${stockOfProduct};
+		var productId = ${product.productId};
 		window.addEventListener('load', function() {
 			document.querySelector('.addtocart').addEventListener('click', function(e) {
 				addToCart(e);
@@ -141,7 +141,10 @@ h1 {
 		}, false);
 
 		function addToCart(e) {
-			var param = 'productId=1' + '&size=S' + '&quantity=1';
+			var size = document.getElementById("size-selector").value;
+			var quantity = document.getElementById("qty-selector").value;
+			debugger;
+			var param = 'productId=' + productId + '&size=' + size + '&quantity=' + quantity;
 			ydbaobao.ajax({
 				/* TODO productId, size, quantity 전달. */
 				method : 'post',
