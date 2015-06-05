@@ -85,20 +85,17 @@ h1 {
 		<div id="product-info-container">
 			<div id="product-photo">
 				<img
-					src="http://www.stylenoriter.co.kr/web/product/medium/201505/4027_shop1_259692.jpg">
+					src="${product.productImage}">
 			</div>
 
 			<div id="product-display">
-				<img src="http://stylenoriter.co.kr/web/2015/15su200_01.jpg">
-				<img src="http://stylenoriter.co.kr/web/2015/15su200_02.jpg">
-				<img src="http://stylenoriter.co.kr/web/2015/15su200_04.jpg">
+				${product.productDescription}
 			</div>
 		</div>
 		<div id="product-buy-container"
 			style="position: absolute; top: 0; left: 100%; margin-left: -350px; width: 350px; outline: 1px solid green;">
-			<h1 class="product-name" style="margin-top: 25px; margin-left: 15px;">퓨어레스
-				스커트</h1>
-			<div class="product-price">19,800</div>
+			<h1 class="product-name" style="margin-top: 25px; margin-left: 15px;">${product.productName}</h1>
+			<div class="product-price">${product.productPrice}원</div>
 			<div style="margin-top: 25px; margin-left: 15px;">
 				<tbody>
 					<tr>
