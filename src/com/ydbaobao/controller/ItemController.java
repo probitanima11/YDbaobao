@@ -17,11 +17,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
+import com.support.JSONResponseUtil;
 import com.support.ServletRequestUtil;
 import com.ydbaobao.dao.ItemDao;
 import com.ydbaobao.model.Item;
 import com.ydbaobao.service.ItemService;
-import com.ydbaobao.util.JSONResponseUtil;
 
 @Controller
 @RequestMapping("/item")
@@ -45,9 +45,6 @@ public class ItemController {
 		List<Item> list = itemDao.readCartList(customerId);
 		System.out.println(list);
 		return list;
-//		return ResponseEntity<list>;
-		
-//		return JSONResponseUtil.getJSONResponse(list, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/add")

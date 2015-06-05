@@ -105,9 +105,9 @@ public class ProductsDao extends JdbcDaoSupport {
 		return Boolean.TRUE;
 	}
 
-	public Integer unregisteredProductsCountByBrand(String brandName) {
-		String sql = "select count(1) from PRODUCTS where productName=?";
-		return getJdbcTemplate().queryForObject(sql, Integer.class, brandName);
+	public Integer unregisteredProductsCountByBrand(int brandId) {
+		String sql = "select count(1) from PRODUCTS where brandId=?";
+		return getJdbcTemplate().queryForObject(sql, Integer.class, brandId);
 	}
 
 }

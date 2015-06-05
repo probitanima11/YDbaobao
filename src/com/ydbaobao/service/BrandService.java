@@ -18,6 +18,10 @@ public class BrandService {
 	public List<Brand> readBrands() {
 		return brandDao.readBrands();
 	}
+	
+	public List<Brand> findBrands(String searchValue) {
+		return brandDao.findBrands(searchValue);
+	}
 
 	public int createBrand(String brandName) {
 		if(brandDao.readBrandByBrandName(brandName) != null) {

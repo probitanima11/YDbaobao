@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.support.JSONResponseUtil;
 import com.ydbaobao.service.BrandService;
-import com.ydbaobao.util.JSONResponseUtil;
 
 @Controller
-@RequestMapping("/api/admin/brandManager")
+@RequestMapping("/api/brands")
 public class ApiBrandController {
 	@Resource
 	private BrandService brandService;
@@ -29,8 +29,8 @@ public class ApiBrandController {
 		return JSONResponseUtil.getJSONResponse(brandService.createBrand(brandName), HttpStatus.OK);
 	}
 	
-	@RequestMapping(value="/{brandId}", method=RequestMethod.PUT)
-	public ResponseEntity<Object> update(@RequestParam String brandId, @RequestParam String brandName) {
+	@RequestMapping(value="/{brandId}/{brandName}", method=RequestMethod.PUT)
+	public ResponseEntity<Object> update(@PathVariable String brandId, @PathVariable String brandName) {
 		brandService.updateBrand(brandId, brandName);
 		return JSONResponseUtil.getJSONResponse("", HttpStatus.OK);
 	}
@@ -39,5 +39,10 @@ public class ApiBrandController {
 	public ResponseEntity<Object> delete(@PathVariable String brandId) {
 		brandService.deleteBrand(brandId);
 		return JSONResponseUtil.getJSONResponse("", HttpStatus.OK);
+	}
+	
+	@RequestMapping("/find")
+	public ResponseEntity<Object> find(@RequestParam String searchValue) {
+		return JSONResponseUtil.getJSONResponse(brandService.findBrands(searchValue), HttpStatus.OK);
 	}
 }

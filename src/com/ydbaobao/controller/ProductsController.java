@@ -75,7 +75,6 @@ public class ProductsController {
 	}
 	
 	@RequestMapping(value="/imageUpload", method=RequestMethod.POST)
-
 	public ModelAndView imageUpload(Product product, @RequestParam("imageFile") MultipartFile... imageFile) {
 		String savingPath = "/home/baobao/products/";
 		for(MultipartFile file:imageFile){

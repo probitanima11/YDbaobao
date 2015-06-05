@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -96,19 +97,30 @@ h1 {
 			style="position: absolute; top: 0; left: 100%; margin-left: -350px; width: 350px; outline: 1px solid green;">
 			<h1 class="product-name" style="margin-top: 25px; margin-left: 15px;">${product.productName}</h1>
 			<div class="product-price">${product.productPrice}원</div>
-			<div>
+			<div style="margin-top: 25px; margin-left: 15px;">
+				<p>사이즈</p>
+				<select>
+                   <c:forEach items="${stockOfProduct}" var="stock">
+                         <option value="${stock.size}" label="${stock.size} ( ${stock.quantity}개 남음 )"></option>
+                   </c:forEach>
+				</select>
+			</div>
+			<div style="margin-top: 25px; margin-left: 15px;">
 				<tbody>
 					<tr>
 						<th>구매수량</th>
-							<td>
-								<div>
-									<input>
-									<span class="number-control">
-										<i class="fa fa-caret-up"></i>
-										<i class="fa fa-caret-down"></i>
-									</span>
-								</div>
-							</td>
+						<td>
+							<div>
+								<input type="text" value="1" style="width: 32px;"
+									onkeypress="return isNumberKey(event);">
+								<span style="display:inline-block"
+									class="number-control"> <i id="up-btn"
+									class="fa fa-caret-up" style="display:block"></i> <i id="down-btn"
+									class="fa fa-caret-down" style="display:block"></i>
+								</span>
+								
+							</div>
+						</td>
 					</tr>
 				</tbody>
 			</div>
@@ -121,6 +133,7 @@ h1 {
 	<div id="footer">footer...</div>
 
 	<script>
+		var test = ${stockOfProduct};
 		window.addEventListener('load', function() {
 			document.querySelector('.addtocart').addEventListener('click', function(e) {
 				addToCart(e);
@@ -139,6 +152,11 @@ h1 {
 				}
 			});
 		}
+		
+		 function isNumberKey(evt) {
+	            var charCode = (evt.which) ? evt.which : event.keyCode
+	            return !(charCode > 31 && (charCode < 48 || charCode > 57));
+	     }
 	</script>
 	<script src="/js/ydbaobao.js"></script>
 </body>

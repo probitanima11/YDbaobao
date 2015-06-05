@@ -13,12 +13,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.support.RandomFactory;
 import com.ydbaobao.dao.BrandDao;
 import com.ydbaobao.dao.ProductsDao;
 import com.ydbaobao.model.Brand;
 import com.ydbaobao.model.Category;
 import com.ydbaobao.model.Product;
-import com.ydbaobao.util.RandomFactory;
 
 @Service
 public class ProductsService {
@@ -90,7 +90,7 @@ public class ProductsService {
 		List<Brand> brandList = brandDao.readBrands();
 		Map<String, Integer> map = new TreeMap<String, Integer>();
 		for(Brand brand:brandList){
-			map.put(brand.getBrandName(), productsDao.unregisteredProductsCountByBrand(brand.getBrandName()));
+			map.put(brand.getBrandName(), productsDao.unregisteredProductsCountByBrand(brand.getBrandId()));
 		}
 		return map;
 	}
