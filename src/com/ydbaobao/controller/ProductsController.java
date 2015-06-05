@@ -1,11 +1,8 @@
 package com.ydbaobao.controller;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.stream.IntStream;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +15,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ydbaobao.model.Brand;
 import com.ydbaobao.model.Product;
 import com.ydbaobao.service.BrandService;
 import com.ydbaobao.service.CategoryService;
@@ -38,13 +36,6 @@ public class ProductsController {
 	@RequestMapping(value="", method=RequestMethod.GET)
 	public String load(Model model, WebRequest req, @RequestParam int categoryId) {
 		int quantity = 16;
-		
-		List<Character> firstLetterList = new ArrayList<Character>();
-		for(char ch = 'A'; ch <= 'Z'; ch++) {
-			firstLetterList.add(ch);	
-		}
-		model.addAttribute("firstLetterList", firstLetterList);
-		
 		int index = 0;
 		int selectedIndex = 0;
 		if (null != req.getParameter("index")) {
@@ -79,6 +70,7 @@ public class ProductsController {
 		model.addAttribute("brands", brandService.readBrands());
 		model.addAttribute("category", categoryService.readByCategoryId(categoryId));
 		model.addAttribute("categories", categoryService.read());
+		model.addAttribute("firstLetterList", new Brand().getFirstLetters());
 		return "products";
 	}
 	
