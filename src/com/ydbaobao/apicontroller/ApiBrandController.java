@@ -40,4 +40,9 @@ public class ApiBrandController {
 		brandService.deleteBrand(brandId);
 		return JSONResponseUtil.getJSONResponse("", HttpStatus.OK);
 	}
+	
+	@RequestMapping("/find")
+	public ResponseEntity<Object> find(@RequestParam String searchValue) {
+		return JSONResponseUtil.getJSONResponse(brandService.findBrands(searchValue), HttpStatus.OK);
+	}
 }

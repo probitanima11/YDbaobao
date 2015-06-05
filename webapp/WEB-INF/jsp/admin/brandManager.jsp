@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="/css/admin.css">
 <link rel="stylesheet" href="/css/font-awesome.min.css">
 <style>
-	#brands input[type='text'] {
+	#brands input[type='text'], input[type='text'] {
 		width:300px;
 		font-size:20px;
 	}
@@ -19,6 +19,8 @@
 		<%@ include file="./_adminNav.jsp"%>
 		<div id="content">
 			<h1>브랜드 관리</h1>
+			<input id="search-brand" type="text">
+			<button class="search-brand-btn">검색</button>
 			<table id="brands" style="width: 500px;">
 				<tr>
 					<th style="width:300px;">브랜드명</th>
@@ -44,13 +46,14 @@
 	</div>
 	<script>
 		window.addEventListener('load', function() {
-			setCategoryEvent();
+			setBrandEvent();
 		}, false);
 
-		function setCategoryEvent() {
+		function setBrandEvent() {
 			var updateBtn = document.querySelectorAll('.update-brand-btn');
 			var deleteBtn = document.querySelectorAll('.delete-brand-btn');
 			var createBtn = document.querySelector('.create-brand-btn');
+			var searchBtn = document.querySelector('.search-brand-btn');
 	
 			// for문 조건문용 변수
 			var length;
@@ -68,6 +71,8 @@
 			}
 
 			createBtn.addEventListener('click', createBrand, false);
+			searchBtn.addEventListener('click', searchBrand, false);
+			
 		}
 
 		function updateBrand(e) {
@@ -108,6 +113,29 @@
 					location.reload();
 				}
 			});
+		}
+		
+		function searchBrand() {
+			var searchValue = document.querySelector('#search-brand').value;
+			ydbaobao.ajax({
+				method:'get',
+				url:'/api/brands/find?searchValue=' + searchValue,
+				success: function(req) {
+					appendBrandList(JSON.parse(req.responseText));
+				}
+			});
+		}
+		
+		function appendBrandList(json) {
+			var table = document.querySelector('#brands');
+			while(table.rows.length > 2)
+				table.deleteRow(1);
+			var brandsLength = json.length;
+			for(var i=0; i<brandsLength; i++) {
+				row = table.insertRow(1);
+				row.insertCell(0).innerHTML = "<td><input type='text' value='"+json[i].brandName+"' data-id='"+json[i].brandId+"'></td>";
+				row.insertCell(1).innerHTML = "<td><button class='update-brand-btn'>수정</button><button class='delete-brand-btn'>삭제</button></td>";
+			}
 		}
 	</script>
 	<script src="/js/ydbaobao.js"></script>

@@ -34,6 +34,12 @@ public class BrandDao extends JdbcDaoSupport {
 		return getJdbcTemplate().query(
 				sql, (rs, rowNum) -> new Brand(rs.getInt("brandId"), rs.getString("brandName")));
 	}
+	
+	public List<Brand> findBrands(String searchValue) {
+		String sql = "select * from BRANDS where brandName like \"%" + searchValue + "%\"";
+		return getJdbcTemplate().query(
+				sql, (rs, rowNum) -> new Brand(rs.getInt("brandId"), rs.getString("brandName")));
+	}
 
 	public int createBrand(String brandName) {
 		KeyHolder keyHolder = new GeneratedKeyHolder();
