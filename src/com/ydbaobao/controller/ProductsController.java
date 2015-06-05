@@ -84,7 +84,8 @@ public class ProductsController {
 	
 	@RequestMapping(value="/imageUpload", method=RequestMethod.POST)
 	public ModelAndView imageUpload(HttpSession session, Product product, @RequestParam("imageFile") MultipartFile... imageFile) {
-		String savingPath = session.getServletContext().getRealPath("/") + "/img/products/";
+		String savingPath = "/home/baobao/products/";
+		logger.debug("savingPath: {}", savingPath);
 		for(MultipartFile file:imageFile){
 			String imageName = productsService.uplodeImage(product,savingPath, file);
 			productsService.create(product.getBrand().getBrandId(), imageName);
