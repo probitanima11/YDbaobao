@@ -14,7 +14,7 @@
 	<div id="container">
 		<%@ include file="./_adminNav.jsp"%>
 		<div id="content">
-			<h1>상품 등록</h1>
+			<h1>이미지 등록</h1>
 			<div id="imageFiles">
 				<form:form class="imageUploadForm" method="post" action="/products/imageUpload" modelAttribute="product" enctype="multipart/form-data">
 					<label class="control-label">브랜드 선택 :</label>
@@ -33,32 +33,13 @@
 			
 			<table id="categories" style="width: 800px;">
 				<tr>
-					<th width="50">상품ID</th>
-					<th width="150">상품이미지</th>
-					<th>상세내역</th>
-					<th width="50">선택</th>
+					<th>브랜드</th>
+					<th>미등록 상품 갯수</th>
 				</tr>
-				<c:forEach var="product" items="${productList}">
-					<tr id="${product.productId}">
-						<td>${product.productId}</td>
-						<td><img class="productImg" src="/img/products/${product.productImage}" width="150"></td>
-						<td>
-						<ul>
-							<li><span>브랜드명 : </span>${product.productName}</li>
-							<li><span>카테고리 : </span> 
-								<select>
-									<c:forEach var="category" items="${categoryList}">
-										<option value="${category.categoryId}" label="${category.categoryName}" />
-									</c:forEach>
-								</select>
-							</li>
-							<li><span>상품명 : </span><input type="text" value="" data-id="${product.productName}"></li>
-							<li><span>상품가격 : </span><input type="number" value="${product.productPrice}" data-id="${product.productPrice}"></li>
-							<li><span>상품소개 : </span><textarea rows="5" cols="60"></textarea></li>
-							<li><span>사이즈 : </span><input type="text" class="product-size-input"><span> 수량: </span><input type="number" class="product-quantity-input"><button class="add-size_quantity-btn">추가</button></li>
-						</ul>
-						</td>
-						<td><input type="checkbox" class="checkBtn"></td>
+				<c:forEach var="product" items="${unregisteredProductsCountByBrand}">
+					<tr>
+						<td>${product.key}</td>
+						<td>${product.value}</td>
 					</tr>
 				</c:forEach>
 			</table>
@@ -99,12 +80,6 @@
 			if (document.body.querySelector('.imageFile').files.length === 0) {
 				document.body.querySelector('.submitBtn').disabled = true;
 			}
-		}
-
-		
-		document.querySelector('.add-size_quantity-btn').addEventListener('click', function(e){addSizeQuantity(e);}, false);
-		function addSizeQuantity(e) {
-			
 		}
 	</script>
 </body>

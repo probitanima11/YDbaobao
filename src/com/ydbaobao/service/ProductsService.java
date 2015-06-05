@@ -3,6 +3,8 @@ package com.ydbaobao.service;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 import javax.annotation.Resource;
 
@@ -82,5 +84,14 @@ public class ProductsService {
 
 	public List<Product> readListByBrandId(int brandId) {
 		return productsDao.readListByBrandId(brandId);
+	}
+
+	public Map<String, Integer> unregisteredProductsCountByBrand() {
+		List<Brand> brandList = brandDao.readBrands();
+		Map<String, Integer> map = new TreeMap<String, Integer>();
+		for(Brand brand:brandList){
+			map.put(brand.getBrandName(), productsDao.unregisteredProductsCountByBrand(brand.getBrandName()));
+		}
+		return map;
 	}
 }
