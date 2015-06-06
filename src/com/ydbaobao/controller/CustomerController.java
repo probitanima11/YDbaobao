@@ -86,7 +86,7 @@ public class CustomerController {
 	protected String login(@RequestParam String customerId, @RequestParam String customerPassword, HttpSession session, Model model) throws ExceptionForMessage {
 		SessionCustomer sessionCustomer = (customerService.login(customerId, customerPassword)).createSessionCustomer();
 		session.setAttribute("sessionCustomer", sessionCustomer);
-		return "index";
+		return "redirect:/";
 	}
 	
 	@RequestMapping("/logout")
