@@ -141,6 +141,7 @@ ul#util li a span {
 	text-decoration: none;
 }
 
+/* _brand.jsp */
 #brand-initial-tab {
 	background-color: #EA6576;
 	color: #fff;
@@ -239,6 +240,13 @@ ul#util li a span {
 	font-size: 20px;
 }
 
+/* cart.jsp */
+#cart-list {
+	width: 600px;
+	text-align: center;
+}
+
+/**/
 .loginBox {
 	display: block;
 	float: left;

@@ -21,6 +21,7 @@ import com.support.JSONResponseUtil;
 import com.support.ServletRequestUtil;
 import com.ydbaobao.dao.ItemDao;
 import com.ydbaobao.model.Item;
+import com.ydbaobao.service.CategoryService;
 import com.ydbaobao.service.ItemService;
 
 @Controller
@@ -28,6 +29,8 @@ import com.ydbaobao.service.ItemService;
 public class ItemController {
 	@Resource
 	private ItemService itemService;
+	@Resource
+	private CategoryService categoryService;
 	
 	@Resource
 	private ItemDao itemDao;
@@ -36,6 +39,7 @@ public class ItemController {
 	public String cartForm(HttpSession session, Model model) throws IOException {
 		String customerId = ServletRequestUtil.getCustomerIdFromSession(session);
 		model.addAttribute("list", new Gson().toJson(itemDao.readCartList(customerId)));
+		model.addAttribute("categories", categoryService.read());
 		return "cart";
 	}
 	

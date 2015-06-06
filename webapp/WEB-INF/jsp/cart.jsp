@@ -15,25 +15,49 @@
 		<%@ include file="./commons/_search.jsp"%>
 	</div>
 
-	<div>
-		<div>
-			<ul id="cart-list">
-			</ul>
+	<div id="main-container">
+		<div id="first-section" class="wrap content" style="height: 500px;">
+			<!-- 카테고리 메뉴 -->
+			<%@ include file="./commons/_category.jsp"%>
+
+			<div id="cart-section">
+				<table id="cart-list">
+					<thead>
+						<tr>
+							<th>선택</th>
+							<th>상품명</th>
+							<th>사이즈</th>
+							<th>수량</th>
+							<th>판매가</th>
+						</tr>
+					</thead>
+					<tbody></tbody>
+					<tfoot>
+						<tr>
+							<td colspan="5">
+								<div style="float:left">
+									<button>선택삭제</button>
+									<button>전체선택</button>
+								</div>
+								<div style="float:right">
+									<span>상품합계금액:</span>
+								</div>
+							</td>
+						</tr>
+					</tfoot>
+				</table>
+			</div>
 		</div>
 	</div>
 
 	<div id="footer">footer...</div>
 
-	<template id="cartListTemplate">
-	<div class="itemBody">
-		<div class="productName"></div>
-		<span class="productSize"></span> <button>사이즈 수정</button><br /> <span
-			class="productQuantity"></span><button>수량 수정</button> <br />
-		<span class="productTotalPrice"></span>
-		<div class="control">
-                <a href="#" class="delete">삭제</a>
-            </div>
-	</div>
+	<template id="cart-item-template">
+		<td><input type="checkbox"></td>
+		<td><span class="item-name"></span></td>
+		<td><span class="item-size"></span></td>
+		<td><span class="item-quantity"></span></td>
+		<td><span class="item-price"></span></td>
 	</template>
 
 	<script>
@@ -43,42 +67,26 @@
 	}, false);
 
 	function loadCartList(itemList) {
-		var ul = document.querySelector('#cart-list');
-		for (item of itemList) {
-			var el = ydbaobao.createElement({
-		        name: 'li',
+		var cartList = document.querySelector('#cart-list');
+
+		var length = itemList.length;
+		for (var i = 0; i < length; i++) {
+			var tr = ydbaobao.createElement({
+		        name: 'tr',
 		        attrs: {
-		            /* 'class': "brands-item", */
-		            'id': 'itemId'+item.itemId
+		            'data-id': itemList[i].itemId
 		        },
 		    });
-			ul.appendChild(el);
-			var cartTemplate = document.querySelector("#cartListTemplate").content;
-			var elDiv = document.importNode(cartTemplate, true);
-		  	elDiv.querySelector('.productName').innerHTML = '상품명 : ' + item.product.productName;
-		  	elDiv.querySelector('.productSize').innerHTML = '사이즈 : ' + item.size;
-		  	elDiv.querySelector('.productQuantity').innerHTML = '수량 : ' + item.quantity;
-		  	elDiv.querySelector('.productTotalPrice').innerHTML = '판매가 : ' + item.product.productPrice*item.quantity;
-		  	
-		    el.appendChild(elDiv);
-		  	el.querySelector('.delete').addEventListener('click', function(e) {
-		  		var itemId = e.target.parentElement.parentElement.parentElement.id;
-		  		itemId = itemId.substr(6);
-				ydbaobao.ajax({
-					method:'post',
-					url:'/item/delete/'+itemId,
-					success: function(req) {
-						document.getElementById('itemId'+itemId).remove();
-					}
-				});
-		  		
-		  		/* var target = document.querySelector('#cart-list')
-	        	var el = e.target.parentElement.parentElement;
-	        	var commentText = el.querySelector('.pComment-text').innerHTML;
-	        	var pCommnetId = el.id.slice(4);
-	            delete(pCommnetId, commentText); */
-	        }, false);
-			
+
+			cartList.tBodies[0].appendChild(tr);
+
+			var itemTemplate = document.querySelector("#cart-item-template").content;
+			var item = document.importNode(itemTemplate, true);
+			item.querySelector('.item-name').innerText = itemList[i].product.productName;
+			item.querySelector('.item-size').innerText = itemList[i].size;
+			item.querySelector('.item-quantity').innerText = itemList[i].quantity;
+			item.querySelector('.item-price').innerText = itemList[i].product.productPrice * itemList[i].quantity;
+			tr.appendChild(item);	
 		}
 	}
 	</script>
