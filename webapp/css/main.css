@@ -79,6 +79,8 @@ ul#util li a span {
 	font-size: 20px;
 }
 
+/* _category.jsp */
+
 #category-menu {
 	color: #fff;
 	outline: 1px solid #EA6576;
@@ -246,7 +248,7 @@ ul#util li a span {
 	text-align: center;
 }
 
-/**/
+/* 로그인/회원가입 폼 */
 .loginBox {
 	display: block;
 	float: left;
@@ -258,7 +260,7 @@ form#customer {
 	margin: 0 auto;
 	display: table;
 	position: relative;
-	top: 123px;
+	top: 30px;
 	padding: 50px;
 	-webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, .4);
 	-moz-box-shadow: 0 1px 3px rgba(0, 0, 0, .4);
@@ -279,7 +281,7 @@ form#customer {
 	float: left;
 	text-align: right;
 	margin-right: 10px;
-	font-size: 17px;
+	font-size: 14px;
 	position: relative;
 	top: 3px;
 }

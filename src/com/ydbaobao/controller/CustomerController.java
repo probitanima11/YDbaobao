@@ -32,6 +32,7 @@ public class CustomerController {
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public String form(Model model) {
 		model.addAttribute("customer", new Customer());
+		model.addAttribute("categories", categoryService.read());
 		return "form";
 	}
 	
