@@ -56,7 +56,7 @@ public class CustomerController {
 			return "form";
 		}
 		customerService.join(customer);
-		return "index";
+		return "redirect:/";
 	}
 	
 	@RequestMapping(value ="/update", method = RequestMethod.POST)
