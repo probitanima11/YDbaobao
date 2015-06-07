@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.context.request.WebRequest;
 
 import com.ydbaobao.model.Brand;
+import com.ydbaobao.model.PageConfigParam;
 import com.ydbaobao.service.BrandService;
 import com.ydbaobao.service.CategoryService;
 import com.ydbaobao.service.ProductsService;
@@ -30,38 +31,14 @@ public class HomeController {
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Model model, WebRequest req) {
-		int quantity = 16;
-		int index = 0;
-		int selectedIndex = 0;
-		if (null != req.getParameter("index")) {
-			index = Integer.parseInt(req.getParameter("index"));
-			selectedIndex = index-1;
-			index = (index-1)*quantity;
-		}
-		model.addAttribute("selectedIndex", selectedIndex);
-		model.addAttribute("productList", productsService.readRange(index, quantity));
-		
-		int start = 0, end = 0;
-		int productsCount = productsService.count();
-		int range = productsCount/quantity;
-		end = range;
-		if (productsCount%quantity > 0) {
-			range++;
-		}
-		if (range > 10) {
-			start = index/quantity/10*10;
-		}
-		if (range > start+10) {
-			end = start+10;
-		}
-		if (end == start) {
-			end++;
-		}
-		if (end < range) {
+		PageConfigParam p = new PageConfigParam(16, req.getParameter("index"), productsService.count());
+
+		if (p.getEnd() < p.getRange()) {
 			model.addAttribute("nextBtn", true);
 		}
-		model.addAttribute("range", IntStream.range(start, end).toArray());
-		
+		model.addAttribute("selectedIndex", p.getSelectedIndex());
+		model.addAttribute("range", IntStream.range(p.getStart(), p.getEnd()).toArray());
+		model.addAttribute("productList", productsService.readRange(p.getIndex(), p.getQuantity()));
 		model.addAttribute("categories", categorySevice.read());
 		model.addAttribute("brands", brandService.readBrands());
 		model.addAttribute("firstLetterList", new Brand().getFirstLetters());

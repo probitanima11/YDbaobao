@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ydbaobao.model.Brand;
+import com.ydbaobao.model.PageConfigParam;
 import com.ydbaobao.model.Product;
 import com.ydbaobao.service.BrandService;
 import com.ydbaobao.service.CategoryService;
@@ -35,38 +36,14 @@ public class ProductsController {
 	
 	@RequestMapping(value="", method=RequestMethod.GET)
 	public String load(Model model, WebRequest req, @RequestParam int categoryId) {
-		int quantity = 16;
-		int index = 0;
-		int selectedIndex = 0;
-		if (null != req.getParameter("index")) {
-			index = Integer.parseInt(req.getParameter("index"));
-			selectedIndex = index-1;
-			index = (index-1)*quantity;
-		}
-		model.addAttribute("selectedIndex", selectedIndex);
-		model.addAttribute("productList", productsService.readListByCategoryId(categoryId, index, quantity));
-		
-		int start = 0, end = 0;
-		int productsCount = productsService.countByCategoryId(categoryId);
-		int range = productsCount/quantity;
-		end = range;
-		if (productsCount%quantity > 0) {
-			range++;
-		}
-		if (range > 10) {
-			start = index/quantity/10*10;
-		}
-		if (range > start+10) {
-			end = start+10;
-		}
-		if (end == start) {
-			end++;
-		}
-		if (end < range) {
+		PageConfigParam p = new PageConfigParam(16, req.getParameter("index"), productsService.countByCategoryId(categoryId));
+
+		if (p.getEnd() < p.getRange()) {
 			model.addAttribute("nextBtn", true);
 		}
-		model.addAttribute("range", IntStream.range(start, end).toArray());
-		
+		model.addAttribute("selectedIndex", p.getSelectedIndex());
+		model.addAttribute("range", IntStream.range(p.getStart(), p.getEnd()).toArray());
+		model.addAttribute("productList", productsService.readListByCategoryId(categoryId, p.getIndex(), p.getQuantity()));
 		model.addAttribute("brands", brandService.readBrands());
 		model.addAttribute("category", categoryService.readByCategoryId(categoryId));
 		model.addAttribute("categories", categoryService.read());
