@@ -97,12 +97,20 @@ insert into PRODUCTS (productName, categoryId, brandId, productPrice, productIma
 
 insert into PRODUCTS (productName, categoryId, brandId, productPrice, productImage, productDescription, productCreateDate, productUpdateDate)values("스커트2", "8", "16", 1000, "location", "이쁜옷", default, default);
 
-insert into STOCKS (productId, size, quantity, productUpdateDate) values("1", "S", 100, default);
-insert into STOCKS (productId, size, quantity, productUpdateDate) values("1", "M", 50, default);
-insert into STOCKS (productId, size, quantity, productUpdateDate) values("1", "XL", 30, default);
-insert into STOCKS (productId, size, quantity, productUpdateDate) values("2", "S", 100, default);
-insert into STOCKS (productId, size, quantity, productUpdateDate) values("2", "M", 50, default);
-insert into STOCKS (productId, size, quantity, productUpdateDate) values("2", "XL", 30, default);
+insert into STOCKS (size, quantity, productUpdateDate) values("S", 100, default);
+insert into STOCKS (size, quantity, productUpdateDate) values("M", 50, default);
+insert into STOCKS (size, quantity, productUpdateDate) values("XL", 30, default);
+insert into STOCKS (size, quantity, productUpdateDate) values("S", 100, default);
+insert into STOCKS (size, quantity, productUpdateDate) values("M", 50, default);
+insert into STOCKS (size, quantity, productUpdateDate) values("XL", 30, default);
+
+insert into PRODUCTS_STOCKS values("1","1");
+insert into PRODUCTS_STOCKS values("1","2");
+insert into PRODUCTS_STOCKS values("1","3");
+insert into PRODUCTS_STOCKS values("2","4");
+insert into PRODUCTS_STOCKS values("2","5");
+insert into PRODUCTS_STOCKS values("2","6");
+
 
 insert into ORDERS (orderStatus, customerId, enuri, realPrice, orderAddress, orderCreateDate, orderUpdateDate) values("입금완료", "test", 1000, 100000, "경기도 분당 삼평동", default, default);
 insert into ORDERS (orderStatus, customerId, enuri, realPrice, orderAddress, orderCreateDate, orderUpdateDate) values("입금대기", "test", 500, 30000, "경기도 분당 서현동", default, default);
