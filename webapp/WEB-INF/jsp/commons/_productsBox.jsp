@@ -3,20 +3,23 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <ul>
 	<c:forEach var="product" items="${productList}" varStatus="status">
-		<li class="item"><a
-			href="/product?productId=${product.productId}"> <img
-				src="${product.productImage}" />
-				<div class="item-info">
-					<div class="item-desc">
-						<c:out value="${product.productDescription}" />
+		<li class="item">
+			<div align="center">
+				<a href="/product?productId=${product.productId}"> 
+					<img src="/img/products/${product.productImage}" />
+					<div class="item-info">
+						<div class="item-desc">
+							<c:out value="${product.productDescription}" />
+						</div>
+						<div class="item-name">
+							<c:out value="${product.productName}" />
+						</div>
+						<div class="item-price">
+							<c:out value="${product.productPrice}" />
+						</div>
 					</div>
-					<div class="item-name">
-						<c:out value="${product.productName}" />
-					</div>
-					<div class="item-price">
-						<c:out value="${product.productPrice}" />
-					</div>
-				</div>
-		</a></li>
+				</a>
+			</div>
+		</li>
 	</c:forEach>
 </ul>

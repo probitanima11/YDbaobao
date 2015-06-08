@@ -30,7 +30,7 @@
 				
 				<%-- <form:form class="productUpdate" method="post" action="/products/update" modelAttribute="product" enctype="multipart/form-data"> --%>
 				<tr>
-					<td rowspan="4">${product.productId}</td>
+				<td rowspan="4">${product.productId}</td>
 					<td rowspan="4"><img class="productImg" src="/img/products/${product.productImage}" width="150"></td>
 					<td>카테고리 : </td>
 					<td><select>

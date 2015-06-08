@@ -1,5 +1,7 @@
 package com.ydbaobao.dao;
 
+import java.util.List;
+
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.sql.DataSource;
@@ -45,5 +47,23 @@ public class CustomerDao extends JdbcDaoSupport {
 	public void updateCustomer(Customer customer) {
 		String sql = "update CUSTOMERS set customerName = ?, customerPassword = ?, customerPhone = ?, customerEmail = ?, customerAddress = ?, customerUpdateDate = default where customerId = ?";
 		getJdbcTemplate().update(sql, customer.getCustomerName(), customer.getCustomerPassword(), customer.getCustomerPhone(), customer.getCustomerEmail(), customer.getCustomerAddress(), customer.getCustomerId());		
+	}
+	
+	public List<Customer> readCustomers() {
+		String sql = "select * from CUSTOMERS";
+		try {
+			return getJdbcTemplate().query(sql, (rs, rowNum) -> new Customer(
+					rs.getString("customerId"),
+					rs.getString("customerName"), 
+					rs.getString("customerPassword"),
+					rs.getString("gradeId"),
+					rs.getString("customerPhone"),
+					rs.getString("customerEmail"),
+					rs.getString("customerAddress"),
+					rs.getString("customerCreateDate")
+					));
+		} catch (EmptyResultDataAccessException e) {
+			return null;
+		}
 	}
 }
