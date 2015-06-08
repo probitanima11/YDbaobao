@@ -31,7 +31,8 @@
 }
 
 #product-photo img {
-	width: 100%;
+	max-height: 100%;
+	max-width: 100%;
 }
 
 h1 {
@@ -84,9 +85,9 @@ h1 {
 	<div id="product-container" class="content wrap"
 		style="position: relative;">
 		<div id="product-info-container">
-			<div id="product-photo">
+			<div align=center id="product-photo">
 				<img
-					src="${product.productImage}">
+					src="/img/products/${product.productImage}">
 			</div>
 
 			<div id="product-display">
