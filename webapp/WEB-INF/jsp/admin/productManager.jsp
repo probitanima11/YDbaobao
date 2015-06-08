@@ -28,7 +28,7 @@
 				<c:forEach var="product" items="${productList}">
 				<tr>
 					<td rowspan="3">${product.productId}</td>
-					<td rowspan="3"><img class="productImg" src="/img/${product.productImage}" width="150"></td>
+					<td rowspan="3"><img class="productImg" src="/img/products/${product.productImage}" width="150"></td>
 					<td width="60px">카테고리 : </td>
 					<td>
 						<select>
