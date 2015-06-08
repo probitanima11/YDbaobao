@@ -1,5 +1,7 @@
 package com.ydbaobao.service;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
@@ -12,7 +14,7 @@ import com.ydbaobao.model.Customer;
 public class CustomerService {
 	@Resource
 	private CustomerDao customerDao;
-
+	
 	public void join(Customer customer) throws ExceptionForMessage{
 		if(customerDao.findCustomerByCustomerId(customer.getCustomerId()) != null)
 			throw new ExceptionForMessage("이미 존재하는 아이디 입니다.", "/form");
@@ -33,5 +35,9 @@ public class CustomerService {
 
 	public void update(Customer customer) {
 		customerDao.updateCustomer(customer);
+	}
+	
+	public List<Customer> readCustomers() {
+		return customerDao.readCustomers();
 	}
 }
