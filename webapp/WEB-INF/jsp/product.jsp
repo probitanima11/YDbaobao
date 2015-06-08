@@ -138,6 +138,10 @@ h1 {
 			document.querySelector('.addtocart').addEventListener('click', function(e) {
 				addToCart(e);
 			}, false);
+			
+			document.addEventListener('scroll', function(e){
+				console.log(e);
+			},false);
 		}, false);
 
 		function addToCart(e) {
