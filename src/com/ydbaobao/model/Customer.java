@@ -8,18 +8,15 @@ public class Customer {
 	private String customerPhone;
 	private String customerEmail;
 	private String customerAddress;
+	private String customerCreateDate;
 	
 	public Customer() {
 		
 	}
-	
-	
 
 	public Customer(String customerId) {
 		this(customerId, null, null, null, null, null, null);
 	}
-
-
 
 	public Customer(String customerId, String customerName, String customerPassword, String customerPhone, String customerEmail, String customerAddress) {
 		this(customerId, customerName, customerPassword, null, customerPhone, customerEmail, customerAddress);
@@ -27,6 +24,10 @@ public class Customer {
 	
 	public Customer(String customerId, String customerName, String customerPassword, String customerGrade,
 			String customerPhone, String customerEmail, String customerAddress) {
+		this(customerId, customerName, customerPassword, customerGrade, customerPhone, customerEmail, customerAddress, null);
+	}
+
+	public Customer(String customerId, String customerName, String customerPassword, String customerGrade, String customerPhone, String customerEmail, String customerAddress, String customerCreateDate) {
 		this.customerId = customerId;
 		this.customerName = customerName;
 		this.customerPassword = customerPassword;
@@ -34,6 +35,7 @@ public class Customer {
 		this.customerPhone = customerPhone;
 		this.customerEmail = customerEmail;
 		this.customerAddress = customerAddress;
+		this.customerCreateDate = customerCreateDate;
 	}
 
 	public String getCustomerId() {
@@ -63,6 +65,10 @@ public class Customer {
 	public String getCustomerAddress() {
 		return customerAddress;
 	}
+	
+	public String getCustomerCreateDate() {
+		return customerCreateDate;
+	}
 
 	public void setCustomerId(String customerId) {
 		this.customerId = customerId;
@@ -91,7 +97,7 @@ public class Customer {
 	public void setCustomerAddress(String customerAddress) {
 		this.customerAddress = customerAddress;
 	}
-	
+
 	public boolean isCorrectPassword(String customerPassword) {
 		return this.customerPassword.equals(customerPassword);
 	}
@@ -99,19 +105,30 @@ public class Customer {
 	public SessionCustomer createSessionCustomer() {
 		return new SessionCustomer(customerId, customerName);
 	}
-	
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((customerAddress == null) ? 0 : customerAddress.hashCode());
-		result = prime * result + ((customerEmail == null) ? 0 : customerEmail.hashCode());
-		result = prime * result + ((customerGrade == null) ? 0 : customerGrade.hashCode());
-		result = prime * result + ((customerId == null) ? 0 : customerId.hashCode());
-		result = prime * result + ((customerName == null) ? 0 : customerName.hashCode());
-		result = prime * result + ((customerPassword == null) ? 0 : customerPassword.hashCode());
-		result = prime * result + ((customerPhone == null) ? 0 : customerPhone.hashCode());
+		result = prime * result
+				+ ((customerAddress == null) ? 0 : customerAddress.hashCode());
+		result = prime
+				* result
+				+ ((customerCreateDate == null) ? 0 : customerCreateDate
+						.hashCode());
+		result = prime * result
+				+ ((customerEmail == null) ? 0 : customerEmail.hashCode());
+		result = prime * result
+				+ ((customerGrade == null) ? 0 : customerGrade.hashCode());
+		result = prime * result
+				+ ((customerId == null) ? 0 : customerId.hashCode());
+		result = prime * result
+				+ ((customerName == null) ? 0 : customerName.hashCode());
+		result = prime
+				* result
+				+ ((customerPassword == null) ? 0 : customerPassword.hashCode());
+		result = prime * result
+				+ ((customerPhone == null) ? 0 : customerPhone.hashCode());
 		return result;
 	}
 
@@ -128,6 +145,11 @@ public class Customer {
 			if (other.customerAddress != null)
 				return false;
 		} else if (!customerAddress.equals(other.customerAddress))
+			return false;
+		if (customerCreateDate == null) {
+			if (other.customerCreateDate != null)
+				return false;
+		} else if (!customerCreateDate.equals(other.customerCreateDate))
 			return false;
 		if (customerEmail == null) {
 			if (other.customerEmail != null)
@@ -164,8 +186,11 @@ public class Customer {
 
 	@Override
 	public String toString() {
-		return "Customer [customerId=" + customerId + ", customerName=" + customerName + ", customerPassword="
-				+ customerPassword + ", customerGrade=" + customerGrade + ", customerPhone=" + customerPhone
-				+ ", customerEmail=" + customerEmail + ", customerAddress=" + customerAddress + "]";
+		return "Customer [customerId=" + customerId + ", customerName="
+				+ customerName + ", customerPassword=" + customerPassword
+				+ ", customerGrade=" + customerGrade + ", customerPhone="
+				+ customerPhone + ", customerEmail=" + customerEmail
+				+ ", customerAddress=" + customerAddress
+				+ ", customerCreateDate=" + customerCreateDate + "]";
 	}
 }
