@@ -1,6 +1,5 @@
 package com.ydbaobao.controller;
 
-import java.util.List;
 import java.util.stream.IntStream;
 
 import javax.annotation.Resource;
@@ -54,9 +53,8 @@ public class ProductsController {
 	
 	@RequestMapping(value="/imageUpload", method=RequestMethod.POST)
 	public ModelAndView imageUpload(Product product, @RequestParam("imageFile") MultipartFile... imageFile) {
-		String savingPath = "/home/baobao/products/";
 		for(MultipartFile file:imageFile){
-			String imageName = productsService.uplodeImage(product,savingPath, file);
+			String imageName = productsService.uploadImage(product, file);
 			productsService.create(product.getBrand().getBrandId(), imageName);
 		}
 		

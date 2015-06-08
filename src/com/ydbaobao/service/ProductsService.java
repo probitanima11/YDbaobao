@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.support.ImageResizeUtil;
 import com.support.RandomFactory;
 import com.ydbaobao.dao.BrandDao;
 import com.ydbaobao.dao.ProductsDao;
@@ -45,13 +46,15 @@ public class ProductsService {
 		return productsDao.count();
 	}
 
-	public String uplodeImage(Product product, String savingPath, MultipartFile productImage) {
+	public String uploadImage(Product product, MultipartFile productImage) {
 		String[] imageSplitName = productImage.getOriginalFilename().split("\\.");
 		String extension = imageSplitName[imageSplitName.length-1];
 		String imageName = createImageName(extension);
 		try {
-			productImage.transferTo(new File(savingPath + imageName));
+			File imageFile = new File(ImageResizeUtil.savingPath + imageName);
+			productImage.transferTo(imageFile);
 			product.setProductImage(imageName);
+			ImageResizeUtil.imageResize(imageFile.getPath(), extension);
 		} catch (IllegalStateException | IOException e) {
 			// TODO 예외처리 추가(giyatto)
 			e.printStackTrace();
