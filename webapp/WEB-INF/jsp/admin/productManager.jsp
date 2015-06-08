@@ -47,17 +47,17 @@
 					<td>${product.productName}</td>
 					<td>재고량 : </td>
 					<td>사이즈</td>
-					<td>수량</td>
+					<td>수 량</td>
 				</tr>
 				<tr>
-					<td>가격 : </td>
+					<td>가 격 : </td>
 					<td><input type="number" value="${product.productPrice}" data-id="${product.productPrice}"></td>
 					<td>
-					<button id="add-size_quantity-btn" class="${product.productId}">추가</button>
-					<button id="delete-size_quantity-btn" class="${product.productId}">삭제</button>
+					<button class="add-size_quantity-btn" value="${product.productId}">추가</button>
+					<button class="delete-size_quantity-btn" value="${product.productId}">삭제</button>
 					</td>
-					<td class='stock-size'><input type="text" name ='size' id="product-size-input" class="${product.productId}"></td>
-					<td class='stock-quantity'><input type="number" name = 'quantity' id="product-quantity-input" class="${product.productId}"></td>
+					<td id='stock-size' class="${product.productId}"><input type="text" id="product-size-input" class="${product.productId}" name ='size'></td>
+					<td id='stock-quantity' class="${product.productId}"><input type="number" id="product-quantity-input" class="${product.productId}" name = 'quantity' ></td>
 				</tr>
 				<tr>
 					<td>상품소개 : </td>
@@ -70,36 +70,76 @@
 	</div>
 
 	<script>
-		document.body.querySelector('#add-size_quantity-btn').addEventListener('click', function(e){
-			addSizeAndQuentity();
-		});
+	
+	window.addEventListener('load', function(e) {
+		setStocksEvent();
+	}, false);
+	
+
+	function setStocksEvent(){
+		var addBtn = document.querySelectorAll('.add-size_quantity-btn');
+		var deleteBtn = document.querySelectorAll('.delete-size_quantity-btn');
 		
-		document.body.querySelector('#delete-size_quantity-btn').addEventListener('click', function(e){
-			deleteSizeAndQuentity(e);
-		});
-		
-		function deleteSizeAndQuentity(e) {
-			var sizeTable = document.body.querySelectorAll('.stock-size');
-			var quantityTable = document.body.querySelectorAll('.stock-quantity');
-			debugger;
-		}
-		
-		
-		function addSizeAndQuentity(e) {
-			var sizeTable = document.body.querySelector('.stock-size');
-			var quantityTable = document.body.querySelector('.stock-quantity');
-			appendInputBox('product-size-input', sizeTable);
-			appendInputBox('product-quantity-input', quantityTable);
+		for(var i = 0; i < addBtn.length; i++) {
+			addBtn[i].addEventListener('click', function(e) {
+				addSizeAndQuentity(e.target.value);
+			}, false);
 		}
 
-		function appendInputBox(idName, targetTable) {
-			var el=undefined;
-			var br=document.createElement('br')
-			el=document.createElement('input');
-			el.setAttribute('id', idName);
-			targetTable.appendChild(br);
-			targetTable.appendChild(el);
+		for(var j = 0; j < deleteBtn.length; j++) {
+			deleteBtn[j].addEventListener('click', function(e) {
+				deleteSizeAndQuentity(e.target.value);
+			}), false;
 		}
+	}
+		
+	function deleteSizeAndQuentity(targetValue) {
+		var sizeTable = document.body.querySelectorAll('#stock-size');
+		var quantityTable = document.body.querySelectorAll('#stock-quantity');
+		removeInputBox('product-size-input', sizeTable, targetValue);
+		removeInputBox('product-quantity-input', quantityTable, targetValue);
+	}
+		
+		
+	function addSizeAndQuentity(targetValue) {
+		var sizeTable = document.body.querySelectorAll('#stock-size');
+		var quantityTable = document.body.querySelectorAll('#stock-quantity');
+		appendInputBox('product-size-input', 'text','size', sizeTable, targetValue);
+		appendInputBox('product-quantity-input', 'number','quantity', quantityTable, targetValue);
+	}
+
+	function appendInputBox(idName, type, name, targetTable, targetValue) {
+		var el=undefined;
+		var br=document.createElement('br')
+		
+		for(var i=0; i<targetTable.length; i++){
+			if(targetTable[i].className === targetValue){
+				el=document.createElement('input');
+				el.setAttribute('type', type);
+				el.setAttribute('id', idName);
+				el.setAttribute('class', targetValue);
+				el.setAttribute('name', name);
+				targetTable[i].appendChild(br);
+				targetTable[i].appendChild(el);
+				break;
+			}
+		}
+	}
+	
+	function removeInputBox(idName, targetTable, targetValue) {
+		var el=undefined;
+		var length=targetTable.length;
+		for(var i=length-1; i>=0; i--){
+			
+			var target = targetTable[i];
+			
+			if(target.className === targetValue && target.childElementCount>1){
+				target.removeChild(target.lastChild);	// inputBox삭제
+				target.removeChild(target.lastChild);	// <br/> 삭제
+				break;
+			}
+		}
+	}
 		
 	</script>
 
