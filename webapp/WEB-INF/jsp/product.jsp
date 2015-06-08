@@ -135,13 +135,19 @@ h1 {
 
 	<script>
 		var productId = ${product.productId};
+		var productBuyContainer;
 		window.addEventListener('load', function() {
 			document.querySelector('.addtocart').addEventListener('click', function(e) {
 				addToCart(e);
 			}, false);
-			
+			productBuyContainer = document.querySelector("#product-buy-container");
 			document.addEventListener('scroll', function(e){
-				console.log(e);
+				console.log(window.scrollY);
+				if (window.scrollY > 150) {
+					productBuyContainer.style.top = (window.scrollY - 150)+"px";
+				} else {
+					productBuyContainer.style.top = "0px";
+				}
 			},false);
 		}, false);
 
