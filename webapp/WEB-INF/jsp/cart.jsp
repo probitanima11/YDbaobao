@@ -36,8 +36,8 @@
 						<tr>
 							<td colspan="5">
 								<div style="float:left">
-									<button>선택삭제</button>
-									<button>전체선택</button>
+									<button id="selection-delete-btn">선택삭제</button>
+									<button id="select-all-btn">전체선택</button>
 								</div>
 								<div style="float:right">
 									<span>상품합계금액:</span>
@@ -53,7 +53,7 @@
 	<div id="footer">footer...</div>
 
 	<template id="cart-item-template">
-		<td><input type="checkbox"></td>
+		<td><input class="item-check" type="checkbox"></td>
 		<td><span class="item-name"></span></td>
 		<td><span class="item-size"></span></td>
 		<td><span class="item-quantity"></span></td>
@@ -64,6 +64,34 @@
 	window.addEventListener('load', function() {
 		var itemList = ${list};
 		loadCartList(itemList);
+		document.querySelector('#selection-delete-btn').addEventListener('click', function() {
+			var checkedItems = document.querySelectorAll('.item-check');
+			
+			var length = checkedItems.length;
+			for(var i = 0; i < length; i++) {
+				if(checkedItems[i].checked) {
+					var tr = checkedItems[i].parentElement.parentElement;
+					ydbaobao.ajax({
+						method : 'delete',
+						url : '/item/delete/' + tr.dataset.id,
+						success : function(req) {
+							// cart-list table에서 제거
+							tr.remove();
+						}
+					});
+				}
+			}
+		});
+
+		document.querySelector('#select-all-btn').addEventListener('click', function() {
+			var checkedItems = document.querySelectorAll('.item-check');
+
+			var length = checkedItems.length;
+			for(var i = 0; i < length; i++) {
+				checkedItems[i].checked = true;
+			}
+		});
+
 	}, false);
 
 	function loadCartList(itemList) {
