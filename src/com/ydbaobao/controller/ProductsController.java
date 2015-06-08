@@ -59,11 +59,25 @@ public class ProductsController {
 			productsService.create(product.getBrand().getBrandId(), imageName);
 		}
 		
-		// 아래부분 리펙토링 필요. (AdminController.java와 중복)
 		ModelAndView mv = new ModelAndView("admin/productRegistration");
 		mv.addObject("brandList", brandService.readBrands());
 		mv.addObject("unregisteredProductsCountByBrand", productsService.unregisteredProductsCountByBrand());
 		mv.addObject("product", new Product());
 		return mv;
 	}
+	
+	@RequestMapping(value="/update", method=RequestMethod.POST)
+	public ModelAndView update(Product product) {
+
+		
+		logger.debug("과연 상품은? : {}", product.toString());
+		
+		
+		ModelAndView mv = new ModelAndView("admin/productRegistration");
+		mv.addObject("brandList", brandService.readBrands());
+		mv.addObject("unregisteredProductsCountByBrand", productsService.unregisteredProductsCountByBrand());
+		mv.addObject("product", new Product());
+		return mv;
+	}
+	
 }

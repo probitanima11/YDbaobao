@@ -31,7 +31,8 @@
 }
 
 #product-photo img {
-	width: 100%;
+	max-height: 100%;
+	max-width: 100%;
 }
 
 h1 {
@@ -84,9 +85,9 @@ h1 {
 	<div id="product-container" class="content wrap"
 		style="position: relative;">
 		<div id="product-info-container">
-			<div id="product-photo">
+			<div align=center id="product-photo">
 				<img
-					src="${product.productImage}">
+					src="/img/products/${product.productImage}">
 			</div>
 
 			<div id="product-display">
@@ -134,10 +135,20 @@ h1 {
 
 	<script>
 		var productId = ${product.productId};
+		var productBuyContainer;
 		window.addEventListener('load', function() {
 			document.querySelector('.addtocart').addEventListener('click', function(e) {
 				addToCart(e);
 			}, false);
+			productBuyContainer = document.querySelector("#product-buy-container");
+			document.addEventListener('scroll', function(e){
+				console.log(window.scrollY);
+				if (window.scrollY > 150) {
+					productBuyContainer.style.top = (window.scrollY - 150)+"px";
+				} else {
+					productBuyContainer.style.top = "0px";
+				}
+			},false);
 		}, false);
 
 		function addToCart(e) {
