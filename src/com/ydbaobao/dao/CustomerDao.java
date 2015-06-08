@@ -66,4 +66,19 @@ public class CustomerDao extends JdbcDaoSupport {
 			return null;
 		}
 	}
+
+	public Customer readCustomerById(String customerId) {
+		String sql = "select *from CUSTOMERS where customerId = ?";
+		
+		return getJdbcTemplate().queryForObject(sql,  (rs, rowNum) -> new Customer(
+				rs.getString("customerId"),
+				rs.getString("customerName"), 
+				rs.getString("customerPassword"),
+				rs.getString("gradeId"),
+				rs.getString("customerPhone"),
+				rs.getString("customerEmail"),
+				rs.getString("customerAddress"),
+				rs.getString("customerCreateDate")
+				), customerId);
+	}
 }

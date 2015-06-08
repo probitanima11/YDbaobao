@@ -40,4 +40,8 @@ public class CustomerService {
 	public List<Customer> readCustomers() {
 		return customerDao.readCustomers();
 	}
+
+	public Customer readCustomerById(String customerId) {
+		return customerDao.readCustomerById(customerId);
+	}
 }

@@ -79,7 +79,7 @@
 				}));
 				memberRow.appendChild(ydbaobao.createElement({
 					name:"td",
-					content:"<button class='btn'><i class='fa fa-info-circle'></i>  상세정보</button><button class='btn'><i class='fa fa-remove'></i>  삭제</button>"
+					content:'<a href="/admin/manage/member/' + member.customerId + '"><button class="btn"><i class="fa fa-info-circle"></i>  상세정보</button></a><button class="btn"><i class="fa fa-remove"></i>  삭제</button>'
 				}));
 				memberTable.appendChild(memberRow);	
 			}
