@@ -58,8 +58,8 @@ public class ItemController {
 		return JSONResponseUtil.getJSONResponse("", HttpStatus.OK);
 	}
 	
-	@RequestMapping(value="/delete/{itemId}", method=RequestMethod.POST)
-	public ResponseEntity<Object> addToCart(@PathVariable int itemId, HttpSession session) throws IOException {
+	@RequestMapping(value="/delete/{itemId}", method=RequestMethod.DELETE)
+	public ResponseEntity<Object> deleteFromCart(@PathVariable int itemId, HttpSession session) throws IOException {
 		String customerId = ServletRequestUtil.getCustomerIdFromSession(session);
 		itemService.deleteCartList(customerId, itemId);
 		return JSONResponseUtil.getJSONResponse("", HttpStatus.OK);
