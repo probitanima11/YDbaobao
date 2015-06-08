@@ -53,9 +53,8 @@ public class ProductsController {
 	
 	@RequestMapping(value="/imageUpload", method=RequestMethod.POST)
 	public ModelAndView imageUpload(Product product, @RequestParam("imageFile") MultipartFile... imageFile) {
-		String savingPath = "/home/baobao/products/";
 		for(MultipartFile file:imageFile){
-			String imageName = productsService.uplodeImage(product,savingPath, file);
+			String imageName = productsService.uplodeImage(product, file);
 			productsService.create(product.getBrand().getBrandId(), imageName);
 		}
 		
@@ -68,11 +67,7 @@ public class ProductsController {
 	
 	@RequestMapping(value="/update", method=RequestMethod.POST)
 	public ModelAndView update(Product product) {
-
-		
 		logger.debug("과연 상품은? : {}", product.toString());
-		
-		
 		ModelAndView mv = new ModelAndView("admin/productRegistration");
 		mv.addObject("brandList", brandService.readBrands());
 		mv.addObject("unregisteredProductsCountByBrand", productsService.unregisteredProductsCountByBrand());
