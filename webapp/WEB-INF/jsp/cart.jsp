@@ -84,7 +84,12 @@
 		});
 
 		document.querySelector('#select-all-btn').addEventListener('click', function() {
+			var checkedItems = document.querySelectorAll('.item-check');
 
+			var length = checkedItems.length;
+			for(var i = 0; i < length; i++) {
+				checkedItems[i].checked = true;
+			}
 		});
 
 	}, false);
