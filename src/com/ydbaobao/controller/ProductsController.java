@@ -1,5 +1,6 @@
 package com.ydbaobao.controller;
 
+import java.util.List;
 import java.util.stream.IntStream;
 
 import javax.annotation.Resource;
@@ -68,15 +69,12 @@ public class ProductsController {
 	
 	@RequestMapping(value="/update", method=RequestMethod.POST)
 	public ModelAndView update(Product product) {
-
+		logger.debug("상품리스트? : {}", product.toString());
 		
-		logger.debug("과연 상품은? : {}", product.toString());
-		
-		
-		ModelAndView mv = new ModelAndView("admin/productRegistration");
-		mv.addObject("brandList", brandService.readBrands());
-		mv.addObject("unregisteredProductsCountByBrand", productsService.unregisteredProductsCountByBrand());
+		ModelAndView mv = new ModelAndView("admin/productManager");
 		mv.addObject("product", new Product());
+		mv.addObject("productList", productsService.readUnclassifiedProducts());
+		mv.addObject("categoryList", categoryService.read());
 		return mv;
 	}
 	

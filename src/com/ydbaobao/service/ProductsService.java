@@ -53,7 +53,7 @@ public class ProductsService {
 			productImage.transferTo(new File(savingPath + imageName));
 			product.setProductImage(imageName);
 		} catch (IllegalStateException | IOException e) {
-			// TODO 예외처리 추가 예정. (giyatto)
+			// TODO 예외처리 추가(giyatto)
 			e.printStackTrace();
 		}
 		return imageName;
@@ -66,7 +66,6 @@ public class ProductsService {
 		}
 		return imageName;
 	}
-	
 
 	public void create(int brandId, String productImage) {
 		Brand brand = brandDao.readBrandByBrandId(brandId);
@@ -79,7 +78,12 @@ public class ProductsService {
 	}
 
 	public List<Product> readUnclassifiedProducts() {
-		return productsDao.readListByCategoryId(0);
+		List<Product> productList = productsDao.readListByCategoryId(0);
+		for(Product product:productList){
+			Brand brand = product.getBrand();
+			brand.setBrandName(brandDao.readBrandByBrandId(brand.getBrandId()).getBrandName());
+		}
+		return productList;
 	}
 
 	public List<Product> readListByBrandId(int brandId) {
