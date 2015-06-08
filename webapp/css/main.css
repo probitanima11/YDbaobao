@@ -184,13 +184,26 @@ ul#util li a span {
 #brand-list ul {
 	list-style: none;
 	margin: 0;
-	padding: 0;
+	padding: 20px;
 	text-align: center;
 }
 
 #brand-list ul li {
+	position:relative;
 	display: inline-block;
-	width: 150px;
+	text-align: left;
+}
+
+#brand-list ul li a {
+	position:relative;
+	display:block;
+	text-decoration:none;
+	width:150px;
+	padding:10px;
+}
+
+#brand-list ul li span {
+	color:#454545;
 }
 
 #item-container {

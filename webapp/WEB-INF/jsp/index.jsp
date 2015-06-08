@@ -47,13 +47,17 @@
 			
 			for(var i = 0, length = firstLetterList.length; i < length; i++) {
 				firstLetterList[i].addEventListener('click', function(e) {
+					var selectedBrand = document.querySelector(".active");
+					if (selectedBrand !== null) {
+						selectedBrand.className = selectedBrand.className.replace(" active","");
+					}
+					this.className += " active";
 					searchBrand(e.target);
 				}, false);
 			}
 		}
 
 		function searchBrand(target) {
-			console.log(target.innerText);
 			ydbaobao.ajax({
 				method:'get',
 				url:'/brand/search?firstLetter=' + target.innerText,
