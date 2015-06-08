@@ -1,0 +1,8 @@
+ALTER TABLE PRODUCTS MODIFY productName varchar(50);
+ALTER TABLE STOCKS DROP FOREIGN KEY stocks_ibfk_1;
+ALTER TABLE STOCKS DROP productId;
+
+ALTER TABLE PRODUCTS ADD stockId int after brandId;
+SET foreign_key_checks = 0;
+ALTER TABLE PRODUCTS ADD FOREIGN KEY (stockId) REFERENCES STOCKS(stockId) ON DELETE CASCADE;
+SET foreign_key_checks = 1;
