@@ -1,6 +1,9 @@
 package com.ydbaobao.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
@@ -160,6 +163,12 @@ public class AdminController {
 	@RequestMapping(value = "/manage/product", method = RequestMethod.GET)
 	public ModelAndView manageProduct() {
 		ModelAndView mv = new ModelAndView("admin/productManager");
+		
+//		Map<String, Object> map = new HashMap<String, Object>();
+//		map.put("product", new Product());
+//		map.put("stockList", new ArrayList<Stock>());
+//		mv.addObject("productMap", map);
+
 		mv.addObject("product", new Product());
 		mv.addObject("productList", productsService.readUnclassifiedProducts());
 		mv.addObject("categoryList", categoryService.read());
