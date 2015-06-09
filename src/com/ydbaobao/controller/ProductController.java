@@ -21,7 +21,6 @@ public class ProductController {
 
 	@RequestMapping()
 	public String read(@RequestParam int productId, Model model) {
-		model.addAttribute("stockOfProduct", stockDao.readListByProductId(productId));
 		model.addAttribute("product", productService.read(productId));
 		return "product";
 	}

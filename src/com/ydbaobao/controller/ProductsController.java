@@ -54,14 +54,15 @@ public class ProductsController {
 	@RequestMapping(value="/imageUpload", method=RequestMethod.POST)
 	public ModelAndView imageUpload(Product product, @RequestParam("imageFile") MultipartFile... imageFile) {
 		for(MultipartFile file:imageFile){
+			int productId = productsService.create(product.getBrand().getBrandId());
+			product.setProductId(productId);
 			String imageName = productsService.uploadImage(product, file);
-			productsService.create(product.getBrand().getBrandId(), imageName);
+			productsService.updateProductImage(product, imageName);
 		}
 		
 		ModelAndView mv = new ModelAndView("admin/productRegistration");
 		mv.addObject("brandList", brandService.readBrands());
 		mv.addObject("unregisteredProductsCountByBrand", productsService.unregisteredProductsCountByBrand());
-		mv.addObject("product", new Product());
 		return mv;
 	}
 	

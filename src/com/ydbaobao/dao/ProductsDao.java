@@ -1,17 +1,25 @@
 package com.ydbaobao.dao;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.sql.DataSource;
 
+import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import com.ydbaobao.model.Brand;
 import com.ydbaobao.model.Category;
 import com.ydbaobao.model.Product;
+import com.ydbaobao.model.Stock;
 
 @Repository
 public class ProductsDao extends JdbcDaoSupport {
@@ -24,13 +32,20 @@ public class ProductsDao extends JdbcDaoSupport {
 		setDataSource(dataSource);
 	}
 	
-	public void create(Product product) {
+	public int create(Product product) {
 		String sql = "insert into PRODUCTS values(default, ?, ?, ?, default, ?, default, default, default)";
-		getJdbcTemplate().update(sql, 
-				product.getProductName(), 
-				product.getCategory().getCategoryId(),
-				product.getBrand().getBrandId(),
-				product.getProductImage());
+		KeyHolder keyHolder = new GeneratedKeyHolder();
+		getJdbcTemplate().update(new PreparedStatementCreator() {
+			public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+				PreparedStatement ps = connection.prepareStatement(sql, new String[] { "noteId" });
+				ps.setString(1, product.getProductName());
+				ps.setObject(2, product.getCategory().getCategoryId());
+				ps.setObject(3, product.getBrand().getBrandId());
+				ps.setString(4, product.getProductImage());
+				return ps;
+			}
+		}, keyHolder);
+		return keyHolder.getKey().intValue();
 	}
 	
 	public List<Product> readRange(int start, int quantity) {
@@ -42,7 +57,7 @@ public class ProductsDao extends JdbcDaoSupport {
 						new Brand(rs.getInt("brandId"), null),
 						rs.getInt("productPrice"), rs.getString("productImage"),
 						rs.getString("productDescription"), rs.getLong("productCreateDate"),
-						rs.getLong("productUpdateDate")), start, quantity);
+						rs.getLong("productUpdateDate"), new ArrayList<Stock>()), start, quantity);
 	}
 
 	public List<Product> readListByCategoryId(int categoryId, int index, int quantity) {
@@ -54,7 +69,7 @@ public class ProductsDao extends JdbcDaoSupport {
 						new Brand(rs.getInt("brandId"), null),
 						rs.getInt("productPrice"), rs.getString("productImage"),
 						rs.getString("productDescription"), rs.getLong("productCreateDate"),
-						rs.getLong("productUpdateDate")), categoryId, index, quantity);
+						rs.getLong("productUpdateDate"), new ArrayList<Stock>()), categoryId, index, quantity);
 	}
 	
 	public List<Product> readListByCategoryId(int categoryId) {
@@ -66,7 +81,7 @@ public class ProductsDao extends JdbcDaoSupport {
 						new Brand(rs.getInt("brandId"), null),
 						rs.getInt("productPrice"), rs.getString("productImage"),
 						rs.getString("productDescription"), rs.getLong("productCreateDate"),
-						rs.getLong("productUpdateDate")), categoryId);
+						rs.getLong("productUpdateDate"), new ArrayList<Stock>()), categoryId);
 	}
 	
 	public int count() {
@@ -94,7 +109,7 @@ public class ProductsDao extends JdbcDaoSupport {
 						new Brand(rs.getInt("brandId"), null),
 						rs.getInt("productPrice"), rs.getString("productImage"),
 						rs.getString("productDescription"), rs.getLong("productCreateDate"),
-						rs.getLong("productUpdateDate")), brandId);
+						rs.getLong("productUpdateDate"), new ArrayList<Stock>()), brandId);
 	}
 	
 	public boolean isExistImageName(String imageName) {
@@ -108,6 +123,11 @@ public class ProductsDao extends JdbcDaoSupport {
 	public Integer unregisteredProductsCountByBrand(int brandId) {
 		String sql = "select count(1) from PRODUCTS where brandId=?";
 		return getJdbcTemplate().queryForObject(sql, Integer.class, brandId);
+	}
+
+	public int updateProductImage(int productId, String imageName) {
+		String sql = "update PRODUCTS set productImage = ? where productId = ?";
+		return getJdbcTemplate().update(sql, imageName, productId);
 	}
 
 }

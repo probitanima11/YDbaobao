@@ -101,7 +101,7 @@ h1 {
 			<div style="margin-top: 25px; margin-left: 15px;">
 				<h3>사이즈</h3>
 				<select id="size-selector">
-                   <c:forEach items="${stockOfProduct}" var="stock">
+                   <c:forEach items="${product.stockList}" var="stock">
                          <option value="${stock.size}" label="${stock.size} ( ${stock.quantity}개 남음 )"></option>
                    </c:forEach>
 				</select>

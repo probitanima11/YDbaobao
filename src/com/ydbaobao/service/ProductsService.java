@@ -14,9 +14,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.support.ImageResizeUtil;
-import com.support.RandomFactory;
 import com.ydbaobao.dao.BrandDao;
 import com.ydbaobao.dao.ProductsDao;
+import com.ydbaobao.dao.StockDao;
 import com.ydbaobao.model.Brand;
 import com.ydbaobao.model.Category;
 import com.ydbaobao.model.Product;
@@ -29,6 +29,9 @@ public class ProductsService {
 	private ProductsDao productsDao;
 	@Resource
 	private BrandDao brandDao;
+	@Resource
+	private StockDao stockDao;
+	
 	
 	public List<Product> readListByCategoryId(int categoryId, int index, int quantity) {
 		return productsDao.readListByCategoryId(categoryId, index, quantity);
@@ -49,7 +52,7 @@ public class ProductsService {
 	public String uploadImage(Product product, MultipartFile productImage) {
 		String[] imageSplitName = productImage.getOriginalFilename().split("\\.");
 		String extension = imageSplitName[imageSplitName.length-1];
-		String imageName = createImageName(extension);
+		String imageName = product.getProductId()+"."+extension;
 		try {
 			File imageFile = new File(ImageResizeUtil.savingPath + imageName);
 			productImage.transferTo(imageFile);
@@ -61,19 +64,13 @@ public class ProductsService {
 		}
 		return imageName;
 	}
-	
-	private String createImageName(String extension) {
-		String imageName = RandomFactory.getRandomId(5)+"."+extension;
-		if (productsDao.isExistImageName(imageName)) {
-			return createImageName(extension);
-		}
-		return imageName;
-	}
 
-	public void create(int brandId, String productImage) {
+	public int create(int brandId) {
 		Brand brand = brandDao.readBrandByBrandId(brandId);
-		Product product = new Product(brand.getBrandName(), new Category(0), brand, productImage);
-		productsDao.create(product);
+		Product product = new Product(brand.getBrandName(), new Category(0), brand);
+		int productId = productsDao.create(product);
+		stockDao.create(productId);
+		return productId;
 	}
 
 	public List<Product> readRange(int start, int range) {
@@ -100,5 +97,9 @@ public class ProductsService {
 			map.put(brand.getBrandName(), productsDao.unregisteredProductsCountByBrand(brand.getBrandId()));
 		}
 		return map;
+	}
+
+	public void updateProductImage(Product product, String imageName) {
+		productsDao.updateProductImage(product.getProductId(), imageName);
 	}
 }

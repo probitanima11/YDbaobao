@@ -1,5 +1,6 @@
 package com.ydbaobao.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Product {
@@ -13,29 +14,29 @@ public class Product {
 	private String productDescription;
 	private long productCreateDate;
 	private long productUpdateDate;
+	private List<Stock> stockList;
 	
 	public Product() {
 		
 	}
 	
 	public Product(int productId) {
-		this(productId, null, null, null, 0, null, null, 0, 0);
+		this(productId, null, new Category(), new Brand(), 0, null, null, 0, 0, new ArrayList<Stock>());
 	}
 	
 	public Product(int productId, String productName, int productPrice) {
-		this(productId, productName, null, null, productPrice, null, null, 0, 0);
+		this(productId, productName, new Category(), new Brand(), productPrice, null, null, 0, 0, new ArrayList<Stock>());
 	}
 	
-	public Product(String productName, Category category, Brand brand, String productImage){
+	public Product(String productName, Category category, Brand brand){
 		super();
 		this.productName = productName;
 		this.category = category;
 		this.brand=brand;
-		this.productImage = productImage;
 	}
 
 	public Product(int productId, String productName, Category category, Brand brand, int productPrice,
-			String productImage, String productDescription, long productCreateDate, long productUpdateDate) {
+			String productImage, String productDescription, long productCreateDate, long productUpdateDate, List<Stock> stockList) {
 		this.productId = productId;
 		this.productName = productName;
 		this.category = category;
@@ -45,6 +46,7 @@ public class Product {
 		this.productDescription = productDescription;
 		this.productCreateDate = productCreateDate;
 		this.productUpdateDate = productUpdateDate;
+		this.stockList = stockList;
 	}
 
 	public int getProductId() {
@@ -83,6 +85,10 @@ public class Product {
 		return productUpdateDate;
 	}
 
+	public List<Stock> getStockList() {
+		return stockList;
+	}
+
 	public void setProductId(int productId) {
 		this.productId = productId;
 	}
@@ -119,6 +125,10 @@ public class Product {
 		this.productUpdateDate = productUpdateDate;
 	}
 
+	public void setStockList(List<Stock> stockList) {
+		this.stockList = stockList;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -132,6 +142,7 @@ public class Product {
 		result = prime * result + ((productName == null) ? 0 : productName.hashCode());
 		result = prime * result + productPrice;
 		result = prime * result + (int) (productUpdateDate ^ (productUpdateDate >>> 32));
+		result = prime * result + ((stockList == null) ? 0 : stockList.hashCode());
 		return result;
 	}
 
@@ -177,6 +188,11 @@ public class Product {
 			return false;
 		if (productUpdateDate != other.productUpdateDate)
 			return false;
+		if (stockList == null) {
+			if (other.stockList != null)
+				return false;
+		} else if (!stockList.equals(other.stockList))
+			return false;
 		return true;
 	}
 
@@ -185,6 +201,6 @@ public class Product {
 		return "Product [productId=" + productId + ", productName=" + productName + ", category=" + category
 				+ ", brand=" + brand + ", productPrice=" + productPrice + ", productImage=" + productImage
 				+ ", productDescription=" + productDescription + ", productCreateDate=" + productCreateDate
-				+ ", productUpdateDate=" + productUpdateDate + "]";
+				+ ", productUpdateDate=" + productUpdateDate + ", stockList=" + stockList + "]";
 	}
 }
