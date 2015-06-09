@@ -129,18 +129,26 @@ ul#util li a span {
 #horizontal-category-menu ul {
 	list-style: none;
 	text-align: center;
-	padding: 10px 0px 10px 0px;
+	padding:0;
+	//padding: 10px 0px 10px 0px;
 	margin: 0;
 }
 
 #horizontal-category-menu ul li {
 	display: inline-block;
-	margin: 0px 0px 0px 10px;
 }
 
 #horizontal-category-menu ul li a {
-	color: #EA6576;
+	color:#EA6576;
+	display:block;
+	padding:10px 5px 10px 5px;
 	text-decoration: none;
+	transition-duration:.3s;
+}
+
+#horizontal-category-menu ul li a:hover, #horizontal-category-menu ul li a.active {
+	color:#fff;
+	background-color:#EA6576;
 }
 
 /* _brand.jsp */

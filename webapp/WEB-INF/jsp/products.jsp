@@ -24,11 +24,11 @@
 	<div id="main-container" class="wrap content">
 		<c:choose>
 			<c:when test="${not empty brand}">
-				<div style="font-size: 50px;">${brand.brandName}</div>
+				<div style="font-size: 40px; padding:25px 0 15px 0;">${brand.brandName}</div>
 			</c:when>
 
 			<c:otherwise>
-				<div style="font-size: 50px;">${category.categoryName}</div>
+				<div style="font-size: 40px; padding:25px 0 15px 0;">${category.categoryName}</div>
 			</c:otherwise>
 		</c:choose>
 		<%@ include file="./commons/_brand.jsp"%>
