@@ -1,12 +1,18 @@
 package com.ydbaobao.dao;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.sql.DataSource;
 
+import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import com.ydbaobao.model.Brand;
@@ -25,6 +31,23 @@ public class ProductDao extends JdbcDaoSupport {
 		setDataSource(dataSource);
 	}
 	
+	public int create(Product product) {
+		String sql = "insert into PRODUCTS values(default, ?, ?, ?, default, ?, default, default, default)";
+		KeyHolder keyHolder = new GeneratedKeyHolder();
+		getJdbcTemplate().update(new PreparedStatementCreator() {
+			public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+				PreparedStatement ps = connection.prepareStatement(sql, new String[] { "noteId" });
+				ps.setString(1, product.getProductName());
+				ps.setObject(2, product.getCategory().getCategoryId());
+				ps.setObject(3, product.getBrand().getBrandId());
+				ps.setString(4, product.getProductImage());
+				return ps;
+			}
+		}, keyHolder);
+		return keyHolder.getKey().intValue();
+	}
+	
+	
 	public Product read(int productId) {
 		String sql = "select * from PRODUCTS where productId = ?";
 		return getJdbcTemplate().queryForObject(sql, (rs, rowNum) -> new Product(
@@ -34,5 +57,10 @@ public class ProductDao extends JdbcDaoSupport {
 						rs.getInt("productPrice"), rs.getString("productImage"),
 						rs.getString("productDescription"), rs.getLong("productCreateDate"),
 						rs.getLong("productUpdateDate"), new ArrayList<Stock>()), productId);
+	}
+	
+	public int updateProductImage(int productId, String imageName) {
+		String sql = "update PRODUCTS set productImage = ? where productId = ?";
+		return getJdbcTemplate().update(sql, imageName, productId);
 	}
 }

@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.support.ImageResizeUtil;
 import com.ydbaobao.dao.BrandDao;
+import com.ydbaobao.dao.ProductDao;
 import com.ydbaobao.dao.ProductsDao;
 import com.ydbaobao.dao.StockDao;
 import com.ydbaobao.model.Brand;
@@ -27,6 +28,8 @@ public class ProductsService {
 
 	@Resource
 	private ProductsDao productsDao;
+	@Resource
+	private ProductDao productDao;
 	@Resource
 	private BrandDao brandDao;
 	@Resource
@@ -68,7 +71,7 @@ public class ProductsService {
 	public int create(int brandId) {
 		Brand brand = brandDao.readBrandByBrandId(brandId);
 		Product product = new Product(brand.getBrandName(), new Category(0), brand);
-		int productId = productsDao.create(product);
+		int productId = productDao.create(product);
 		stockDao.create(productId);
 		return productId;
 	}
@@ -100,6 +103,6 @@ public class ProductsService {
 	}
 
 	public void updateProductImage(Product product, String imageName) {
-		productsDao.updateProductImage(product.getProductId(), imageName);
+		productDao.updateProductImage(product.getProductId(), imageName);
 	}
 }

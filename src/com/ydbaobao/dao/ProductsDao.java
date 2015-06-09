@@ -32,22 +32,6 @@ public class ProductsDao extends JdbcDaoSupport {
 		setDataSource(dataSource);
 	}
 	
-	public int create(Product product) {
-		String sql = "insert into PRODUCTS values(default, ?, ?, ?, default, ?, default, default, default)";
-		KeyHolder keyHolder = new GeneratedKeyHolder();
-		getJdbcTemplate().update(new PreparedStatementCreator() {
-			public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-				PreparedStatement ps = connection.prepareStatement(sql, new String[] { "noteId" });
-				ps.setString(1, product.getProductName());
-				ps.setObject(2, product.getCategory().getCategoryId());
-				ps.setObject(3, product.getBrand().getBrandId());
-				ps.setString(4, product.getProductImage());
-				return ps;
-			}
-		}, keyHolder);
-		return keyHolder.getKey().intValue();
-	}
-	
 	public List<Product> readRange(int start, int quantity) {
 		String sql ="select * from PRODUCTS ORDER BY productCreateDate ASC LIMIT ?, ?";
 		return getJdbcTemplate().query(
@@ -111,23 +95,9 @@ public class ProductsDao extends JdbcDaoSupport {
 						rs.getString("productDescription"), rs.getLong("productCreateDate"),
 						rs.getLong("productUpdateDate"), new ArrayList<Stock>()), brandId);
 	}
-	
-	public boolean isExistImageName(String imageName) {
-		String sql = "select count(1) from PRODUCTS where productImage = ?";
-		if (getJdbcTemplate().queryForObject(sql, Integer.class, imageName) == 0) {
-			return Boolean.FALSE;
-		}
-		return Boolean.TRUE;
-	}
 
 	public Integer unregisteredProductsCountByBrand(int brandId) {
 		String sql = "select count(1) from PRODUCTS where brandId=?";
 		return getJdbcTemplate().queryForObject(sql, Integer.class, brandId);
 	}
-
-	public int updateProductImage(int productId, String imageName) {
-		String sql = "update PRODUCTS set productImage = ? where productId = ?";
-		return getJdbcTemplate().update(sql, imageName, productId);
-	}
-
 }
