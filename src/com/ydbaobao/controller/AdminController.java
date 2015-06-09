@@ -1,6 +1,9 @@
 package com.ydbaobao.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
@@ -17,8 +20,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ydbaobao.model.Category;
 import com.ydbaobao.model.Product;
+import com.ydbaobao.model.Stock;
 import com.ydbaobao.service.BrandService;
 import com.ydbaobao.service.CategoryService;
+import com.ydbaobao.service.CustomerService;
 import com.ydbaobao.service.ProductsService;
 
 @Controller
@@ -29,10 +34,10 @@ public class AdminController {
 
 	@Resource
 	private CategoryService categoryService;
-	
 	@Resource
 	private BrandService brandService;
-	
+	@Resource
+	private CustomerService customerService;
 	@Resource
 	private ProductsService productsService;
 	
@@ -73,6 +78,21 @@ public class AdminController {
 	@RequestMapping(value = "/manage/member", method = RequestMethod.GET)
 	public ModelAndView manageMember() {
 		ModelAndView mv = new ModelAndView("admin/memberManager");
+		return mv;
+	}
+	
+	/**
+	 * 관리자 페이지에서 회원목록에서 회원상세보기 버튼 클릭시 동작
+	 * @author jyb
+	 * @param customerId
+	 * @return WEB-INF/jsp/admin 폴더의 파일을 불러오기 위해 ModelAndView 타입 사용, 
+	 * customerId로 검색한 결과를 customer 객체에 저장
+	 */
+	@RequestMapping(value = "/manage/member/{customerId}", method = RequestMethod.GET)
+	public ModelAndView showDetailMember(@PathVariable String customerId) {
+		logger.debug(customerId);
+		ModelAndView mv = new ModelAndView("admin/memberDetail");
+		mv.addObject("customer", customerService.readCustomerById(customerId));
 		return mv;
 	}
 
@@ -143,6 +163,12 @@ public class AdminController {
 	@RequestMapping(value = "/manage/product", method = RequestMethod.GET)
 	public ModelAndView manageProduct() {
 		ModelAndView mv = new ModelAndView("admin/productManager");
+		
+//		Map<String, Object> map = new HashMap<String, Object>();
+//		map.put("product", new Product());
+//		map.put("stockList", new ArrayList<Stock>());
+//		mv.addObject("productMap", map);
+
 		mv.addObject("product", new Product());
 		mv.addObject("productList", productsService.readUnclassifiedProducts());
 		mv.addObject("categoryList", categoryService.read());

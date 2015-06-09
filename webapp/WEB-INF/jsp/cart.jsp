@@ -83,12 +83,22 @@
 			}
 		});
 
-		document.querySelector('#select-all-btn').addEventListener('click', function() {
+		document.querySelector('#select-all-btn').addEventListener('click', function(e) {
 			var checkedItems = document.querySelectorAll('.item-check');
-
 			var length = checkedItems.length;
-			for(var i = 0; i < length; i++) {
-				checkedItems[i].checked = true;
+
+			//전체선택 해제
+			if(e.target.classList.contains('checked')) {
+				e.target.classList.remove('checked');
+				for(var i = 0; i < length; i++) {
+					checkedItems[i].checked = false;
+				}
+				return;
+			}
+
+			e.target.classList.add('checked');
+			for(var j = 0; j < length; j++) {
+				checkedItems[j].checked = true;
 			}
 		});
 
