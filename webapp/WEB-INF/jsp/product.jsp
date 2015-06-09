@@ -99,7 +99,7 @@ h1 {
 			<h1 class="product-name" style="margin-top: 25px; margin-left: 15px;">${product.productName}</h1>
 			<div class="product-price">${product.productPrice}원</div>
 			<div style="margin-top: 25px; margin-left: 15px;">
-				<p>사이즈</p>
+				<h3>사이즈</h3>
 				<select id="size-selector">
                    <c:forEach items="${stockOfProduct}" var="stock">
                          <option value="${stock.size}" label="${stock.size} ( ${stock.quantity}개 남음 )"></option>
@@ -107,23 +107,10 @@ h1 {
 				</select>
 			</div>
 			<div style="margin-top: 25px; margin-left: 15px;">
-				<tbody>
-					<tr>
-						<th>구매수량</th>
-						<td>
-							<div>
-								<input id="qty-selector" type="text" value="1" style="width: 32px;"
-									onkeypress="return isNumberKey(event);">
-								<span style="display:inline-block"
-									class="number-control"> <i id="up-btn"
-									class="fa fa-caret-up" style="display:block"></i> <i id="down-btn"
-									class="fa fa-caret-down" style="display:block"></i>
-								</span>
-								
-							</div>
-						</td>
-					</tr>
-				</tbody>
+				<h3>구매수량</h3>
+				<button onclick="qtyControl('minus')"><i class='fa fa-minus'></i></button>
+				<input id="qty-selector" type="text" value="1" style="width: 32px;" onkeypress="return isNumberKey(event);">
+				<button onclick="qtyControl('plus')"><i class='fa fa-plus'></i></button>
 			</div>
 			<div class="button-group">
 				<button class="btn addtocart">장바구니</button>
@@ -154,7 +141,6 @@ h1 {
 		function addToCart(e) {
 			var size = document.getElementById("size-selector").value;
 			var quantity = document.getElementById("qty-selector").value;
-			debugger;
 			var param = 'productId=' + productId + '&size=' + size + '&quantity=' + quantity;
 			ydbaobao.ajax({
 				/* TODO productId, size, quantity 전달. */
@@ -171,6 +157,17 @@ h1 {
 	            var charCode = (evt.which) ? evt.which : event.keyCode
 	            return !(charCode > 31 && (charCode < 48 || charCode > 57));
 	     }
+		 
+		 function qtyControl(type) {
+			 var qty = document.querySelector("#qty-selector");
+			 switch (type) {
+			 	case "plus": qty.value = qty.value*1+1; break;
+			 	case "minus": 
+			 		qty.value = qty.value*1-1;
+			 		if (qty.value*1 <= 0) qty.value = 1;
+			 		break;
+			 }
+		 }
 	</script>
 	<script src="/js/ydbaobao.js"></script>
 </body>
