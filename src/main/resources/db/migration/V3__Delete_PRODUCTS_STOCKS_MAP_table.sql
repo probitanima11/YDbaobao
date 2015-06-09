@@ -1,0 +1,6 @@
+DROP TABLE PRODUCTS_STOCKS;
+
+ALTER TABLE STOCKS ADD productId int NOT NULL after stockId;
+SET foreign_key_checks = 0;
+ALTER TABLE STOCKS ADD FOREIGN KEY (productId) REFERENCES PRODUCTS(productId) ON DELETE CASCADE;
+SET foreign_key_checks = 1;
