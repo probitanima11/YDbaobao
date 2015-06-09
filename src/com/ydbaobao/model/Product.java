@@ -1,5 +1,7 @@
 package com.ydbaobao.model;
 
+import java.util.List;
+
 public class Product {
 	
 	private int productId;
@@ -44,62 +46,79 @@ public class Product {
 		this.productCreateDate = productCreateDate;
 		this.productUpdateDate = productUpdateDate;
 	}
-	
+
 	public int getProductId() {
 		return productId;
 	}
+
 	public String getProductName() {
 		return productName;
 	}
+
 	public Category getCategory() {
 		return category;
 	}
+
 	public Brand getBrand() {
 		return brand;
 	}
+
 	public int getProductPrice() {
 		return productPrice;
 	}
+
 	public String getProductImage() {
 		return productImage;
 	}
+
 	public String getProductDescription() {
 		return productDescription;
 	}
+
 	public long getProductCreateDate() {
 		return productCreateDate;
 	}
+
 	public long getProductUpdateDate() {
 		return productUpdateDate;
 	}
+
 	public void setProductId(int productId) {
 		this.productId = productId;
 	}
+
 	public void setProductName(String productName) {
 		this.productName = productName;
 	}
+
 	public void setCategory(Category category) {
 		this.category = category;
 	}
+
 	public void setBrand(Brand brand) {
 		this.brand = brand;
 	}
+
 	public void setProductPrice(int productPrice) {
 		this.productPrice = productPrice;
 	}
+
 	public void setProductImage(String productImage) {
 		this.productImage = productImage;
 	}
+
 	public void setProductDescription(String productDescription) {
 		this.productDescription = productDescription;
 	}
+
 	public void setProductCreateDate(long productCreateDate) {
 		this.productCreateDate = productCreateDate;
 	}
+
 	public void setProductUpdateDate(long productUpdateDate) {
 		this.productUpdateDate = productUpdateDate;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -115,7 +134,7 @@ public class Product {
 		result = prime * result + (int) (productUpdateDate ^ (productUpdateDate >>> 32));
 		return result;
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -163,7 +182,7 @@ public class Product {
 
 	@Override
 	public String toString() {
-		return "Products [productId=" + productId + ", productName=" + productName + ", category=" + category
+		return "Product [productId=" + productId + ", productName=" + productName + ", category=" + category
 				+ ", brand=" + brand + ", productPrice=" + productPrice + ", productImage=" + productImage
 				+ ", productDescription=" + productDescription + ", productCreateDate=" + productCreateDate
 				+ ", productUpdateDate=" + productUpdateDate + "]";
