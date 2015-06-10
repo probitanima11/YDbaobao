@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Product {
-	
 	private int productId;
 	private String productName;
 	private Category category;
@@ -17,7 +16,6 @@ public class Product {
 	private List<Stock> stockList;
 	
 	public Product() {
-		
 	}
 	
 	public Product(int productId) {

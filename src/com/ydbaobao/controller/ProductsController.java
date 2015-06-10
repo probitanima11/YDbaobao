@@ -20,6 +20,7 @@ import com.ydbaobao.model.PageConfigParam;
 import com.ydbaobao.model.Product;
 import com.ydbaobao.service.BrandService;
 import com.ydbaobao.service.CategoryService;
+import com.ydbaobao.service.ProductService;
 import com.ydbaobao.service.ProductsService;
 
 @Controller
@@ -33,6 +34,8 @@ public class ProductsController {
 	private BrandService brandService;
 	@Resource
 	private ProductsService productsService;
+	@Resource
+	private ProductService productService;
 	
 	@RequestMapping(value="", method=RequestMethod.GET)
 	public String load(Model model, WebRequest req, @RequestParam int categoryId) {
@@ -54,10 +57,10 @@ public class ProductsController {
 	@RequestMapping(value="/imageUpload", method=RequestMethod.POST)
 	public ModelAndView imageUpload(Product product, @RequestParam("imageFile") MultipartFile... imageFile) {
 		for(MultipartFile file:imageFile){
-			int productId = productsService.create(product.getBrand().getBrandId());
+			int productId = productService.create(product.getBrand().getBrandId());
 			product.setProductId(productId);
 			String imageName = productsService.uploadImage(product, file);
-			productsService.updateProductImage(product, imageName);
+			productService.updateProductImage(product, imageName);
 		}
 		
 		ModelAndView mv = new ModelAndView("admin/productRegistration");
@@ -65,16 +68,4 @@ public class ProductsController {
 		mv.addObject("unregisteredProductsCountByBrand", productsService.unregisteredProductsCountByBrand());
 		return mv;
 	}
-	
-	@RequestMapping(value="/update", method=RequestMethod.POST)
-	public ModelAndView update(Product product) {
-		logger.debug("상품리스트? : {}", product.toString());
-		
-		ModelAndView mv = new ModelAndView("admin/productManager");
-		mv.addObject("product", new Product());
-		mv.addObject("productList", productsService.readUnclassifiedProducts());
-		mv.addObject("categoryList", categoryService.read());
-		return mv;
-	}
-	
 }

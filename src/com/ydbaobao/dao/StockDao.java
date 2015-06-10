@@ -30,8 +30,19 @@ public class StockDao extends JdbcDaoSupport {
 						rs.getString("size"), rs.getInt("quantity")), productId);
 	}
 
-	public void create(int productId) {
+	public void create(Product product, Stock stock) {
+		String sql = "insert into STOCKS(productId, size, quantity) values(?, ?, ?);";
+		getJdbcTemplate().update(sql, product.getProductId(), stock.getSize(), stock.getQuantity());
+	}
+	
+	public void createDefault(int productId) {
 		String sql = "insert into STOCKS(productId) values(?);";
 		getJdbcTemplate().update(sql, productId);
 	}
+
+	public void update(Stock stock) {
+		String sql = "update STOCKS set size = ?, quantity=?, stockUpdateDate=default  where stockId = ?";
+		getJdbcTemplate().update(sql, stock.getSize(), stock.getQuantity(), stock.getStockId());
+	}
+
 }

@@ -47,7 +47,6 @@ public class ProductDao extends JdbcDaoSupport {
 		return keyHolder.getKey().intValue();
 	}
 	
-	
 	public Product read(int productId) {
 		String sql = "select * from PRODUCTS where productId = ?";
 		return getJdbcTemplate().queryForObject(sql, (rs, rowNum) -> new Product(
@@ -62,5 +61,10 @@ public class ProductDao extends JdbcDaoSupport {
 	public int updateProductImage(int productId, String imageName) {
 		String sql = "update PRODUCTS set productImage = ? where productId = ?";
 		return getJdbcTemplate().update(sql, imageName, productId);
+	}
+
+	public int update(Product product) {
+		String sql = "update PRODUCTS set productName = ?, categoryId = ?, brandId = ?, productPrice=?, productDescription=?, productUpdateDate=default where productId = ?";
+		return getJdbcTemplate().update(sql, product.getProductName(), product.getCategory().getCategoryId(), product.getBrand().getBrandId(), product.getProductPrice(), product.getProductDescription(), product.getProductId());
 	}
 }

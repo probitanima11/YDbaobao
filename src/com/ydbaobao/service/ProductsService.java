@@ -8,8 +8,6 @@ import java.util.TreeMap;
 
 import javax.annotation.Resource;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,11 +19,10 @@ import com.ydbaobao.dao.StockDao;
 import com.ydbaobao.model.Brand;
 import com.ydbaobao.model.Category;
 import com.ydbaobao.model.Product;
+import com.ydbaobao.model.Stock;
 
 @Service
 public class ProductsService {
-	private static final Logger logger = LoggerFactory.getLogger(ProductsService.class);
-
 	@Resource
 	private ProductsDao productsDao;
 	@Resource
@@ -68,14 +65,6 @@ public class ProductsService {
 		return imageName;
 	}
 
-	public int create(int brandId) {
-		Brand brand = brandDao.readBrandByBrandId(brandId);
-		Product product = new Product(brand.getBrandName(), new Category(0), brand);
-		int productId = productDao.create(product);
-		stockDao.create(productId);
-		return productId;
-	}
-
 	public List<Product> readRange(int start, int range) {
 		return productsDao.readRange(start, range);
 	}
@@ -85,6 +74,7 @@ public class ProductsService {
 		for(Product product:productList){
 			Brand brand = product.getBrand();
 			brand.setBrandName(brandDao.readBrandByBrandId(brand.getBrandId()).getBrandName());
+			product.setStockList(stockDao.readListByProductId(product.getProductId()));
 		}
 		return productList;
 	}
@@ -102,7 +92,13 @@ public class ProductsService {
 		return map;
 	}
 
-	public void updateProductImage(Product product, String imageName) {
-		productDao.updateProductImage(product.getProductId(), imageName);
+	public List<Product> readProducts() {
+		List<Product> productList = productsDao.readProductsList();
+		for(Product product:productList){
+			Brand brand = product.getBrand();
+			brand.setBrandName(brandDao.readBrandByBrandId(brand.getBrandId()).getBrandName());
+			product.setStockList(stockDao.readListByProductId(product.getProductId()));
+		}
+		return productList;
 	}
 }

@@ -1,9 +1,7 @@
 package com.ydbaobao.controller;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
@@ -18,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ydbaobao.model.Brand;
 import com.ydbaobao.model.Category;
 import com.ydbaobao.model.Product;
 import com.ydbaobao.model.Stock;
@@ -164,7 +163,9 @@ public class AdminController {
 	public ModelAndView manageProduct() {
 		ModelAndView mv = new ModelAndView("admin/productManager");
 		mv.addObject("product", new Product());
-		mv.addObject("productList", productsService.readUnclassifiedProducts());
+		//mv.addObject("productList", productsService.readUnclassifiedProducts());
+		mv.addObject("productList", productsService.readProducts());
+		mv.addObject("brandList", brandService.readBrands());
 		mv.addObject("categoryList", categoryService.read());
 		return mv;
 	}
