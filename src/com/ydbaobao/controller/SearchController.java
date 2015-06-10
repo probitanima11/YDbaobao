@@ -1,6 +1,8 @@
 package com.ydbaobao.controller;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.IntStream;
 
 import javax.annotation.Resource;
@@ -31,7 +33,10 @@ public class SearchController {
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public String search(Model model, WebRequest req, @RequestParam String terms, @RequestParam String select) {
-		String query = terms.replace("^\\s|\\s$", "").replace(" ", "|");
+		Pattern pt = Pattern.compile("^\\s{1,}|\\s{1,}$");
+		Matcher m = pt.matcher(terms);
+		String query = m.replaceAll("").replaceAll(" ", "|");
+		logger.debug(query);
 		int count = 0;
 		String selectOption = "상품명";
 		List<Product> products= null;
