@@ -37,46 +37,8 @@
 		<%@ include file="./commons/_productsBox.jsp" %>
 		<%@ include file="./commons/_productsListBar.jsp" %>
 	</div>
-		<script>
-		window.addEventListener('load', function() {
-			setBrandSearchEvent();
-		}, false)
 
-		function setBrandSearchEvent() {
-			var firstLetterList = document.querySelectorAll('.first-letter');
-			
-			for(var i = 0, length = firstLetterList.length; i < length; i++) {
-				firstLetterList[i].addEventListener('click', function(e) {
-					searchBrand(e.target);
-				}, false);
-			}
-		}
-
-		function searchBrand(target) {
-			ydbaobao.ajax({
-				method:'get',
-				url:'/brand/search?firstLetter=' + target.textContent,
-				success: function(req) {
-					changeBrandList(JSON.parse(req.responseText));
-				}
-			});
-		}
-
-		function changeBrandList(brands) {
-			// 기존 brand list 삭제
-			var ul = document.querySelector('#brand-list > ul');
-			while(ul.firstChild) {
-				ul.removeChild(ul.firstChild);
-			}
-
-			// 검색된 브랜드 리스트 출력
-			for(var i = 0, length = brands.length; i < length; i++) {
-				var li = document.createElement('li');
-				li.innerHTML += '<a href="/brand/products/' + brands[i].brandId + '"><span>' + brands[i].brandName + '</span></a>';
-				ul.appendChild(li);
-			}
-		}
-	</script>
+	<script src="/js/brand.js"></script>
 	<script src="/js/ydbaobao.js"></script>
 </body>
 </html>
