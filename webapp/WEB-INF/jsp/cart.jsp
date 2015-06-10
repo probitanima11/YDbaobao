@@ -39,8 +39,8 @@
 									<button id="selection-delete-btn">선택삭제</button>
 									<button id="select-all-btn">전체선택</button>
 								</div>
-								<div style="float:right">
-									<span>상품합계금액:</span>
+								<div id="total-price" style="float:right">
+									<span></span>
 								</div>
 							</td>
 						</tr>
@@ -113,6 +113,7 @@
 		var cartList = document.querySelector('#cart-list');
 
 		var length = itemList.length;
+		var totalPrice = 0;
 		for (var i = 0; i < length; i++) {
 			var tr = ydbaobao.createElement({
 		        name: 'tr',
@@ -128,9 +129,12 @@
 			item.querySelector('.item-name').textContent = itemList[i].product.productName;
 			item.querySelector('.item-size').textContent = itemList[i].size;
 			item.querySelector('.item-quantity').textContent = itemList[i].quantity;
-			item.querySelector('.item-price').textContent = itemList[i].product.productPrice * itemList[i].quantity;
+			var price = itemList[i].product.productPrice * itemList[i].quantity;
+			item.querySelector('.item-price').textContent = price;
 			tr.appendChild(item);	
+			totalPrice += price;
 		}
+		document.querySelector("#total-price span").textContent = "상품합계금액: " + totalPrice;
 	}
 	</script>
 	<script src="/js/ydbaobao.js"></script>
