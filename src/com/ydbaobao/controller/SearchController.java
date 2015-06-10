@@ -55,8 +55,10 @@ public class SearchController {
 		model.addAttribute("selectedIndex", p.getSelectedIndex());
 		model.addAttribute("range", IntStream.range(p.getStart(), p.getEnd()).toArray());
 		model.addAttribute("categories", categoryService.read());
-		model.addAttribute("select", selectOption);
-		model.addAttribute("query", terms);
+		model.addAttribute("selected", selectOption);
+		model.addAttribute("select", select);
+		model.addAttribute("terms", terms);
+		model.addAttribute("query", query);
 		return "search";
 	}
 
