@@ -82,6 +82,11 @@ ul#util li a span {
 	padding: 10px 5px;
 }
 
+.search-message {
+	font-size: 20px;
+	margin: 10px 0px 0px 10px;
+}
+
 #brand-search-container {
 	border-bottom: 2px solid #EA6576;
 }

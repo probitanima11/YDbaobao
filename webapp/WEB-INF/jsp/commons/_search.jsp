@@ -6,7 +6,7 @@
 			<a href="/"> <img
 				src="/img/yd_logo.gif" />
 			</a>
-			<form action="/search" method="post" id="search-form">
+			<form action="/search" method="get" id="search-form">
 				<div id="search-bar">
 					<select name="select">
 						<option value="product-name">상품명</option>

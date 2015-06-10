@@ -44,12 +44,28 @@ public class ProductsService {
 		return productsDao.readListByCategoryId(categoryId);
 	}
 	
+	public List<Product> readByProductName(String query, int index, int quantity) {
+		return productsDao.readByProductName(query, index, quantity);
+	}
+	
+	public List<Product> readByBrandName(String query, int index, int quantity) {
+		return productsDao.readByBrandName(query, index, quantity);
+	}
+	
 	public int countByCategoryId(int categoryId) {
 		return productsDao.countByCategoryId(categoryId);
 	}
 	
 	public int count() {
 		return productsDao.count();
+	}
+	
+	public int countBySearchProductName(String terms) {
+		return productsDao.countBySearchProductName(terms);
+	}
+	
+	public int countBySearchBrandName(String terms) {
+		return productsDao.countBySearchBrandName(terms);
 	}
 
 	public String uploadImage(Product product, MultipartFile productImage) {

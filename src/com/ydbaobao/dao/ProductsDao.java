@@ -68,6 +68,30 @@ public class ProductsDao extends JdbcDaoSupport {
 						rs.getLong("productUpdateDate"), new ArrayList<Stock>()), categoryId);
 	}
 	
+	public List<Product> readByProductName(String query, int index, int quantity) {
+		String sql = "select * from products WHERE productName REGEXP (?) order by productId desc limit ?, ?";
+		return getJdbcTemplate().query(
+				sql, (rs, rowNum) -> new Product(
+						rs.getInt("productId"), rs.getString("productName"),
+						new Category(rs.getInt("categoryId"), null),
+						new Brand(rs.getInt("brandId"), null),
+						rs.getInt("productPrice"), rs.getString("productImage"),
+						rs.getString("productDescription"), rs.getLong("productCreateDate"),
+						rs.getLong("productUpdateDate"), new ArrayList<Stock>()), query, index, quantity);
+	}
+	
+	public List<Product> readByBrandName(String query, int index, int quantity) {
+		String sql = "select * from products, brands WHERE products.brandId = brands.brandId and brandName REGEXP (?) order by productId desc limit ?, ?";
+		return getJdbcTemplate().query(
+				sql, (rs, rowNum) -> new Product(
+						rs.getInt("productId"), rs.getString("productName"),
+						new Category(rs.getInt("categoryId"), null),
+						new Brand(rs.getInt("brandId"), null),
+						rs.getInt("productPrice"), rs.getString("productImage"),
+						rs.getString("productDescription"), rs.getLong("productCreateDate"),
+						rs.getLong("productUpdateDate"), new ArrayList<Stock>()), query, index, quantity);
+	}
+	
 	public int count() {
 		String sql = "select count(1) from PRODUCTS";
 		return getJdbcTemplate().queryForObject(sql, Integer.class);
@@ -76,6 +100,16 @@ public class ProductsDao extends JdbcDaoSupport {
 	public int countByCategoryId(int categoryId) {
 		String sql = "select count(1) from PRODUCTS where categoryId=?";
 		return getJdbcTemplate().queryForObject(sql, Integer.class, categoryId);
+	}
+	
+	public int countBySearchProductName(String query) {
+		String sql = "select count(1) as count from products WHERE productName REGEXP (?)";
+		return getJdbcTemplate().queryForObject(sql, Integer.class, query);
+	}
+	
+	public int countBySearchBrandName(String query) {
+		String sql = "select count(1) as count from products, brands WHERE products.brandId = brands.brandId and brandName REGEXP (?)";
+		return getJdbcTemplate().queryForObject(sql, Integer.class, query);
 	}
 
 	/**

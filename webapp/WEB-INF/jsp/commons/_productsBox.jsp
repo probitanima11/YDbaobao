@@ -9,7 +9,7 @@
 					<img src="/img/products/${product.productImage}" />
 					<div class="item-info">
 						<div class="item-desc">
-							<c:out value="${product.productDescription}" />
+							<c:out value="${product.brand.brandName}" />
 						</div>
 						<div class="item-name">
 							<c:out value="${product.productName}" />
