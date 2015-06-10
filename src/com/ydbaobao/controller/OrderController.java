@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.support.JSONResponseUtil;
@@ -28,10 +29,9 @@ public class OrderController {
 	}
 	
 	//TODO 주문상세 조회하기 
-	@RequestMapping()
-	public ResponseEntity<Object> readOrder(HttpSession session) throws IOException {
-		String customerId = ServletRequestUtil.getCustomerIdFromSession(session);
-		return JSONResponseUtil.getJSONResponse(orderService.readOrder(customerId), HttpStatus.OK);
+	@RequestMapping(value="/{orderId}")
+	public ResponseEntity<Object> readOrder(@PathVariable int orderId){
+		return JSONResponseUtil.getJSONResponse(orderService.readOrder(orderId), HttpStatus.OK);
 	}
 
 	//TODO 주문사항 변경하기

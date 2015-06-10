@@ -34,13 +34,13 @@ public class OrderDao extends JdbcDaoSupport {
 				customerId);
 	}
 	
-	public Order readOrder(String customerId) {
-		String sql = "select * from ORDERS where customerId = ?";
+	public Order readOrder(int orderId) {
+		String sql = "select * from ORDERS where orderId = ?";
 		return getJdbcTemplate().queryForObject(
 				sql, (rs, rowNum) -> new Order(rs.getInt("orderId"), rs
 						.getString("orderStatus"), new Customer(rs
 								.getString("customerId")), rs.getInt("enuri"), rs
 								.getInt("realPrice"), rs.getString("orderAddress")),
-								customerId);
+								orderId);
 	}
 }

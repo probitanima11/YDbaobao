@@ -19,7 +19,7 @@ public class OrderService {
 		return orderDao.readOrders(customerId);
 	}
 	
-	public Order readOrder(String customerId) {
-		return orderDao.readOrder(customerId);
+	public Order readOrder(int orderId) {
+		return orderDao.readOrder(orderId);
 	}
 }
