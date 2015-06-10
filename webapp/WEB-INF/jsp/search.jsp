@@ -1,16 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link href="http://fonts.googleapis.com/css?family=Lobster"
 	rel="stylesheet" type="text/css" />
 <link rel="stylesheet" href="/css/main.css" />
-<title>카테고리 별 상품 보기</title>
+<title>검색 결과 보기</title>
 </head>
 <body>
+
 	<div id="header" style="width: 100%;">
 		<!-- 상단 navigator -->
 		<%@ include file="./commons/_topNav.jsp"%>
@@ -22,23 +22,12 @@
 		<%@ include file="./commons/_horizontalCategory.jsp"%>
 	</div>
 	<div id="main-container" class="wrap content">
-		<c:choose>
-			<c:when test="${not empty brand}">
-				<div style="font-size: 40px; padding:25px 0 15px 0;">${brand.brandName}</div>
-			</c:when>
-
-			<c:otherwise>
-				<div style="font-size: 40px; padding:25px 0 15px 0;">${category.categoryName}</div>
-			</c:otherwise>
-		</c:choose>
-		<%@ include file="./commons/_brand.jsp"%>
+		<div class="search-message">요청하신 ${select} : "${query}"에 대한 검색결과입니다. ${count} 개</div>
 	</div>
 	<div id="item-container" class="wrap content">
-		<%@ include file="./commons/_productsBox.jsp" %>
-		<%@ include file="./commons/_productsListBar.jsp" %>
+		<%@ include file="./commons/_productsBox.jsp"%>
+		<%@ include file="./commons/_productsListBar.jsp"%>
 	</div>
 
-	<script src="/js/brand.js"></script>
-	<script src="/js/ydbaobao.js"></script>
 </body>
 </html>

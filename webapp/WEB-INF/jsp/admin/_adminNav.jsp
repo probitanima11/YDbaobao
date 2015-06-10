@@ -8,6 +8,7 @@
 		<li><a href="/admin/manage/product"><span>상품관리</span></a></li>
 		<li><a href="/admin/manage/brand"><span>브랜드관리</span></a></li>
 		<li><a href="/admin/manage/category"><span>카테고리관리</span></a></li>
+		<li><a href="/admin/manage/order"><span>주문관리</span></a></li>
 		<li><a href="/admin/config"><span>관리자설정</span></a></li>
 	</ul>
 	<a href="/" style="text-decoration:none;"><div style="margin-top:10px; padding:15px 15px; font-size:12px; color:#fff; background-color:#EA6576">

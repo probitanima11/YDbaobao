@@ -21,6 +21,16 @@ html, body {
 	margin-right: 10px;
 }
 
+.btn {
+	background-color: #EA6576;
+	border-radius: 2px;
+	border: 0;
+	font-size: 20px;
+	color: #fff;
+	padding: 11px 15px;
+	margin: 0;
+}
+
 a.prevAndNext {
 	display: table;
 	position: relative;
@@ -72,15 +82,78 @@ ul#util li a span {
 	padding: 10px 5px;
 }
 
+.search-message {
+	font-size: 20px;
+	margin: 10px 0px 0px 10px;
+}
+
+#brand-search-container {
+	border-bottom: 2px solid #EA6576;
+}
+
+#search-bar-container {
+	height: 94px;
+}
+
+#search-bar-container>a {
+	text-decoration: none;
+	float: left;
+	height: 1px;
+}
+
+#search-bar-container>a>img {
+	width: 185px;
+}
+
+#search-form {
+	float: left;
+	margin-top: 20px;
+	margin-left: 12px;
+}
+
+#search-form button {
+	background-color: #EA6576;
+	border-radius: 2px;
+	border: 0;
+	font-size: 20px;
+	color: white;
+	padding: 11px 15px;
+	margin: 0;
+	height: 44px;
+}
+
 #search-bar {
 	width: 410px;
 	height: 35px;
 	border: 5px solid #EA6576;
 	font-size: 20px;
+	float: left;
+	margin-right: 7px;
+}
+
+#search-bar>input[type="text"] {
+	width: 305px;
+	height: 29px;
+	outline: none;
+	border: none;
+	font-size: 17px;
+	margin-top: 3px;
+}
+
+#search-form select {
+	height: 29px;
+	width: 90px;
+	font-size: 15px;
+	background-color: white;
+	border: none;
+	margin: 3px 0px 0px 2px;
+}
+
+#search-form select:focus {
+	outline: none;
 }
 
 /* _category.jsp */
-
 #category-menu {
 	color: #fff;
 	outline: 1px solid #EA6576;
@@ -129,8 +202,8 @@ ul#util li a span {
 #horizontal-category-menu ul {
 	list-style: none;
 	text-align: center;
-	padding:0;
-	//padding: 10px 0px 10px 0px;
+	padding: 0; //
+	padding: 10px 0px 10px 0px;
 	margin: 0;
 }
 
@@ -139,16 +212,17 @@ ul#util li a span {
 }
 
 #horizontal-category-menu ul li a {
-	color:#EA6576;
-	display:block;
-	padding:10px 5px 10px 5px;
+	color: #EA6576;
+	display: block;
+	padding: 10px 5px 10px 5px;
 	text-decoration: none;
-	transition-duration:.3s;
+	transition-duration: .3s;
 }
 
-#horizontal-category-menu ul li a:hover, #horizontal-category-menu ul li a.active {
-	color:#fff;
-	background-color:#EA6576;
+#horizontal-category-menu ul li a:hover, #horizontal-category-menu ul li a.active
+	{
+	color: #fff;
+	background-color: #EA6576;
 }
 
 /* _brand.jsp */
@@ -197,21 +271,21 @@ ul#util li a span {
 }
 
 #brand-list ul li {
-	position:relative;
+	position: relative;
 	display: inline-block;
 	text-align: left;
 }
 
 #brand-list ul li a {
-	position:relative;
-	display:block;
-	text-decoration:none;
-	width:150px;
-	padding:10px;
+	position: relative;
+	display: block;
+	text-decoration: none;
+	width: 150px;
+	padding: 10px;
 }
 
 #brand-list ul li span {
-	color:#454545;
+	color: #454545;
 }
 
 #item-container {
@@ -265,9 +339,18 @@ ul#util li a span {
 }
 
 /* cart.jsp */
+#cart-section {
+	height: 400px;
+}
+
 #cart-list {
 	width: 600px;
 	text-align: center;
+}
+
+#order-section {
+	margin: 10px 0px 0px 0px;
+	text-align: right;
 }
 
 /* 로그인/회원가입 폼 */

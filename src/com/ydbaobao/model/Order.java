@@ -17,7 +17,6 @@ public class Order {
 	}
 
 	public Order(int orderId, String orderStatus, Customer customer, int enuri, int realPrice, String orderAddress) {
-		super();
 		this.orderId = orderId;
 		this.orderStatus = orderStatus;
 		this.customer = customer;
