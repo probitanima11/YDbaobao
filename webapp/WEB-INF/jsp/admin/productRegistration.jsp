@@ -39,8 +39,10 @@
 				</tr>
 				<c:forEach var="product" items="${unregisteredProductsCountByBrand}">
 					<tr>
+						<c:if test="${product.value > 0}">
 						<td>${product.key}</td>
 						<td>${product.value}</td>
+						</c:if>
 					</tr>
 				</c:forEach>
 			</table>

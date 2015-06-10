@@ -125,7 +125,7 @@ public class ProductsDao extends JdbcDaoSupport {
 	}
 
 	public Integer unregisteredProductsCountByBrand(int brandId) {
-		String sql = "select count(1) from PRODUCTS where brandId=?";
+		String sql = "select count(1) from PRODUCTS where brandId=? and categoryId=0";
 		return getJdbcTemplate().queryForObject(sql, Integer.class, brandId);
 	}
 
