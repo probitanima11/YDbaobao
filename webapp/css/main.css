@@ -172,6 +172,9 @@ ul#util li a span {
 	list-style: none;
 	font-size: 15px;
 	font-weight: 100;
+	overflow-y: auto;
+	max-height: 450px;
+	overflow-x: hidden;
 }
 
 #category-menu ul li a {
