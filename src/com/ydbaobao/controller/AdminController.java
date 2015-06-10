@@ -184,4 +184,10 @@ public class AdminController {
 		ModelAndView mv = new ModelAndView("admin/config");
 		return mv;
 	}
+	
+	@RequestMapping(value = "/manage/order", method = RequestMethod.GET)
+	public ModelAndView manageOrder() {
+		ModelAndView mv = new ModelAndView("admin/orderManager");
+		return mv;
+	}
 }
