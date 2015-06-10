@@ -39,7 +39,7 @@
 									<button id="selection-delete-btn">선택삭제</button>
 									<button id="select-all-btn">전체선택</button>
 								</div>
-								<div id="total-price" style="float:right">
+								<div id="total-price" style="float:right">상품합계금액 : 
 									<span></span>
 								</div>
 							</td>
@@ -71,7 +71,6 @@
 		loadCartList(itemList);
 		document.querySelector('#selection-delete-btn').addEventListener('click', function() {
 			var checkedItems = document.querySelectorAll('.item-check');
-			
 			var length = checkedItems.length;
 			for(var i = 0; i < length; i++) {
 				if(checkedItems[i].checked) {
@@ -80,8 +79,8 @@
 						method : 'delete',
 						url : '/item/delete/' + tr.dataset.id,
 						success : function(req) {
-							// cart-list table에서 제거
-							tr.remove();
+							document.querySelector("#total-price span").textContent -= document.querySelector('tr[data-id="'+ req.responseText + '"] .item-price').innerText;
+							document.querySelector('tr[data-id="'+ req.responseText + '"]').remove();
 						}
 					});
 				}
@@ -134,7 +133,7 @@
 			tr.appendChild(item);	
 			totalPrice += price;
 		}
-		document.querySelector("#total-price span").textContent = "상품합계금액: " + totalPrice;
+		document.querySelector("#total-price span").textContent = totalPrice;
 	}
 	</script>
 	<script src="/js/ydbaobao.js"></script>
