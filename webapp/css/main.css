@@ -54,7 +54,6 @@ a.prevAndNext>button {
 	cursor: pointer;
 	border-radius: 4px;
 	-webkit-appearance: button;
-	
 }
 
 a.prevAndNext>button:focus {
@@ -159,11 +158,16 @@ ul#util li a span {
 
 #search-form select {
 	height: 29px;
-	width: 90px;
+	width: 67px;
 	font-size: 15px;
 	background-color: white;
 	border: none;
+	border-radius: 0px;
+	border-right : 1px solid gray;
+	padding: 6px;
 	margin: 3px 0px 0px 2px;
+	-webkit-appearance:none;
+	-moz-appearance: none;
 }
 
 #search-form select:focus {
