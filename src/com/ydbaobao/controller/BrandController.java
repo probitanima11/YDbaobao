@@ -14,7 +14,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.support.JSONResponseUtil;
 import com.ydbaobao.model.Brand;
@@ -40,8 +39,8 @@ public class BrandController {
 	 * @param 검색에 사용될 브랜드 이름의 첫글자(A~Z)
 	 * @return 검색된 결과를 JSON 데이타로 전달
 	 */
-	@RequestMapping(value = "/search", method = RequestMethod.GET)
-	public ResponseEntity<Object> search(@RequestParam String firstLetter) {
+	@RequestMapping(value = "/search/{firstLetter}", method = RequestMethod.GET)
+	public ResponseEntity<Object> searchByFirstLetter(@PathVariable String firstLetter) {
 		logger.debug("search");
 		return JSONResponseUtil.getJSONResponse(brandService.search(firstLetter), HttpStatus.OK);
 	}
@@ -55,7 +54,7 @@ public class BrandController {
 	 * @return products.jsp
 	 */
 	@RequestMapping(value="/products/{brandId}", method=RequestMethod.GET)
-	public String load(Model model, @PathVariable int brandId) {
+	public String searchByBrandId(Model model, @PathVariable int brandId) {
 		List<Character> firstLetterList = new ArrayList<Character>();
 		for(char ch = 'A'; ch <= 'Z'; ch++) {
 			firstLetterList.add(ch);	

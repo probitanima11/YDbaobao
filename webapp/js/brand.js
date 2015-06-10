@@ -27,7 +27,7 @@ function setBrandSearchEvent() {
 function searchBrand(target) {
 	ydbaobao.ajax({
 		method:'get',
-			url:'/brand/search?firstLetter=' + target.textContent,
+			url:'/brand/search/' + target.textContent,
 			success: function(req) {
 				changeBrandList(JSON.parse(req.responseText));
 			}
