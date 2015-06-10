@@ -53,10 +53,9 @@
 		}
 
 		function searchBrand(target) {
-			console.log(target.innerText);
 			ydbaobao.ajax({
 				method:'get',
-				url:'/brand/search?firstLetter=' + target.innerText,
+				url:'/brand/search?firstLetter=' + target.textContent,
 				success: function(req) {
 					changeBrandList(JSON.parse(req.responseText));
 				}
