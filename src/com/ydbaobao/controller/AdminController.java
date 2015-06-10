@@ -1,9 +1,6 @@
 package com.ydbaobao.controller;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
@@ -20,7 +17,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ydbaobao.model.Category;
 import com.ydbaobao.model.Product;
-import com.ydbaobao.model.Stock;
 import com.ydbaobao.service.BrandService;
 import com.ydbaobao.service.CategoryService;
 import com.ydbaobao.service.CustomerService;
@@ -78,6 +74,7 @@ public class AdminController {
 	@RequestMapping(value = "/manage/member", method = RequestMethod.GET)
 	public ModelAndView manageMember() {
 		ModelAndView mv = new ModelAndView("admin/memberManager");
+		mv.addObject("members", customerService.readCustomers());
 		return mv;
 	}
 	

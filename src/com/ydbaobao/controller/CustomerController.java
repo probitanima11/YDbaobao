@@ -98,10 +98,4 @@ public class CustomerController {
 		session.invalidate();
 		return "redirect:/";
 	}
-	
-	@RequestMapping(value = "/load/all", method = RequestMethod.GET)
-	protected ResponseEntity<Object> loadAll() {
-		return JSONResponseUtil.getJSONResponse(customerService.readCustomers(), HttpStatus.OK);
-	}
-	
 }
