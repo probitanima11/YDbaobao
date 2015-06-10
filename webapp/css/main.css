@@ -202,9 +202,9 @@ ul#util li a span {
 #horizontal-category-menu ul {
 	list-style: none;
 	text-align: center;
-	padding: 0; //
-	padding: 10px 0px 10px 0px;
-	margin: 0;
+	padding: 0;
+	margin: 0 auto;
+	max-width: 980px;
 }
 
 #horizontal-category-menu ul li {
@@ -420,4 +420,3 @@ form#customer {
 	background-color: #888;
 	color: #fff;
 }
-
