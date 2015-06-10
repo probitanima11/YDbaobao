@@ -47,6 +47,11 @@
 					</tfoot>
 				</table>
 			</div>
+
+			<div id="order-section">
+				<button id="select-order-btn" class="btn">선택주문하기</button>
+				<button id="order-btn" class="btn">전체주문하기</button>
+			</div>
 		</div>
 	</div>
 
@@ -120,10 +125,10 @@
 
 			var itemTemplate = document.querySelector("#cart-item-template").content;
 			var item = document.importNode(itemTemplate, true);
-			item.querySelector('.item-name').innerText = itemList[i].product.productName;
-			item.querySelector('.item-size').innerText = itemList[i].size;
-			item.querySelector('.item-quantity').innerText = itemList[i].quantity;
-			item.querySelector('.item-price').innerText = itemList[i].product.productPrice * itemList[i].quantity;
+			item.querySelector('.item-name').textContent = itemList[i].product.productName;
+			item.querySelector('.item-size').textContent = itemList[i].size;
+			item.querySelector('.item-quantity').textContent = itemList[i].quantity;
+			item.querySelector('.item-price').textContent = itemList[i].product.productPrice * itemList[i].quantity;
 			tr.appendChild(item);	
 		}
 	}

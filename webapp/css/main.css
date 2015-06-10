@@ -21,6 +21,16 @@ html, body {
 	margin-right: 10px;
 }
 
+.btn {
+	background-color: #EA6576;
+	border-radius: 2px;
+	border: 0;
+	font-size: 20px;
+	color: #fff;
+	padding: 11px 15px;
+	margin: 0;
+}
+
 a.prevAndNext {
 	display: table;
 	position: relative;
@@ -265,9 +275,18 @@ ul#util li a span {
 }
 
 /* cart.jsp */
+#cart-section {
+	height: 400px;
+}
+
 #cart-list {
 	width: 600px;
 	text-align: center;
+}
+
+#order-section {
+	margin: 10px 0px 0px 0px;
+	text-align: right;
 }
 
 /* 로그인/회원가입 폼 */
