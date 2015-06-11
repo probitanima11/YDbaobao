@@ -22,7 +22,7 @@
 					<th width="50px">선택</th>
 				</tr>
 				<c:forEach var="product" items="${productList}">
-				<form:form class="productUpdate" method="post" action="/product/update" modelAttribute="product" enctype="multipart/form-data">
+				<form:form class="productUpdate" method="post" action="/product/update" modelAttribute="product">
 				<tr>
 					<td rowspan="4">${product.productId}
 					<form:input path="productId" type="hidden" value="${product.productId}"/>
@@ -61,7 +61,7 @@
 						</select>
 					</td>
 					<td width="50px">가격 :</td>
-					<td><form:input type="number" path="productPrice" value="${product.productPrice}" style="width:90px"/></td>
+					<td><form:input type="number" path="productPrice" value="${product.productPrice}" min="0" style="width:90px"/></td>
 					<td rowspan="4"><input type="submit" class="update-product-btn" value="수정" onclick="alert('상품 정보가 수정되었습니다');" />
 					</td>
 				</tr>
@@ -75,7 +75,7 @@
 								<div id="stock" class="${status.index}">
 									<form:input path="stockList[${status.index}].stockId" type="hidden" id="stockId" value="${stock.stockId}"/>
 									<form:input path="stockList[${status.index}].size" type="text" id="stock-size-input" value="${stock.size}" style="width:80px"/>
-									<form:input path="stockList[${status.index}].quantity" type="number" id="stock-quantity-input" value="${stock.quantity}" style="width:80px"/>
+									<form:input path="stockList[${status.index}].quantity" type="number" id="stock-quantity-input" value="${stock.quantity}" min="0" style="width:80px"/>
 									<c:if test="${status.index > 0}">
 										<button type="button" class="delete-size_quantity-btn" value="${product.productId}">삭제</button>
 									</c:if>
@@ -150,7 +150,6 @@
 				if (stocksDiv[i].className === productId) {
 					/*div생성*/
 					var divIndex = stocksDiv[i].children[stocksDiv[i].childElementCount-1].className*1+1;
-					
 					el = document.createElement('div');
 					el.setAttribute('id', 'stock');
 					el.setAttribute('class', divIndex);
@@ -178,6 +177,7 @@
 					el.setAttribute('name', 'stockList[' + divIndex + '].quantity');
 					el.setAttribute('type', 'number');
 					el.setAttribute('value', '0');
+					el.setAttribute('min', '0');
 					el.setAttribute('style', 'width:80px');
 					stocksDiv[i].lastChild.appendChild(el);
 					
