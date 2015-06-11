@@ -59,6 +59,7 @@ public class BrandController {
 		model.addAttribute("range", IntStream.range(p.getStart(), p.getEnd()).toArray());
 		model.addAttribute("productList", productsService.readListByBrandId(brandId, p.getIndex(), p.getQuantity()));
 		model.addAttribute("brands", brandService.readBrands());
+		model.addAttribute("brand", brandService.readBrandByBrandId(brandId));
 		model.addAttribute("categories", categoryService.read());
 		model.addAttribute("firstLetterList", new Brand().getFirstLetters());
 
