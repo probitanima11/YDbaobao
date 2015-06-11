@@ -42,6 +42,9 @@ public class ProductService {
 
 	public void update(Product product) {
 		productDao.update(product);
+		
+		//TODO 재고량 삭제에 대한 처리 필요.
+		
 		for(Stock stock:product.getStockList()){
 			if(stock.getStockId() == 0){
 				stockDao.create(product, stock);

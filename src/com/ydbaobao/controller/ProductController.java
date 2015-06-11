@@ -44,6 +44,8 @@ public class ProductController {
 	public ModelAndView update(Product product) {
 		productService.update(product);
 		
+		logger.debug("재고량 : {}", product.getStockList().toString());
+		
 		//TODO AJAX로 변경 예정.
 		ModelAndView mv = new ModelAndView("admin/productManager");
 		mv.addObject("product", new Product());

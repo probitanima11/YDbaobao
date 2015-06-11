@@ -62,7 +62,7 @@
 					</td>
 					<td width="50px">가격 :</td>
 					<td><form:input type="number" path="productPrice" value="${product.productPrice}" style="width:90px"/></td>
-					<td rowspan="4"><input type="submit" class="updateBtn" value="수정" onclick="alert('상품 정보가 수정되었습니다');" />
+					<td rowspan="4"><input type="submit" class="update-product-btn" value="수정" onclick="alert('상품 정보가 수정되었습니다');" />
 					</td>
 				</tr>
 				<tr>
@@ -83,7 +83,6 @@
 							</c:forEach>
 						</div>
 						<button type="button" class="add-size_quantity-btn" value="${product.productId}">추가</button>
-						${stockList.size}
 					</td>
 				</tr>
 				<tr>
@@ -150,6 +149,7 @@
 			for (var i = 0; i < stocksDiv.length; i++) {
 				if (stocksDiv[i].className === productId) {
 					/*div생성*/
+					debugger;
 					var divIndex = stocksDiv[i].children[stocksDiv[i].childElementCount-1].className*1+1;
 					
 					el = document.createElement('div');
@@ -157,23 +157,32 @@
 					el.setAttribute('class', divIndex);
 					stocksDiv[i].appendChild(el);
 					
+					/*hidden input박스 추가*/
+					el = document.createElement('input');
+					el.setAttribute('id', 'stockId');
+					el.setAttribute('name', 'stockList[' + divIndex + '].size');
+					el.setAttribute('type', 'hidden');
+					el.setAttribute('value', '0');
+					stocksDiv[i].lastChild.appendChild(el);
+					
 					/*사이즈 input박스 추가*/
 					el = document.createElement('input');
 					el.setAttribute('id', 'stock-size-input');
-					el.setAttribute('name', 'productList[' + divIndex + '].size');
+					el.setAttribute('name', 'stockList[' + divIndex + '].size');
 					el.setAttribute('type', 'text');
 					el.setAttribute('style', 'width:80px');
 					stocksDiv[i].lastChild.appendChild(el);
-					
+
 					/*수량 input박스 추가*/
 					el = document.createElement('input');
 					el.setAttribute('id', 'stock-size-input');
-					el.setAttribute('name', 'productList[' + divIndex + '].quantity');
+					el.setAttribute('name', 'stockList[' + divIndex + '].quantity');
 					el.setAttribute('type', 'number');
 					el.setAttribute('value', '0');
 					el.setAttribute('style', 'width:80px');
 					stocksDiv[i].lastChild.appendChild(el);
 					
+					debugger;
 					/*삭제 버튼 추가*/
 					el = document.createElement('button');
 					el.setAttribute('type', 'button');
@@ -181,6 +190,7 @@
 					el.setAttribute('value', productId);
 					el.innerText = "삭제";
 					stocksDiv[i].lastChild.appendChild(el);
+					debugger;
 					break;
 				}
 			}
