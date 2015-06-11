@@ -159,7 +159,7 @@
 					/*hidden input박스 추가*/
 					el = document.createElement('input');
 					el.setAttribute('id', 'stockId');
-					el.setAttribute('name', 'stockList[' + divIndex + '].size');
+					el.setAttribute('name', 'stockList[' + divIndex + '].stockId');
 					el.setAttribute('type', 'hidden');
 					el.setAttribute('value', '0');
 					stocksDiv[i].lastChild.appendChild(el);
