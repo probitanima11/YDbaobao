@@ -27,48 +27,48 @@ public class ProductsDao extends JdbcDaoSupport {
 	}
 
 	public List<Product> readRange(int start, int quantity) {
-		String sql ="select * from PRODUCTS ORDER BY productId desc LIMIT ?, ?";
+		String sql ="select * from PRODUCTS, brands where brands.brandId = PRODUCTS.brandId ORDER BY productId desc LIMIT ?, ?";
 		return getJdbcTemplate().query(
 				sql, (rs, rowNum) -> new Product(
 						rs.getInt("productId"), rs.getString("productName"),
 						new Category(rs.getInt("categoryId"), null),
-						new Brand(rs.getInt("brandId"), null),
+						new Brand(rs.getInt("brandId"), rs.getString("brandName")),
 						rs.getInt("productPrice"), rs.getString("productImage"),
 						rs.getString("productDescription"), rs.getLong("productCreateDate"),
 						rs.getLong("productUpdateDate"), new ArrayList<Stock>()), start, quantity);
 	}
 
 	public List<Product> readListByCategoryId(int categoryId, int index, int quantity) {
-		String sql = "select * from PRODUCTS where categoryId=? ORDER BY productId desc limit ?, ?";
+		String sql = "select * from PRODUCTS, brands where products.brandId = brands.brandId and categoryId=? ORDER BY productId desc limit ?, ?";
 		return getJdbcTemplate().query(
 				sql, (rs, rowNum) -> new Product(
 						rs.getInt("productId"), rs.getString("productName"),
 						new Category(rs.getInt("categoryId"), null),
-						new Brand(rs.getInt("brandId"), null),
+						new Brand(rs.getInt("brandId"), rs.getString("brandName")),
 						rs.getInt("productPrice"), rs.getString("productImage"),
 						rs.getString("productDescription"), rs.getLong("productCreateDate"),
 						rs.getLong("productUpdateDate"), new ArrayList<Stock>()), categoryId, index, quantity);
 	}
 
 	public List<Product> readListByCategoryId(int categoryId) {
-		String sql = "select * from PRODUCTS where categoryId=? ORDER BY productId desc";
+		String sql = "select * from PRODUCTS, brands where products.brandId = brands.brandId and categoryId=? ORDER BY productId desc";
 		return getJdbcTemplate().query(
 				sql, (rs, rowNum) -> new Product(
 						rs.getInt("productId"), rs.getString("productName"),
 						new Category(rs.getInt("categoryId"), null),
-						new Brand(rs.getInt("brandId"), null),
+						new Brand(rs.getInt("brandId"), rs.getString("brandName")),
 						rs.getInt("productPrice"), rs.getString("productImage"),
 						rs.getString("productDescription"), rs.getLong("productCreateDate"),
 						rs.getLong("productUpdateDate"), new ArrayList<Stock>()), categoryId);
 	}
 	
 	public List<Product> readByProductName(String query, int index, int quantity) {
-		String sql = "select * from products WHERE productName REGEXP (?) order by productId desc limit ?, ?";
+		String sql = "select * from products, brands WHERE products.brandId = brands.brandId and productName REGEXP (?) order by productId desc limit ?, ?";
 		return getJdbcTemplate().query(
 				sql, (rs, rowNum) -> new Product(
 						rs.getInt("productId"), rs.getString("productName"),
 						new Category(rs.getInt("categoryId"), null),
-						new Brand(rs.getInt("brandId"), null),
+						new Brand(rs.getInt("brandId"), rs.getString("brandName")),
 						rs.getInt("productPrice"), rs.getString("productImage"),
 						rs.getString("productDescription"), rs.getLong("productCreateDate"),
 						rs.getLong("productUpdateDate"), new ArrayList<Stock>()), query, index, quantity);
@@ -80,7 +80,7 @@ public class ProductsDao extends JdbcDaoSupport {
 				sql, (rs, rowNum) -> new Product(
 						rs.getInt("productId"), rs.getString("productName"),
 						new Category(rs.getInt("categoryId"), null),
-						new Brand(rs.getInt("brandId"), null),
+						new Brand(rs.getInt("brandId"), rs.getString("brandName")),
 						rs.getInt("productPrice"), rs.getString("productImage"),
 						rs.getString("productDescription"), rs.getLong("productCreateDate"),
 						rs.getLong("productUpdateDate"), new ArrayList<Stock>()), query, index, quantity);
@@ -111,19 +111,13 @@ public class ProductsDao extends JdbcDaoSupport {
 		return getJdbcTemplate().queryForObject(sql, Integer.class, query);
 	}
 
-	/**
-	 * brand 이름 클릭시 brandId로 상품 검색
-	 * @author jyb
-	 * @param 검색에 사용될 브랜드Id
-	 * @return DB에 저장된 Product 결과를 List<Product>로 반환
-	 */
 	public List<Product> readListByBrandId(int brandId, int index, int quantity) {
-		String sql = "select * from PRODUCTS where brandId = ? ORDER BY productId DESC limit ?, ?";
+		String sql = "select * from PRODUCTS, BRANDS where BRANDS.brandId = PRODUCTS.brandId and PRODUCTS.brandId=? ORDER BY productId DESC limit ?, ?";
 		return getJdbcTemplate().query(
 				sql, (rs, rowNum) -> new Product(
 						rs.getInt("productId"), rs.getString("productName"),
 						new Category(rs.getInt("categoryId"), null),
-						new Brand(rs.getInt("brandId"), null),
+						new Brand(rs.getInt("brandId"), rs.getString("brandName")),
 						rs.getInt("productPrice"), rs.getString("productImage"),
 						rs.getString("productDescription"), rs.getLong("productCreateDate"),
 						rs.getLong("productUpdateDate"), new ArrayList<Stock>()), brandId, index, quantity);
