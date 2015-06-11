@@ -1,7 +1,6 @@
 package com.ydbaobao.controller;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.stream.IntStream;
 
 import javax.annotation.Resource;
 
@@ -14,9 +13,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.context.request.WebRequest;
 
 import com.support.JSONResponseUtil;
 import com.ydbaobao.model.Brand;
+import com.ydbaobao.model.PageConfigParam;
 import com.ydbaobao.service.BrandService;
 import com.ydbaobao.service.CategoryService;
 import com.ydbaobao.service.ProductsService;
@@ -45,37 +47,21 @@ public class BrandController {
 		return JSONResponseUtil.getJSONResponse(brandService.search(firstLetter), HttpStatus.OK);
 	}
 	
-	/**
-	 * TODO ProductsController load와 중복
-	 * 
-	 * 브랜드 클릭시 해당 브랜드의 상품만 검색
-	 * @author jyb
-	 * @param 검색에 사용될 브랜드 Id
-	 * @return products.jsp
-	 */
-	@RequestMapping(value="/products/{brandId}", method=RequestMethod.GET)
-	public String searchByBrandId(Model model, @PathVariable int brandId) {
-		List<Character> firstLetterList = new ArrayList<Character>();
-		for(char ch = 'A'; ch <= 'Z'; ch++) {
-			firstLetterList.add(ch);	
+	@RequestMapping(value="", method=RequestMethod.GET)
+	public String searchByBrandId(WebRequest req, Model model, @RequestParam int brandId) {
+		
+		PageConfigParam p = new PageConfigParam(16, req.getParameter("index"), productsService.countByBrandId(brandId));
+
+		if (p.getEnd() < p.getRange()) {
+			model.addAttribute("nextBtn", true);
 		}
-		List<Brand> brands = brandService.readBrands();
-		
-		
-		//클릭한 브랜드를 DB가 아닌 brandList에서 검색
-		Brand brand = null;
-		for(int i = 0; i < brands.size(); i++) {
-			if(brands.get(i).getBrandByBrandId(brandId) != null) {
-				brand = brands.get(i).getBrandByBrandId(brandId);
-				break;
-			}
-		}
-		
+		model.addAttribute("selectedIndex", p.getSelectedIndex());
+		model.addAttribute("range", IntStream.range(p.getStart(), p.getEnd()).toArray());
+		model.addAttribute("productList", productsService.readListByBrandId(brandId, p.getIndex(), p.getQuantity()));
+		model.addAttribute("brands", brandService.readBrands());
 		model.addAttribute("categories", categoryService.read());
-		model.addAttribute("brands", brands);
-		model.addAttribute("brand", brand);
-		model.addAttribute("firstLetterList", firstLetterList);
-		model.addAttribute("productList", productsService.readListByBrandId(brandId));
+		model.addAttribute("firstLetterList", new Brand().getFirstLetters());
+
 		return "products";
 	}
 }

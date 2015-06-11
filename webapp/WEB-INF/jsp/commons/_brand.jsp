@@ -14,7 +14,7 @@
 	<div id="brand-list">
 		<ul>
 			<c:forEach var="brand" items="${brands}">
-				<li><a href="/brand/products/${brand.brandId}"><span>${brand.brandName}</span></a></li>
+				<li><a href="/brand?brandId=${brand.brandId}"><span>${brand.brandName}</span></a></li>
 			</c:forEach>
 		</ul>
 	</div>	

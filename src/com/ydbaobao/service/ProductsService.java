@@ -51,6 +51,10 @@ public class ProductsService {
 		return productsDao.countByCategoryId(categoryId);
 	}
 	
+	public int countByBrandId(int categoryId) {
+		return productsDao.countByBrandId(categoryId);
+	}
+	
 	public int count() {
 		return productsDao.count();
 	}
@@ -93,8 +97,8 @@ public class ProductsService {
 		return productList;
 	}
 
-	public List<Product> readListByBrandId(int brandId) {
-		return productsDao.readListByBrandId(brandId);
+	public List<Product> readListByBrandId(int brandId, int index, int quantity) {
+		return productsDao.readListByBrandId(brandId, index, quantity);
 	}
 
 	public Map<String, Integer> unregisteredProductsCountByBrand() {
