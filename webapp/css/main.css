@@ -14,11 +14,15 @@ html, body {
 
 .contents-nav li {
 	list-style: none;
-	display: table;
+	display: inline;
 	text-align: center;
 	margin-top: 10px;
 	margin-left: 10px;
 	margin-right: 10px;
+}
+
+.contents-nav li>a {
+	text-decoration: none;
 }
 
 .btn {
@@ -32,13 +36,24 @@ html, body {
 }
 
 a.prevAndNext {
-	display: table;
+	display: inline;
 	position: relative;
-	top: 7px;
+	top: -3px;
 }
 
 a.prevAndNext>button {
-	background-color: white;
+	color: #333;
+	background-color: #fff;
+	border-color: #ccc;
+	display: inline-block;
+	margin-bottom: 0;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: middle;
+	touch-action: manipulation;
+	cursor: pointer;
+	border-radius: 4px;
+	-webkit-appearance: button;
 }
 
 a.prevAndNext>button:focus {
@@ -52,11 +67,12 @@ a.prevAndNext>button:focus {
 .contents-nav {
 	display: table;
 	margin: 0 auto;
+	margin-top: 15px;
 }
 
 .contents-nav>ul {
 	float: left;
-	display: inline-flex;
+	display: inline;
 }
 
 ul#util {
@@ -142,11 +158,16 @@ ul#util li a span {
 
 #search-form select {
 	height: 29px;
-	width: 90px;
+	width: 67px;
 	font-size: 15px;
 	background-color: white;
 	border: none;
+	border-radius: 0px;
+	border-right : 1px solid gray;
+	padding: 6px;
 	margin: 3px 0px 0px 2px;
+	-webkit-appearance:none;
+	-moz-appearance: none;
 }
 
 #search-form select:focus {
@@ -172,6 +193,9 @@ ul#util li a span {
 	list-style: none;
 	font-size: 15px;
 	font-weight: 100;
+	overflow-y: auto;
+	max-height: 450px;
+	overflow-x: hidden;
 }
 
 #category-menu ul li a {
@@ -202,9 +226,9 @@ ul#util li a span {
 #horizontal-category-menu ul {
 	list-style: none;
 	text-align: center;
-	padding: 0; //
-	padding: 10px 0px 10px 0px;
-	margin: 0;
+	padding: 0;
+	margin: 0 auto;
+	max-width: 980px;
 }
 
 #horizontal-category-menu ul li {
@@ -420,4 +444,3 @@ form#customer {
 	background-color: #888;
 	color: #fff;
 }
-

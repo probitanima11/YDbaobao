@@ -5,13 +5,13 @@
 	<ul>
 		<c:forEach var="digit" items="${range}" varStatus="status">
 			<c:if test="${(digit ne 0) && (status.first) && (not empty category)}" >
-				<a href="?index=${digit}&categoryId=${category.categoryId}" class="prevAndNext"><button>prev</button></a>
+				<li><a href="?index=${digit}&categoryId=${category.categoryId}" class="prevAndNext"><button>prev</button></a></li>
 			</c:if>
 			<c:if test="${(digit ne 0) && (status.first) && (not empty query)}" >
-				<a href="?index=${digit}&terms=${query}&select=${select}" class="prevAndNext"><button>prev</button></a>
+				<li><a href="?index=${digit}&terms=${query}&select=${select}" class="prevAndNext"><button>prev</button></a></li>
 			</c:if>
 			<c:if test="${(digit ne 0) && (status.first) && (empty select) && (empty query) && (empty category)}" >
-				<a href="?index=${digit}" class="prevAndNext"><button>prev</button></a>
+				<li><a href="?index=${digit}" class="prevAndNext"><button>prev</button></a></li>
 			</c:if>
 			<c:if test="${not empty category}" >
 				<li><a href="?index=${digit+1}&categoryId=${category.categoryId}">
@@ -34,13 +34,13 @@
 				</span>
 			</a></li>
 			<c:if test="${(not empty nextBtn) && (status.last) && (not empty category)}" >
-				<a href="?index=${digit+2}&categoryId=${category.categoryId}" class="prevAndNext"><button>next</button></a>
+				<li><a href="?index=${digit+2}&categoryId=${category.categoryId}" class="prevAndNext"><button>next</button></a></li>
 			</c:if>
 			<c:if test="${(not empty nextBtn) && (status.last) && (not empty query)}" >
-				<a href="?index=${digit+2}&terms=${query}&select=${select}" class="prevAndNext"><button>next</button></a>
+				<li><a href="?index=${digit+2}&terms=${query}&select=${select}" class="prevAndNext"><button>next</button></a></li>
 			</c:if>
 			<c:if test="${(not empty nextBtn) && (status.last) && (empty select) && (empty query) && (empty category)}" >
-				<a href="?index=${digit+2}" class="prevAndNext"><button>next</button></a>
+				<li><a href="?index=${digit+2}" class="prevAndNext"><button>next</button></a></li>
 			</c:if>
 		</c:forEach>
 	</ul>

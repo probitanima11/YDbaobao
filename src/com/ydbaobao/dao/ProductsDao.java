@@ -27,7 +27,7 @@ public class ProductsDao extends JdbcDaoSupport {
 	}
 
 	public List<Product> readRange(int start, int quantity) {
-		String sql ="select * from PRODUCTS ORDER BY productCreateDate ASC LIMIT ?, ?";
+		String sql ="select * from PRODUCTS ORDER BY productId desc LIMIT ?, ?";
 		return getJdbcTemplate().query(
 				sql, (rs, rowNum) -> new Product(
 						rs.getInt("productId"), rs.getString("productName"),
@@ -39,7 +39,7 @@ public class ProductsDao extends JdbcDaoSupport {
 	}
 
 	public List<Product> readListByCategoryId(int categoryId, int index, int quantity) {
-		String sql = "select * from PRODUCTS where categoryId=? limit ?, ?";
+		String sql = "select * from PRODUCTS where categoryId=? ORDER BY productId desc limit ?, ?";
 		return getJdbcTemplate().query(
 				sql, (rs, rowNum) -> new Product(
 						rs.getInt("productId"), rs.getString("productName"),
@@ -51,7 +51,7 @@ public class ProductsDao extends JdbcDaoSupport {
 	}
 
 	public List<Product> readListByCategoryId(int categoryId) {
-		String sql = "select * from PRODUCTS where categoryId=?";
+		String sql = "select * from PRODUCTS where categoryId=? ORDER BY productId desc";
 		return getJdbcTemplate().query(
 				sql, (rs, rowNum) -> new Product(
 						rs.getInt("productId"), rs.getString("productName"),
@@ -96,6 +96,11 @@ public class ProductsDao extends JdbcDaoSupport {
 		return getJdbcTemplate().queryForObject(sql, Integer.class, categoryId);
 	}
 	
+	public int countByBrandId(int brandId) {
+		String sql = "select count(1) from PRODUCTS where brandId=?";
+		return getJdbcTemplate().queryForObject(sql, Integer.class, brandId);
+	}
+	
 	public int countBySearchProductName(String query) {
 		String sql = "select count(1) as count from products WHERE productName REGEXP (?)";
 		return getJdbcTemplate().queryForObject(sql, Integer.class, query);
@@ -112,8 +117,8 @@ public class ProductsDao extends JdbcDaoSupport {
 	 * @param 검색에 사용될 브랜드Id
 	 * @return DB에 저장된 Product 결과를 List<Product>로 반환
 	 */
-	public List<Product> readListByBrandId(int brandId) {
-		String sql = "select * from PRODUCTS where brandId = ?";
+	public List<Product> readListByBrandId(int brandId, int index, int quantity) {
+		String sql = "select * from PRODUCTS where brandId = ? ORDER BY productId DESC limit ?, ?";
 		return getJdbcTemplate().query(
 				sql, (rs, rowNum) -> new Product(
 						rs.getInt("productId"), rs.getString("productName"),
@@ -121,7 +126,7 @@ public class ProductsDao extends JdbcDaoSupport {
 						new Brand(rs.getInt("brandId"), null),
 						rs.getInt("productPrice"), rs.getString("productImage"),
 						rs.getString("productDescription"), rs.getLong("productCreateDate"),
-						rs.getLong("productUpdateDate"), new ArrayList<Stock>()), brandId);
+						rs.getLong("productUpdateDate"), new ArrayList<Stock>()), brandId, index, quantity);
 	}
 
 	public Integer unregisteredProductsCountByBrand(int brandId) {

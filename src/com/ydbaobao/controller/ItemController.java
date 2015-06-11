@@ -62,7 +62,7 @@ public class ItemController {
 	public ResponseEntity<Object> deleteFromCart(@PathVariable int itemId, HttpSession session) throws IOException {
 		String customerId = ServletRequestUtil.getCustomerIdFromSession(session);
 		itemService.deleteCartList(customerId, itemId);
-		return JSONResponseUtil.getJSONResponse("", HttpStatus.OK);
+		return JSONResponseUtil.getJSONResponse(""+itemId, HttpStatus.OK);
 	}
 	
 }
