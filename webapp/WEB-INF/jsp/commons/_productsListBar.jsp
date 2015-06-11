@@ -10,7 +10,10 @@
 			<c:if test="${(digit ne 0) && (status.first) && (not empty query)}" >
 				<li><a href="?index=${digit}&terms=${query}&select=${select}" class="prevAndNext"><button>prev</button></a></li>
 			</c:if>
-			<c:if test="${(digit ne 0) && (status.first) && (empty select) && (empty query) && (empty category)}" >
+			<c:if test="${(digit ne 0) && (status.first) && (not empty brand)}" >
+				<li><a href="?index=${digit}&brandId=${brand.brandId}" class="prevAndNext"><button>prev</button></a></li>
+			</c:if>
+			<c:if test="${(digit ne 0) && (status.first) && (empty select) && (empty query) && (empty category) && (empty brand)}" >
 				<li><a href="?index=${digit}" class="prevAndNext"><button>prev</button></a></li>
 			</c:if>
 			<c:if test="${not empty category}" >
@@ -19,7 +22,10 @@
 			<c:if test="${(not empty select) && (not empty query)}" >
 				<li><a href="?index=${digit+1}&terms=${query}&select=${select}">
 			</c:if>
-			<c:if test="${(empty select) && (empty query) && (empty category)}" >
+			<c:if test="${(not empty brand)}" >
+				<li><a href="?index=${digit+1}&brandId=${brand.brandId}">
+			</c:if>
+			<c:if test="${(empty select) && (empty query) && (empty category) && (empty brand)}" >
 				<li><a href="?index=${digit+1}">
 			</c:if>
 			<c:choose>
@@ -39,7 +45,10 @@
 			<c:if test="${(not empty nextBtn) && (status.last) && (not empty query)}" >
 				<li><a href="?index=${digit+2}&terms=${query}&select=${select}" class="prevAndNext"><button>next</button></a></li>
 			</c:if>
-			<c:if test="${(not empty nextBtn) && (status.last) && (empty select) && (empty query) && (empty category)}" >
+			<c:if test="${(not empty nextBtn) && (status.last) && (not empty brand)}" >
+				<li><a href="?index=${digit+2}&brandId=${brand.brandId}" class="prevAndNext"><button>next</button></a></li>
+			</c:if>
+			<c:if test="${(not empty nextBtn) && (status.last) && (empty select) && (empty query) && (empty category) && (empty brand)}" >
 				<li><a href="?index=${digit+2}" class="prevAndNext"><button>next</button></a></li>
 			</c:if>
 		</c:forEach>

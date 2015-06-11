@@ -15,6 +15,9 @@ public class BrandService {
 	@Resource
 	private BrandDao brandDao;
 
+	public Brand readBrandByBrandId(int brandId) {
+		return brandDao.readBrandByBrandId(brandId);
+	}
 	public List<Brand> readBrands() {
 		return brandDao.readBrands();
 	}
