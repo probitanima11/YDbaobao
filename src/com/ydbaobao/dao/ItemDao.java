@@ -26,7 +26,7 @@ public class ItemDao extends JdbcDaoSupport {
 	}
 
 	public List<Item> readCartList(String customerId) {
-		String sql = "select * from ITEMS A, PRODUCTS B where A.customerId=? and A.orderId is NULL AND A.productId = B.productId";
+		String sql = "select * from ITEMS A, PRODUCTS B where A.customerId= ? and A.orderId is NULL AND A.productId = B.productId";
 		try {
 			return getJdbcTemplate().query(sql, (rs, rowNum) -> new Item(
 					rs.getInt("itemId"),
@@ -58,5 +58,21 @@ public class ItemDao extends JdbcDaoSupport {
 				new Product(),
 				new Order(),
 				rs.getString("size"), rs.getInt("quantity")), itemId);
+	}
+
+	public List<Item> readOrderedItems(String customerId) {
+		String sql = "select * from ITEMS A, PRODUCTS B where A.customerId= ? and A.orderId is not NULL AND A.productId = B.productId order by A.orderId";
+		try {
+			return getJdbcTemplate().query(sql, (rs, rowNum) -> new Item(
+					rs.getInt("itemId"),
+					new Customer(rs.getString("customerId")),
+					new Product(rs.getInt("productId"),rs.getString("productName"), rs.getInt("productPrice")),
+					new Order(rs.getInt("orderId")),
+					rs.getString("size"),
+					rs.getInt("quantity")
+					), customerId);
+		} catch (EmptyResultDataAccessException e) {
+			return null;
+		}
 	}
 }
