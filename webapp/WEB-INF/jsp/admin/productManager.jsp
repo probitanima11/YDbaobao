@@ -173,7 +173,7 @@
 
 					/*수량 input박스 추가*/
 					el = document.createElement('input');
-					el.setAttribute('id', 'stock-size-input');
+					el.setAttribute('id', 'stock-quantity-input');
 					el.setAttribute('name', 'stockList[' + divIndex + '].quantity');
 					el.setAttribute('type', 'number');
 					el.setAttribute('value', '0');
