@@ -149,7 +149,6 @@
 			for (var i = 0; i < stocksDiv.length; i++) {
 				if (stocksDiv[i].className === productId) {
 					/*div생성*/
-					debugger;
 					var divIndex = stocksDiv[i].children[stocksDiv[i].childElementCount-1].className*1+1;
 					
 					el = document.createElement('div');
@@ -182,7 +181,6 @@
 					el.setAttribute('style', 'width:80px');
 					stocksDiv[i].lastChild.appendChild(el);
 					
-					debugger;
 					/*삭제 버튼 추가*/
 					el = document.createElement('button');
 					el.setAttribute('type', 'button');
@@ -190,7 +188,6 @@
 					el.setAttribute('value', productId);
 					el.innerText = "삭제";
 					stocksDiv[i].lastChild.appendChild(el);
-					debugger;
 					break;
 				}
 			}

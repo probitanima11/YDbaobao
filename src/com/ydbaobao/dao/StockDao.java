@@ -45,4 +45,8 @@ public class StockDao extends JdbcDaoSupport {
 		getJdbcTemplate().update(sql, stock.getSize(), stock.getQuantity(), stock.getStockId());
 	}
 
+	public void delete(Stock stock) {
+		String sql = "delete from STOCKS where stockId = ?";
+		getJdbcTemplate().update(sql, stock.getStockId());
+	}
 }
