@@ -50,7 +50,7 @@ public class BrandController {
 	@RequestMapping(value="", method=RequestMethod.GET)
 	public String searchByBrandId(WebRequest req, Model model, @RequestParam int brandId) {
 		
-		PageConfigParam p = new PageConfigParam(16, req.getParameter("index"), productsService.countByBrandId(brandId));
+		PageConfigParam p = new PageConfigParam(16, req.getParameter("index"), brandService.readBrandByBrandId(brandId).getBrandCount());
 
 		if (p.getEnd() < p.getRange()) {
 			model.addAttribute("nextBtn", true);

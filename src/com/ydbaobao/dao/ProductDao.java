@@ -52,7 +52,7 @@ public class ProductDao extends JdbcDaoSupport {
 		return getJdbcTemplate().queryForObject(sql, (rs, rowNum) -> new Product(
 						rs.getInt("productId"), rs.getString("productName"),
 						new Category(rs.getInt("categoryId"), null, 0),
-						new Brand(rs.getInt("brandId"), null),
+						new Brand(rs.getInt("brandId"), null, 0),
 						rs.getInt("productPrice"), rs.getString("productImage"),
 						rs.getString("productDescription"), rs.getLong("productCreateDate"),
 						rs.getLong("productUpdateDate"), new ArrayList<Stock>()), productId);

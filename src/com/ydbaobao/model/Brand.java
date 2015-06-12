@@ -6,14 +6,16 @@ import java.util.List;
 public class Brand {
 	private int brandId;
 	private String brandName;
+	private int brandCount;
 	
 	public Brand() {
 	}
 
-	public Brand(int brandId, String brandName) {
+	public Brand(int brandId, String brandName, int brandCount) {
 		super();
 		this.brandId = brandId;
 		this.brandName = brandName;
+		this.brandCount = brandCount;
 	}
 	
 	public List<Character> getFirstLetters() {
@@ -32,6 +34,10 @@ public class Brand {
 		return brandName;
 	}
 
+	public int getBrandCount() {
+		return brandCount;
+	}
+
 	public void setBrandId(int brandId) {
 		this.brandId = brandId;
 	}
@@ -40,13 +46,17 @@ public class Brand {
 		this.brandName = brandName;
 	}
 
+	public void setBrandCount(int brandCount) {
+		this.brandCount = brandCount;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + brandCount;
 		result = prime * result + brandId;
-		result = prime * result
-				+ ((brandName == null) ? 0 : brandName.hashCode());
+		result = prime * result + ((brandName == null) ? 0 : brandName.hashCode());
 		return result;
 	}
 
@@ -59,6 +69,8 @@ public class Brand {
 		if (getClass() != obj.getClass())
 			return false;
 		Brand other = (Brand) obj;
+		if (brandCount != other.brandCount)
+			return false;
 		if (brandId != other.brandId)
 			return false;
 		if (brandName == null) {
@@ -71,13 +83,6 @@ public class Brand {
 
 	@Override
 	public String toString() {
-		return "Brand [brandId=" + brandId + ", brandName=" + brandName + "]";
-	}
-
-	public Brand getBrandByBrandId(int brandId) {
-		if(this.brandId == brandId) {
-			return this;
-		}
-		return null;
+		return "Brand [brandId=" + brandId + ", brandName=" + brandName + ", brandCount=" + brandCount + "]";
 	}
 }
