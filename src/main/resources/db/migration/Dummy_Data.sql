@@ -120,3 +120,4 @@ insert into GRADES values(2, 0);
 insert into GRADES values(3, 0);
 insert into GRADES values(4, 0);
 insert into GRADES values(5, 0);
+

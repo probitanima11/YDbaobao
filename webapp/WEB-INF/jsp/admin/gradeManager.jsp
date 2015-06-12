@@ -1,0 +1,74 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>관리자페이지::브랜드관리</title>
+<link rel="stylesheet" href="/css/admin.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css">
+<style>
+	#grades input[type='text'], input[type='text'] {
+		width:200px;
+		font-size:15px;
+	}
+</style>
+</head>
+<body>
+	<div id="container">
+		<%@ include file="./_adminNav.jsp"%>
+		<div id="content">
+			<h1>등급 관리</h1>
+			<table id="grades" style="width: 500px;">
+				<tr>
+					<th style="width:100px;">등급</th>
+					<th style="width:200px;">할인율</th>
+					<th style="width:200px;"></th>
+				</tr>
+				<c:forEach var="grade" items="${grades}">
+					<tr id="${grade.gradeId}">
+						<td><input type="text" value="${grade.gradeId}" data-id="${grade.gradeId}" readonly></td>
+						<td><input type="text" value="${grade.discount}"></td>
+						<td>
+							<button class="update-grade-btn">수정</button>
+						</td>
+					</tr>
+				</c:forEach>
+			</table>
+		</div>
+	</div>
+	<script>
+		window.addEventListener('load', function() {
+			setBrandEvent();
+		}, false);
+
+		function setBrandEvent() {
+			var updateBtn = document.querySelectorAll('.update-grade-btn');
+			// for문 조건문용 변수
+			var length;
+
+			for(var i = 0, length = updateBtn.length; i < length; i++) {
+				updateBtn[i].addEventListener('click', function(e) {
+					updateGrade(e);
+				}, false);
+			}
+
+		}
+
+		function updateGrade(e) {
+			/* var gradeId = e.target.parentElement.parentElement.id;
+			var brandName = document.querySelector('input[data-id="' + brandId + '"]').value;
+			ydbaobao.ajax({
+				method:'put',
+				url:'/api/brands/' + brandId + '/' + brandName,
+				success: function(req) {
+					alert('브랜드명이 수정되었습니다')
+				}
+			}); */
+		}
+
+
+	</script>
+	<script src="/js/ydbaobao.js"></script>
+</body>
+</html>

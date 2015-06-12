@@ -99,6 +99,13 @@ public class AdminController {
 		mv.addObject("brands", brandService.readBrands());
 		return mv;
 	}
+	
+	@RequestMapping(value = "/manage/grade", method = RequestMethod.GET)
+	public ModelAndView manageGrade() {
+		ModelAndView mv = new ModelAndView("admin/gradeManager");
+//		mv.addObject("grades", brandService.readBrands());
+		return mv;
+	}
 
 	/**
 	 * 관리자 페이지에서 카테고리 목록을 불러옴
