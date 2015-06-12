@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -45,6 +46,12 @@ public class CustomerController {
 		model.addAttribute("isUpdate", true);
 		model.addAttribute("customer", customerDao.findCustomerByCustomerId(customerId));
 		return "form";
+	}
+	
+	@RequestMapping(value = "/{customerId}/grade/{grade}", method = RequestMethod.PUT)
+	public ResponseEntity<Object> update(@PathVariable String customerId, @PathVariable String grade) {
+		customerService.updateGrade(customerId, grade);
+		return JSONResponseUtil.getJSONResponse("등급 변경 완료.", HttpStatus.OK);
 	}
 	
 	@RequestMapping(value ="/create", method = RequestMethod.POST)
