@@ -44,7 +44,7 @@ function changeBrandList(brands) {
 	// 검색된 브랜드 리스트 출력
 	for(var i = 0, length = brands.length; i < length; i++) {
 		var li = document.createElement('li');
-		li.innerHTML += '<a href="/brand/products/' + brands[i].brandId + '"><i class="fa fa-bookmark"></i>  <span>' + brands[i].brandName + '</span></a>';
+		li.innerHTML += '<a href="/brand/products/' + brands[i].brandId + '"><i class="fa fa-bookmark"></i>  <span>' + brands[i].brandName +'('+brands[i].brandCount+')'+ '</span></a>';
 		ul.appendChild(li);
 	}
 }

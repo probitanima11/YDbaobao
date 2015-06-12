@@ -32,13 +32,13 @@ public class BrandDao extends JdbcDaoSupport {
 	public List<Brand> readBrands() {
 		String sql = "select * from BRANDS order by brandName";
 		return getJdbcTemplate().query(
-				sql, (rs, rowNum) -> new Brand(rs.getInt("brandId"), rs.getString("brandName")));
+				sql, (rs, rowNum) -> new Brand(rs.getInt("brandId"), rs.getString("brandName"), rs.getInt("brandCount")));
 	}
 	
 	public List<Brand> findBrands(String searchValue) {
 		String sql = "select * from BRANDS where brandName like \"%" + searchValue + "%\"";
 		return getJdbcTemplate().query(
-				sql, (rs, rowNum) -> new Brand(rs.getInt("brandId"), rs.getString("brandName")));
+				sql, (rs, rowNum) -> new Brand(rs.getInt("brandId"), rs.getString("brandName"), rs.getInt("brandCount")));
 	}
 
 	public int createBrand(String brandName) {
@@ -59,7 +59,7 @@ public class BrandDao extends JdbcDaoSupport {
 		try {
 			return getJdbcTemplate().queryForObject(sql, (rs, rowNum) -> new Brand(
 					rs.getInt("brandId"), 
-					rs.getString("brandName")), brandName);
+					rs.getString("brandName"), rs.getInt("brandCount")), brandName);
 		} catch (EmptyResultDataAccessException e) {
 			return null;
 		}
@@ -80,7 +80,7 @@ public class BrandDao extends JdbcDaoSupport {
 		try {
 			return getJdbcTemplate().queryForObject(sql, (rs, rowNum) -> new Brand(
 					rs.getInt("brandId"), 
-					rs.getString("brandName")), brandId);
+					rs.getString("brandName"), rs.getInt("brandCount")), brandId);
 		} catch (EmptyResultDataAccessException e) {
 			return null;
 		}
@@ -90,6 +90,16 @@ public class BrandDao extends JdbcDaoSupport {
 		String sql = "select * from BRANDS where brandName like \"" + firstLetter + "%\"";
 		return getJdbcTemplate().query(sql, (rs, rowNum) -> new Brand(
 				rs.getInt("brandId"), 
-				rs.getString("brandName")));
+				rs.getString("brandName"), rs.getInt("brandCount")));
+	}
+	
+	public int increaseCount(long brandId) {
+		String sql = "update BRANDS set brandCount = brandCount+1 where brandId = ?";
+		return getJdbcTemplate().update(sql, brandId);
+	}
+	
+	public int decreaseCount(long brandId) {
+		String sql = "update BRANDS set brandCount = brandCount-1 where brandId = ?";
+		return getJdbcTemplate().update(sql, brandId);
 	}
 }

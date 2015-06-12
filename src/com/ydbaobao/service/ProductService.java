@@ -36,6 +36,7 @@ public class ProductService {
 		int productId = productDao.create(product);
 		stockDao.createDefault(productId);
 		categoryDao.increaseCount(0);
+		brandDao.increaseCount(brandId);
 		return productId;
 	}
 
@@ -48,7 +49,6 @@ public class ProductService {
 	public void updateProductImage(Product product, String imageName) {
 		productDao.updateProductImage(product.getProductId(), imageName);
 	}
-
 	public void update(Product product) {
 		Product oldStatus = productDao.read(product.getProductId());
 		long oldCategoryId = oldStatus.getCategory().getCategoryId();
@@ -56,6 +56,12 @@ public class ProductService {
 		if (oldCategoryId != newCategoryId) {
 			categoryDao.increaseCount(newCategoryId);
 			categoryDao.decreaseCount(oldCategoryId);
+		}
+		long oldBrandId = oldStatus.getBrand().getBrandId();
+		long newBrandId = product.getBrand().getBrandId();
+		if (oldBrandId != newBrandId) {
+			brandDao.increaseCount(newBrandId);
+			brandDao.decreaseCount(oldBrandId);
 		}
 		productDao.update(product);
 		updateStocks(product);

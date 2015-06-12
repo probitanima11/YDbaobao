@@ -32,7 +32,7 @@ public class ProductsDao extends JdbcDaoSupport {
 				sql, (rs, rowNum) -> new Product(
 						rs.getInt("productId"), rs.getString("productName"),
 						new Category(rs.getInt("categoryId"), null, 0),
-						new Brand(rs.getInt("brandId"), rs.getString("brandName")),
+						new Brand(rs.getInt("brandId"), rs.getString("brandName"), rs.getInt("brandCount")),
 						rs.getInt("productPrice"), rs.getString("productImage"),
 						rs.getString("productDescription"), rs.getLong("productCreateDate"),
 						rs.getLong("productUpdateDate"), new ArrayList<Stock>()), start, quantity);
@@ -44,7 +44,7 @@ public class ProductsDao extends JdbcDaoSupport {
 				sql, (rs, rowNum) -> new Product(
 						rs.getInt("productId"), rs.getString("productName"),
 						new Category(rs.getInt("categoryId"), null, 0),
-						new Brand(rs.getInt("brandId"), rs.getString("brandName")),
+						new Brand(rs.getInt("brandId"), rs.getString("brandName"), rs.getInt("brandCount")),
 						rs.getInt("productPrice"), rs.getString("productImage"),
 						rs.getString("productDescription"), rs.getLong("productCreateDate"),
 						rs.getLong("productUpdateDate"), new ArrayList<Stock>()), categoryId, index, quantity);
@@ -56,7 +56,7 @@ public class ProductsDao extends JdbcDaoSupport {
 				sql, (rs, rowNum) -> new Product(
 						rs.getInt("productId"), rs.getString("productName"),
 						new Category(rs.getInt("categoryId"), null, 0),
-						new Brand(rs.getInt("brandId"), rs.getString("brandName")),
+						new Brand(rs.getInt("brandId"), rs.getString("brandName"), rs.getInt("brandCount")),
 						rs.getInt("productPrice"), rs.getString("productImage"),
 						rs.getString("productDescription"), rs.getLong("productCreateDate"),
 						rs.getLong("productUpdateDate"), new ArrayList<Stock>()), categoryId);
@@ -68,7 +68,7 @@ public class ProductsDao extends JdbcDaoSupport {
 				sql, (rs, rowNum) -> new Product(
 						rs.getInt("productId"), rs.getString("productName"),
 						new Category(rs.getInt("categoryId"), null, 0),
-						new Brand(rs.getInt("brandId"), rs.getString("brandName")),
+						new Brand(rs.getInt("brandId"), rs.getString("brandName"), rs.getInt("brandCount")),
 						rs.getInt("productPrice"), rs.getString("productImage"),
 						rs.getString("productDescription"), rs.getLong("productCreateDate"),
 						rs.getLong("productUpdateDate"), new ArrayList<Stock>()), query, index, quantity);
@@ -80,7 +80,7 @@ public class ProductsDao extends JdbcDaoSupport {
 				sql, (rs, rowNum) -> new Product(
 						rs.getInt("productId"), rs.getString("productName"),
 						new Category(rs.getInt("categoryId"), null, 0),
-						new Brand(rs.getInt("brandId"), rs.getString("brandName")),
+						new Brand(rs.getInt("brandId"), rs.getString("brandName"), rs.getInt("brandCount")),
 						rs.getInt("productPrice"), rs.getString("productImage"),
 						rs.getString("productDescription"), rs.getLong("productCreateDate"),
 						rs.getLong("productUpdateDate"), new ArrayList<Stock>()), query, index, quantity);
@@ -91,11 +91,6 @@ public class ProductsDao extends JdbcDaoSupport {
 		return getJdbcTemplate().queryForObject(sql, Integer.class);
 	}
 
-	public int countByBrandId(int brandId) {
-		String sql = "select count(1) from PRODUCTS where brandId=?";
-		return getJdbcTemplate().queryForObject(sql, Integer.class, brandId);
-	}
-	
 	public int countBySearchProductName(String query) {
 		String sql = "select count(1) as count from products WHERE productName REGEXP (?)";
 		return getJdbcTemplate().queryForObject(sql, Integer.class, query);
@@ -112,7 +107,7 @@ public class ProductsDao extends JdbcDaoSupport {
 				sql, (rs, rowNum) -> new Product(
 						rs.getInt("productId"), rs.getString("productName"),
 						new Category(rs.getInt("categoryId"), null, 0),
-						new Brand(rs.getInt("brandId"), rs.getString("brandName")),
+						new Brand(rs.getInt("brandId"), rs.getString("brandName"), rs.getInt("brandCount")),
 						rs.getInt("productPrice"), rs.getString("productImage"),
 						rs.getString("productDescription"), rs.getLong("productCreateDate"),
 						rs.getLong("productUpdateDate"), new ArrayList<Stock>()), brandId, index, quantity);
@@ -128,7 +123,7 @@ public class ProductsDao extends JdbcDaoSupport {
 		return getJdbcTemplate()
 				.query(sql,
 						(rs, rowNum) -> new Product(rs.getInt("productId"), rs.getString("productName"), new Category(
-								rs.getInt("categoryId"), null, 0), new Brand(rs.getInt("brandId"), null), rs
+								rs.getInt("categoryId"), null, 0), new Brand(rs.getInt("brandId"), null, 0), rs
 								.getInt("productPrice"), rs.getString("productImage"), rs
 								.getString("productDescription"), rs.getLong("productCreateDate"), rs
 								.getLong("productUpdateDate"), new ArrayList<Stock>()));
