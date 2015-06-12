@@ -75,4 +75,17 @@ public class ItemDao extends JdbcDaoSupport {
 			return null;
 		}
 	}
+
+	public void orderItems(int orderId, int[] itemList) {
+		String sql = "update ITEMS set orderId = ? where itemId = " + itemList[0];
+		for (int i=1; i<itemList.length; i++) {
+			sql += " or itemId = " + itemList[i];
+		}
+		getJdbcTemplate().update(sql, orderId);
+	}
+
+	public void orderDirect(String customerId, String productId, int orderId, String size, int quantity) {
+		String sql = "insert into ITEMS (customerId, productId, orderId, size, quantity) values(?, ?, ?, ?, ?)";
+		getJdbcTemplate().update(sql, customerId, productId, orderId, size, quantity);		
+	}
 }

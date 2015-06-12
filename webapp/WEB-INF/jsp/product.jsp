@@ -125,6 +125,9 @@ h1 {
 			document.querySelector('.addtocart').addEventListener('click', function(e) {
 				addToCart(e);
 			}, false);
+			document.querySelector('.buyitnow').addEventListener('click', function(e) {
+				buyitnow(e);
+			}, false);
 			productBuyContainer = document.querySelector("#product-buy-container");
 			document.addEventListener('scroll', function(e){
 				if (window.scrollY > 150) {
@@ -153,6 +156,22 @@ h1 {
 				param : param,
 				success : function(req) {
 					alert('장바구니에 담겼습니다.');
+				}
+			});
+		}
+
+		function buyitnow(e) {
+			var size = document.getElementById("size-selector").value;
+			var quantity = document.getElementById("qty-selector").value;
+			var param = 'productId=' + productId + '&size=' + size + '&quantity=' + quantity;
+			ydbaobao.ajax({
+				/* TODO productId, size, quantity 전달. */
+				method : 'post',
+				url : '/item/order/',
+				param : param,
+				success : function(req) {
+					alert('주문요청이 완료되었습니다.');
+					window.location.href = "/orders";
 				}
 			});
 		}

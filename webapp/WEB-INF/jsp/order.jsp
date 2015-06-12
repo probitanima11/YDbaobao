@@ -11,7 +11,11 @@
 	}
 	#order-list {
 		border: 1px gray solid;
-		margin-left: 300px;
+		margin: 0 auto;
+	}
+	#order-section {
+		overflow:scroll;
+		height: 450px;
 	}
 	.order-date-td, .order-status-td, .order-price-td {
 		border-right: 1px lightgray solid;
@@ -122,7 +126,3 @@
 	<script src="/js/ydbaobao.js"></script>
 </body>
 </html>
-
-
-
-
