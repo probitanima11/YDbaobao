@@ -102,10 +102,9 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value = "/manage/grade", method = RequestMethod.GET)
-	public ModelAndView manageGrade() {
-		ModelAndView mv = new ModelAndView("admin/gradeManager");
-		mv.addObject("grades", gradeDao.readGrades());
-		return mv;
+	public String manageGrade(Model model) {
+		model.addAttribute("grades", gradeDao.readGrades());
+		return "admin/gradeManager";
 	}
 
 	/**
