@@ -39,7 +39,7 @@ public class ProductsController {
 	
 	@RequestMapping(value="", method=RequestMethod.GET)
 	public String load(Model model, WebRequest req, @RequestParam int categoryId) {
-		PageConfigParam p = new PageConfigParam(16, req.getParameter("index"), productsService.countByCategoryId(categoryId));
+		PageConfigParam p = new PageConfigParam(16, req.getParameter("index"), categoryService.readByCategoryId(categoryId).getCategoryCount());
 
 		if (p.getEnd() < p.getRange()) {
 			model.addAttribute("nextBtn", true);

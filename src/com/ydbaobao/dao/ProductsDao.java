@@ -91,11 +91,6 @@ public class ProductsDao extends JdbcDaoSupport {
 		return getJdbcTemplate().queryForObject(sql, Integer.class);
 	}
 
-	public int countByCategoryId(int categoryId) {
-		String sql = "select count(1) from PRODUCTS where categoryId=?";
-		return getJdbcTemplate().queryForObject(sql, Integer.class, categoryId);
-	}
-	
 	public int countByBrandId(int brandId) {
 		String sql = "select count(1) from PRODUCTS where brandId=?";
 		return getJdbcTemplate().queryForObject(sql, Integer.class, brandId);
