@@ -26,5 +26,5 @@
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
 
 	<mvc:resources mapping="/admin/**" location="/WEB-INF/admin/" />
-	<mvc:annotation-driven />
+	
 </beans>
