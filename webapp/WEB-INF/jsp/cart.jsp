@@ -105,8 +105,46 @@
 				checkedItems[j].checked = true;
 			}
 		});
+		
+		document.querySelector('#select-order-btn').addEventListener('click', function() {
+			var checkList = document.querySelectorAll(".item-check");
+			var checkLength = checkList.length;
+			var paramList = new Array();
+			var param = 'itemList=';
+			for(var i = 0; i < checkLength; i++) {
+				if(checkList[i].checked) {
+					paramList.push(checkList[i].parentNode.parentNode.getAttribute("data-id"));
+				}
+			}
+			param += paramList;
+			order(param);
+		}, false); 
+		
+		document.querySelector('#order-btn').addEventListener('click', function() {
+			var checkList = document.querySelectorAll(".item-check");
+			var checkLength = checkList.length;
+			var paramList = new Array();
+			var param = 'itemList=';
+			for(var i = 0; i < checkLength; i++) {
+				paramList.push(checkList[i].parentNode.parentNode.getAttribute("data-id"));
+			}
+			param += paramList;
+			order(param);
+		}, false); 
 
 	}, false);
+	
+	function order(param) {
+		ydbaobao.ajax({
+			method : 'post',
+			url : '/orders',
+			param : param,
+			success : function(req) {
+				alert('주문요청이 완료되었습니다.');
+				window.location.href = "/orders";
+			}
+		});
+	}
 
 	function loadCartList(itemList) {
 		var cartList = document.querySelector('#cart-list');
