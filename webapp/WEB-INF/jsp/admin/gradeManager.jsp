@@ -22,13 +22,16 @@
 			<table id="grades" style="width: 500px;">
 				<tr>
 					<th style="width:100px;">등급</th>
-					<th style="width:200px;">할인율</th>
+					<th style="width:200px;">할인율(%)</th>
 					<th style="width:200px;"></th>
 				</tr>
 				<c:forEach var="grade" items="${grades}">
 					<tr id="${grade.gradeId}">
-						<td><input type="text" value="${grade.gradeId}" data-id="${grade.gradeId}" readonly></td>
-						<td><input type="text" value="${grade.discount}"></td>
+						<td><input type="text" value="${grade.gradeId}" readonly></td>
+						<td style="display: inline-flex;">
+							<input type="text" value="${grade.discount}" data-id="${grade.gradeId}">
+							<span>(%)</span>
+						</td>
 						<td>
 							<button class="update-grade-btn">수정</button>
 						</td>
@@ -56,15 +59,15 @@
 		}
 
 		function updateGrade(e) {
-			/* var gradeId = e.target.parentElement.parentElement.id;
-			var brandName = document.querySelector('input[data-id="' + brandId + '"]').value;
+			var gradeId = e.target.parentElement.parentElement.id;
+			var discount = document.querySelector('input[data-id="' + gradeId + '"]').value;
 			ydbaobao.ajax({
 				method:'put',
-				url:'/api/brands/' + brandId + '/' + brandName,
+				url:'/api/grades/' + gradeId + '/' + discount,
 				success: function(req) {
-					alert('브랜드명이 수정되었습니다')
+					alert(gradeId + '등급의 할인율이 조정되었습니다')
 				}
-			}); */
+			});
 		}
 
 

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ydbaobao.dao.GradeDao;
 import com.ydbaobao.model.Category;
 import com.ydbaobao.model.Product;
 import com.ydbaobao.service.BrandService;
@@ -36,6 +37,8 @@ public class AdminController {
 	private CustomerService customerService;
 	@Resource
 	private ProductsService productsService;
+	@Resource
+	private GradeDao gradeDao;
 	
 	/**
 	 * 관리자 페이지 접근을 위한 GET 요청을 응답.
@@ -103,7 +106,7 @@ public class AdminController {
 	@RequestMapping(value = "/manage/grade", method = RequestMethod.GET)
 	public ModelAndView manageGrade() {
 		ModelAndView mv = new ModelAndView("admin/gradeManager");
-//		mv.addObject("grades", brandService.readBrands());
+		mv.addObject("grades", gradeDao.readGrades());
 		return mv;
 	}
 
