@@ -25,7 +25,7 @@ public class GradeDao extends JdbcDaoSupport {
 		return getJdbcTemplate().queryForList(sql);
 	}
 
-	public void updateGrade(int gradeId, int discount) {
+	public void updateGrade(int gradeId, String discount) {
 		String sql = "update GRADES set discount = ? where gradeId = ?";
 		getJdbcTemplate().update(sql, discount, gradeId);
 		

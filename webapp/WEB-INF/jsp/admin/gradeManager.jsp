@@ -65,12 +65,13 @@
 				method:'put',
 				url:'/api/grades/' + gradeId + '/' + discount,
 				success: function(req) {
-					alert(gradeId + '등급의 할인율이 조정되었습니다')
+					if(req.responseText === "fail")
+						alert('숫자만 입력 가능합니다.');
+					else
+						alert(gradeId + '등급의 할인율이 조정되었습니다');
 				}
 			});
 		}
-
-
 	</script>
 	<script src="/js/ydbaobao.js"></script>
 </body>
