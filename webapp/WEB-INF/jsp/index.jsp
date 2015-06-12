@@ -38,8 +38,6 @@
 	<div id="footer">
 		<div class="content wrap">Footer...</div>
 	</div>
-	
-	<script src="/js/brand.js"></script>
 	<script src="/js/ydbaobao.js"></script>
 </body>
 </html>
