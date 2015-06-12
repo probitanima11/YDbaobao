@@ -15,4 +15,5 @@
 	<a href="/" style="text-decoration:none;"><div style="margin-top:10px; padding:15px 15px; font-size:12px; color:#fff; background-color:#EA6576">
 		<i class='fa fa-home'></i>  쇼핑몰로 이동
 	</div></a>
+	<a href="/admin/logout" style="text-decoration:none;"><div style="margin-top:10px; padding:15px 15px; font-size:12px; color:#fff; background-color:#454545">관리자 로그아웃</div></a>
 </div>    
