@@ -107,7 +107,7 @@ h1 {
 			<div style="margin-top: 25px; margin-left: 15px;">
 				<h3>구매수량</h3>
 				<button onclick="qtyControl('minus')"><i class='fa fa-minus'></i></button>
-				<input id="qty-selector" type="text" value="1" style="width: 32px;" onkeypress="return isNumberKey(event);">
+				<input id="qty-selector" type="text" value="1" style="width: 32px;" onkeypress="return numberKey(event);">
 				<button onclick="qtyControl('plus')"><i class='fa fa-plus'></i></button>
 			</div>
 			<div class="button-group">
@@ -117,7 +117,7 @@ h1 {
 		</div>
 	</div>
 	<div id="footer">footer...</div>
-
+	<script src="/js/ydbaobao.js"></script>
 	<script>
 		var productId = ${product.productId};
 		var productBuyContainer;
@@ -190,7 +190,10 @@ h1 {
 			 		break;
 			 }
 		 }
+		 function numberKey(evt) {
+			    var charCode = (evt.which) ? evt.which : event.keyCode
+			    return !(charCode > 31 && (charCode < 48 || charCode > 57));
+		};
 	</script>
-	<script src="/js/ydbaobao.js"></script>
 </body>
 </html>
