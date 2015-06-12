@@ -7,6 +7,7 @@
 <title>Welcome YDbaobao!</title>
 <meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="/css/main.css" />
+<link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css" />
 </head>
 <body>
 	<div id="header" style="width: 100%;">
