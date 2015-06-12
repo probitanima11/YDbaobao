@@ -79,8 +79,7 @@
 
 		function updateBrand(e) {
 			var brandId = e.target.parentElement.parentElement.id;
-			var brandName = document.querySelector('input[data-id="' + brandId
-					+ '"]').value;
+			var brandName = document.querySelector('input[data-id="' + brandId + '"]').value;
 			ydbaobao.ajax({
 				method : 'put',
 				url : '/api/brands/' + brandId + '/' + brandName,
@@ -136,9 +135,11 @@
 			var brandsLength = json.length;
 			for (var i = 0; i < brandsLength; i++) {
 				row = table.insertRow(1);
+				row.id = json[i].brandId;
 				row.insertCell(0).innerHTML = "<td><input type='text' value='"+json[i].brandName+"' data-id='"+json[i].brandId+"'></td>";
 				row.insertCell(1).innerHTML = "<td><button class='update-brand-btn'>수정</button><button class='delete-brand-btn'>삭제</button></td>";
 			}
+			setBrandEvent();
 		}
 	</script>
 	<script src="/js/ydbaobao.js"></script>
