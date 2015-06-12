@@ -81,6 +81,14 @@
 									</c:if>
 								</div>
 							</c:forEach>
+							<c:forEach var="i" begin="1" end="20">
+							<div id="stock-add" class = "" style="display:none">
+									<form:input path="" type="hidden" id="stockId" value="0"/>
+									<form:input path="" type="text" id="stock-size-input" value="" style="width:80px"/>
+									<form:input path="" type="number" id="stock-quantity-input" value="0" min="0" style="width:80px"/>
+									<button type="button" class="delete-size_quantity-btn" value="${product.productId}">삭제</button>
+							</div>
+							</c:forEach>
 						</div>
 						<button type="button" class="add-size_quantity-btn" value="${product.productId}">추가</button>
 					</td>
@@ -148,47 +156,18 @@
 			var el = undefined;
 			for (var i = 0; i < stocksDiv.length; i++) {
 				if (stocksDiv[i].className === productId) {
-					/*div생성*/
-					var divIndex = stocksDiv[i].children[stocksDiv[i].childElementCount-1].className*1+1;
-					el = document.createElement('div');
-					el.setAttribute('id', 'stock');
-					el.setAttribute('class', divIndex);
-					stocksDiv[i].appendChild(el);
 					
-					/*hidden input박스 추가*/
-					el = document.createElement('input');
-					el.setAttribute('id', 'stockId');
-					el.setAttribute('name', 'stockList[' + divIndex + '].stockId');
-					el.setAttribute('type', 'hidden');
-					el.setAttribute('value', '0');
-					stocksDiv[i].lastChild.appendChild(el);
-					
-					/*사이즈 input박스 추가*/
-					el = document.createElement('input');
-					el.setAttribute('id', 'stock-size-input');
-					el.setAttribute('name', 'stockList[' + divIndex + '].size');
-					el.setAttribute('type', 'text');
-					el.setAttribute('style', 'width:80px');
-					stocksDiv[i].lastChild.appendChild(el);
-
-					/*수량 input박스 추가*/
-					el = document.createElement('input');
-					el.setAttribute('id', 'stock-quantity-input');
-					el.setAttribute('name', 'stockList[' + divIndex + '].quantity');
-					el.setAttribute('type', 'number');
-					el.setAttribute('value', '0');
-					el.setAttribute('min', '0');
-					el.setAttribute('style', 'width:80px');
-					stocksDiv[i].lastChild.appendChild(el);
-					
-					/*삭제 버튼 추가*/
-					el = document.createElement('button');
-					el.setAttribute('type', 'button');
-					el.setAttribute('class', 'delete-size_quantity-btn');
-					el.setAttribute('value', productId);
-					el.innerText = "삭제";
-					stocksDiv[i].lastChild.appendChild(el);
-					break;
+					for(var k=0; k<stocksDiv[i].childElementCount; k++){
+						if(stocksDiv[i].children[k].style.display==='none'){
+							var index = stocksDiv[i].children[k-1].className*1+1;
+							stocksDiv[i].children[k].style.display='';
+							stocksDiv[i].children[k].className = index;
+							stocksDiv[i].children[k].children[0].name = "stockList["+index+"].stockId";
+							stocksDiv[i].children[k].children[1].name = "stockList["+index+"].size";
+							stocksDiv[i].children[k].children[2].name = "stockList["+index+"].quantity";
+							return;
+						}
+					}
 				}
 			}
 		}
