@@ -9,10 +9,6 @@
 <link rel="stylesheet" href="/css/font-awesome.min.css">
 <title>YDbaobao:: 상품페이지</title>
 <style>
-#product-container {
-	
-}
-
 #product-info-container {
 	position: relative;
 	width: 620px;
@@ -30,15 +26,18 @@
 	outline: 1px solid #ccc;
 }
 
-#product-photo img {
-	max-height: 100%;
-	max-width: 100%;
-}
-
 h1 {
 	margin: 0;
 	padding: 0;
 	font-size: 35px;
+}
+
+#product-buy-container {
+	position: absolute; 
+	top: 0; 
+	left: 100%; 
+	margin-left: -350px; 
+	width: 350px;
 }
 
 #product-buy-container .product-price {
@@ -94,8 +93,7 @@ h1 {
 				${product.productDescription}
 			</div>
 		</div>
-		<div id="product-buy-container"
-			style="position: absolute; top: 0; left: 100%; margin-left: -350px; width: 350px; outline: 1px solid green;">
+		<div id="product-buy-container">
 			<h1 class="product-name" style="margin-top: 25px; margin-left: 15px;">${product.productName}</h1>
 			<div class="product-price">${product.productPrice}원</div>
 			<div style="margin-top: 25px; margin-left: 15px;">
@@ -129,13 +127,19 @@ h1 {
 			}, false);
 			productBuyContainer = document.querySelector("#product-buy-container");
 			document.addEventListener('scroll', function(e){
-				console.log(window.scrollY);
 				if (window.scrollY > 150) {
 					productBuyContainer.style.top = (window.scrollY - 150)+"px";
 				} else {
 					productBuyContainer.style.top = "0px";
 				}
 			},false);
+
+			 var image = document.querySelector("#product-photo img");
+			 if (image.naturalWidth > image.naturalHeight) {
+				 document.querySelector("#product-photo img").style.width = "100%";
+			 } else {
+				 document.querySelector("#product-photo img").style.height = "100%";
+			 }
 		}, false);
 
 		function addToCart(e) {
