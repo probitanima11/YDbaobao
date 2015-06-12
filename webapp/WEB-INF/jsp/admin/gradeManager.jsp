@@ -29,7 +29,7 @@
 					<tr id="${grade.gradeId}">
 						<td><input type="text" value="${grade.gradeId}" readonly></td>
 						<td style="display: inline-flex;">
-							<input type="text" value="${grade.discount}" data-id="${grade.gradeId}">
+							<input type="text" value="${grade.discount}" data-id="${grade.gradeId}" onkeypress="return isNumberKey(event);">
 							<span>(%)</span>
 						</td>
 						<td>
