@@ -47,14 +47,6 @@ public class ProductsService {
 		return productsDao.readByBrandName(query, index, quantity);
 	}
 	
-	public int countByCategoryId(int categoryId) {
-		return productsDao.countByCategoryId(categoryId);
-	}
-	
-	public int countByBrandId(int categoryId) {
-		return productsDao.countByBrandId(categoryId);
-	}
-	
 	public int count() {
 		return productsDao.count();
 	}

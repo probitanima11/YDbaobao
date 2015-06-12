@@ -25,7 +25,7 @@ public class CategoryDao extends JdbcDaoSupport {
 		String sql = "select * from CATEGORY";
 		return getJdbcTemplate().query(sql, (rs, rowNum) -> new Category(
 				rs.getInt("categoryId"),
-				rs.getString("categoryName")));
+				rs.getString("categoryName"), rs.getInt("categoryCount")));
 	}
 
 	public int update(long categoryId, String categoryName) {
@@ -47,6 +47,16 @@ public class CategoryDao extends JdbcDaoSupport {
 		String sql = "select * from CATEGORY where categoryId = ?";
 		return getJdbcTemplate().queryForObject(sql, (rs, rowNum) -> new Category(
 				rs.getInt("categoryId"),
-				rs.getString("categoryName")), categoryId);
+				rs.getString("categoryName"), rs.getInt("categoryCount")), categoryId);
+	}
+	
+	public int increaseCount(long categoryId) {
+		String sql = "update category set categoryCount = categoryCount+1 where categoryId = ?";
+		return getJdbcTemplate().update(sql, categoryId);
+	}
+	
+	public int decreaseCount(long categoryId) {
+		String sql = "update category set categoryCount = categoryCount-1 where categoryId = ?";
+		return getJdbcTemplate().update(sql, categoryId);
 	}
 }

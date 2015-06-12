@@ -25,7 +25,7 @@ public class OrderDao extends JdbcDaoSupport {
 	}
 
 	public List<Map<String, Object>> readOrders(String customerId) {
-		String sql = "select DATE_FORMAT(ORDERS.orderUpdateDate, '%Y-%c-%e') as orderUpdateDate, ORDERS.orderId, ORDERS.orderStatus, ORDERS.realPrice, ITEMS.itemId, PRODUCTS.productName from ORDERS, ITEMS, PRODUCTS where PRODUCTS.productId = ITEMS.productId and ORDERS.customerId = ? and ORDERS.orderId is not NULL and ORDERS.orderId = ITEMS.orderId;";
+		String sql = "select DATE_FORMAT(ORDERS.orderUpdateDate, '%Y-%c-%e') as orderUpdateDate, ORDERS.orderId, ORDERS.orderStatus, ORDERS.realPrice, ITEMS.itemId, ITEMS.size, ITEMS.quantity, PRODUCTS.productName from ORDERS, ITEMS, PRODUCTS where PRODUCTS.productId = ITEMS.productId and ORDERS.customerId = ? and ORDERS.orderId is not NULL and ORDERS.orderId = ITEMS.orderId;";
 		return getJdbcTemplate().queryForList(sql,customerId);
 	}
 	
