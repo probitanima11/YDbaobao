@@ -51,7 +51,7 @@ public class ProductDao extends JdbcDaoSupport {
 		String sql = "select * from PRODUCTS where productId = ?";
 		return getJdbcTemplate().queryForObject(sql, (rs, rowNum) -> new Product(
 						rs.getInt("productId"), rs.getString("productName"),
-						new Category(rs.getInt("categoryId"), null),
+						new Category(rs.getInt("categoryId"), null, 0),
 						new Brand(rs.getInt("brandId"), null),
 						rs.getInt("productPrice"), rs.getString("productImage"),
 						rs.getString("productDescription"), rs.getLong("productCreateDate"),

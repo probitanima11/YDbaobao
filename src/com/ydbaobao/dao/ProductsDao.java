@@ -31,7 +31,7 @@ public class ProductsDao extends JdbcDaoSupport {
 		return getJdbcTemplate().query(
 				sql, (rs, rowNum) -> new Product(
 						rs.getInt("productId"), rs.getString("productName"),
-						new Category(rs.getInt("categoryId"), null),
+						new Category(rs.getInt("categoryId"), null, 0),
 						new Brand(rs.getInt("brandId"), rs.getString("brandName")),
 						rs.getInt("productPrice"), rs.getString("productImage"),
 						rs.getString("productDescription"), rs.getLong("productCreateDate"),
@@ -43,7 +43,7 @@ public class ProductsDao extends JdbcDaoSupport {
 		return getJdbcTemplate().query(
 				sql, (rs, rowNum) -> new Product(
 						rs.getInt("productId"), rs.getString("productName"),
-						new Category(rs.getInt("categoryId"), null),
+						new Category(rs.getInt("categoryId"), null, 0),
 						new Brand(rs.getInt("brandId"), rs.getString("brandName")),
 						rs.getInt("productPrice"), rs.getString("productImage"),
 						rs.getString("productDescription"), rs.getLong("productCreateDate"),
@@ -55,7 +55,7 @@ public class ProductsDao extends JdbcDaoSupport {
 		return getJdbcTemplate().query(
 				sql, (rs, rowNum) -> new Product(
 						rs.getInt("productId"), rs.getString("productName"),
-						new Category(rs.getInt("categoryId"), null),
+						new Category(rs.getInt("categoryId"), null, 0),
 						new Brand(rs.getInt("brandId"), rs.getString("brandName")),
 						rs.getInt("productPrice"), rs.getString("productImage"),
 						rs.getString("productDescription"), rs.getLong("productCreateDate"),
@@ -67,7 +67,7 @@ public class ProductsDao extends JdbcDaoSupport {
 		return getJdbcTemplate().query(
 				sql, (rs, rowNum) -> new Product(
 						rs.getInt("productId"), rs.getString("productName"),
-						new Category(rs.getInt("categoryId"), null),
+						new Category(rs.getInt("categoryId"), null, 0),
 						new Brand(rs.getInt("brandId"), rs.getString("brandName")),
 						rs.getInt("productPrice"), rs.getString("productImage"),
 						rs.getString("productDescription"), rs.getLong("productCreateDate"),
@@ -79,7 +79,7 @@ public class ProductsDao extends JdbcDaoSupport {
 		return getJdbcTemplate().query(
 				sql, (rs, rowNum) -> new Product(
 						rs.getInt("productId"), rs.getString("productName"),
-						new Category(rs.getInt("categoryId"), null),
+						new Category(rs.getInt("categoryId"), null, 0),
 						new Brand(rs.getInt("brandId"), rs.getString("brandName")),
 						rs.getInt("productPrice"), rs.getString("productImage"),
 						rs.getString("productDescription"), rs.getLong("productCreateDate"),
@@ -116,7 +116,7 @@ public class ProductsDao extends JdbcDaoSupport {
 		return getJdbcTemplate().query(
 				sql, (rs, rowNum) -> new Product(
 						rs.getInt("productId"), rs.getString("productName"),
-						new Category(rs.getInt("categoryId"), null),
+						new Category(rs.getInt("categoryId"), null, 0),
 						new Brand(rs.getInt("brandId"), rs.getString("brandName")),
 						rs.getInt("productPrice"), rs.getString("productImage"),
 						rs.getString("productDescription"), rs.getLong("productCreateDate"),
@@ -133,7 +133,7 @@ public class ProductsDao extends JdbcDaoSupport {
 		return getJdbcTemplate()
 				.query(sql,
 						(rs, rowNum) -> new Product(rs.getInt("productId"), rs.getString("productName"), new Category(
-								rs.getInt("categoryId"), null), new Brand(rs.getInt("brandId"), null), rs
+								rs.getInt("categoryId"), null, 0), new Brand(rs.getInt("brandId"), null), rs
 								.getInt("productPrice"), rs.getString("productImage"), rs
 								.getString("productDescription"), rs.getLong("productCreateDate"), rs
 								.getLong("productUpdateDate"), new ArrayList<Stock>()));

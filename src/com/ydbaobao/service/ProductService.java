@@ -6,9 +6,12 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.ydbaobao.dao.BrandDao;
+import com.ydbaobao.dao.CategoryDao;
 import com.ydbaobao.dao.ProductDao;
 import com.ydbaobao.dao.StockDao;
 import com.ydbaobao.model.Brand;
@@ -18,19 +21,21 @@ import com.ydbaobao.model.Stock;
 
 @Service
 public class ProductService {
-
 	@Resource
 	ProductDao productDao;
 	@Resource
 	StockDao stockDao;
 	@Resource
 	BrandDao brandDao;
+	@Resource
+	CategoryDao categoryDao;
 
 	public int create(int brandId) {
 		Brand brand = brandDao.readBrandByBrandId(brandId);
 		Product product = new Product(brand.getBrandName(), new Category(0), brand);
 		int productId = productDao.create(product);
 		stockDao.createDefault(productId);
+		categoryDao.increaseCount(0);
 		return productId;
 	}
 
@@ -45,6 +50,13 @@ public class ProductService {
 	}
 
 	public void update(Product product) {
+		Product oldStatus = productDao.read(product.getProductId());
+		long oldCategoryId = oldStatus.getCategory().getCategoryId();
+		long newCategoryId = product.getCategory().getCategoryId();
+		if (oldCategoryId != newCategoryId) {
+			categoryDao.increaseCount(newCategoryId);
+			categoryDao.decreaseCount(oldCategoryId);
+		}
 		productDao.update(product);
 		updateStocks(product);
 	}
