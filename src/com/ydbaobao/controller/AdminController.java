@@ -64,6 +64,15 @@ public class AdminController {
 		}
 		return "admin/adminCheck";
 	}
+	
+	@RequestMapping("/logout")
+	public String logout(HttpSession session) {
+		if (null == session.getAttribute("sessionAdmin")) {
+			return "admin/adminCheck";
+		}
+		session.removeAttribute("sessionAdmin");
+		return "redirect:/";
+	}
 
 	@RequestMapping(value = "/manage/member", method = RequestMethod.GET)
 	public String manageMember(Model model) {
