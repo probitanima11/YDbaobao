@@ -155,7 +155,11 @@ h1 {
 				url : '/item/add/',
 				param : param,
 				success : function(req) {
-					alert('장바구니에 담겼습니다.');
+					if(req.responseText === "fail")
+						alert('로그인이 필요합니다.');
+					else
+						alert('장바구니에 담겼습니다.');
+						
 				}
 			});
 		}

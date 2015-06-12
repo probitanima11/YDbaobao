@@ -31,45 +31,50 @@ public class ItemController {
 	private ItemService itemService;
 	@Resource
 	private CategoryService categoryService;
-	
+
 	@Resource
 	private ItemDao itemDao;
-	
-	@RequestMapping(value="/cart", method=RequestMethod.GET)
+
+	@RequestMapping(value = "/cart", method = RequestMethod.GET)
 	public String cartForm(HttpSession session, Model model) throws IOException {
 		String customerId = ServletRequestUtil.getCustomerIdFromSession(session);
 		model.addAttribute("list", new Gson().toJson(itemDao.readCartList(customerId)));
 		model.addAttribute("categories", categoryService.read());
 		return "cart";
 	}
-	
-	@RequestMapping(value="/cart/list", method=RequestMethod.GET)
+
+	@RequestMapping(value = "/cart/list", method = RequestMethod.GET)
 	public @ResponseBody List<Item> readCartList(HttpSession session) throws IOException {
 		String customerId = ServletRequestUtil.getCustomerIdFromSession(session);
 		List<Item> list = itemDao.readCartList(customerId);
 		System.out.println(list);
 		return list;
 	}
-	
-	@RequestMapping(value="/add")
-	public ResponseEntity<Object> addToCart(@RequestParam String productId, @RequestParam String size, @RequestParam int quantity, HttpSession session) throws IOException {
+
+	@RequestMapping(value = "/add")
+	public ResponseEntity<Object> addToCart(@RequestParam String productId, @RequestParam String size,
+			@RequestParam int quantity, HttpSession session) throws IOException {
 		String customerId = ServletRequestUtil.getCustomerIdFromSession(session);
+		if (customerId == null) {
+			return JSONResponseUtil.getJSONResponse("fail", HttpStatus.OK);
+		}
 		itemDao.addCart(customerId, productId, size, quantity);
 		return JSONResponseUtil.getJSONResponse("", HttpStatus.OK);
 	}
-	
-	@RequestMapping(value="/order")
-	public ResponseEntity<Object> orderDirect(@RequestParam String productId, @RequestParam String size, @RequestParam int quantity, HttpSession session) throws IOException {
+
+	@RequestMapping(value = "/order")
+	public ResponseEntity<Object> orderDirect(@RequestParam String productId, @RequestParam String size,
+			@RequestParam int quantity, HttpSession session) throws IOException {
 		String customerId = ServletRequestUtil.getCustomerIdFromSession(session);
 		itemService.orderDirect(customerId, productId, size, quantity);
 		return JSONResponseUtil.getJSONResponse("", HttpStatus.OK);
 	}
-	
-	@RequestMapping(value="/delete/{itemId}", method=RequestMethod.DELETE)
+
+	@RequestMapping(value = "/delete/{itemId}", method = RequestMethod.DELETE)
 	public ResponseEntity<Object> deleteFromCart(@PathVariable int itemId, HttpSession session) throws IOException {
 		String customerId = ServletRequestUtil.getCustomerIdFromSession(session);
 		itemService.deleteCartList(customerId, itemId);
-		return JSONResponseUtil.getJSONResponse(""+itemId, HttpStatus.OK);
+		return JSONResponseUtil.getJSONResponse("" + itemId, HttpStatus.OK);
 	}
-	
+
 }
