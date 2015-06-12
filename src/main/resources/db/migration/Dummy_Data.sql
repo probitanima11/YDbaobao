@@ -109,4 +109,8 @@ insert into ORDERS (orderStatus, customerId, enuri, realPrice, orderAddress, ord
 insert into ORDERS (orderStatus, customerId, enuri, realPrice, orderAddress, orderCreateDate, orderUpdateDate) values("입금대기", "test", 500, 30000, "경기도 분당 서현동", default, default);
 
 insert into ITEMS (customerId, productId, orderId, size, quantity) values("test", 1, 1, "S", 5);
-insert into ITEMS (customerId, productId, orderId, size, quantity) values("test", 1, null, "S", 5);
+insert into ITEMS (customerId, productId, orderId, size, quantity) values("test", 2, 1, "S", 5);
+insert into ITEMS (customerId, productId, orderId, size, quantity) values("test", 3, 1, "S", 5);
+insert into ITEMS (customerId, productId, orderId, size, quantity) values("test", 4, 1, "S", 5);
+insert into ITEMS (customerId, productId, orderId, size, quantity) values("test", 1, 2, "S", 5);
+insert into ITEMS (customerId, productId, orderId, size, quantity) values("test", 2, 2, "S", 5);

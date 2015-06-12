@@ -1,6 +1,7 @@
 package com.ydbaobao.service;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -15,7 +16,7 @@ public class OrderService {
 	@Resource
 	OrderDao orderDao;
 
-	public List<Order> readOrders(String customerId) {
+	public List<Map<String, Object>> readOrders(String customerId) {
 		return orderDao.readOrders(customerId);
 	}
 	

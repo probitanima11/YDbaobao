@@ -15,12 +15,8 @@ public class ItemService {
 	@Resource
 	private ItemDao itemDao;
 	
-	public List<Item> readCartList(String customerId) {
-		List<Item> list = itemDao.readCartList("test");
-		System.out.println(list);
-		
-		
-		return null;
+	public List<Item> readOrderedItems(String customerId) {
+		return itemDao.readOrderedItems(customerId);
 	}
 
 	public void deleteCartList(String customerId, int itemId) {

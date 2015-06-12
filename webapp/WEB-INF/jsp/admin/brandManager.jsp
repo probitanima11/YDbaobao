@@ -10,7 +10,7 @@
 <style>
 	#brands input[type='text'], input[type='text'] {
 		width:300px;
-		font-size:20px;
+		font-size:15px;
 	}
 </style>
 </head>
@@ -109,7 +109,7 @@
 				url:'/api/brands/',
 				param: 'brandName=' + brandName,
 				success: function(req) {
-					alert('카테고리가 추가되었습니다');
+					alert('브랜드가 추가되었습니다');
 					location.reload();
 				}
 			});

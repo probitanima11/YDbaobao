@@ -8,6 +8,7 @@
 <link href="http://fonts.googleapis.com/css?family=Lobster"
 	rel="stylesheet" type="text/css" />
 <link rel="stylesheet" href="/css/main.css" />
+<link rel="stylesheet" href="/css/font-awesome.min.css" />
 <title>카테고리 별 상품 보기</title>
 </head>
 <body>
@@ -37,8 +38,6 @@
 		<%@ include file="./commons/_productsBox.jsp" %>
 		<%@ include file="./commons/_productsListBar.jsp" %>
 	</div>
-
-	<script src="/js/brand.js"></script>
 	<script src="/js/ydbaobao.js"></script>
 </body>
 </html>
