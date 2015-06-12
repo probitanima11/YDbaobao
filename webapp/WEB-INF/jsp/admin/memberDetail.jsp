@@ -28,7 +28,16 @@
 				</tr>
 				<tr>
 					<th>등급</th>
-					<td>${customer.customerGrade}</td>
+					<td>
+						<select id="gradeSelector">
+							<option name="0" value="0">0</option>
+							<option name="1" value="1">1</option>
+							<option name="2" value="2">2</option>
+							<option name="3" value="3">3</option>
+							<option name="4" value="4">4</option>
+							<option name="5" value="5">5</option>
+						</select>
+					</td>
 				</tr>
 				<tr>
 					<th>가입일</th>
@@ -46,4 +55,24 @@
 		</div>
 	</div>
 </body>
+<script>
+	var selectedGrade = ${customer.customerGrade};
+	var customerId = "${customer.customerId}";
+	window.addEventListener('load', function(){
+		document.querySelector("#gradeSelector option[name='"+selectedGrade+"']").selected="selected";
+		document.querySelector("#gradeSelector").addEventListener("change", function(e){
+			if (selectedGrade != e.target.value) {
+				ydbaobao.ajax({
+					method:"put",
+					url:"/customer/"+customerId+"/grade/"+e.target.value,
+					success:function(req){
+						alert(req.responseText);
+					}
+				});
+				selectedGrade = e.target.value;
+			}
+		}, false);
+	}, false);
+</script>
+<script src="/js/ydbaobao.js"></script>
 </html>

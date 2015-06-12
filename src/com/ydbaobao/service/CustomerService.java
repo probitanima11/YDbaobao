@@ -46,4 +46,10 @@ public class CustomerService {
 	public Customer readCustomerById(String customerId) {
 		return customerDao.readCustomerById(customerId);
 	}
+
+	public void updateGrade(String customerId, String grade) {
+		Customer customer = customerDao.readCustomerById(customerId);
+		customer.setCustomerGrade(grade);
+		customerDao.updateCustomer(customer);
+	}
 }

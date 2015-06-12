@@ -114,3 +114,10 @@ insert into ITEMS (customerId, productId, orderId, size, quantity) values("test"
 insert into ITEMS (customerId, productId, orderId, size, quantity) values("test", 4, 1, "S", 5);
 insert into ITEMS (customerId, productId, orderId, size, quantity) values("test", 1, 2, "S", 5);
 insert into ITEMS (customerId, productId, orderId, size, quantity) values("test", 2, 2, "S", 5);
+
+insert into GRADES values(1, 0);
+insert into GRADES values(2, 0);
+insert into GRADES values(3, 0);
+insert into GRADES values(4, 0);
+insert into GRADES values(5, 0);
+
