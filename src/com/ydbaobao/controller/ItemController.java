@@ -66,6 +66,9 @@ public class ItemController {
 	public ResponseEntity<Object> orderDirect(@RequestParam String productId, @RequestParam String size,
 			@RequestParam int quantity, HttpSession session) throws IOException {
 		String customerId = ServletRequestUtil.getCustomerIdFromSession(session);
+		if (customerId == null) {
+			return JSONResponseUtil.getJSONResponse("fail", HttpStatus.OK);
+		}
 		itemService.orderDirect(customerId, productId, size, quantity);
 		return JSONResponseUtil.getJSONResponse("", HttpStatus.OK);
 	}

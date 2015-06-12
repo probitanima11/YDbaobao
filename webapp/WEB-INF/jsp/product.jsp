@@ -107,7 +107,7 @@ h1 {
 			<div style="margin-top: 25px; margin-left: 15px;">
 				<h3>구매수량</h3>
 				<button onclick="qtyControl('minus')"><i class='fa fa-minus'></i></button>
-				<input id="qty-selector" type="text" value="1" style="width: 32px;" onkeypress="return numberKey(event);">
+				<input id="qty-selector" value="1" style="width: 32px;" onkeypress="return isNumberKey(event);">
 				<button onclick="qtyControl('plus')"><i class='fa fa-plus'></i></button>
 			</div>
 			<div class="button-group">
@@ -117,7 +117,6 @@ h1 {
 		</div>
 	</div>
 	<div id="footer">footer...</div>
-	<script src="/js/ydbaobao.js"></script>
 	<script>
 		var productId = ${product.productId};
 		var productBuyContainer;
@@ -174,8 +173,12 @@ h1 {
 				url : '/item/order/',
 				param : param,
 				success : function(req) {
-					alert('주문요청이 완료되었습니다.');
-					window.location.href = "/orders";
+					if(req.responseText === "fail")
+						alert('로그인이 필요합니다.');
+					else {
+						alert('주문요청이 완료되었습니다.');
+						window.location.href = "/orders";
+					}
 				}
 			});
 		}
@@ -190,10 +193,7 @@ h1 {
 			 		break;
 			 }
 		 }
-		 function numberKey(evt) {
-			    var charCode = (evt.which) ? evt.which : event.keyCode
-			    return !(charCode > 31 && (charCode < 48 || charCode > 57));
-		};
 	</script>
+	<script src="/js/ydbaobao.js"></script>
 </body>
 </html>
