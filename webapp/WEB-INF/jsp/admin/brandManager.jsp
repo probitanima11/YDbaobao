@@ -10,7 +10,12 @@
 <link rel="stylesheet" href="/css/font-awesome.min.css">
 <style>
 #brands input[type='text'], input[type='text'] {
-	width: 300px;
+	width:25px;
+	margin-right:5px;
+}
+
+#brands input.brandName {
+	width: 150px;
 	font-size: 15px;
 }
 </style>
@@ -20,17 +25,25 @@
 		<%@ include file="./_adminNav.jsp"%>
 		<div id="content">
 			<h1>브랜드 관리</h1>
-			<input id="search-brand" type="text">
+			<input id="search-brand" type="text" style="width:150px;">
 			<button class="search-brand-btn">검색</button>
-			<table id="brands" style="width: 500px;">
+			<table id="brands" style="width: 700px;">
 				<tr>
-					<th style="width: 300px;">브랜드명</th>
-					<th style="width: 200px;"></th>
+					<th style="width:150px">브랜드명</th>
+					<th style="width:400px">할인율</th>
+					<th style=""></th>
 				</tr>
 				<c:forEach var="brand" items="${brands}">
-					<tr id="${brand.brandId}">
-						<td><input type="text" value="${brand.brandName}"
+					<tr id="brand_${brand.brandId}">
+						<td><input class="brandName" type="text" value="${brand.brandName}"
 							data-id="${brand.brandId}"></td>
+						<td class='discount_table'>
+							1등급:<input type="text" value="${brand.discount_1}">
+							2등급:<input type="text" value="${brand.discount_2}">
+							3등급:<input type="text" value="${brand.discount_3}">
+							4등급:<input type="text" value="${brand.discount_4}">
+							5등급:<input type="text" value="${brand.discount_5}">
+						</td>	
 						<td>
 							<button class="update-brand-btn">수정</button>
 							<button class="delete-brand-btn">삭제</button>
@@ -38,7 +51,8 @@
 					</tr>
 				</c:forEach>
 				<tr>
-					<td><input id="new-brand" type="text"></td>
+					<td><input class="brandName" id="new-brand" type="text"></td>
+					<td></td>
 					<td>
 						<button class="create-brand-btn">추가</button>
 					</td>
@@ -78,13 +92,25 @@
 		}
 
 		function updateBrand(e) {
-			var brandId = e.target.parentElement.parentElement.id;
+			var brandId = e.target.parentElement.parentElement.id.split("brand_")[1];
 			var brandName = document.querySelector('input[data-id="' + brandId + '"]').value;
+			var discountTable = document.querySelectorAll('#brand_'+brandId+' .discount_table input');
+			var value = 0;
+			var discountParam = "brandName="+brandName+"&discount_1="+discountTable[0].value;
+			for (var i = 1; i < discountTable.length; i++) {
+				value = discountTable[i].value*1;
+				if (value > 100 || value < 0){
+					value = 0;
+					document.querySelector("#brand_"+brandId+" .discount_table input:nth-child("+(i+1)+")").value = 0;
+				}
+				discountParam += "&discount_"+(i+1)+"="+value;
+			}
 			ydbaobao.ajax({
-				method : 'put',
-				url : '/api/brands/' + brandId + '/' + brandName,
+				method : 'post',
+				url : '/api/brands/' + brandId,
+				param : discountParam,
 				success : function(req) {
-					alert('브랜드명이 수정되었습니다')
+					alert('브랜드 정보가 수정되었습니다')
 				}
 			});
 		}
@@ -135,9 +161,10 @@
 			var brandsLength = json.length;
 			for (var i = 0; i < brandsLength; i++) {
 				row = table.insertRow(1);
-				row.id = json[i].brandId;
-				row.insertCell(0).innerHTML = "<td><input type='text' value='"+json[i].brandName+"' data-id='"+json[i].brandId+"'></td>";
-				row.insertCell(1).innerHTML = "<td><button class='update-brand-btn'>수정</button><button class='delete-brand-btn'>삭제</button></td>";
+				row.id = "brand_"+json[i].brandId;
+				row.insertCell(0).innerHTML = "<td><input class='brandName' type='text' value='"+json[i].brandName+"' data-id='"+json[i].brandId+"'></td>";
+				row.insertCell(1).innerHTML = "<td>1등급:<input type='text' value='"+json[i].discount_1+"'>2등급:<input type='text' value='"+json[i].discount_2+"'>3등급:<input type='text' value='"+json[i].discount_3+"'>4등급:<input type='text' value='"+json[i].discount_4+"'>5등급:<input type='text' value='"+json[i].discount_5+"'></td>"
+				row.insertCell(2).innerHTML = "<td><button class='update-brand-btn'>수정</button><button class='delete-brand-btn'>삭제</button></td>";
 			}
 			setBrandEvent();
 		}

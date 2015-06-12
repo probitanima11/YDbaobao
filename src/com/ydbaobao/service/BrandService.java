@@ -33,11 +33,11 @@ public class BrandService {
 		return brandDao.createBrand(brandName);
 	}
 
-	public void updateBrand(String brandId, String brandName) {
-		if(brandDao.readBrandByBrandName(brandName) != null) {
+	public void updateBrand(Brand brand) {
+		if(brandDao.readBrandByBrandName(brand.getBrandName()) != null) {
 			// TODO 브랜드명 중복 예외처리
 		}
-		brandDao.updateBrand(brandId, brandName);
+		brandDao.updateBrand(brand);
 	}
 
 	public void deleteBrand(String brandId) {

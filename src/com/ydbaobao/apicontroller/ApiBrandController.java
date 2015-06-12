@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.support.JSONResponseUtil;
+import com.ydbaobao.model.Brand;
 import com.ydbaobao.service.BrandService;
 
 @Controller
@@ -29,9 +30,10 @@ public class ApiBrandController {
 		return JSONResponseUtil.getJSONResponse(brandService.createBrand(brandName), HttpStatus.OK);
 	}
 	
-	@RequestMapping(value="/{brandId}/{brandName}", method=RequestMethod.PUT)
-	public ResponseEntity<Object> update(@PathVariable String brandId, @PathVariable String brandName) {
-		brandService.updateBrand(brandId, brandName);
+	@RequestMapping(value="/{brandId}", method=RequestMethod.POST)
+	public ResponseEntity<Object> update(@PathVariable int brandId, @RequestParam String brandName, @RequestParam int discount_1, @RequestParam int discount_2, @RequestParam int discount_3, @RequestParam int discount_4, @RequestParam int discount_5) {
+		Brand brand = new Brand(brandId, brandName, 0, discount_1, discount_2, discount_3, discount_4, discount_5);
+		brandService.updateBrand(brand);
 		return JSONResponseUtil.getJSONResponse("", HttpStatus.OK);
 	}
 	

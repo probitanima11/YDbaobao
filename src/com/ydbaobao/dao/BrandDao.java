@@ -32,13 +32,13 @@ public class BrandDao extends JdbcDaoSupport {
 	public List<Brand> readBrands() {
 		String sql = "select * from BRANDS order by brandName";
 		return getJdbcTemplate().query(
-				sql, (rs, rowNum) -> new Brand(rs.getInt("brandId"), rs.getString("brandName"), rs.getInt("brandCount")));
+				sql, (rs, rowNum) -> new Brand(rs.getInt("brandId"), rs.getString("brandName"), rs.getInt("brandCount"), rs.getInt("discount_1"), rs.getInt("discount_2"), rs.getInt("discount_3"), rs.getInt("discount_4"), rs.getInt("discount_5")));
 	}
 	
 	public List<Brand> findBrands(String searchValue) {
 		String sql = "select * from BRANDS where brandName like \"%" + searchValue + "%\"";
 		return getJdbcTemplate().query(
-				sql, (rs, rowNum) -> new Brand(rs.getInt("brandId"), rs.getString("brandName"), rs.getInt("brandCount")));
+				sql, (rs, rowNum) -> new Brand(rs.getInt("brandId"), rs.getString("brandName"), rs.getInt("brandCount"), rs.getInt("discount_1"), rs.getInt("discount_2"), rs.getInt("discount_3"), rs.getInt("discount_4"), rs.getInt("discount_5")));
 	}
 
 	public int createBrand(String brandName) {
@@ -59,15 +59,15 @@ public class BrandDao extends JdbcDaoSupport {
 		try {
 			return getJdbcTemplate().queryForObject(sql, (rs, rowNum) -> new Brand(
 					rs.getInt("brandId"), 
-					rs.getString("brandName"), rs.getInt("brandCount")), brandName);
+					rs.getString("brandName"), rs.getInt("brandCount"), rs.getInt("discount_1"), rs.getInt("discount_2"), rs.getInt("discount_3"), rs.getInt("discount_4"), rs.getInt("discount_5")), brandName);
 		} catch (EmptyResultDataAccessException e) {
 			return null;
 		}
 	}
 	
-	public void updateBrand(String brandId, String brandName) {
-		String sql = "update BRANDS set brandName = ? where brandId = ?";
-		getJdbcTemplate().update(sql, brandName, brandId);
+	public void updateBrand(Brand brand) {
+		String sql = "update BRANDS set brandName = ?, discount_1 = ?, discount_2 = ?, discount_3 = ?, discount_4 = ?, discount_5 = ? where brandId = ?";
+		getJdbcTemplate().update(sql, brand.getBrandName(), brand.getDiscount_1(), brand.getDiscount_2(), brand.getDiscount_3(), brand.getDiscount_4(), brand.getDiscount_5(), brand.getBrandId());
 	}
 
 	public void deleteBrand(String brandId) {
@@ -80,7 +80,7 @@ public class BrandDao extends JdbcDaoSupport {
 		try {
 			return getJdbcTemplate().queryForObject(sql, (rs, rowNum) -> new Brand(
 					rs.getInt("brandId"), 
-					rs.getString("brandName"), rs.getInt("brandCount")), brandId);
+					rs.getString("brandName"), rs.getInt("brandCount"), rs.getInt("discount_1"), rs.getInt("discount_2"), rs.getInt("discount_3"), rs.getInt("discount_4"), rs.getInt("discount_5")), brandId);
 		} catch (EmptyResultDataAccessException e) {
 			return null;
 		}
@@ -90,7 +90,7 @@ public class BrandDao extends JdbcDaoSupport {
 		String sql = "select * from BRANDS where brandName like \"" + firstLetter + "%\"";
 		return getJdbcTemplate().query(sql, (rs, rowNum) -> new Brand(
 				rs.getInt("brandId"), 
-				rs.getString("brandName"), rs.getInt("brandCount")));
+				rs.getString("brandName"), rs.getInt("brandCount"), rs.getInt("discount_1"), rs.getInt("discount_2"), rs.getInt("discount_3"), rs.getInt("discount_4"), rs.getInt("discount_5")));
 	}
 	
 	public int increaseCount(long brandId) {
