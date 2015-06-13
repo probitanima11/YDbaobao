@@ -9,6 +9,9 @@
 <link rel="stylesheet" href="/css/admin.css">
 <link rel="stylesheet" href="/css/font-awesome.min.css">
 <style>
+	#categories td {
+		text-align:center;
+	}
 	#categories input[type='text'] {
 		width:300px;
 		font-size:20px;

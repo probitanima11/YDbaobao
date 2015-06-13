@@ -8,13 +8,19 @@
 <title>관리자페이지::상품관리</title>
 <link rel="stylesheet" href="/css/admin.css">
 <link rel="stylesheet" href="/css/font-awesome.min.css">
+<style>
+#product-table td {
+	font-size:12px;
+	text-align:center;
+}
+</style>
 </head>
 <body>
 	<div id="container">
 		<%@ include file="./_adminNav.jsp"%>
 		<div id="content">
 			<h1>상품 관리</h1>
-			<table id="categories" style="width: 800px;">
+			<table id="product-table" style="width: 800px;">
 				<tr>
 					<th width="50px">상품ID</th>
 					<th width="150px">이미지</th>
