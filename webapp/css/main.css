@@ -324,13 +324,12 @@ ul#util li a span {
 	width: 230px;
 	margin-left: 9px;
 	margin-top: 9px;
-	outline: 1px solid #ccc;
 	display: inline-block;
 	cursor: pointer;
 }
 
 .item:hover {
-	outline: 1px solid #EA6576;
+	outline: 1px solid #E38690;
 }
 
 .item a {
@@ -344,8 +343,8 @@ ul#util li a span {
 
 .item .item-info {
 	padding: 10px;
-	background-color: #454545;
-	color: #fff;
+	background-color: #fff;
+	color: #454545;
 }
 
 .item .item-info .item-desc {
