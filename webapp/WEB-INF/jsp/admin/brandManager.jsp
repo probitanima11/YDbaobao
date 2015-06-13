@@ -9,14 +9,23 @@
 <link rel="stylesheet" href="/css/admin.css">
 <link rel="stylesheet" href="/css/font-awesome.min.css">
 <style>
-#brands input[type='text'], input[type='text'] {
+#brand-table input[type='text'], input[type='text'] {
 	width:25px;
 	margin-right:5px;
 }
 
-#brands input.brandName {
+#brand-table td{
+	font-size:9px;
+	text-align:center;
+}
+
+#brand-table input.brandName {
 	width: 150px;
 	font-size: 15px;
+}
+
+#brand-table .brand_sizes input{
+	width:100px;
 }
 </style>
 </head>
@@ -27,11 +36,12 @@
 			<h1>브랜드 관리</h1>
 			<input id="search-brand" type="text" style="width:150px;">
 			<button class="search-brand-btn">검색</button>
-			<table id="brands" style="width: 700px;">
+			<table id="brand-table" style="width: 780px;">
 				<tr>
 					<th style="width:150px">브랜드명</th>
-					<th style="width:400px">할인율</th>
-					<th style=""></th>
+					<th style="width:320px">할인율</th>
+					<th style="width:100px">사이즈</th>
+					<th style="width:80px"></th>
 				</tr>
 				<c:forEach var="brand" items="${brands}">
 					<tr id="brand_${brand.brandId}">
@@ -43,6 +53,9 @@
 							3등급:<input type="text" value="${brand.discount_3}">
 							4등급:<input type="text" value="${brand.discount_4}">
 							5등급:<input type="text" value="${brand.discount_5}">
+						</td>
+						<td class='brand_sizes'>
+							<input type="text" value="${brand.brandSize}">
 						</td>	
 						<td>
 							<button class="update-brand-btn">수정</button>
@@ -52,6 +65,7 @@
 				</c:forEach>
 				<tr>
 					<td><input class="brandName" id="new-brand" type="text"></td>
+					<td></td>
 					<td></td>
 					<td>
 						<button class="create-brand-btn">추가</button>
@@ -96,19 +110,21 @@
 			var brandName = document.querySelector('input[data-id="' + brandId + '"]').value;
 			var discountTable = document.querySelectorAll('#brand_'+brandId+' .discount_table input');
 			var value = 0;
-			var discountParam = "brandName="+brandName+"&discount_1="+discountTable[0].value;
+			var param = "brandName="+brandName+"&discount_1="+discountTable[0].value;
 			for (var i = 1; i < discountTable.length; i++) {
 				value = discountTable[i].value*1;
 				if (value > 100 || value < 0){
 					value = 0;
 					document.querySelector("#brand_"+brandId+" .discount_table input:nth-child("+(i+1)+")").value = 0;
 				}
-				discountParam += "&discount_"+(i+1)+"="+value;
+				param += "&discount_"+(i+1)+"="+value;
 			}
+			var brandSize = document.querySelector("#brand_"+brandId+" .brand_sizes input").value;
+			param += "&brandSize="+brandSize;
 			ydbaobao.ajax({
 				method : 'post',
 				url : '/api/brands/' + brandId,
-				param : discountParam,
+				param : param,
 				success : function(req) {
 					alert('브랜드 정보가 수정되었습니다')
 				}
@@ -155,7 +171,7 @@
 		}
 
 		function appendBrandList(json) {
-			var table = document.querySelector('#brands');
+			var table = document.querySelector('#brand-table');
 			while (table.rows.length > 2)
 				table.deleteRow(1);
 			var brandsLength = json.length;

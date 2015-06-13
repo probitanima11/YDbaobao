@@ -71,7 +71,7 @@ table th{
 	padding:5px 0;
 }
 
-table td{
+table#member-table td{
 	text-align:center;
 	font-size:13px;
 }

@@ -12,11 +12,12 @@ public class Brand {
 	private int discount_3;
 	private int discount_4;
 	private int discount_5;
+	private String brandSize;
 	
 	public Brand() {
 	}
-
-	public Brand(int brandId, String brandName, int brandCount, int discount_1, int discount_2, int discount_3, int discount_4, int discount_5) {
+	
+	public Brand(int brandId, String brandName, int brandCount, int discount_1, int discount_2, int discount_3, int discount_4, int discount_5, String brandSize) {
 		super();
 		this.brandId = brandId;
 		this.brandName = brandName;
@@ -26,6 +27,7 @@ public class Brand {
 		this.discount_3 = discount_3;
 		this.discount_4 = discount_4;
 		this.discount_5 = discount_5;
+		this.brandSize = brandSize;
 	}
 	
 	public List<Character> getFirstLetters() {
@@ -99,6 +101,14 @@ public class Brand {
 	public void setDiscount_5(int discount_5) {
 		this.discount_5 = discount_5;
 	}
+	
+	public String getBrandSize() {
+		return brandSize;
+	}
+	
+	public void setBrandSize(String brandSize) {
+		this.brandSize = brandSize;
+	}
 
 	@Override
 	public int hashCode() {
@@ -108,6 +118,8 @@ public class Brand {
 		result = prime * result + brandId;
 		result = prime * result
 				+ ((brandName == null) ? 0 : brandName.hashCode());
+		result = prime * result
+				+ ((brandSize == null) ? 0 : brandSize.hashCode());
 		result = prime * result + discount_1;
 		result = prime * result + discount_2;
 		result = prime * result + discount_3;
@@ -134,6 +146,11 @@ public class Brand {
 				return false;
 		} else if (!brandName.equals(other.brandName))
 			return false;
+		if (brandSize == null) {
+			if (other.brandSize != null)
+				return false;
+		} else if (!brandSize.equals(other.brandSize))
+			return false;
 		if (discount_1 != other.discount_1)
 			return false;
 		if (discount_2 != other.discount_2)
@@ -153,6 +170,7 @@ public class Brand {
 				+ ", brandCount=" + brandCount + ", discount_1=" + discount_1
 				+ ", discount_2=" + discount_2 + ", discount_3=" + discount_3
 				+ ", discount_4=" + discount_4 + ", discount_5=" + discount_5
-				+ "]";
+				+ ", brandSize=" + brandSize + "]";
 	}
+
 }
