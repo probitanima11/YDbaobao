@@ -17,8 +17,6 @@
 	</div>
 	<div id="main-container">
 		<div id="first-section" class="wrap content" style="height: 500px;">
-			<!-- 카테고리 메뉴 -->
-			<%@ include file="./commons/_category.jsp"%>
 			<div class="loginBox">
 				<form:form modelAttribute="customer" method="post" action="/customer/login">
 					<h1>로그인</h1>

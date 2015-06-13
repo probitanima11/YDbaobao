@@ -19,9 +19,6 @@
 
 	<div id="main-container">
 		<div id="first-section" class="wrap content" style="height: 500px;">
-			<!-- 카테고리 메뉴 -->
-			<%@ include file="./commons/_category.jsp"%>
-
 			<div class="joinForm">
 				<c:set var="actionUrl" value="/customer/create" />
 				<c:if test="${isUpdate}">
