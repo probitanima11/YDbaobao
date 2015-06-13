@@ -174,48 +174,19 @@ ul#util li a span {
 	outline: none;
 }
 
-/* _category.jsp */
-#category-menu {
-	color: #fff;
-	outline: 1px solid #EA6576;
+/* showcase */
+#showcase {
+	position:relative;
+	width: 100%;
+	height: 500px;
+	display: table;
+	text-align: center;
 }
 
-#category-menu #category-menu-header {
-	padding: 15px;
-	border-bottom: 1px solid #fff;
-	font-weight: 500;
-	background-color: #EA6576;
+#showcase img {
+	height:100%;
 }
 
-#category-menu ul {
-	padding: 0;
-	margin: 0;
-	list-style: none;
-	font-size: 15px;
-	font-weight: 100;
-	overflow-y: auto;
-	max-height: 450px;
-	overflow-x: hidden;
-}
-
-#category-menu ul li a {
-	color: #EA6576;
-	text-decoration: none;
-}
-
-#category-menu ul li a span:hover {
-	left: 10px;
-}
-
-#category-menu ul li a span {
-	display: block;
-	cursor: pointer;
-	left: 0;
-	position: relative;
-	padding: 7px 15px;
-	transition-property: left;
-	transition-duration: .3s;
-}
 
 /* horizontalCategory.jsp */
 #horizontal-category-menu {

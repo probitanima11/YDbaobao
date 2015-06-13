@@ -21,15 +21,12 @@
 		<%@ include file="./commons/_horizontalCategory.jsp"%>
 	</div>
 	<div id="main-container">
-		<div id="first-section" class="wrap content" style="height: 500px;">
-			<!-- 카테고리 메뉴 -->
-			<%@ include file="./commons/_category.jsp"%>
-
-			<div
-				style="width: 80%; height: 100%; outline: 1px solid #ccc; display: table; float: left;">
-				아마도 신상품 페이지</div>
+		<div id="first-section" class="wrap content" style="position:relative; padding:25px 0;">
+			<div id="showcase">
+				<img src="http://www.stylenoriter.co.kr/images/02.jpg">
+			</div>
 		</div>
-		<div id="second-section" style="padding-top: 25px;">
+		<div id="second-section" class="wrap content">
 			<!-- 브랜드 탭(A~Z) 메뉴 -->
 			<%@ include file="./commons/_brand.jsp" %>
 
