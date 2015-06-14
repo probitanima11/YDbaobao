@@ -74,19 +74,10 @@
 				<tr>
 					<td>제품명 :</td>
 					<td><form:input path="productName" class="productName" value="${product.productName}"/></td>
-					<td>재고량 :</td>
+					<td>사이즈 :</td>
 					<td colspan="3" style="text-align:left; padding-left:10px;">
 						<div id="stocks" class="${product.productId}">
-							<c:forEach var="stock"  varStatus="status" items="${product.stockList}">
-								<div id="stock" class="${status.index}">
-									<form:input path="stockList[${status.index}].stockId" type="hidden" id="stockId" value="${stock.stockId}"/>
-									<form:input path="stockList[${status.index}].size" type="text" id="stock-size-input" value="${stock.size}" style="width:80px"/>
-									<form:input path="stockList[${status.index}].quantity" type="number" id="stock-quantity-input" value="${stock.quantity}" min="0" style="width:80px"/>
-									<c:if test="${status.index > 0}">
-										<button type="button" class="delete-size_quantity-btn" value="${product.productId}">삭제</button>
-									</c:if>
-								</div>
-							</c:forEach>
+							<form:input path="productSize" type="text" id="product-size-input" value="${product.productSize}" style="width:80px" />
 							<c:forEach var="i" begin="1" end="20">
 							<div id="stock-add" class = "" style="display:none">
 									<form:input path="" type="hidden" id="stockId" value="0"/>
@@ -96,7 +87,7 @@
 							</div>
 							</c:forEach>
 						</div>
-						<button type="button" class="add-size_quantity-btn" value="${product.productId}">추가</button>
+						<!-- <button type="button" class="add-size_quantity-btn" value="${product.productId}">추가</button>   -->
 					</td>
 				</tr>
 				<tr>

@@ -30,7 +30,7 @@ public class ProductService {
 
 	public int create(int brandId) {
 		Brand brand = brandDao.readBrandByBrandId(brandId);
-		Product product = new Product(brand.getBrandName(), new Category(0), brand);
+		Product product = new Product(brand.getBrandName(), new Category(0), brand, brand.getBrandSize());
 		int productId = productDao.create(product);
 		stockDao.createDefault(productId);
 		categoryDao.increaseCount(0);
@@ -62,7 +62,8 @@ public class ProductService {
 			brandDao.decreaseCount(oldBrandId);
 		}
 		productDao.update(product);
-		updateStocks(product);
+		//재고관리 삭제...
+		//updateStocks(product);
 	}
 
 	private void updateStocks(Product product) {

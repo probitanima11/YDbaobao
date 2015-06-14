@@ -14,27 +14,29 @@ public class Product {
 	private long productCreateDate;
 	private long productUpdateDate;
 	private List<Stock> stockList;
+	private String productSize;
 	
 	public Product() {
 	}
 	
 	public Product(int productId) {
-		this(productId, null, new Category(), new Brand(), 0, null, null, 0, 0, new ArrayList<Stock>());
+		this(productId, null, new Category(), new Brand(), 0, null, null, 0, 0, new ArrayList<Stock>(), null);
 	}
 	
 	public Product(int productId, String productName, int productPrice) {
-		this(productId, productName, new Category(), new Brand(), productPrice, null, null, 0, 0, new ArrayList<Stock>());
+		this(productId, productName, new Category(), new Brand(), productPrice, null, null, 0, 0, new ArrayList<Stock>(), null);
 	}
 	
-	public Product(String productName, Category category, Brand brand){
+	public Product(String productName, Category category, Brand brand, String productSize){
 		super();
 		this.productName = productName;
 		this.category = category;
-		this.brand=brand;
+		this.brand = brand;
+		this.productSize = productSize;
 	}
-
+	
 	public Product(int productId, String productName, Category category, Brand brand, int productPrice,
-			String productImage, String productDescription, long productCreateDate, long productUpdateDate, List<Stock> stockList) {
+			String productImage, String productDescription, long productCreateDate, long productUpdateDate, List<Stock> stockList, String productSize) {
 		this.productId = productId;
 		this.productName = productName;
 		this.category = category;
@@ -45,6 +47,7 @@ public class Product {
 		this.productCreateDate = productCreateDate;
 		this.productUpdateDate = productUpdateDate;
 		this.stockList = stockList;
+		this.productSize = productSize;
 	}
 
 	public int getProductId() {
@@ -73,6 +76,10 @@ public class Product {
 
 	public String getProductDescription() {
 		return productDescription;
+	}
+	
+	public String getProductSize() {
+		return productSize;
 	}
 
 	public long getProductCreateDate() {
@@ -114,6 +121,10 @@ public class Product {
 	public void setProductDescription(String productDescription) {
 		this.productDescription = productDescription;
 	}
+	
+	public void setProductSize(String productSize) {
+		this.productSize = productSize;
+	}
 
 	public void setProductCreateDate(long productCreateDate) {
 		this.productCreateDate = productCreateDate;
@@ -132,15 +143,26 @@ public class Product {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((brand == null) ? 0 : brand.hashCode());
-		result = prime * result + ((category == null) ? 0 : category.hashCode());
-		result = prime * result + (int) (productCreateDate ^ (productCreateDate >>> 32));
-		result = prime * result + ((productDescription == null) ? 0 : productDescription.hashCode());
+		result = prime * result
+				+ ((category == null) ? 0 : category.hashCode());
+		result = prime * result
+				+ (int) (productCreateDate ^ (productCreateDate >>> 32));
+		result = prime
+				* result
+				+ ((productDescription == null) ? 0 : productDescription
+						.hashCode());
 		result = prime * result + productId;
-		result = prime * result + ((productImage == null) ? 0 : productImage.hashCode());
-		result = prime * result + ((productName == null) ? 0 : productName.hashCode());
+		result = prime * result
+				+ ((productImage == null) ? 0 : productImage.hashCode());
+		result = prime * result
+				+ ((productName == null) ? 0 : productName.hashCode());
 		result = prime * result + productPrice;
-		result = prime * result + (int) (productUpdateDate ^ (productUpdateDate >>> 32));
-		result = prime * result + ((stockList == null) ? 0 : stockList.hashCode());
+		result = prime * result
+				+ ((productSize == null) ? 0 : productSize.hashCode());
+		result = prime * result
+				+ (int) (productUpdateDate ^ (productUpdateDate >>> 32));
+		result = prime * result
+				+ ((stockList == null) ? 0 : stockList.hashCode());
 		return result;
 	}
 
@@ -184,6 +206,11 @@ public class Product {
 			return false;
 		if (productPrice != other.productPrice)
 			return false;
+		if (productSize == null) {
+			if (other.productSize != null)
+				return false;
+		} else if (!productSize.equals(other.productSize))
+			return false;
 		if (productUpdateDate != other.productUpdateDate)
 			return false;
 		if (stockList == null) {
@@ -196,9 +223,13 @@ public class Product {
 
 	@Override
 	public String toString() {
-		return "Product [productId=" + productId + ", productName=" + productName + ", category=" + category
-				+ ", brand=" + brand + ", productPrice=" + productPrice + ", productImage=" + productImage
-				+ ", productDescription=" + productDescription + ", productCreateDate=" + productCreateDate
-				+ ", productUpdateDate=" + productUpdateDate + ", stockList=" + stockList + "]";
+		return "Product [productId=" + productId + ", productName="
+				+ productName + ", category=" + category + ", brand=" + brand
+				+ ", productPrice=" + productPrice + ", productImage="
+				+ productImage + ", productDescription=" + productDescription
+				+ ", productSize=" + productSize + ", productCreateDate="
+				+ productCreateDate + ", productUpdateDate="
+				+ productUpdateDate + ", stockList=" + stockList + "]";
 	}
+
 }

@@ -1,0 +1,1 @@
+ALTER TABLE PRODUCTS add column productSize varchar(24);
