@@ -77,6 +77,12 @@
 		function updateCategory(e) {
 			var categoryId = e.target.parentElement.parentElement.id;
 			var categoryName = document.querySelector('input[data-id="' + categoryId + '"]').value;
+
+			if(categoryName === '') {
+				alert('카테고리 명을 입력해주세요');
+				return;
+			}
+
 			ydbaobao.ajax({
 				method:'put',
 				url:'/admin/manage/category/' + categoryId + '/' + categoryName,
@@ -106,8 +112,13 @@
 		}
 
 		function createCategory() {
-			console.log(document.querySelector('#new-category').value);
 			var categoryName = document.querySelector('#new-category').value;
+
+			if(categoryName === '') {
+				alert("카테고리 명을 입력해주세요");
+				return;
+			}
+
 			ydbaobao.ajax({
 				method:'post',
 				url:'/admin/manage/category',

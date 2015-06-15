@@ -16,7 +16,7 @@ import com.ydbaobao.model.Brand;
 import com.ydbaobao.model.PageConfigParam;
 import com.ydbaobao.service.BrandService;
 import com.ydbaobao.service.CategoryService;
-import com.ydbaobao.service.ProductsService;
+import com.ydbaobao.service.ProductService;
 
 @Controller
 public class HomeController {
@@ -27,18 +27,18 @@ public class HomeController {
 	@Resource
 	private BrandService brandService;
 	@Resource
-	private ProductsService productsService;
+	private ProductService productService;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Model model, WebRequest req) {
-		PageConfigParam p = new PageConfigParam(16, req.getParameter("index"), productsService.count());
+		PageConfigParam p = new PageConfigParam(16, req.getParameter("index"), productService.count());
 
 		if (p.getEnd() < p.getRange()) {
 			model.addAttribute("nextBtn", true);
 		}
 		model.addAttribute("selectedIndex", p.getSelectedIndex());
 		model.addAttribute("range", IntStream.range(p.getStart(), p.getEnd()).toArray());
-		model.addAttribute("productList", productsService.readRange(p.getIndex(), p.getQuantity()));
+		model.addAttribute("productList", productService.readRange(p.getIndex(), p.getQuantity()));
 		model.addAttribute("categories", categorySevice.read());
 		model.addAttribute("brands", brandService.readBrands());
 		model.addAttribute("firstLetterList", new Brand().getFirstLetters());

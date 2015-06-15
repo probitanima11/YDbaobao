@@ -21,7 +21,7 @@ import com.ydbaobao.model.Brand;
 import com.ydbaobao.model.PageConfigParam;
 import com.ydbaobao.service.BrandService;
 import com.ydbaobao.service.CategoryService;
-import com.ydbaobao.service.ProductsService;
+import com.ydbaobao.service.ProductService;
 
 @Controller
 @RequestMapping("/brand")
@@ -33,7 +33,7 @@ public class BrandController {
 	@Resource
 	private CategoryService categoryService;
 	@Resource
-	private ProductsService productsService;
+	private ProductService productService;
 	
 	/**
 	 * index.jsp에서 브랜드 메뉴 검색하는 곳에 사용
@@ -57,7 +57,7 @@ public class BrandController {
 		}
 		model.addAttribute("selectedIndex", p.getSelectedIndex());
 		model.addAttribute("range", IntStream.range(p.getStart(), p.getEnd()).toArray());
-		model.addAttribute("productList", productsService.readListByBrandId(brandId, p.getIndex(), p.getQuantity()));
+		model.addAttribute("productList", productService.readListByBrandId(brandId, p.getIndex(), p.getQuantity()));
 		model.addAttribute("brands", brandService.readBrands());
 		model.addAttribute("brand", brandService.readBrandByBrandId(brandId));
 		model.addAttribute("categories", categoryService.read());

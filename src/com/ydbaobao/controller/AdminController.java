@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.support.JSONResponseUtil;
 import com.ydbaobao.dao.GradeDao;
@@ -22,7 +21,7 @@ import com.ydbaobao.model.Product;
 import com.ydbaobao.service.BrandService;
 import com.ydbaobao.service.CategoryService;
 import com.ydbaobao.service.CustomerService;
-import com.ydbaobao.service.ProductsService;
+import com.ydbaobao.service.ProductService;
 
 @Controller
 @RequestMapping("/admin")
@@ -37,7 +36,7 @@ public class AdminController {
 	@Resource
 	private CustomerService customerService;
 	@Resource
-	private ProductsService productsService;
+	private ProductService productService;
 	@Resource
 	private GradeDao gradeDao;
 	
@@ -164,8 +163,7 @@ public class AdminController {
 	@RequestMapping(value = "/manage/product", method = RequestMethod.GET)
 	public String manageProduct(Model model) {
 		model.addAttribute("product", new Product());
-		//model.addAttribute("productList", productsService.readUnclassifiedProducts());
-		model.addAttribute("productList", productsService.readProducts());
+		model.addAttribute("productList", productService.readProducts());
 		model.addAttribute("brandList", brandService.readBrands());
 		model.addAttribute("categoryList", categoryService.read());
 		return "admin/productManager";
@@ -174,7 +172,7 @@ public class AdminController {
 	
 	@RequestMapping(value = "/manage/product", method = RequestMethod.DELETE)
 	public ResponseEntity<Object> deleteAllProducts() {
-		if(productsService.deleteAll()) {
+		if(productService.deleteAll()) {
 			return JSONResponseUtil.getJSONResponse("success", HttpStatus.OK);
 		}
 		return JSONResponseUtil.getJSONResponse("fail", HttpStatus.OK);
@@ -184,7 +182,7 @@ public class AdminController {
 	public String addProduct(Model model) {
 		model.addAttribute("product", new Product());
 		model.addAttribute("brandList", brandService.readBrands());
-		model.addAttribute("unregisteredProductsCountByBrand", productsService.unregisteredProductsCountByBrand());
+		model.addAttribute("unregisteredProductsCountByBrand", productService.unregisteredProductsCountByBrand());
 		return "admin/productRegistration";
 	}
 
