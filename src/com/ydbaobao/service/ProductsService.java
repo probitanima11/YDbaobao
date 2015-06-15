@@ -15,7 +15,6 @@ import com.support.ImageResizeUtil;
 import com.ydbaobao.dao.BrandDao;
 import com.ydbaobao.dao.ProductDao;
 import com.ydbaobao.dao.ProductsDao;
-import com.ydbaobao.dao.StockDao;
 import com.ydbaobao.model.Brand;
 import com.ydbaobao.model.Product;
 
@@ -27,8 +26,6 @@ public class ProductsService {
 	private ProductDao productDao;
 	@Resource
 	private BrandDao brandDao;
-	@Resource
-	private StockDao stockDao;
 	
 	
 	public List<Product> readListByCategoryId(int categoryId, int index, int quantity) {
@@ -84,7 +81,6 @@ public class ProductsService {
 		for(Product product:productList){
 			Brand brand = product.getBrand();
 			brand.setBrandName(brandDao.readBrandByBrandId(brand.getBrandId()).getBrandName());
-			product.setStockList(stockDao.readListByProductId(product.getProductId()));
 		}
 		return productList;
 	}
@@ -107,7 +103,6 @@ public class ProductsService {
 		for(Product product:productList){
 			Brand brand = product.getBrand();
 			brand.setBrandName(brandDao.readBrandByBrandId(brand.getBrandId()).getBrandName());
-			product.setStockList(stockDao.readListByProductId(product.getProductId()));
 		}
 		return productList;
 	}

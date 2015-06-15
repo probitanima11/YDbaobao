@@ -3,7 +3,6 @@ package com.ydbaobao.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
@@ -18,7 +17,6 @@ import org.springframework.stereotype.Repository;
 import com.ydbaobao.model.Brand;
 import com.ydbaobao.model.Category;
 import com.ydbaobao.model.Product;
-import com.ydbaobao.model.Stock;
 
 @Repository
 public class ProductDao extends JdbcDaoSupport {
@@ -56,7 +54,7 @@ public class ProductDao extends JdbcDaoSupport {
 						new Brand(rs.getInt("brandId"), null, 0, 0, 0, 0, 0, 0, ""),
 						rs.getInt("productPrice"), rs.getString("productImage"),
 						rs.getString("productDescription"), rs.getLong("productCreateDate"),
-						rs.getLong("productUpdateDate"), new ArrayList<Stock>(), rs.getString("productSize")), productId);
+						rs.getLong("productUpdateDate"), rs.getString("productSize")), productId);
 	}
 	
 	public int updateProductImage(int productId, String imageName) {
