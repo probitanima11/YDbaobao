@@ -17,9 +17,10 @@
 </head>
 <body>
 	<div id="container">
-		<%@ include file="./_adminNav.jsp"%>
+		<%@ include file="./_adminNav.jsp"%>		
 		<div id="content">
 			<h1>상품 관리</h1>
+			<button id="all-product-delete-btn">상품 삭제</button>
 			<table id="product-table" style="width: 800px;">
 				<tr>
 					<th width="50px">상품ID</th>
@@ -111,7 +112,23 @@
 		window.addEventListener('load', function(e) {
 			setStockAddEvent();
 			setStockDeleteEvent();
+			document.querySelector('#all-product-delete-btn').addEventListener('click', deleteAllProducts, false);
 		}, false);
+
+		function deleteAllProducts() {
+			if(confirm('전체 상품을 삭제하시겠습니까?') === true) {
+				ydbaobao.ajax({
+					method : 'delete',
+					url : '/admin/manage/product',
+					success : function(req) {
+						if(req.responseText === 'success') {
+							alert('상품이 삭제되었습니다');
+							location.reload();
+						}
+					}
+				});
+			}
+		}
 
 		function setStockAddEvent() {
 			var addBtn = document.querySelectorAll('.add-size_quantity-btn');
@@ -169,6 +186,6 @@
 			}
 		}
 	</script>
-
+	<script src="/js/ydbaobao.js"></script>
 </body>
 </html>

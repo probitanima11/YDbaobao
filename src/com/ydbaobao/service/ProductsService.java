@@ -111,4 +111,11 @@ public class ProductsService {
 		}
 		return productList;
 	}
+
+	public boolean deleteAll() {
+		if(productsDao.deleteAll() >= 1) {
+			return true;
+		}
+		return false;
+	}
 }
