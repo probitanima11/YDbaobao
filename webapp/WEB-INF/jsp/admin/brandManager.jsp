@@ -138,14 +138,15 @@
 		}
 
 		function deleteBrand(e) {
-			var brandId = e.target.parentElement.parentElement.id;
+			var brandId = e.target.parentElement.parentElement.id.split('_')[1];
+
 			if (confirm('정말 브랜드를 삭제하시겠습니까?') === true) {
 				ydbaobao.ajax({
 					method : 'delete',
 					url : '/api/brands/' + brandId,
 					success : function(req) {
 						alert('브랜드가 삭제되었습니다');
-						document.getElementById(brandId).remove();
+						document.getElementById('brand_' + brandId).remove();
 					}
 				});
 				e.target.removeEventListener('click', deleteBrand, false);
