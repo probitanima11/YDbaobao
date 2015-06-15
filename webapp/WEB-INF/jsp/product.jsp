@@ -98,11 +98,12 @@ h1 {
 			<div class="product-price">${product.productPrice}원</div>
 			<div style="margin-top: 25px; margin-left: 15px;">
 				<h3>사이즈</h3>
-				<select id="size-selector">
+				다시 구현 필요.
+<%-- 				<select id="size-selector">
                    <c:forEach items="${product.stockList}" var="stock">
                          <option value="${stock.size}" label="${stock.size} ( ${stock.quantity}개 남음 )"></option>
                    </c:forEach>
-				</select>
+				</select> --%>
 			</div>
 			<div style="margin-top: 25px; margin-left: 15px;">
 				<h3>구매수량</h3>

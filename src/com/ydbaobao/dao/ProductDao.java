@@ -3,6 +3,7 @@ package com.ydbaobao.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
@@ -65,5 +66,109 @@ public class ProductDao extends JdbcDaoSupport {
 	public int update(Product product) {
 		String sql = "update PRODUCTS set productName = ?, categoryId = ?, brandId = ?, productPrice=?, productDescription=?, productUpdateDate=default, productSize=? where productId = ?";
 		return getJdbcTemplate().update(sql, product.getProductName(), product.getCategory().getCategoryId(), product.getBrand().getBrandId(), product.getProductPrice(), product.getProductDescription(), product.getProductSize(), product.getProductId());
+	}
+	
+
+	public List<Product> readRange(int start, int quantity) {
+		String sql ="select * from PRODUCTS, brands where brands.brandId = PRODUCTS.brandId ORDER BY productId desc LIMIT ?, ?";
+		return getJdbcTemplate().query(
+				sql, (rs, rowNum) -> new Product(
+						rs.getInt("productId"), rs.getString("productName"),
+						new Category(rs.getInt("categoryId"), null, 0),
+						new Brand(rs.getInt("brandId"), rs.getString("brandName"), rs.getInt("brandCount"), rs.getInt("discount_1"), rs.getInt("discount_2"), rs.getInt("discount_3"), rs.getInt("discount_4"), rs.getInt("discount_5"), rs.getString("brandSize")),
+						rs.getInt("productPrice"), rs.getString("productImage"),
+						rs.getString("productDescription"), rs.getLong("productCreateDate"),
+						rs.getLong("productUpdateDate"), rs.getString("productSize")), start, quantity);
+	}
+
+	public List<Product> readListByCategoryId(int categoryId, int index, int quantity) {
+		String sql = "select * from PRODUCTS, brands where products.brandId = brands.brandId and categoryId=? ORDER BY productId desc limit ?, ?";
+		return getJdbcTemplate().query(
+				sql, (rs, rowNum) -> new Product(
+						rs.getInt("productId"), rs.getString("productName"),
+						new Category(rs.getInt("categoryId"), null, 0),
+						new Brand(rs.getInt("brandId"), rs.getString("brandName"), rs.getInt("brandCount"), rs.getInt("discount_1"), rs.getInt("discount_2"), rs.getInt("discount_3"), rs.getInt("discount_4"), rs.getInt("discount_5"), rs.getString("brandSize")),
+						rs.getInt("productPrice"), rs.getString("productImage"),
+						rs.getString("productDescription"), rs.getLong("productCreateDate"),
+						rs.getLong("productUpdateDate"), rs.getString("productSize")), categoryId, index, quantity);
+	}
+
+	public List<Product> readListByCategoryId(int categoryId) {
+		String sql = "select * from PRODUCTS, brands where products.brandId = brands.brandId and categoryId=? ORDER BY productId desc";
+		return getJdbcTemplate().query(
+				sql, (rs, rowNum) -> new Product(
+						rs.getInt("productId"), rs.getString("productName"),
+						new Category(rs.getInt("categoryId"), null, 0),
+						new Brand(rs.getInt("brandId"), rs.getString("brandName"), rs.getInt("brandCount"), rs.getInt("discount_1"), rs.getInt("discount_2"), rs.getInt("discount_3"), rs.getInt("discount_4"), rs.getInt("discount_5"), rs.getString("brandSize")),
+						rs.getInt("productPrice"), rs.getString("productImage"),
+						rs.getString("productDescription"), rs.getLong("productCreateDate"),
+						rs.getLong("productUpdateDate"), rs.getString("productSize")), categoryId);
+	}
+	
+	public List<Product> readByProductName(String query, int index, int quantity) {
+		String sql = "select * from products, brands WHERE products.brandId = brands.brandId and productName REGEXP (?) order by productId desc limit ?, ?";
+		return getJdbcTemplate().query(
+				sql, (rs, rowNum) -> new Product(
+						rs.getInt("productId"), rs.getString("productName"),
+						new Category(rs.getInt("categoryId"), null, 0),
+						new Brand(rs.getInt("brandId"), rs.getString("brandName"), rs.getInt("brandCount"), rs.getInt("discount_1"), rs.getInt("discount_2"), rs.getInt("discount_3"), rs.getInt("discount_4"), rs.getInt("discount_5"), rs.getString("brandSize")),
+						rs.getInt("productPrice"), rs.getString("productImage"),
+						rs.getString("productDescription"), rs.getLong("productCreateDate"),
+						rs.getLong("productUpdateDate"), rs.getString("productSize")), query, index, quantity);
+	}
+	
+	public List<Product> readByBrandName(String query, int index, int quantity) {
+		String sql = "select * from products, brands WHERE products.brandId = brands.brandId and brandName REGEXP (?) order by productId desc limit ?, ?";
+		return getJdbcTemplate().query(
+				sql, (rs, rowNum) -> new Product(
+						rs.getInt("productId"), rs.getString("productName"),
+						new Category(rs.getInt("categoryId"), null, 0),
+						new Brand(rs.getInt("brandId"), rs.getString("brandName"), rs.getInt("brandCount"), rs.getInt("discount_1"), rs.getInt("discount_2"), rs.getInt("discount_3"), rs.getInt("discount_4"), rs.getInt("discount_5"), rs.getString("brandSize")),
+						rs.getInt("productPrice"), rs.getString("productImage"),
+						rs.getString("productDescription"), rs.getLong("productCreateDate"),
+						rs.getLong("productUpdateDate"), rs.getString("productSize")), query, index, quantity);
+	}
+
+	public int count() {
+		String sql = "select count(1) from PRODUCTS";
+		return getJdbcTemplate().queryForObject(sql, Integer.class);
+	}
+
+	public int countBySearchProductName(String query) {
+		String sql = "select count(1) as count from products WHERE productName REGEXP (?)";
+		return getJdbcTemplate().queryForObject(sql, Integer.class, query);
+	}
+	
+	public int countBySearchBrandName(String query) {
+		String sql = "select count(1) as count from products, brands WHERE products.brandId = brands.brandId and brandName REGEXP (?)";
+		return getJdbcTemplate().queryForObject(sql, Integer.class, query);
+	}
+
+	public List<Product> readListByBrandId(int brandId, int index, int quantity) {
+		String sql = "select * from PRODUCTS, BRANDS where BRANDS.brandId = PRODUCTS.brandId and PRODUCTS.brandId=? ORDER BY productId DESC limit ?, ?";
+		return getJdbcTemplate().query(
+				sql, (rs, rowNum) -> new Product(
+						rs.getInt("productId"), rs.getString("productName"),
+						new Category(rs.getInt("categoryId"), null, 0),
+						new Brand(rs.getInt("brandId"), rs.getString("brandName"), rs.getInt("brandCount"), rs.getInt("discount_1"), rs.getInt("discount_2"), rs.getInt("discount_3"), rs.getInt("discount_4"), rs.getInt("discount_5"), rs.getString("brandSize")),
+						rs.getInt("productPrice"), rs.getString("productImage"),
+						rs.getString("productDescription"), rs.getLong("productCreateDate"),
+						rs.getLong("productUpdateDate"), rs.getString("productSize")), brandId, index, quantity);
+	}
+
+	public Integer unregisteredProductsCountByBrand(int brandId) {
+		String sql = "select count(1) from PRODUCTS where brandId=? and categoryId=0";
+		return getJdbcTemplate().queryForObject(sql, Integer.class, brandId);
+	}
+
+	public List<Product> readProductsList() {
+		String sql = "select * from PRODUCTS ORDER BY productId DESC";
+		return getJdbcTemplate()
+				.query(sql,
+						(rs, rowNum) -> new Product(rs.getInt("productId"), rs.getString("productName"), new Category(
+								rs.getInt("categoryId"), null, 0), new Brand(rs.getInt("brandId"), null, 0, 0, 0, 0, 0, 0, ""), rs
+								.getInt("productPrice"), rs.getString("productImage"), rs
+								.getString("productDescription"), rs.getLong("productCreateDate"), rs
+								.getLong("productUpdateDate"), rs.getString("productSize")));
 	}
 }

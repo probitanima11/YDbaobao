@@ -19,7 +19,7 @@ import org.springframework.web.context.request.WebRequest;
 import com.ydbaobao.model.PageConfigParam;
 import com.ydbaobao.model.Product;
 import com.ydbaobao.service.CategoryService;
-import com.ydbaobao.service.ProductsService;
+import com.ydbaobao.service.ProductService;
 
 @Controller
 @RequestMapping("/search")
@@ -29,7 +29,7 @@ public class SearchController {
 	@Resource
 	private CategoryService categoryService;
 	@Resource
-	private ProductsService productsService;
+	private ProductService productService;
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public String search(Model model, WebRequest req, @RequestParam String terms, @RequestParam String select) {
@@ -47,15 +47,15 @@ public class SearchController {
 		List<Product> products= null;
 		PageConfigParam p = null;
 		if (select.equals("product-name")) {
-			count = productsService.countBySearchProductName(query);
+			count = productService.countBySearchProductName(query);
 			p = new PageConfigParam(16, req.getParameter("index"), count);
-			products = productsService.readByProductName(query, p.getIndex(), p.getQuantity());
+			products = productService.readByProductName(query, p.getIndex(), p.getQuantity());
 		}
 		if (select.equals("brand-name")) {
 			selectOption="브랜드명";
-			count = productsService.countBySearchBrandName(query);
+			count = productService.countBySearchBrandName(query);
 			p = new PageConfigParam(16, req.getParameter("index"), count);
-			products = productsService.readByBrandName(query, p.getIndex(), p.getQuantity());
+			products = productService.readByBrandName(query, p.getIndex(), p.getQuantity());
 		}
 		if (p.getEnd() < p.getRange()) {
 			model.addAttribute("nextBtn", true);
