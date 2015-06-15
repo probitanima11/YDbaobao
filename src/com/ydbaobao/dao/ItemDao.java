@@ -31,7 +31,7 @@ public class ItemDao extends JdbcDaoSupport {
 			return getJdbcTemplate().query(sql, (rs, rowNum) -> new Item(
 					rs.getInt("itemId"),
 					new Customer(rs.getString("customerId")),
-					new Product(rs.getInt("productId"),rs.getString("productName"), rs.getInt("productPrice")),
+					new Product(rs.getInt("productId"),rs.getString("productName"), rs.getInt("productPrice"), rs.getString("productImage"), rs.getString("productSize")),
 					new Order(rs.getInt("orderId")),
 					rs.getString("size"),
 					rs.getInt("quantity")
@@ -66,7 +66,7 @@ public class ItemDao extends JdbcDaoSupport {
 			return getJdbcTemplate().query(sql, (rs, rowNum) -> new Item(
 					rs.getInt("itemId"),
 					new Customer(rs.getString("customerId")),
-					new Product(rs.getInt("productId"),rs.getString("productName"), rs.getInt("productPrice")),
+					new Product(rs.getInt("productId"),rs.getString("productName"), rs.getInt("productPrice"), rs.getString("productImage"), rs.getString("productSize")),
 					new Order(rs.getInt("orderId")),
 					rs.getString("size"),
 					rs.getInt("quantity")
