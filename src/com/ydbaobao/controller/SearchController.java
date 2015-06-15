@@ -33,10 +33,15 @@ public class SearchController {
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public String search(Model model, WebRequest req, @RequestParam String terms, @RequestParam String select) {
+		model.addAttribute("categories", categoryService.read());
+		
 		Pattern pt = Pattern.compile("^\\s{1,}|\\s{1,}$");
 		Matcher m = pt.matcher(terms);
 		String query = m.replaceAll("").replaceAll(" ", "|");
-		logger.debug(query);
+		if (query.length() <1) {
+			model.addAttribute("count", 0);
+			return "search";
+		}
 		int count = 0;
 		String selectOption = "상품명";
 		List<Product> products= null;
@@ -59,7 +64,6 @@ public class SearchController {
 		model.addAttribute("count", count);
 		model.addAttribute("selectedIndex", p.getSelectedIndex());
 		model.addAttribute("range", IntStream.range(p.getStart(), p.getEnd()).toArray());
-		model.addAttribute("categories", categoryService.read());
 		model.addAttribute("selected", selectOption);
 		model.addAttribute("select", select);
 		model.addAttribute("terms", terms);
