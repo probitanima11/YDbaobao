@@ -2,6 +2,8 @@ package com.ydbaobao.apicontroller;
 
 import javax.annotation.Resource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -17,6 +19,8 @@ import com.ydbaobao.service.BrandService;
 @Controller
 @RequestMapping("/api/brands")
 public class ApiBrandController {
+	private static final Logger logger = LoggerFactory.getLogger(ApiBrandController.class);
+	
 	@Resource
 	private BrandService brandService;
 	
