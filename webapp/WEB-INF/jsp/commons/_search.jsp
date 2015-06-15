@@ -13,7 +13,7 @@
 						<option value="brand-name">브랜드명</option>
 					</select> <input type="text" name="terms" />
 				</div>
-				<button>검색</button>
+				<button class="btn">검색</button>
 			</form>
 		</div>
 	</div>

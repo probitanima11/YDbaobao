@@ -33,6 +33,7 @@ html, body {
 	color: #fff;
 	padding: 11px 15px;
 	margin: 0;
+	cursor: pointer;
 }
 
 a.prevAndNext {
@@ -128,13 +129,7 @@ ul#util li a span {
 }
 
 #search-form button {
-	background-color: #EA6576;
-	border-radius: 2px;
-	border: 0;
-	font-size: 20px;
-	color: white;
 	padding: 11px 15px;
-	margin: 0;
 	height: 44px;
 }
 
