@@ -111,6 +111,12 @@
 			var discountTable = document.querySelectorAll('#brand_'+brandId+' .discount_table input');
 			var value = 0;
 			var param = "brandName="+brandName+"&discount_1="+discountTable[0].value;
+
+			if(brandName === '') {
+				alert('브랜드 명을 입력해주세요');
+				return;
+			}
+
 			for (var i = 1; i < discountTable.length; i++) {
 				value = discountTable[i].value*1;
 				if (value > 100 || value < 0){
