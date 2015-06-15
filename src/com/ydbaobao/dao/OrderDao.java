@@ -50,7 +50,7 @@ public class OrderDao extends JdbcDaoSupport {
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		getJdbcTemplate().update(new PreparedStatementCreator() {
 			public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-				PreparedStatement ps = connection.prepareStatement(sql, new String[] { "orderId" });
+				PreparedStatement ps = connection.prepareStatement(sql);
 				ps.setString(1, customerId);
 				return ps;
 			}
