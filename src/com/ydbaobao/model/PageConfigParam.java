@@ -17,10 +17,10 @@ public class PageConfigParam {
 		}
 		
 		this.range = productsCount/quantity;
-		this.end = this.range;
 		if (productsCount%quantity > 0) {
 			this.range++;
 		}
+		this.end = this.range;
 		if (this.range > 10) {
 			this.start = tempIndex/quantity/10*10;
 		}
@@ -30,7 +30,6 @@ public class PageConfigParam {
 		if (this.end == this.start) {
 			this.end++;
 		}
-		this.selectedIndex = selectedIndex;
 		this.index = tempIndex;
 		this.quantity = quantity;
 	}
