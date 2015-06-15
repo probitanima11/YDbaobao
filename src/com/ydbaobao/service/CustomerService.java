@@ -52,4 +52,8 @@ public class CustomerService {
 		customer.setCustomerGrade(grade);
 		customerDao.updateCustomer(customer);
 	}
+
+	public void delete(String customerId) {
+		customerDao.deleteCustomer(customerId);
+	}
 }
