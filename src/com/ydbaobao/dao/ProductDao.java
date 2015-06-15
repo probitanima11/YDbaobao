@@ -36,7 +36,7 @@ public class ProductDao extends JdbcDaoSupport {
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		getJdbcTemplate().update(new PreparedStatementCreator() {
 			public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-				PreparedStatement ps = connection.prepareStatement(sql);
+				PreparedStatement ps = connection.prepareStatement(sql, new String[] {"productId"});
 				ps.setString(1, product.getProductName());
 				ps.setObject(2, product.getCategory().getCategoryId());
 				ps.setObject(3, product.getBrand().getBrandId());

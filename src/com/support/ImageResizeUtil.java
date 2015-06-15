@@ -9,6 +9,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public class ImageResizeUtil {
+	//public static String savingPath = System.getProperty("user.home")+"/baobao/products/";
 	public static String savingPath = "/home/baobao/products/";
 	public static final int maxValue = 500;
 
