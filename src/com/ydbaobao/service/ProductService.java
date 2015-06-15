@@ -140,4 +140,11 @@ public class ProductService {
 	public List<Product> readListByBrandId(int brandId, int index, int quantity) {
 		return productDao.readListByBrandId(brandId, index, quantity);
 	}
+
+	public boolean deleteAll() {
+		if(productDao.deleteAll() >=1){
+			return true;
+		}
+		return false;
+	}
 }

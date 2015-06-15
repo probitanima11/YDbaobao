@@ -81,4 +81,13 @@ public class CustomerDao extends JdbcDaoSupport {
 				rs.getString("customerCreateDate")
 				), customerId);
 	}
+
+	public void deleteCustomer(String customerId) {
+		String sql = "delete from CUSTOMERS where customerId = ?";
+		getJdbcTemplate().update(sql, customerId);
+		sql = "delete from ORDERS where customerId = ?";
+		getJdbcTemplate().update(sql, customerId);
+		sql = "delete from ITEMS where customerId = ?";
+		getJdbcTemplate().update(sql, customerId);
+	}
 }

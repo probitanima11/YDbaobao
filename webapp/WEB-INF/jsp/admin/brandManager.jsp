@@ -111,6 +111,12 @@
 			var discountTable = document.querySelectorAll('#brand_'+brandId+' .discount_table input');
 			var value = 0;
 			var param = "brandName="+brandName+"&discount_1="+discountTable[0].value;
+
+			if(brandName === '') {
+				alert('브랜드 명을 입력해주세요');
+				return;
+			}
+
 			for (var i = 1; i < discountTable.length; i++) {
 				value = discountTable[i].value*1;
 				if (value > 100 || value < 0){
@@ -132,14 +138,15 @@
 		}
 
 		function deleteBrand(e) {
-			var brandId = e.target.parentElement.parentElement.id;
+			var brandId = e.target.parentElement.parentElement.id.split('_')[1];
+
 			if (confirm('정말 브랜드를 삭제하시겠습니까?') === true) {
 				ydbaobao.ajax({
 					method : 'delete',
 					url : '/api/brands/' + brandId,
 					success : function(req) {
 						alert('브랜드가 삭제되었습니다');
-						document.getElementById(brandId).remove();
+						document.getElementById('brand_' + brandId).remove();
 					}
 				});
 				e.target.removeEventListener('click', deleteBrand, false);

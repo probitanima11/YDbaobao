@@ -105,4 +105,14 @@ public class CustomerController {
 		session.invalidate();
 		return "redirect:/";
 	}
+	
+	@RequestMapping(value = "/delete/{customerId}", method = RequestMethod.GET)
+	protected String delete(@PathVariable String customerId, HttpSession session, Model model) {
+		if(session.getAttribute("sessionAdmin") == null) {
+			model.addAttribute("errorMessage", "권한이 없습니다.");
+			return "redirect:/admin/manage/member";
+		}
+		customerService.delete(customerId);
+		return "redirect:/admin/manage/member";
+	}
 }

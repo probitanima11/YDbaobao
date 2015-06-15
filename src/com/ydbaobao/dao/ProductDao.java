@@ -171,4 +171,9 @@ public class ProductDao extends JdbcDaoSupport {
 								.getString("productDescription"), rs.getLong("productCreateDate"), rs
 								.getLong("productUpdateDate"), rs.getString("productSize")));
 	}
+
+	public int deleteAll() {
+		String sql = "delete from PRODUCTS";
+		return getJdbcTemplate().update(sql);
+	}
 }
