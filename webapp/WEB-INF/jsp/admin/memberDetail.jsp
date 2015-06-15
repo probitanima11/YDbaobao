@@ -19,6 +19,10 @@
 					<td>${customer.customerId}</td>
 				</tr>
 				<tr>
+					<th>비밀번호</th>
+					<td>${customer.customerPassword}</td>
+				</tr>
+				<tr>
 					<th>회원이름</th>
 					<td>${customer.customerName}</td>
 				</tr>
