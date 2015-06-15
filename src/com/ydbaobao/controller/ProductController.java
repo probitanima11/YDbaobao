@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.ydbaobao.dao.StockDao;
 import com.ydbaobao.model.Product;
 import com.ydbaobao.service.BrandService;
 import com.ydbaobao.service.CategoryService;
@@ -31,8 +30,6 @@ public class ProductController {
 	private CategoryService categoryService;
 	@Resource
 	private BrandService brandService;
-	@Resource
-	private StockDao stockDao;
 
 	@RequestMapping()
 	public String read(@RequestParam int productId, Model model) {
@@ -49,7 +46,6 @@ public class ProductController {
 		//TODO AJAX로 변경 예정.
 		ModelAndView mv = new ModelAndView("admin/productManager");
 		mv.addObject("product", new Product());
-		//mv.addObject("productList", productsService.readUnclassifiedProducts());
 		mv.addObject("productList", productsService.readProducts());
 		mv.addObject("brandList", brandService.readBrands());
 		mv.addObject("categoryList", categoryService.read());
