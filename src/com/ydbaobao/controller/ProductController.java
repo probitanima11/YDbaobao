@@ -42,18 +42,17 @@ public class ProductController {
 	}
 
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	public ModelAndView update(Product product) {
+	public String update(Model model, Product product) {
 		productService.update(product);
 		
 		//logger.debug("재고량 : {}", product.getStockList().toString());
 		
 		//TODO AJAX로 변경 예정.
-		ModelAndView mv = new ModelAndView("admin/productManager");
-		mv.addObject("product", new Product());
-		mv.addObject("productList", productService.readProducts());
-		mv.addObject("brandList", brandService.readBrands());
-		mv.addObject("categoryList", categoryService.read());
-		return mv;
+		model.addAttribute("product", new Product());
+		model.addAttribute("productList", productService.readProducts());
+		model.addAttribute("brandList", brandService.readBrands());
+		model.addAttribute("categoryList", categoryService.read());
+		return "admin/productManager";
 	}
 	
 	@RequestMapping(value="/category", method=RequestMethod.GET)
@@ -74,7 +73,7 @@ public class ProductController {
 	}
 	
 	@RequestMapping(value="/imageUpload", method=RequestMethod.POST)
-	public ModelAndView imageUpload(Product product, @RequestParam("imageFile") MultipartFile... imageFile) {
+	public String imageUpload(Model model, Product product, @RequestParam("imageFile") MultipartFile... imageFile) {
 		for(MultipartFile file:imageFile){
 			int productId = productService.create(product.getBrand().getBrandId());
 			product.setProductId(productId);
@@ -82,9 +81,8 @@ public class ProductController {
 			productService.updateProductImage(product, imageName);
 		}
 
-		ModelAndView mv = new ModelAndView("admin/productRegistration");
-		mv.addObject("brandList", brandService.readBrands());
-		mv.addObject("unregisteredProductsCountByBrand", productService.unregisteredProductsCountByBrand());
-		return mv;
+		model.addAttribute("brandList", brandService.readBrands());
+		model.addAttribute("unregisteredProductsCountByBrand", productService.unregisteredProductsCountByBrand());
+		return "admin/productRegistration";
 	}
 }

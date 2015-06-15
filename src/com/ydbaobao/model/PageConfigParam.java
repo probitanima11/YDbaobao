@@ -16,24 +16,20 @@ public class PageConfigParam {
 			tempIndex = (tempIndex-1)*quantity;
 		}
 		
-		int range = productsCount/quantity;
-		end = range;
+		this.range = productsCount/quantity;
+		this.end = this.range;
 		if (productsCount%quantity > 0) {
-			range++;
+			this.range++;
 		}
-		if (range > 10) {
-			start = tempIndex/quantity/10*10;
+		if (this.range > 10) {
+			this.start = tempIndex/quantity/10*10;
 		}
-		if (range > start+10) {
-			end = start+10;
+		if (this.range > this.start+10) {
+			this.end = this.start+10;
 		}
-		if (end == start) {
-			end++;
+		if (this.end == this.start) {
+			this.end++;
 		}
-		
-		this.start = start;
-		this.end = end;
-		this.range = range;
 		this.selectedIndex = selectedIndex;
 		this.index = tempIndex;
 		this.quantity = quantity;
