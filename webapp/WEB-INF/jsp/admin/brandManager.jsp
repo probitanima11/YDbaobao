@@ -148,6 +148,12 @@
 
 		function createBrand() {
 			var brandName = document.querySelector('#new-brand').value;
+
+			if(brandName === '') {
+				alert('브랜드 명을 입력해주세요');
+				return;
+			}
+
 			ydbaobao.ajax({
 				method : 'post',
 				url : '/api/brands/',
