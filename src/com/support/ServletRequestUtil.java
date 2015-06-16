@@ -23,4 +23,12 @@ public class ServletRequestUtil {
 		}
 		return ((SessionCustomer)session.getAttribute("sessionCustomer")).getSessionId();
 	}
+
+	public static boolean hasAuthorizationFromCustomer(HttpSession session) {
+		SessionCustomer sessionCustomer = (SessionCustomer)session.getAttribute("sessionCustomer");
+		if ((sessionCustomer.getSessionGrade()).equals("0")) {
+			return Boolean.FALSE;
+		}
+		return Boolean.TRUE;
+	}
 }

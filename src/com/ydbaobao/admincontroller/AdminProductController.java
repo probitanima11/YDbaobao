@@ -25,9 +25,22 @@ public class AdminProductController {
 	@Resource
 	private CategoryService categoryService;
 	
+	/**
+	 * 상품 이미지 업로드 페이지 호출
+	 */
+	@RequestMapping(value = "/regist", method = RequestMethod.GET)
+	public String registProducts(Model model) {
+		model.addAttribute("product", new Product());
+		model.addAttribute("brandList", brandService.readBrands());
+		model.addAttribute("unregisteredProductsCountByBrand", productService.unregisteredProductsCountByBrand());
+		return "admin/productRegistration";
+	}
 	
+	/**
+	 * 상품 관리 페이지 호출
+	 */
 	@RequestMapping(value = "", method = RequestMethod.GET)
-	public String manageProduct(Model model) {
+	public String read(Model model) {
 		model.addAttribute("product", new Product());
 		model.addAttribute("products", productService.readProducts());
 		model.addAttribute("brands", brandService.readBrands());

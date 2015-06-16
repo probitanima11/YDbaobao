@@ -15,6 +15,8 @@
 		<div id="content">
 			<h1>관리자 설정</h1>
 		</div>
+
+		<!-- TODO method=POST -> PUT, action="/admin/config/update -> /admin/config" -->
 		<form:form id="confirm" modelAttribute="adminConfig" method="POST" action="/admin/config/update">
 			<form:input type="hidden" path="adminConfigId" value="${adminConfig.adminConfigId}" />
 			<form:input type="number" path="adminDisplayProducts" value="${adminConfig.adminDisplayProducts}"/>

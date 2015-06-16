@@ -16,13 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ydbaobao.dao.GradeDao;
-import com.ydbaobao.model.AdminConfig;
-import com.ydbaobao.model.Product;
-import com.ydbaobao.service.AdminConfigService;
-import com.ydbaobao.service.BrandService;
-import com.ydbaobao.service.CategoryService;
-import com.ydbaobao.service.CustomerService;
-import com.ydbaobao.service.ProductService;
 
 @Controller
 @RequestMapping("/admin")
@@ -30,21 +23,11 @@ public class AdminController {
 	private static String password = "1111";
 
 	@Resource
-	private CategoryService categoryService;
-	@Resource
-	private BrandService brandService;
-	@Resource
-	private CustomerService customerService;
-	@Resource
-	private ProductService productService;
-	@Resource
-	private AdminConfigService adminConfigService;
-	@Resource
 	private GradeDao gradeDao;
-
+	
 	/**
-	 * 관리자 페이지 접근을 위한 GET 요청을 응답. session 체크를 하여 sessionAdmin이 Null일 경우 관리자 번호
-	 * 체크 페이지로 포워딩.
+	 * 관리자 페이지 접근을 위한 GET 요청을 응답.
+	 * session 체크를 하여 sessionAdmin이 Null일 경우 관리자 번호 체크 페이지로 포워딩.
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public String home(HttpSession session) {
@@ -58,17 +41,17 @@ public class AdminController {
 	public String check() {
 		return "admin/adminCheck";
 	}
+	
 
 	@RequestMapping(value = "/check", method = RequestMethod.POST)
-	public String checkForm(@RequestParam String adminPassword,
-			HttpSession session) {
+	public String checkForm(@RequestParam String adminPassword, HttpSession session) {
 		if (adminPassword.equals(password)) {
 			session.setAttribute("sessionAdmin", adminPassword);
 			return "admin/admin";
 		}
 		return "admin/adminCheck";
 	}
-
+	
 	@RequestMapping("/logout")
 	public String logout(HttpSession session) {
 		if (null == session.getAttribute("sessionAdmin")) {
@@ -77,39 +60,11 @@ public class AdminController {
 		session.removeAttribute("sessionAdmin");
 		return "redirect:/";
 	}
-
+	
 	@RequestMapping(value = "/manage/grade", method = RequestMethod.GET)
 	public String manageGrade(Model model) {
 		model.addAttribute("grades", gradeDao.readGrades());
 		return "admin/gradeManager";
-	}
-
-	@RequestMapping(value = "/add/product", method = RequestMethod.GET)
-	public String addProduct(Model model) {
-		model.addAttribute("product", new Product());
-		model.addAttribute("brandList", brandService.readBrands());
-		model.addAttribute("unregisteredProductsCountByBrand",
-				productService.unregisteredProductsCountByBrand());
-		return "admin/productRegistration";
-	}
-
-	@RequestMapping(value = "/config", method = RequestMethod.GET)
-	public String config(Model model) {
-		model.addAttribute("adminConfig", adminConfigService.read());
-		return "admin/config";
-	}
-
-	@RequestMapping(value = "/manage/order", method = RequestMethod.GET)
-	public String manageOrder() {
-		return "admin/orderManager";
-	}
-
-	@RequestMapping(value = "/config/update", method = RequestMethod.PUT)
-	public String configUpdate(Model model,
-			@RequestParam AdminConfig adminConfig) {
-		model.addAttribute("adminConfig",
-				adminConfigService.update(adminConfig));
-		return "/admin/config";
 	}
 
 	/**
