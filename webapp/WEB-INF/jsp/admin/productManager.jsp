@@ -98,6 +98,7 @@
 		window.addEventListener('load', function(e) {
 			document.querySelector('#all-product-delete-btn').addEventListener('click', deleteAllProducts, false);
 			setUpdateProductBtn();
+			setDeleteProductBtn();
 		}, false);
 
 		function deleteAllProducts() {
@@ -105,6 +106,32 @@
 				ydbaobao.ajax({
 					method : 'delete',
 					url : '/product',
+					success : function(req) {
+						if(req.responseText === 'success') {
+							alert('전체 상품이 삭제되었습니다');
+							location.reload();
+						}
+					}
+				});
+			}
+		}
+		
+		function setDeleteProductBtn() {
+			var deleteBtn = document.querySelectorAll('#delete-product-btn');
+			for (var i = 0; i < deleteBtn.length; i++) {
+				deleteBtn[i].addEventListener('click', function(e) {
+					debugger;
+					var form = document.querySelectorAll('.product-update-form')[e.target.className];
+					deleteProduct(form, e.target.value);
+				}, false);
+			}
+		}
+		
+		function deleteProduct(form, productId) {
+			if(confirm('상품을 삭제하시겠습니까?') === true) {
+				ydbaobao.ajax({
+					method : 'delete',
+					url : '/product/'+productId,
 					success : function(req) {
 						if(req.responseText === 'success') {
 							alert('상품이 삭제되었습니다');
@@ -119,7 +146,6 @@
 			var updateBtn = document.querySelectorAll('#update-product-btn');
 			for (var i = 0; i < updateBtn.length; i++) {
 				updateBtn[i].addEventListener('click', function(e) {
-					debugger;
 					var form = document.querySelectorAll('.product-update-form')[e.target.className];
 					updateProduct(form, e.target.value);
 				}, false);
