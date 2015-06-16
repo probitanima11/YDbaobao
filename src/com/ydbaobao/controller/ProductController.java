@@ -23,6 +23,7 @@ import com.ydbaobao.model.Brand;
 import com.ydbaobao.model.Category;
 import com.ydbaobao.model.PageConfigParam;
 import com.ydbaobao.model.Product;
+import com.ydbaobao.service.AdminConfigService;
 import com.ydbaobao.service.BrandService;
 import com.ydbaobao.service.CategoryService;
 import com.ydbaobao.service.ProductService;
@@ -38,6 +39,8 @@ public class ProductController {
 	private CategoryService categoryService;
 	@Resource
 	private BrandService brandService;
+	@Resource
+	private AdminConfigService adminConfigService;
 
 	@RequestMapping()
 	public String read(@RequestParam int productId, Model model) {
@@ -72,7 +75,7 @@ public class ProductController {
 	
 	@RequestMapping(value="/category", method=RequestMethod.GET)
 	public String load(Model model, WebRequest req, @RequestParam int categoryId) {
-		PageConfigParam p = new PageConfigParam(16, req.getParameter("index"), categoryService.readByCategoryId(categoryId).getCategoryCount());
+		PageConfigParam p = new PageConfigParam(adminConfigService.read().getAdminDisplayProducts(), req.getParameter("index"), categoryService.readByCategoryId(categoryId).getCategoryCount());
 
 		if (p.getEnd() < p.getRange()) {
 			model.addAttribute("nextBtn", true);
@@ -89,13 +92,12 @@ public class ProductController {
 	
 	@RequestMapping(value="/imageUpload", method=RequestMethod.POST)
 	public String imageUpload(Model model, Product product, @RequestParam("imageFile") MultipartFile... imageFile) {
-		for(MultipartFile file:imageFile){
+		for(MultipartFile file:imageFile) {
 			int productId = productService.create(product.getBrand().getBrandId());
 			product.setProductId(productId);
 			String imageName = productService.uploadImage(product, file);
 			productService.updateProductImage(product, imageName);
 		}
-
 		model.addAttribute("brandList", brandService.readBrands());
 		model.addAttribute("unregisteredProductsCountByBrand", productService.unregisteredProductsCountByBrand());
 		return "admin/productRegistration";

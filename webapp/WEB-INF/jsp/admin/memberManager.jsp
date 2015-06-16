@@ -54,7 +54,7 @@
 							<td>${member.customerGrade}</td>
 							<td>${member.customerCreateDate}</td>
 							<td>
-								<a href="/admin/manage/member/${member.customerId}"><button class="btn btn-warn"><i class="fa fa-info-circle"></i>  상세정보</button></a>
+								<a href="/admin/customers/${member.customerId}"><button class="btn btn-warn"><i class="fa fa-info-circle"></i>  상세정보</button></a>
 								<a href="#"><button class="btn btn-err" onclick="deleteCustomer('${member.customerId}')"><i class="fa fa-remove"></i>  삭제</button></a>
 							</td>	
 						</tr>

@@ -14,6 +14,7 @@ import org.springframework.web.context.request.WebRequest;
 
 import com.ydbaobao.model.Brand;
 import com.ydbaobao.model.PageConfigParam;
+import com.ydbaobao.service.AdminConfigService;
 import com.ydbaobao.service.BrandService;
 import com.ydbaobao.service.CategoryService;
 import com.ydbaobao.service.ProductService;
@@ -28,10 +29,12 @@ public class HomeController {
 	private BrandService brandService;
 	@Resource
 	private ProductService productService;
+	@Resource
+	private AdminConfigService adminConfigService;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Model model, WebRequest req) {
-		PageConfigParam p = new PageConfigParam(16, req.getParameter("index"), productService.count());
+		PageConfigParam p = new PageConfigParam(adminConfigService.read().getAdminDisplayProducts(), req.getParameter("index"), productService.count());
 
 		if (p.getEnd() < p.getRange()) {
 			model.addAttribute("nextBtn", true);
