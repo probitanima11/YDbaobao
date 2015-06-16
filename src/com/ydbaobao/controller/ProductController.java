@@ -6,16 +6,22 @@ import javax.annotation.Resource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.support.JSONResponseUtil;
 import com.ydbaobao.model.Brand;
+import com.ydbaobao.model.Category;
 import com.ydbaobao.model.PageConfigParam;
 import com.ydbaobao.model.Product;
 import com.ydbaobao.service.BrandService;
@@ -34,26 +40,39 @@ public class ProductController {
 	@Resource
 	private BrandService brandService;
 
-
 	@RequestMapping()
 	public String read(@RequestParam int productId, Model model) {
 		model.addAttribute("product", productService.read(productId));
 		return "product";
 	}
-
-	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	public ModelAndView update(Product product) {
-		productService.update(product);
+	
+	@RequestMapping(value = "", method = RequestMethod.DELETE)
+	public ResponseEntity<Object> deleteAllProducts() {
+		if(productService.deleteAll()) {
+			return JSONResponseUtil.getJSONResponse("success", HttpStatus.OK);
+		}
+		return JSONResponseUtil.getJSONResponse("fail", HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "", method = RequestMethod.GET)
+	public String manageProduct(Model model) {
+		model.addAttribute("product", new Product());
+		model.addAttribute("productList", productService.readProducts());
+		model.addAttribute("brandList", brandService.readBrands());
+		model.addAttribute("categoryList", categoryService.read());
+		return "admin/productManager";
+	}
+	
+	@RequestMapping(value = "/{productId}/{productName}/{categoryId}/{brandId}/{productPrice}/{productSize}/{productDescription}", method = RequestMethod.PUT)
+	public @ResponseBody String update(@PathVariable int productId, @PathVariable String productName, @PathVariable int categoryId, @PathVariable int brandId, @PathVariable int productPrice, @PathVariable String productSize, @PathVariable String productDescription){
 		
-		//logger.debug("재고량 : {}", product.getStockList().toString());
+		logger.debug("업데이트.");
 		
-		//TODO AJAX로 변경 예정.
-		ModelAndView mv = new ModelAndView("admin/productManager");
-		mv.addObject("product", new Product());
-		mv.addObject("productList", productService.readProducts());
-		mv.addObject("brandList", brandService.readBrands());
-		mv.addObject("categoryList", categoryService.read());
-		return mv;
+		Product product = new Product(productId, productName,new Category(categoryId), new Brand(brandId), productPrice, productDescription, productSize);
+		if(productService.update(product)){
+			return "success";
+		}
+		return "fail";
 	}
 	
 	@RequestMapping(value="/category", method=RequestMethod.GET)

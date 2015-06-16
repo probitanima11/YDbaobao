@@ -45,7 +45,7 @@ public class ProductService {
 		productDao.updateProductImage(product.getProductId(), imageName);
 	}
 	
-	public void update(Product product) {
+	public Boolean update(Product product) {
 		Product oldStatus = productDao.read(product.getProductId());
 		long oldCategoryId = oldStatus.getCategory().getCategoryId();
 		long newCategoryId = product.getCategory().getCategoryId();
@@ -59,7 +59,11 @@ public class ProductService {
 			brandDao.increaseCount(newBrandId);
 			brandDao.decreaseCount(oldBrandId);
 		}
-		productDao.update(product);
+		
+		if(productDao.update(product)==1){
+			return true;
+		}
+		return false;
 	}
 	
 	public String uploadImage(Product product, MultipartFile productImage) {

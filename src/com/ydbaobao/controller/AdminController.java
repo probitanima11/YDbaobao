@@ -160,24 +160,6 @@ public class AdminController {
 		return "fail";
 	}
 
-	@RequestMapping(value = "/manage/product", method = RequestMethod.GET)
-	public String manageProduct(Model model) {
-		model.addAttribute("product", new Product());
-		model.addAttribute("productList", productService.readProducts());
-		model.addAttribute("brandList", brandService.readBrands());
-		model.addAttribute("categoryList", categoryService.read());
-		return "admin/productManager";
-	}
-	
-	
-	@RequestMapping(value = "/manage/product", method = RequestMethod.DELETE)
-	public ResponseEntity<Object> deleteAllProducts() {
-		if(productService.deleteAll()) {
-			return JSONResponseUtil.getJSONResponse("success", HttpStatus.OK);
-		}
-		return JSONResponseUtil.getJSONResponse("fail", HttpStatus.OK);
-	}
-
 	@RequestMapping(value = "/add/product", method = RequestMethod.GET)
 	public String addProduct(Model model) {
 		model.addAttribute("product", new Product());

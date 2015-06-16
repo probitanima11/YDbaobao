@@ -17,6 +17,11 @@ public class Brand {
 	public Brand() {
 	}
 	
+	public Brand(int brandId) {
+		super();
+		this.brandId = brandId;
+	}
+	
 	public Brand(int brandId, String brandName, int brandCount, int discount_1, int discount_2, int discount_3, int discount_4, int discount_5, String brandSize) {
 		super();
 		this.brandId = brandId;

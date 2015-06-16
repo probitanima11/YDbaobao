@@ -31,6 +31,17 @@ public class Product {
 		this.productSize = productSize;
 	}
 	
+	public Product(int productId, String productName, Category category, Brand brand, int productPrice, String productDecription, String productSize){
+		super();
+		this.productId = productId;
+		this.productName = productName;
+		this.category = category;
+		this.brand = brand;
+		this.productPrice = productPrice;
+		this.productDescription = productDecription;
+		this.productSize = productSize;
+	}
+	
 	public Product(int productId, String productName, Category category, Brand brand, int productPrice,
 			String productImage, String productDescription, long productCreateDate, long productUpdateDate, String productSize) {
 		this.productId = productId;

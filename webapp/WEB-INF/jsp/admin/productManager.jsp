@@ -28,8 +28,8 @@
 					<th colspan="4">상세내역</th>
 					<th width="50px">선택</th>
 				</tr>
-				<c:forEach var="product" items="${productList}">
-				<form:form class="productUpdate" method="post" action="/product/update" modelAttribute="product">
+				<c:forEach var="product" varStatus="status" items="${productList}">
+				<form:form class="product-update-form" action="" modelAttribute="product">
 				<tr>
 					<td rowspan="4">${product.productId}
 					<form:input path="productId" type="hidden" value="${product.productId}"/></td>
@@ -37,7 +37,8 @@
 					<form:input path="productImage" type="hidden" value="${product.productImage}"/></td>
 					<td>카테고리 :</td>
 					<td>
-					<select name="category.categoryId">
+					<input id="categoryId" name="categoryId" type="hidden" value="${product.category.categoryId}"/>
+					<select class="${status.index}" onchange="setCategoryId(this)">
 							<c:forEach var="category" items="${categoryList}">
 										<c:choose>
 											<c:when test="${category.categoryId eq product.category.categoryId}">
@@ -53,7 +54,8 @@
 					</td>
 					<td>브랜드 :</td>
 					<td>
-					<select name="brand.brandId">
+					<input id="brandId" name="brandId" type="hidden" value="${product.brand.brandId}"/>
+					<select class="${status.index}" onchange="setBrandId(this)">
 							<c:forEach var="brand" items="${brandList}">
 										<c:choose>
 											<c:when test="${brand.brandId eq product.brand.brandId}">
@@ -66,43 +68,43 @@
 							</c:forEach>
 						</select>
 					</td>
-					<td rowspan="4"><input type="submit" class="update-product-btn" value="수정" onclick="alert('상품 정보가 수정되었습니다');" />
+					<td rowspan="4"><button type="button" id="update-product-btn" class="${status.index}" value="${product.productId}">수정</button><br/>
+					<button type="button" id="delete-product-btn" class="${status.index}" value="${product.productId}">삭제</button> 
 					</td>
 				</tr>
 				<tr>
 					<td>제품명 :</td>
-					<td colspan="3"><form:input path="productName" class="productName" value="${product.productName}"/></td>
-				</tr>
-				<tr>
-					<td>가격</td>
-					<td><form:input type="number" path="productPrice" value="${product.productPrice}" min="0" /></td>
+					<td><form:input path="productName" class="productName" value="${product.productName}"/></td>
 					<td>사이즈 :</td>
 					<td><form:input path="productSize" type="text" id="product-size-input" value="${product.productSize}"/></td>
 				</tr>
 				<tr>
-					<td>상품소개</td>
+					<td>가 격 :</td>
+					<td><form:input type="number" path="productPrice" value="${product.productPrice}" min="0" /></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>상품소개 :</td>
 					<td colspan="3"><textarea name="productDescription" rows="4" cols="70">${product.productDescription}</textarea></td>
 				</tr>
 				</form:form>
 				</c:forEach>
 			</table>
-
-
 		</div>
 	</div>
 
 	<script>
 		window.addEventListener('load', function(e) {
-			setStockAddEvent();
-			setStockDeleteEvent();
 			document.querySelector('#all-product-delete-btn').addEventListener('click', deleteAllProducts, false);
+			setUpdateProductBtn();
 		}, false);
 
 		function deleteAllProducts() {
 			if(confirm('전체 상품을 삭제하시겠습니까?') === true) {
 				ydbaobao.ajax({
 					method : 'delete',
-					url : '/admin/manage/product',
+					url : '/product',
 					success : function(req) {
 						if(req.responseText === 'success') {
 							alert('상품이 삭제되었습니다');
@@ -112,61 +114,43 @@
 				});
 			}
 		}
-
-		function setStockAddEvent() {
-			var addBtn = document.querySelectorAll('.add-size_quantity-btn');
-			for (var i = 0; i < addBtn.length; i++) {
-				addBtn[i].addEventListener('click', function(e) {
-					addSizeAndQuentity(e.target.value);
-					setStockDeleteEvent();
+		
+		function setUpdateProductBtn() {
+			var updateBtn = document.querySelectorAll('#update-product-btn');
+			for (var i = 0; i < updateBtn.length; i++) {
+				updateBtn[i].addEventListener('click', function(e) {
+					debugger;
+					var form = document.querySelectorAll('.product-update-form')[e.target.className];
+					updateProduct(form, e.target.value);
 				}, false);
 			}
 		}
 		
-		function setStockDeleteEvent() {
-			var deleteBtn = document.querySelectorAll('.delete-size_quantity-btn');
-			for (var j = 0; j < deleteBtn.length; j++) {
-				deleteBtn[j].addEventListener('click', function(e) {
-					deleteSizeAndQuentity(e.target.value, e.target.parentNode.className);
-				}), false;
-			}
-		}
-
-		function deleteSizeAndQuentity(productId, stockIndex) {
-			var stocksDiv = document.body.querySelectorAll('#stocks');
-			
-			for (var i = 0; i < stocksDiv.length; i++) {
-				if (stocksDiv[i].className === productId) {
-					var stocks = stocksDiv[i].children;
-					for(var k=0; k<stocks.length; k++){
-						if(stocks[k].className === stockIndex){
-							stocks[k].remove(stocks[k]);
-							return;
-						}
+		function updateProduct(form, productId) {
+		var param = "/" + form.productId.value + "/" + form.productName.value + "/" + 
+					form.categoryId.value + "/" + form.brandId.value + "/" + form.productPrice.value + "/" + 
+					form.productSize.value + "/" + form.productDescription.value; 
+		debugger;
+		ydbaobao.ajax({
+				method : 'put',
+				url : '/product/'+param,
+				success : function(req) {
+					if (req.responseText === 'success') {
+						alert('상품정보가 수정되었습니다.');
+						location.reload();
 					}
 				}
-			}
+			});
 		}
 
-		function addSizeAndQuentity(productId) {
-			var stocksDiv = document.body.querySelectorAll('#stocks');
-			var el = undefined;
-			for (var i = 0; i < stocksDiv.length; i++) {
-				if (stocksDiv[i].className === productId) {
-					
-					for(var k=0; k<stocksDiv[i].childElementCount; k++){
-						if(stocksDiv[i].children[k].style.display==='none'){
-							var index = stocksDiv[i].children[k-1].className*1+1;
-							stocksDiv[i].children[k].style.display='';
-							stocksDiv[i].children[k].className = index;
-							stocksDiv[i].children[k].children[0].name = "stockList["+index+"].stockId";
-							stocksDiv[i].children[k].children[1].name = "stockList["+index+"].size";
-							stocksDiv[i].children[k].children[2].name = "stockList["+index+"].quantity";
-							return;
-						}
-					}
-				}
-			}
+		function setBrandId(e) {
+			var form = document.querySelectorAll('.product-update-form')[e.className];
+			form.brandId.value = e.value;
+		}
+
+		function setCategoryId(e) {
+			var form = document.querySelectorAll('.product-update-form')[e.className];
+			form.categoryId.value = e.value;
 		}
 	</script>
 	<script src="/js/ydbaobao.js"></script>
