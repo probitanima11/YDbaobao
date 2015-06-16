@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.support.JSONResponseUtil;
 import com.ydbaobao.dao.GradeDao;
+import com.ydbaobao.model.AdminConfig;
 import com.ydbaobao.model.Product;
+import com.ydbaobao.service.AdminConfigService;
 import com.ydbaobao.service.BrandService;
 import com.ydbaobao.service.CategoryService;
 import com.ydbaobao.service.CustomerService;
@@ -37,6 +39,8 @@ public class AdminController {
 	private CustomerService customerService;
 	@Resource
 	private ProductService productService;
+	@Resource
+	private AdminConfigService adminConfigService;
 	@Resource
 	private GradeDao gradeDao;
 	
@@ -169,12 +173,19 @@ public class AdminController {
 	}
 
 	@RequestMapping(value = "/config", method = RequestMethod.GET)
-	public String config() {
+	public String config(Model model) {
+		model.addAttribute("adminConfig", adminConfigService.read());
 		return "admin/config";
 	}
 	
 	@RequestMapping(value = "/manage/order", method = RequestMethod.GET)
 	public String manageOrder() {
 		return "admin/orderManager";
+	}
+	
+	@RequestMapping(value = "/config/update", method = RequestMethod.PUT)
+	public String configUpdate(Model model, @RequestParam AdminConfig adminConfig) {
+		model.addAttribute("adminConfig", adminConfigService.update(adminConfig));
+		return "/admin/config";
 	}
 }

@@ -18,6 +18,7 @@ import org.springframework.web.context.request.WebRequest;
 
 import com.ydbaobao.model.PageConfigParam;
 import com.ydbaobao.model.Product;
+import com.ydbaobao.service.AdminConfigService;
 import com.ydbaobao.service.CategoryService;
 import com.ydbaobao.service.ProductService;
 
@@ -30,11 +31,12 @@ public class SearchController {
 	private CategoryService categoryService;
 	@Resource
 	private ProductService productService;
+	@Resource
+	private AdminConfigService adminConfigService;
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public String search(Model model, WebRequest req, @RequestParam String terms, @RequestParam String select) {
 		model.addAttribute("categories", categoryService.read());
-		
 		Pattern pt = Pattern.compile("^\\s{1,}|\\s{1,}$");
 		Matcher m = pt.matcher(terms);
 		String query = m.replaceAll("").replaceAll(" ", "|");
@@ -48,7 +50,7 @@ public class SearchController {
 		PageConfigParam p = null;
 		if (select.equals("product-name")) {
 			count = productService.countBySearchProductName(query);
-			p = new PageConfigParam(16, req.getParameter("index"), count);
+			p = new PageConfigParam(adminConfigService.read().getAdminDisplayProducts(), req.getParameter("index"), count);
 			products = productService.readByProductName(query, p.getIndex(), p.getQuantity());
 		}
 		if (select.equals("brand-name")) {
