@@ -1,12 +1,9 @@
 package com.ydbaobao.controller;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.support.JSONResponseUtil;
 import com.ydbaobao.exception.ExceptionForMessage;
 import com.ydbaobao.exception.JoinValidationException;
 import com.ydbaobao.model.Customer;
@@ -24,7 +21,11 @@ public class ControllerExceptionHandler {
 	
 	// 회원가입시 유효성 검사 예외처리
 	@ExceptionHandler(JoinValidationException.class)
-	public ResponseEntity<Object> joinValidationException(JoinValidationException e) {
-		return JSONResponseUtil.getJSONResponse(e.getExtractValidationMessages(), HttpStatus.PRECONDITION_FAILED);
+	public ModelAndView joinValidationException(JoinValidationException e) {
+		ModelAndView mav = new ModelAndView("form");
+		mav.addObject("customer", new Customer());
+		mav.addObject("validMessages", e.getExtractValidationMessages());
+		return mav;
+//		return JSONResponseUtil.getJSONResponse(e.getExtractValidationMessages(), HttpStatus.PRECONDITION_FAILED);
 	}
 }

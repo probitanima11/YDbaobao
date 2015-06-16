@@ -1,24 +1,38 @@
 package com.ydbaobao.model;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-
-import org.hibernate.validator.constraints.Email;
 
 import com.google.gson.annotations.Expose;
 
 public class Customer {
-	private String customerId;
-	private String customerName;
-	private String customerPassword;
-	private String customerGrade;
-	private String customerPhone;
 	@NotNull
-	@Email(message = "이메일 주소가 유효하지 않습니다.")
-	@Size(max = 50, message = "이메일은 50 글자 이하만 사용 가능합니다.")
+	@Pattern(regexp = "([a-zA-Z0-9ㄱ-ㅎㅏ-ㅣ가-힣].*)", message = "이름은 한글, 영문, 숫자만 가능합니다.")
+	@Size(min = 4, max = 25, message = "아이디는 4 글자 이상, 25 글자 이하만 사용 가능합니다.")
 	@Expose
+	private String customerId;
+	
+	private String customerName;
+	
+	@NotNull
+	@Pattern(regexp = "([a-zA-Z].*[0-9])|([0-9].*[a-zA-Z])", message = "비밀번호는 영어 대소문자와 숫자를 포함해야합니다.")
+	@Size(min = 8, max = 16, message = "비밀번호는 8자리 이상, 16자리 이하로 사용해야합니다.")
+	@Expose(serialize=false)
+	private String customerPassword;
+	
+	private String customerGrade;
+	
+	private String customerPhone;
+	
+//	@NotNull
+//	@Email(message = "이메일 주소가 유효하지 않습니다.")
+//	@Size(max = 50, message = "이메일은 50 글자 이하만 사용 가능합니다.")
+//	@Expose
 	private String customerEmail;
+	
 	private String customerAddress;
+	
 	private String customerCreateDate;
 	
 	public Customer() {

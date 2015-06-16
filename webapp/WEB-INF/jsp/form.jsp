@@ -53,7 +53,8 @@
 					<span id="join-userPassword-message" class="errorMessage"></span>
 					<br />
 					<label for="customerAgainPassword">비밀번호확인</label>
-					<input type="password" name="customerAgainPassword" />
+					<input id="join-userRePassword" type="password" name="customerAgainPassword" />
+					<span id="join-userRePassword-message" class="errorMessage"></span>
 					<br />
 					<label for="customerPhone">전화번호</label>
 					<form:input path="customerPhone" />
@@ -66,8 +67,14 @@
 					<form:input path="customerAddress" />
 					<br />
 					<c:if test="${not empty message}">
-						<label class="error">${message}</label>
+						<label style="width:initial" class="error">${message}</label>
 						<br />
+					</c:if>
+					<c:if test="${not empty validMessages}">
+						<c:forEach var="validMessage" items="${validMessages}">
+							<label style="width:initial" class="error">${validMessage}</label>
+							<br />
+						</c:forEach>
 					</c:if>
 					<button id="join-submit" type="submit">확인</button>
 				</form:form>
@@ -89,6 +96,7 @@
 		joinCheck.setNameValidation("join-userId", "join-userId-message");
 		// Password //
 		joinCheck.setPasswordValidation("join-userPassword", "join-userPassword-message");
+		joinCheck.setPasswordValidation("join-userRePassword", "join-userRePassword-message");
 	}
 	</script>
 	<script type="text/javascript" src="/js/joinCheck.js"></script>

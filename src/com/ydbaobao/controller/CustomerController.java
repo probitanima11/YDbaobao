@@ -8,6 +8,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -62,13 +63,13 @@ public class CustomerController {
 	}
 	
 	@RequestMapping(value ="/create", method = RequestMethod.POST)
-	public String create(Customer customer, BindingResult result, @RequestParam String customerAgainPassword, Model model) throws ExceptionForMessage{
+	public String create(@Valid Customer customer, BindingResult result, @RequestParam String customerAgainPassword, Model model) throws ExceptionForMessage{
 		if(result.hasErrors()) {
 			throw new JoinValidationException(extractValidationMessages(result));
         }
 		if(!customer.getCustomerPassword().equals(customerAgainPassword)) {
 			model.addAttribute("customer", new Customer());
-			model.addAttribute("message", "아이디와 비밀번호가 일치하지 않습니다.");
+			model.addAttribute("message", "비밀번호가 일치하지 않습니다.");
 			return "form";
 		}
 		customerService.join(customer);
@@ -121,16 +122,13 @@ public class CustomerController {
 		return "redirect:/admin/manage/member";
 	}
 	
-	private List<Map<String, Object>> extractValidationMessages(BindingResult result) {
-		List<Map<String, Object>> messages = new ArrayList<>();
+	private List<String> extractValidationMessages(BindingResult result) {
 		List<ObjectError> list = result.getAllErrors();
+		List<String> messageList = new ArrayList<>();
+		System.out.println(list);
 		for (ObjectError e : list) {
-			String element = e.getCodes()[0].split("\\.")[2];
-			Map<String, Object> map = new HashMap<>();
-			map.put("id", element+"-message");
-			map.put("message", result.getFieldError(element).getDefaultMessage());
-			messages.add(map);
+			messageList.add(e.getDefaultMessage());
 		}
-		return messages;
+		return messageList;
 	}
 }
