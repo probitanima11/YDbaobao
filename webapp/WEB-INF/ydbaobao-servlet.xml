@@ -21,9 +21,12 @@
 		<mvc:interceptor>
 			<mvc:mapping path="/search/**" />
 			<mvc:mapping path="/product/**" />
+			<mvc:mapping path="/products/**" />
 			<mvc:mapping path="/orders/**" />
 			<mvc:mapping path="/item/**" />
-			<mvc:mapping path="/brand/**" />
+			<mvc:mapping path="/brands/**" />
+			<mvc:mapping path="/categories/**" />
+			<mvc:mapping path="/imageUpload/**" />
 			<bean class="com.ydbaobao.intercepter.GradeCheckIntercepter" />
 		</mvc:interceptor>
 	</mvc:interceptors>
