@@ -5,7 +5,7 @@
 	<c:forEach var="product" items="${productList}" varStatus="status">
 		<li class="item">
 			<div align="center">
-				<a href="/product?productId=${product.productId}"> 
+				<a href="/products/${product.productId}"> 
 					<img src="/img/products/${product.productImage}" />
 					<div class="item-info">
 						<div class="item-desc">

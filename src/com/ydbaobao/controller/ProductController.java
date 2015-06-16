@@ -4,8 +4,6 @@ import java.util.stream.IntStream;
 
 import javax.annotation.Resource;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -15,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.support.JSONResponseUtil;
@@ -29,10 +26,7 @@ import com.ydbaobao.service.CategoryService;
 import com.ydbaobao.service.ProductService;
 
 @Controller
-@RequestMapping("/product")
 public class ProductController {
-	private static final Logger logger = LoggerFactory.getLogger(ProductController.class);
-
 	@Resource
 	private ProductService productService;
 	@Resource
@@ -42,13 +36,13 @@ public class ProductController {
 	@Resource
 	private AdminConfigService adminConfigService;
 
-	@RequestMapping()
-	public String read(@RequestParam int productId, Model model) {
+	@RequestMapping(value = "/products/{productId}", method = RequestMethod.GET)
+	public String read(@PathVariable int productId, Model model) {
 		model.addAttribute("product", productService.read(productId));
 		return "product";
 	}
 	
-	@RequestMapping(value = "/{productId}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/products/{productId}", method = RequestMethod.DELETE)
 	public ResponseEntity<Object> deleteProduct(@PathVariable int productId) {
 		if(productService.delete(productId)) {
 			return JSONResponseUtil.getJSONResponse("success", HttpStatus.OK);
@@ -65,9 +59,9 @@ public class ProductController {
 		return "fail";
 	}
 	
-	@RequestMapping(value="/category", method=RequestMethod.GET)
-	public String load(Model model, WebRequest req, @RequestParam int categoryId) {
-		PageConfigParam p = new PageConfigParam(adminConfigService.read().getAdminDisplayProducts(), req.getParameter("index"), categoryService.readByCategoryId(categoryId).getCategoryCount());
+	@RequestMapping(value="/categories/{categoryId}", method=RequestMethod.GET)
+	public String load(Model model, @RequestParam("page") String page, @PathVariable int categoryId) {
+		PageConfigParam p = new PageConfigParam(adminConfigService.read().getAdminDisplayProducts(), page, categoryService.readByCategoryId(categoryId).getCategoryCount());
 
 		if (p.getEnd() < p.getRange()) {
 			model.addAttribute("nextBtn", true);
