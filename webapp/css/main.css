@@ -33,6 +33,7 @@ html, body {
 	color: #fff;
 	padding: 11px 15px;
 	margin: 0;
+	cursor: pointer;
 }
 
 a.prevAndNext {
@@ -128,13 +129,7 @@ ul#util li a span {
 }
 
 #search-form button {
-	background-color: #EA6576;
-	border-radius: 2px;
-	border: 0;
-	font-size: 20px;
-	color: white;
 	padding: 11px 15px;
-	margin: 0;
 	height: 44px;
 }
 
@@ -330,7 +325,7 @@ ul#util li a span {
 
 /* cart.jsp */
 #cart-section {
-	height: 400px;
+	min-height: 400px;
 }
 
 #cart-list {
@@ -410,4 +405,27 @@ form#customer {
 	padding: 20px;
 	background-color: #888;
 	color: #fff;
+}
+
+#progress-info {
+	position:relative;
+	border-bottom:5px solid #EA6576;
+	margin-bottom:15px;
+	color:#ccc;
+}
+
+#progress-info div{
+	display:inline-block;
+	font-size:45px;
+	padding:10px;
+	width:31%;
+}
+
+#progress-info div.on{
+	color:#454545;
+}
+
+.fa-chevron-right {
+	float:right;
+	color:#454545;
 }

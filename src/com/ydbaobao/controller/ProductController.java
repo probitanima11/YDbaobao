@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.support.JSONResponseUtil;
 import com.ydbaobao.model.Brand;
@@ -65,9 +64,6 @@ public class ProductController {
 	
 	@RequestMapping(value = "/{productId}/{productName}/{categoryId}/{brandId}/{productPrice}/{productSize}/{productDescription}", method = RequestMethod.PUT)
 	public @ResponseBody String update(@PathVariable int productId, @PathVariable String productName, @PathVariable int categoryId, @PathVariable int brandId, @PathVariable int productPrice, @PathVariable String productSize, @PathVariable String productDescription){
-		
-		logger.debug("업데이트.");
-		
 		Product product = new Product(productId, productName,new Category(categoryId), new Brand(brandId), productPrice, productDescription, productSize);
 		if(productService.update(product)){
 			return "success";
@@ -93,7 +89,7 @@ public class ProductController {
 	}
 	
 	@RequestMapping(value="/imageUpload", method=RequestMethod.POST)
-	public ModelAndView imageUpload(Product product, @RequestParam("imageFile") MultipartFile... imageFile) {
+	public String imageUpload(Model model, Product product, @RequestParam("imageFile") MultipartFile... imageFile) {
 		for(MultipartFile file:imageFile){
 			int productId = productService.create(product.getBrand().getBrandId());
 			product.setProductId(productId);
@@ -101,9 +97,8 @@ public class ProductController {
 			productService.updateProductImage(product, imageName);
 		}
 
-		ModelAndView mv = new ModelAndView("admin/productRegistration");
-		mv.addObject("brandList", brandService.readBrands());
-		mv.addObject("unregisteredProductsCountByBrand", productService.unregisteredProductsCountByBrand());
-		return mv;
+		model.addAttribute("brandList", brandService.readBrands());
+		model.addAttribute("unregisteredProductsCountByBrand", productService.unregisteredProductsCountByBrand());
+		return "admin/productRegistration";
 	}
 }
