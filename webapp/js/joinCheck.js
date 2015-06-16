@@ -42,14 +42,14 @@ joinCheck.checkNameValidation = function(value, errorElement) {
 		joinCheck.setErrorMessage({
 			element: errorElement,
 			status: "block",
-			message: "이름은 한글, 영문, 숫자만 가능합니다."
+			message: "아이디는 한글, 영문, 숫자만 가능합니다."
 	  	});
 	}
-	if(value.length > 25) {
+	if(value.length < 4 || value.length > 25) {
 		joinCheck.setErrorMessage({
 			element: errorElement,
 			status: "block",
-			message: "이름은 25 글자 이하만 사용 가능합니다."
+			message: "아이디는 4 글자 이상, 25 글자 이하만 사용 가능합니다."
 	  	});
 	}
 }
@@ -110,5 +110,5 @@ joinCheck.checkJoinFieldsStatus = function() {
 		}
 	}
 	subitBtn.disabled = false;
-	subitBtn.style.backgroundColor="#7cc4b5";
+	subitBtn.style.backgroundColor="#EA6576";
 }

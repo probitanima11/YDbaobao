@@ -69,7 +69,7 @@
 						<label class="error">${message}</label>
 						<br />
 					</c:if>
-					<button type="submit">확인</button>
+					<button id="join-submit" type="submit">확인</button>
 				</form:form>
 			</div>
 		</div>
@@ -83,7 +83,8 @@
 	
 	var setEventListener = function() {
 		// Email //
-		joinCheck.setEmailValidation("join-userEmail", "join-userEmail-message");
+		//TOTO 유효성체크항목 추후 협의.
+		//joinCheck.setEmailValidation("join-userEmail", "join-userEmail-message");
 		// Name //
 		joinCheck.setNameValidation("join-userId", "join-userId-message");
 		// Password //
