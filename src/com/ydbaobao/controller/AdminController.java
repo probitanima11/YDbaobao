@@ -188,4 +188,13 @@ public class AdminController {
 		model.addAttribute("adminConfig", adminConfigService.update(adminConfig));
 		return "/admin/config";
 	}
+
+	@RequestMapping(value = "/manage/product", method = RequestMethod.GET)
+	public String manageProduct(Model model) {
+		model.addAttribute("product", new Product());
+		model.addAttribute("productList", productService.readProducts());
+		model.addAttribute("brandList", brandService.readBrands());
+		model.addAttribute("categoryList", categoryService.read());
+		return "admin/productManager";
+	}
 }
