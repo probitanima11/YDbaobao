@@ -61,15 +61,6 @@ public class ProductController {
 		return JSONResponseUtil.getJSONResponse("fail", HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "", method = RequestMethod.GET)
-	public String manageProduct(Model model) {
-		model.addAttribute("product", new Product());
-		model.addAttribute("productList", productService.readProducts());
-		model.addAttribute("brandList", brandService.readBrands());
-		model.addAttribute("categoryList", categoryService.read());
-		return "admin/productManager";
-	}
-	
 	@RequestMapping(value = "/{productId}/{productName}/{categoryId}/{brandId}/{productPrice}/{productSize}/{productDescription}", method = RequestMethod.PUT)
 	public @ResponseBody String update(@PathVariable int productId, @PathVariable String productName, @PathVariable int categoryId, @PathVariable int brandId, @PathVariable int productPrice, @PathVariable String productSize, @PathVariable String productDescription){
 		Product product = new Product(productId, productName,new Category(categoryId), new Brand(brandId), productPrice, productDescription, productSize);

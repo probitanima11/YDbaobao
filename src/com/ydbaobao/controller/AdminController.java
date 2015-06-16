@@ -177,4 +177,13 @@ public class AdminController {
 	public String manageOrder() {
 		return "admin/orderManager";
 	}
+	
+	@RequestMapping(value = "/manage/product", method = RequestMethod.GET)
+	public String manageProduct(Model model) {
+		model.addAttribute("product", new Product());
+		model.addAttribute("productList", productService.readProducts());
+		model.addAttribute("brandList", brandService.readBrands());
+		model.addAttribute("categoryList", categoryService.read());
+		return "admin/productManager";
+	}
 }
