@@ -12,7 +12,7 @@
 
 	<mvc:annotation-driven />
 
-	<mvc:resources location="/img/" mapping="/img/**" />
+	<mvc:resources location="/image/" mapping="/image/**" />
 	<mvc:resources location="/favicon/" mapping="/favicon/**" />
 	<mvc:resources location="/fonts/" mapping="/fonts/**" />
 	<mvc:resources location="/js/" mapping="/js/**" />
