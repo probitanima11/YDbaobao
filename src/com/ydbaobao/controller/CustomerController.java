@@ -112,16 +112,6 @@ public class CustomerController {
 		return "redirect:/";
 	}
 	
-	@RequestMapping(value = "/delete/{customerId}", method = RequestMethod.GET)
-	protected String delete(@PathVariable String customerId, HttpSession session, Model model) {
-		if(session.getAttribute("sessionAdmin") == null) {
-			model.addAttribute("errorMessage", "권한이 없습니다.");
-			return "redirect:/admin/manage/member";
-		}
-		customerService.delete(customerId);
-		return "redirect:/admin/manage/member";
-	}
-	
 	private List<String> extractValidationMessages(BindingResult result) {
 		List<ObjectError> list = result.getAllErrors();
 		List<String> messageList = new ArrayList<>();

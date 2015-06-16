@@ -1,6 +1,7 @@
 package com.ydbaobao.admincontroller;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,5 +32,19 @@ public class AdminCustomerController {
 	public String showDetailMember(Model model, @PathVariable String customerId) {
 		model.addAttribute("customer", customerService.readCustomerById(customerId));
 		return "admin/customerDetail";
+	}
+	
+	/**
+	 * 관리자 페이지에서 회원목록에서 회원 삭제
+	 * @param customerId
+	 */
+	@RequestMapping(value = "/{customerId}", method = RequestMethod.DELETE)
+	protected String delete(@PathVariable String customerId, HttpSession session, Model model) {
+		if(session.getAttribute("sessionAdmin") == null) {
+			model.addAttribute("errorMessage", "권한이 없습니다.");
+			return "redirect:/admin/customers";
+		}
+		customerService.delete(customerId);
+		return "redirect:/admin/customers";
 	}
 }
