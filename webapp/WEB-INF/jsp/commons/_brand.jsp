@@ -14,7 +14,7 @@
 	<div id="brand-list">
 		<ul>
 			<c:forEach var="brand" items="${brands}">
-				<li><a href="/brand?brandId=${brand.brandId}"><i class='fa fa-bookmark'></i>  <span>${brand.brandName}(${brand.brandCount})</span></a></li>
+				<li><a href="/brands/${brand.brandId}/products?page=1"><i class='fa fa-bookmark'></i>  <span>${brand.brandName}(${brand.brandCount})</span></a></li>
 			</c:forEach>
 		</ul>
 	</div>	

@@ -4,8 +4,6 @@ import java.util.stream.IntStream;
 
 import javax.annotation.Resource;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -24,10 +22,8 @@ import com.ydbaobao.service.CategoryService;
 import com.ydbaobao.service.ProductService;
 
 @Controller
-@RequestMapping("/brand")
+@RequestMapping("/brands")
 public class BrandController {
-	private static final Logger logger = LoggerFactory.getLogger(BrandController.class);
-	
 	@Resource
 	private BrandService brandService;
 	@Resource
@@ -37,20 +33,22 @@ public class BrandController {
 	
 	/**
 	 * index.jsp에서 브랜드 메뉴 검색하는 곳에 사용
-	 * @author jyb
 	 * @param 검색에 사용될 브랜드 이름의 첫글자(A~Z)
 	 * @return 검색된 결과를 JSON 데이타로 전달
 	 */
-	@RequestMapping(value = "/search/{firstLetter}", method = RequestMethod.GET)
+	@RequestMapping(value = "/{firstLetter}", method = RequestMethod.GET)
 	public ResponseEntity<Object> searchByFirstLetter(@PathVariable String firstLetter) {
-		logger.debug("search");
 		return JSONResponseUtil.getJSONResponse(brandService.search(firstLetter), HttpStatus.OK);
 	}
 	
-	@RequestMapping(value="", method=RequestMethod.GET)
-	public String searchByBrandId(WebRequest req, Model model, @RequestParam int brandId) {
+	/**
+	 * 브랜드별 전체 상품
+	 * @param 검색에 사용될 브랜드 Id, page 숫자
+	 */
+	@RequestMapping(value="/{brandId}/products", method=RequestMethod.GET)
+	public String searchByBrandId(@RequestParam("page") String page, Model model, @PathVariable int brandId) {
 		
-		PageConfigParam p = new PageConfigParam(16, req.getParameter("index"), brandService.readBrandByBrandId(brandId).getBrandCount());
+		PageConfigParam p = new PageConfigParam(16, page, brandService.readBrandByBrandId(brandId).getBrandCount());
 
 		if (p.getEnd() < p.getRange()) {
 			model.addAttribute("nextBtn", true);
