@@ -18,19 +18,18 @@ public class AdminCustomerController {
 	
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public String manageMember(Model model) {
-		model.addAttribute("members", customerService.readCustomers());
-		return "admin/memberManager";
+		model.addAttribute("customers", customerService.readCustomers());
+		return "admin/customerManager";
 	}
 	
 	/**
 	 * 관리자 페이지에서 회원목록에서 회원상세보기 버튼 클릭시 동작
-	 * @author jyb
 	 * @param customerId
 	 * customerId로 검색한 결과를 customer 객체에 저장
 	 */
 	@RequestMapping(value = "/{customerId}", method = RequestMethod.GET)
 	public String showDetailMember(Model model, @PathVariable String customerId) {
 		model.addAttribute("customer", customerService.readCustomerById(customerId));
-		return "admin/memberDetail";
+		return "admin/customerDetail";
 	}
 }

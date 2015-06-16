@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="/css/font-awesome.min.css">
 <script src="/js/ydbaobao.js"></script>
 <style>
- #member-table .btn {
+ #customer-table .btn {
  	border:0;
  	border-bottom:2px solid black;
  	margin:0 1px;
@@ -18,12 +18,12 @@
  	color:#fff;
  }
  
- #member-table .btn.btn-warn {
+ #customer-table .btn.btn-warn {
  	background-color:#EDA900;
  	border-bottom:2px solid #813D00;
  }
  
- #member-table .btn.btn-err {
+ #customer-table .btn.btn-err {
  	background-color:#F15F5F;
  	border-bottom:2px solid #850000;
  }
@@ -34,7 +34,7 @@
 		<%@ include file="./_adminNav.jsp" %>
 		<div id="content">
 			<h1>회원관리</h1>
-			<table id="member-table" style="width: 800px;">
+			<table id="customer-table" style="width: 800px;">
 				<thead>
 					<tr>
 						<th>회원아이디</th>
@@ -46,16 +46,16 @@
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach var="member" items="${members}">
-						<tr id="member-${member.customerId}">
-							<td>${member.customerId}</td>
-							<td>${member.customerName}</td>
-							<td>${member.customerEmail}</td>
-							<td>${member.customerGrade}</td>
-							<td>${member.customerCreateDate}</td>
+					<c:forEach var="customer" items="${customers}">
+						<tr id="customer-${customer.customerId}">
+							<td>${customer.customerId}</td>
+							<td>${customer.customerName}</td>
+							<td>${customer.customerEmail}</td>
+							<td>${customer.customerGrade}</td>
+							<td>${customer.customerCreateDate}</td>
 							<td>
-								<a href="/admin/customers/${member.customerId}"><button class="btn btn-warn"><i class="fa fa-info-circle"></i>  상세정보</button></a>
-								<a href="#"><button class="btn btn-err" onclick="deleteCustomer('${member.customerId}')"><i class="fa fa-remove"></i>  삭제</button></a>
+								<a href="/admin/customers/${customer.customerId}"><button class="btn btn-warn"><i class="fa fa-info-circle"></i>  상세정보</button></a>
+								<a href="#"><button class="btn btn-err" onclick="deleteCustomer('${customer.customerId}')"><i class="fa fa-remove"></i>  삭제</button></a>
 							</td>	
 						</tr>
 					</c:forEach>
@@ -67,7 +67,7 @@
 		function deleteCustomer(customerId) {
 			var isDelete = confirm("다음의 고객 데이터가 삭제됩니다:"+customerId);
 			if (isDelete) {
-				window.location.href="/customer/delete/"+customerId;
+				window.location.href="/customers/"+customerId;
 			}
 		}
 	</script>
