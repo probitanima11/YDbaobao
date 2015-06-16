@@ -1,6 +1,10 @@
 package com.ydbaobao.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
@@ -9,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,6 +24,7 @@ import com.support.JSONResponseUtil;
 import com.support.ServletRequestUtil;
 import com.ydbaobao.dao.CustomerDao;
 import com.ydbaobao.exception.ExceptionForMessage;
+import com.ydbaobao.exception.JoinValidationException;
 import com.ydbaobao.model.Customer;
 import com.ydbaobao.model.SessionCustomer;
 import com.ydbaobao.service.CategoryService;
@@ -55,12 +62,10 @@ public class CustomerController {
 	}
 	
 	@RequestMapping(value ="/create", method = RequestMethod.POST)
-	public String create(Customer customer, @RequestParam String customerAgainPassword, Model model) throws ExceptionForMessage{
-		//TODO VALIDATION CHECK
-//	public String create(@Valid Customer customer, BindingResult result, @RequestParam String customerAgainPassword, Model model) throws ExceptionForMessage{
-//		if(result.hasErrors()) {
-//			throw new JoinValidationException(extractValidationMessages(result));
-//        }
+	public String create(Customer customer, BindingResult result, @RequestParam String customerAgainPassword, Model model) throws ExceptionForMessage{
+		if(result.hasErrors()) {
+			throw new JoinValidationException(extractValidationMessages(result));
+        }
 		if(!customer.getCustomerPassword().equals(customerAgainPassword)) {
 			model.addAttribute("customer", new Customer());
 			model.addAttribute("message", "아이디와 비밀번호가 일치하지 않습니다.");
@@ -114,5 +119,18 @@ public class CustomerController {
 		}
 		customerService.delete(customerId);
 		return "redirect:/admin/manage/member";
+	}
+	
+	private List<Map<String, Object>> extractValidationMessages(BindingResult result) {
+		List<Map<String, Object>> messages = new ArrayList<>();
+		List<ObjectError> list = result.getAllErrors();
+		for (ObjectError e : list) {
+			String element = e.getCodes()[0].split("\\.")[2];
+			Map<String, Object> map = new HashMap<>();
+			map.put("id", element+"-message");
+			map.put("message", result.getFieldError(element).getDefaultMessage());
+			messages.add(map);
+		}
+		return messages;
 	}
 }

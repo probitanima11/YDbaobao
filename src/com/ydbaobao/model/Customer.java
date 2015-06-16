@@ -1,11 +1,22 @@
 package com.ydbaobao.model;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.Email;
+
+import com.google.gson.annotations.Expose;
+
 public class Customer {
 	private String customerId;
 	private String customerName;
 	private String customerPassword;
 	private String customerGrade;
 	private String customerPhone;
+	@NotNull
+	@Email(message = "이메일 주소가 유효하지 않습니다.")
+	@Size(max = 50, message = "이메일은 50 글자 이하만 사용 가능합니다.")
+	@Expose
 	private String customerEmail;
 	private String customerAddress;
 	private String customerCreateDate;
