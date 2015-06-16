@@ -85,7 +85,7 @@
 
 			ydbaobao.ajax({
 				method:'put',
-				url:'/admin/manage/category/' + categoryId + '/' + categoryName,
+				url:'/admin/categories/' + categoryId + '?categoryName=' + categoryName,
 				success: function(req) {
 					if(req.responseText === 'success') {
 						alert('카테고리가 수정되었습니다')
@@ -99,7 +99,7 @@
 			if(confirm('정말 카테고리를 삭제하시겠습니까?') === true) {
 				ydbaobao.ajax({
 					method:'delete',
-					url:'/admin/manage/category/' + categoryId,
+					url:'/admin/categories/' + categoryId,
 					success: function(req) {
 						if(req.responseText === 'success') {
 							alert('카테고리가 삭제되었습니다');
@@ -121,7 +121,7 @@
 
 			ydbaobao.ajax({
 				method:'post',
-				url:'/admin/manage/category',
+				url:'/admin/categories',
 				param: 'categoryName=' + categoryName,
 				success: function(req) {
 					if(req.responseText === 'success') {
