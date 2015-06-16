@@ -28,7 +28,7 @@
 					<th colspan="4">상세내역</th>
 					<th width="50px">선택</th>
 				</tr>
-				<c:forEach var="product" varStatus="status" items="${productList}">
+				<c:forEach var="product" varStatus="status" items="${products}">
 				<form:form class="product-update-form" action="" modelAttribute="product">
 				<tr>
 					<td rowspan="4">${product.productId}
@@ -39,7 +39,7 @@
 					<td>
 					<input id="categoryId" name="categoryId" type="hidden" value="${product.category.categoryId}"/>
 					<select class="${status.index}" onchange="setCategoryId(this)">
-							<c:forEach var="category" items="${categoryList}">
+							<c:forEach var="category" items="${categories}">
 										<c:choose>
 											<c:when test="${category.categoryId eq product.category.categoryId}">
 												<option value="${category.categoryId}" label="${category.categoryName}" selected="selected"/>
@@ -56,7 +56,7 @@
 					<td>
 					<input id="brandId" name="brandId" type="hidden" value="${product.brand.brandId}"/>
 					<select class="${status.index}" onchange="setBrandId(this)">
-							<c:forEach var="brand" items="${brandList}">
+							<c:forEach var="brand" items="${brands}">
 										<c:choose>
 											<c:when test="${brand.brandId eq product.brand.brandId}">
 												<option value="${brand.brandId}" label="${brand.brandName}" selected="selected"/>
@@ -105,7 +105,7 @@
 			if(confirm('전체 상품을 삭제하시겠습니까?') === true) {
 				ydbaobao.ajax({
 					method : 'delete',
-					url : '/product',
+					url : '/admin/products',
 					success : function(req) {
 						if(req.responseText === 'success') {
 							alert('전체 상품이 삭제되었습니다');
@@ -131,7 +131,7 @@
 			if(confirm('상품을 삭제하시겠습니까?') === true) {
 				ydbaobao.ajax({
 					method : 'delete',
-					url : '/product/'+productId,
+					url : '/admin/products/'+productId,
 					success : function(req) {
 						if(req.responseText === 'success') {
 							alert('상품이 삭제되었습니다');
@@ -159,7 +159,7 @@
 		debugger;
 		ydbaobao.ajax({
 				method : 'put',
-				url : '/product/'+param,
+				url : '/admin/products/'+param,
 				success : function(req) {
 					if (req.responseText === 'success') {
 						alert('상품정보가 수정되었습니다.');

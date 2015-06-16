@@ -48,14 +48,6 @@ public class ProductController {
 		return "product";
 	}
 	
-	@RequestMapping(value = "", method = RequestMethod.DELETE)
-	public ResponseEntity<Object> deleteAllProducts() {
-		if(productService.deleteAll()) {
-			return JSONResponseUtil.getJSONResponse("success", HttpStatus.OK);
-		}
-		return JSONResponseUtil.getJSONResponse("fail", HttpStatus.OK);
-	}
-	
 	@RequestMapping(value = "/{productId}", method = RequestMethod.DELETE)
 	public ResponseEntity<Object> deleteProduct(@PathVariable int productId) {
 		if(productService.delete(productId)) {
