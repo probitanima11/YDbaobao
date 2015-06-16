@@ -40,15 +40,17 @@
 							<form:input path="customerId" readonly="true" />
 						</c:when>
 						<c:otherwise>
-							<form:input path="customerId" />
+							<form:input id="join-userId" path="customerId" />
 						</c:otherwise>
 					</c:choose>
+							<span id="join-userId-message" class="errorMessage"></span>
 					<br />
 					<label for="customerName">이름</label>
 					<form:input path="customerName" />
 					<br />
 					<label for="customerPassword">비밀번호</label>
-					<form:password path="customerPassword" />
+					<form:password id="join-userPassword" path="customerPassword" />
+					<span id="join-userPassword-message" class="errorMessage"></span>
 					<br />
 					<label for="customerAgainPassword">비밀번호확인</label>
 					<input type="password" name="customerAgainPassword" />
@@ -57,7 +59,8 @@
 					<form:input path="customerPhone" />
 					<br />
 					<label for="customerEmail">이메일</label>
-					<form:input path="customerEmail" />
+					<form:input id="join-userEmail" path="customerEmail" />
+					<span id="join-userEmail-message" class="errorMessage"></span>
 					<br />
 					<label for="customerAddress">주소</label>
 					<form:input path="customerAddress" />
@@ -71,5 +74,22 @@
 			</div>
 		</div>
 	</div>
+	
+	<script>
+	window.addEventListener('load', function() {
+		//회원가입 유효성 이벤트 등록
+		setEventListener();
+	}, false);
+	
+	var setEventListener = function() {
+		// Email //
+		joinCheck.setEmailValidation("join-userEmail", "join-userEmail-message");
+		// Name //
+		joinCheck.setNameValidation("join-userId", "join-userId-message");
+		// Password //
+		joinCheck.setPasswordValidation("join-userPassword", "join-userPassword-message");
+	}
+	</script>
+	<script type="text/javascript" src="/js/joinCheck.js"></script>
 </body>
 </html>
