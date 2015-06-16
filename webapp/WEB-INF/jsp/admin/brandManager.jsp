@@ -129,7 +129,7 @@
 			param += "&brandSize="+brandSize;
 			ydbaobao.ajax({
 				method : 'post',
-				url : '/api/brands/' + brandId,
+				url : '/admin/brands/' + brandId,
 				param : param,
 				success : function(req) {
 					alert('브랜드 정보가 수정되었습니다')
@@ -143,7 +143,7 @@
 			if (confirm('정말 브랜드를 삭제하시겠습니까?') === true) {
 				ydbaobao.ajax({
 					method : 'delete',
-					url : '/api/brands/' + brandId,
+					url : '/admin/brands/' + brandId,
 					success : function(req) {
 						alert('브랜드가 삭제되었습니다');
 						document.getElementById('brand_' + brandId).remove();
