@@ -3,8 +3,6 @@ package com.ydbaobao.admincontroller;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,29 +10,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ydbaobao.dao.GradeDao;
-import com.ydbaobao.model.AdminConfig;
-import com.ydbaobao.model.Product;
-import com.ydbaobao.service.AdminConfigService;
-import com.ydbaobao.service.BrandService;
-import com.ydbaobao.service.CategoryService;
-import com.ydbaobao.service.CustomerService;
-import com.ydbaobao.service.ProductService;
 
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
 	private static String password = "1111";
 
-	@Resource
-	private CategoryService categoryService;
-	@Resource
-	private BrandService brandService;
-	@Resource
-	private CustomerService customerService;
-	@Resource
-	private ProductService productService;
-	@Resource
-	private AdminConfigService adminConfigService;
 	@Resource
 	private GradeDao gradeDao;
 	
@@ -78,17 +59,5 @@ public class AdminController {
 	public String manageGrade(Model model) {
 		model.addAttribute("grades", gradeDao.readGrades());
 		return "admin/gradeManager";
-	}
-
-	@RequestMapping(value = "/config", method = RequestMethod.GET)
-	public String config(Model model) {
-		model.addAttribute("adminConfig", adminConfigService.read());
-		return "admin/config";
-	}
-	
-	@RequestMapping(value = "/config/update", method = RequestMethod.PUT)
-	public String configUpdate(Model model, @RequestParam AdminConfig adminConfig) {
-		model.addAttribute("adminConfig", adminConfigService.update(adminConfig));
-		return "/admin/config";
 	}
 }
