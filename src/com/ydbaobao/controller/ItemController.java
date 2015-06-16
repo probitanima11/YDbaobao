@@ -19,7 +19,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.google.gson.Gson;
 import com.support.JSONResponseUtil;
 import com.support.ServletRequestUtil;
+import com.ydbaobao.dao.CustomerDao;
 import com.ydbaobao.dao.ItemDao;
+import com.ydbaobao.model.Customer;
 import com.ydbaobao.model.Item;
 import com.ydbaobao.service.CategoryService;
 import com.ydbaobao.service.ItemService;
@@ -31,6 +33,8 @@ public class ItemController {
 	private ItemService itemService;
 	@Resource
 	private CategoryService categoryService;
+	@Resource
+	private CustomerDao customerDao;
 
 	@Resource
 	private ItemDao itemDao;
@@ -40,6 +44,8 @@ public class ItemController {
 		String customerId = ServletRequestUtil.getCustomerIdFromSession(session);
 		model.addAttribute("list", new Gson().toJson(itemDao.readCartList(customerId)));
 		model.addAttribute("categories", categoryService.read());
+		Customer customer = customerDao.readCustomerById(customerId);
+		model.addAttribute("customerGrade", customer.getCustomerGrade());
 		return "cart";
 	}
 
