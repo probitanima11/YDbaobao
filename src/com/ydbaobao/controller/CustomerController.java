@@ -32,7 +32,7 @@ import com.ydbaobao.service.CategoryService;
 import com.ydbaobao.service.CustomerService;
 
 @Controller
-@RequestMapping("/customer")
+@RequestMapping("/customers")
 public class CustomerController {
 	@Resource
 	private CustomerService customerService;
