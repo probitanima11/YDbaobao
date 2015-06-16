@@ -15,7 +15,6 @@ import com.ydbaobao.service.CategoryService;
 @Controller
 @RequestMapping("/admin/categories")
 public class AdminCategoryController {
-	
 	@Resource
 	private CategoryService categoryService;
 	
@@ -45,8 +44,9 @@ public class AdminCategoryController {
 	 * @param DB에 저장된 categoryId와 변경할 categoryName
 	 * @return 성공/실패 여부만 전달하기 위해 success, fail string 전달
 	 */
-	@RequestMapping(value = "/{categoryId}/{categoryName}", method = RequestMethod.PUT)
-	public @ResponseBody String update(@PathVariable long categoryId, @PathVariable String categoryName) {
+	@RequestMapping(value = "/{categoryId}", method = RequestMethod.PUT)
+	public @ResponseBody String update(@PathVariable long categoryId, @RequestParam String categoryName) {
+		System.out.println("categoryId : " + categoryId + " categoryName : " + categoryName);
 		if(categoryService.update(categoryId, categoryName)) {
 			return "success";
 		}
