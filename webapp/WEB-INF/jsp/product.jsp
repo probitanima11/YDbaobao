@@ -97,13 +97,11 @@ h1 {
 			<h1 class="product-name" style="margin-top: 25px; margin-left: 15px;">${product.productName}</h1>
 			<div class="product-price">${product.productPrice}원</div>
 			<div style="margin-top: 25px; margin-left: 15px;">
-				<h3>사이즈</h3>
-				<select id="size-selector"></select>
-			</div>
-			<div style="margin-top: 25px; margin-left: 15px;">
 				<h3>구매수량</h3>
 				<button onclick="qtyControl('minus')"><i class='fa fa-minus'></i></button>
-				<input id="qty-selector" value="1" style="width: 32px;" onkeypress="return isNumberKey(event);">
+					<ul id="quantity" style="display: inline-block; padding: 0px">
+					</ul>
+				<!-- <input class="qty-selector" value="1" style="width: 32px;" onkeypress="return isNumberKey(event);"> -->
 				<button onclick="qtyControl('plus')"><i class='fa fa-plus'></i></button>
 			</div>
 			<div class="button-group">
@@ -115,8 +113,37 @@ h1 {
 	<div id="footer">footer...</div>
 	<script>
 		var productId = ${product.productId};
+		var sizeArray = "${product.productSize}".split('|');
 		var productBuyContainer;
 		window.addEventListener('load', function() {
+			
+			for (var i = 0; i < sizeArray.length; i++) {
+				var li = ydbaobao.createElement({
+			        name: 'li',
+			        attrs: {
+			            'class': 'qty',
+			            'style': 'display: block',
+			            'value': sizeArray[i]
+			        },
+			        content: sizeArray[i]
+			    });
+				
+				var el = ydbaobao.createElement({
+			        name: 'input',
+			        attrs: {
+			            'class': 'qty-selector',
+			            'name' : sizeArray[i],
+			            'value': '1',
+			            'style': 'width: 32px; margin-left: 5px',
+			            'onkeypress': 'return isNumberKey(event);'
+			        },
+			        //content: sizeArray[i]
+			    });
+				li.appendChild(el);
+				
+				document.body.querySelector('#quantity').appendChild(li);
+			}
+			
 			document.querySelector('.addtocart').addEventListener('click', function(e) {
 				addToCart(e);
 			}, false);
@@ -141,8 +168,13 @@ h1 {
 		}, false);
 
 		function addToCart(e) {
-			var size = document.getElementById("size-selector").value;
-			var quantity = document.getElementById("qty-selector").value;
+			var el = document.querySelectorAll(".qty-selector");
+			var size = "";
+			var quantity = "";
+			for(var i=0;i<el.length;i++){
+				size += el[i].name + "-";
+				quantity += el[i].value + "-";
+			}
 			var param = 'productId=' + productId + '&size=' + size + '&quantity=' + quantity;
 			ydbaobao.ajax({
 				/* TODO productId, size, quantity 전달. */
@@ -160,8 +192,13 @@ h1 {
 		}
 
 		function buyitnow(e) {
-			var size = document.getElementById("size-selector").value;
-			var quantity = document.getElementById("qty-selector").value;
+			var el = document.querySelectorAll(".qty-selector");
+			var size = "";
+			var quantity = "";
+			for(var i=0;i<el.length;i++){
+				size += el[i].name + "-";
+				quantity += el[i].value + "-";
+			}
 			var param = 'productId=' + productId + '&size=' + size + '&quantity=' + quantity;
 			ydbaobao.ajax({
 				/* TODO productId, size, quantity 전달. */
@@ -180,12 +217,18 @@ h1 {
 		}
 		
 		 function qtyControl(type) {
-			 var qty = document.querySelector("#qty-selector");
+			 var qtyArray = document.querySelectorAll(".qty-selector");
 			 switch (type) {
-			 	case "plus": qty.value = qty.value*1+1; break;
+			 	case "plus":
+			 		for(var i=0;i<qtyArray.length;i++){
+			 			qtyArray[i].value = qtyArray[i].value*1+1;
+			 		}
+			 		break;
 			 	case "minus": 
-			 		qty.value = qty.value*1-1;
-			 		if (qty.value*1 <= 0) qty.value = 1;
+			 		for(var i=0;i<qtyArray.length;i++){
+			 			qtyArray[i].value = qtyArray[i].value*1-1;
+				 		if (qtyArray[i].value*1 <= 0) qtyArray[i].value = 1;
+			 		}
 			 		break;
 			 }
 		 }

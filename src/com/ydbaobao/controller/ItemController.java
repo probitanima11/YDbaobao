@@ -59,23 +59,31 @@ public class ItemController {
 
 	@RequestMapping(value = "/add")
 	public ResponseEntity<Object> addToCart(@RequestParam String productId, @RequestParam String size,
-			@RequestParam int quantity, HttpSession session) throws IOException {
+			@RequestParam String quantity, HttpSession session) throws IOException {
 		String customerId = ServletRequestUtil.getCustomerIdFromSession(session);
 		if (customerId == null) {
 			return JSONResponseUtil.getJSONResponse("fail", HttpStatus.OK);
 		}
-		itemDao.addCart(customerId, productId, size, quantity);
+		String[] sizeArray = size.split("-");
+		String[] quantityArray = quantity.split("-");
+		for(int i=0; i< quantityArray.length; i++){
+			itemDao.addCart(customerId, productId, sizeArray[i], Integer.parseInt(quantityArray[i]));
+		}
 		return JSONResponseUtil.getJSONResponse("", HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/order")
 	public ResponseEntity<Object> orderDirect(@RequestParam String productId, @RequestParam String size,
-			@RequestParam int quantity, HttpSession session) throws IOException {
+			@RequestParam String quantity, HttpSession session) throws IOException {
 		String customerId = ServletRequestUtil.getCustomerIdFromSession(session);
 		if (customerId == null) {
 			return JSONResponseUtil.getJSONResponse("fail", HttpStatus.OK);
 		}
-		itemService.orderDirect(customerId, productId, size, quantity);
+		String[] sizeArray = size.split("-");
+		String[] quantityArray = quantity.split("-");
+		for(int i=0; i< quantityArray.length; i++){
+			itemService.orderDirect(customerId, productId, sizeArray[i], Integer.parseInt(quantityArray[i]));
+		}
 		return JSONResponseUtil.getJSONResponse("", HttpStatus.OK);
 	}
 
