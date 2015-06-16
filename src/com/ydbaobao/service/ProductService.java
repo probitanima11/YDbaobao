@@ -151,4 +151,11 @@ public class ProductService {
 		}
 		return false;
 	}
+
+	public boolean delete(int productId) {
+		if(productDao.delete(productId) >=1){
+			return true;
+		}
+		return false;
+	}
 }

@@ -53,6 +53,14 @@ public class ProductController {
 		return JSONResponseUtil.getJSONResponse("fail", HttpStatus.OK);
 	}
 	
+	@RequestMapping(value = "/{productId}", method = RequestMethod.DELETE)
+	public ResponseEntity<Object> deleteProduct(@PathVariable int productId) {
+		if(productService.delete(productId)) {
+			return JSONResponseUtil.getJSONResponse("success", HttpStatus.OK);
+		}
+		return JSONResponseUtil.getJSONResponse("fail", HttpStatus.OK);
+	}
+	
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public String manageProduct(Model model) {
 		model.addAttribute("product", new Product());
