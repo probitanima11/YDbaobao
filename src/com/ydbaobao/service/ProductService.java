@@ -8,6 +8,8 @@ import java.util.TreeMap;
 
 import javax.annotation.Resource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,6 +23,8 @@ import com.ydbaobao.model.Product;
 
 @Service
 public class ProductService {
+	private static final Logger logger = LoggerFactory.getLogger(ProductService.class);
+	
 	@Resource
 	ProductDao productDao;
 	@Resource
@@ -72,6 +76,7 @@ public class ProductService {
 		String imageName = product.getProductId()+"."+extension;
 		try {
 			File imageFile = new File(ImageResizeUtil.savingPath + imageName);
+			logger.debug("저장경로 : {}", imageFile.getPath());
 			productImage.transferTo(imageFile);
 			product.setProductImage(imageName);
 			ImageResizeUtil.imageResize(imageFile.getPath(), extension);
@@ -153,7 +158,10 @@ public class ProductService {
 	}
 
 	public boolean delete(int productId) {
-		if(productDao.delete(productId) >=1){
+		Product product = productDao.read(productId);
+		File file = new File("/home/baobao/products/"+product.getProductImage());
+		if(productDao.delete(product) >=1){
+			file.delete();
 			return true;
 		}
 		return false;

@@ -177,8 +177,8 @@ public class ProductDao extends JdbcDaoSupport {
 		return getJdbcTemplate().update(sql);
 	}
 
-	public int delete(int productId) {
+	public int delete(Product product) {
 		String sql = "delete from PRODUCTS where productId=?";
-		return getJdbcTemplate().update(sql, productId);
+		return getJdbcTemplate().update(sql, product.getProductId());
 	}
 }
