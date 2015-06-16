@@ -80,14 +80,6 @@ public class AdminController {
 		return "admin/gradeManager";
 	}
 
-	@RequestMapping(value = "/add/product", method = RequestMethod.GET)
-	public String addProduct(Model model) {
-		model.addAttribute("product", new Product());
-		model.addAttribute("brandList", brandService.readBrands());
-		model.addAttribute("unregisteredProductsCountByBrand", productService.unregisteredProductsCountByBrand());
-		return "admin/productRegistration";
-	}
-
 	@RequestMapping(value = "/config", method = RequestMethod.GET)
 	public String config(Model model) {
 		model.addAttribute("adminConfig", adminConfigService.read());

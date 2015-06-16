@@ -8,11 +8,11 @@
 	<div style="padding:15px 15px; color:#fff; background-color:#EA6576">관리자메뉴</div>
 	<ul>
 		<li><a href="/admin/customers"><span>회원관리</span></a></li>
-		<li><a href="/admin/add/product"><span>상품등록</span></a></li>
+		<li><a href="/admin/products/regist"><span>상품등록</span></a></li>
 		<li><a href="/admin/products"><span>상품관리</span></a></li>
 		<li><a href="/admin/brands"><span>브랜드관리</span></a></li>
 		<li><a href="/admin/categories"><span>카테고리관리</span></a></li>
-		<li><a href="/admin/manage/order"><span>주문관리</span></a></li>
+		<li><a href="/admin/orders"><span>주문관리</span></a></li>
 		<li><a href="/admin/config"><span>관리자설정</span></a></li>
 	</ul>
 	<a href="/" style="text-decoration:none;"><div style="margin-top:10px; padding:15px 15px; font-size:12px; color:#fff; background-color:#EA6576">
