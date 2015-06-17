@@ -3,8 +3,6 @@ package com.ydbaobao.service;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
 
 import javax.annotation.Resource;
 
@@ -78,7 +76,7 @@ public class ProductService {
 			File imageFile = new File(ImageResizeUtil.savingPath + imageName);
 			productImage.transferTo(imageFile);
 			product.setProductImage(imageName);
-			ImageResizeUtil.imageResize(imageFile.getPath(), extension);
+			ImageResizeUtil.imageResize(imageFile.getPath(), extension, 500);
 		} catch (IllegalStateException | IOException e) {
 			// TODO 예외처리 추가(giyatto)
 			e.printStackTrace();
@@ -161,5 +159,9 @@ public class ProductService {
 			return true;
 		}
 		return false;
+	}
+
+	public List<Product> readByCategoryIdAndBrandId(int categoryId, int brandId) {
+		return productDao.readByCategoryIdAndBrandId(categoryId, brandId);
 	}
 }
