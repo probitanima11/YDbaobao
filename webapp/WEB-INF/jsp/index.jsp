@@ -50,11 +50,10 @@
  				return;
  			}
  			imgEl.src = imgPaths[imgIndex];
- 			addIndex();
  			
 			setInterval(function(){
-				fadeOut(imgEl);
 				addIndex();
+				fadeOut(imgEl);
 			}, 5000);
 			
 		}, false);
@@ -76,7 +75,6 @@
 
 	function fadeInAction(id, level, inTimer)
 	{
-		console.log("fadein");
 		level = level + 0.1;
 		changeOpacity(id, level);
 		if(level > 1) 
@@ -95,7 +93,6 @@
 
 	function fadeOutAction(id, level, outTimer)
 	{
-		console.log("fadeOut");
 		level = level - 0.1;
 		changeOpacity(id, level);
 		if(level < 0) 

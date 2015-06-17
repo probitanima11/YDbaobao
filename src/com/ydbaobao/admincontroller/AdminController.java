@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.support.ImageResizeUtil;
 import com.ydbaobao.dao.GradeDao;
 
 @Controller
@@ -96,8 +97,9 @@ public class AdminController {
 	 */
 	@RequestMapping(value = "/indexImages", method = RequestMethod.POST)
 	public String indexImageCreate(Model model, @RequestParam MultipartFile profileImage, @RequestParam int imgIndex) throws IllegalStateException, IOException {
-		profileImage.transferTo(new File("/home/baobao/index/index_0" + imgIndex + ".jpg"));
-		
+		String imgFilePath = "/home/baobao/index/index_0" + imgIndex + ".jpg";
+		profileImage.transferTo(new File(imgFilePath));
+		ImageResizeUtil.imageResize(imgFilePath, "jpg", 800);
 		List<String> imgPath = new ArrayList<String>();
 		for (int i = 0; i < 8; i++) {
 			String filePath = "index_0" + i + ".jpg";
