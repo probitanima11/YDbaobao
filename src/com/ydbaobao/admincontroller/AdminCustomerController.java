@@ -3,17 +3,23 @@ package com.ydbaobao.admincontroller;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ydbaobao.service.CustomerService;
 
 @Controller
 @RequestMapping("/admin/customers")
 public class AdminCustomerController {
+	private static final Logger logger = LoggerFactory.getLogger(AdminCustomerController.class);
+	
 	@Resource
 	private CustomerService customerService;
 	
@@ -32,6 +38,19 @@ public class AdminCustomerController {
 	public String showDetailMember(Model model, @PathVariable String customerId) {
 		model.addAttribute("customer", customerService.readCustomerById(customerId));
 		return "admin/customerDetail";
+	}
+	
+	/**
+	 * 회원 상세보기에서 회원 등급 수정 
+	 * @param customerId, grade
+	 * @return success or fail
+	 */
+	@RequestMapping(value = "/{customerId}", method = RequestMethod.PUT)
+	public @ResponseBody String changeCustomerGrade(@PathVariable String customerId, @RequestParam String grade) {
+		if(customerService.updateGrade(customerId, grade)) {
+			return "success";
+		}
+		return "fail";
 	}
 	
 	/**
