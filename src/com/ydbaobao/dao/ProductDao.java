@@ -156,11 +156,6 @@ public class ProductDao extends JdbcDaoSupport {
 						rs.getLong("productUpdateDate"), rs.getString("productSize")), brandId, index, quantity);
 	}
 
-	public Integer unregisteredProductsCountByBrand(int brandId) {
-		String sql = "select count(1) from PRODUCTS where brandId=? and categoryId=0";
-		return getJdbcTemplate().queryForObject(sql, Integer.class, brandId);
-	}
-
 	public List<Product> readProductsList() {
 		String sql = "select * from PRODUCTS ORDER BY productId DESC";
 		return getJdbcTemplate()

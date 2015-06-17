@@ -15,7 +15,7 @@
 	<div id="container">
 		<%@ include file="./_adminNav.jsp"%>
 		<div id="content">
-			<h1>상품등록</h1>
+			<h1>상품 등록</h1>
 			<div id="imageFiles">
 				<form:form class="imageUploadForm" method="post" action="/admin/products" modelAttribute="product" enctype="multipart/form-data">
 					<label class="control-label">브랜드 선택 :</label>
@@ -27,25 +27,10 @@
 					<br />
 					<label class="control-label">이미지 선택 :</label>
 					<input class="imageFile" type="file" name="imageFile" accept="image/x-png, image/gif, image/jpeg" multiple />
-					<input type="submit" class='submitBtn' value="저장" disabled='true' />
+					<button type="button" class='submitBtn' disabled='true'>저장</button>
 				</form:form>
 				<div class="imageList"></div>
 			</div>
-			
-			<table id="categories" style="width: 800px;">
-				<tr>
-					<th>브랜드</th>
-					<th>미등록 상품 갯수</th>
-				</tr>
-				<c:forEach var="product" items="${unregisteredProductsCountByBrand}">
-					<tr>
-						<c:if test="${product.value > 0}">
-						<td>${product.key}</td>
-						<td>${product.value}</td>
-						</c:if>
-					</tr>
-				</c:forEach>
-			</table>
 		</div>
 	</div>
 
@@ -82,6 +67,13 @@
 				document.body.querySelector('.submitBtn').disabled = true;
 			}
 		}
+		
+		document.body.querySelector('.submitBtn').addEventListener('click', function(e){
+			e.target.parentElement.submit();
+			var imgCount = document.body.querySelector('.imageFile').files.length;
+			var message = imgCount + '개의 상품이 등록되었습니다.';
+			alert(message);
+		}, false);
 	</script>
 </body>
 </html>

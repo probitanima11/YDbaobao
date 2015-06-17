@@ -20,7 +20,7 @@
 		<%@ include file="./_adminNav.jsp"%>		
 		<div id="content">
 			<h1>상품 관리</h1>
-			<button id="all-product-delete-btn">상품 삭제</button>
+			<button id="all-product-delete-btn">전체상품 삭제</button>
 			<table id="product-table" style="width: 800px;">
 				<tr>
 					<th width="50px">상품ID</th>

@@ -42,7 +42,6 @@ public class AdminProductController {
 	public String registProducts(Model model) {
 		model.addAttribute("product", new Product());
 		model.addAttribute("brandList", brandService.readBrands());
-		model.addAttribute("unregisteredProductsCountByBrand", productService.unregisteredProductsCountByBrand());
 		return "admin/productRegistration";
 	}
 	
@@ -70,7 +69,6 @@ public class AdminProductController {
 			productService.updateProductImage(product, imageName);
 		}
 		model.addAttribute("brandList", brandService.readBrands());
-		model.addAttribute("unregisteredProductsCountByBrand", productService.unregisteredProductsCountByBrand());
 		return "admin/productRegistration";
 	}
 	

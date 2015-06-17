@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -74,20 +75,16 @@ public class AdminController {
 	@RequestMapping(value = "/indexImages")
 	public String indexImage(Model model) {
 		List<String> imgPath = new ArrayList<String>();
-		String defaultPath = "/img/index/default.png";
-		int imgCount = 0;
 		for (int i = 0; i < 8; i++) {
 			String filePath = "index_0" + i + ".jpg";
 			File f = new File("/home/baobao/index/"+filePath);
 			if (f.isFile()) {
 				imgPath.add("/img/index/"+filePath);
-				imgCount++;
 			} else {
-				imgPath.add(defaultPath);
+				imgPath.add("");
 			}
 		}
 		model.addAttribute("imgPath", imgPath);
-		model.addAttribute("imgCount", imgCount);
 		return "/admin/indexManager";
 	}
 	
@@ -98,25 +95,44 @@ public class AdminController {
 	 * @throws IllegalStateException 
 	 */
 	@RequestMapping(value = "/indexImages", method = RequestMethod.POST)
-	public String indexImageCreate(Model model, @RequestParam MultipartFile profileImage, @RequestParam int imgCount) throws IllegalStateException, IOException {
-		profileImage.transferTo(new File("/home/baobao/index/index_0" + imgCount + ".jpg"));
+	public String indexImageCreate(Model model, @RequestParam MultipartFile profileImage, @RequestParam int imgIndex) throws IllegalStateException, IOException {
+		profileImage.transferTo(new File("/home/baobao/index/index_0" + imgIndex + ".jpg"));
 		
 		List<String> imgPath = new ArrayList<String>();
-		String defaultPath = "/img/index/default.png";
-		imgCount = 0;
 		for (int i = 0; i < 8; i++) {
 			String filePath = "index_0" + i + ".jpg";
 			File f = new File("/home/baobao/index/"+filePath);
 			if (f.isFile()) {
 				imgPath.add("/img/index/"+filePath);
-				imgCount++;
 			} else {
-				imgPath.add(defaultPath);
+				imgPath.add("");
 			}
 		}
 		model.addAttribute("imgPath", imgPath);
-		model.addAttribute("imgCount", imgCount);
+		return "/admin/indexManager";
+	}
+	
+	/**
+	 * 첫화면 이미지 설정 관리 페이지 
+	 * 이미지 삭제.
+	 * @throws IOException 
+	 * @throws IllegalStateException 
+	 */
+	@RequestMapping(value = "/indexImages/{imgIndex}", method = RequestMethod.POST)
+	public String indexImageDelete(Model model, @PathVariable int imgIndex) throws IllegalStateException, IOException {
+		new File("/home/baobao/index/index_0" + imgIndex + ".jpg").delete();
 		
+		List<String> imgPath = new ArrayList<String>();
+		for (int i = 0; i < 8; i++) {
+			String filePath = "index_0" + i + ".jpg";
+			File f = new File("/home/baobao/index/"+filePath);
+			if (f.isFile()) {
+				imgPath.add("/img/index/"+filePath);
+			} else {
+				imgPath.add("");
+			}
+		}
+		model.addAttribute("imgPath", imgPath);
 		return "/admin/indexManager";
 	}
 }
