@@ -56,14 +56,15 @@ public class AdminCustomerController {
 	/**
 	 * 관리자 페이지에서 회원목록에서 회원 삭제
 	 * @param customerId
+	 * @return success or fail
 	 */
 	@RequestMapping(value = "/{customerId}", method = RequestMethod.DELETE)
-	protected String delete(@PathVariable String customerId, HttpSession session, Model model) {
+	protected @ResponseBody String delete(@PathVariable String customerId, HttpSession session, Model model) {
 		if(session.getAttribute("sessionAdmin") == null) {
 			model.addAttribute("errorMessage", "권한이 없습니다.");
-			return "redirect:/admin/customers";
+			return "fail";
 		}
 		customerService.delete(customerId);
-		return "redirect:/admin/customers";
+		return "success";
 	}
 }
