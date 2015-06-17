@@ -61,16 +61,18 @@
 </body>
 <script>
 	var selectedGrade = ${customer.customerGrade};
-	var customerId = "${customer.customerId}";
+	var customerId = '${customer.customerId}';
 	window.addEventListener('load', function(){
-		document.querySelector("#gradeSelector option[name='"+selectedGrade+"']").selected="selected";
-		document.querySelector("#gradeSelector").addEventListener("change", function(e){
+		document.querySelector('#gradeSelector option[name="' + selectedGrade + '"]').selected = 'selected';
+		document.querySelector('#gradeSelector').addEventListener('change', function(e){
 			if (selectedGrade != e.target.value) {
 				ydbaobao.ajax({
-					method:"put",
-					url:"/customer/"+customerId+"/grade/"+e.target.value,
-					success:function(req){
-						alert(req.responseText);
+					method:'put',
+					url:'/admin/customers/' + customerId + '?grade=' + e.target.value,
+					success: function(req){
+						if(req.responseText === 'success') {
+							alert('회원 등급이 변경되었습니다');
+						}
 					}
 				});
 				selectedGrade = e.target.value;

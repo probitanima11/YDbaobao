@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.support.JSONResponseUtil;
@@ -76,7 +75,8 @@ public class AdminProductController {
 	}
 	
 	/**
-	 * 전체 상품 삭제
+	 * 저장 된 상품 전체 삭제
+	 * @return success or fail
 	 */
 	@RequestMapping(value = "", method = RequestMethod.DELETE)
 	public ResponseEntity<Object> deleteAll() {
@@ -87,7 +87,9 @@ public class AdminProductController {
 	}
 	
 	/**
-	 * 개별 상품 삭제
+	 * 특정 상품 삭제
+	 * @param 상품Id(productId)
+	 * @return success or fail
 	 */
 	@RequestMapping(value = "/{productId}", method = RequestMethod.DELETE)
 	public ResponseEntity<Object> deleteProduct(@PathVariable int productId) {
@@ -98,8 +100,10 @@ public class AdminProductController {
 	}
 
 	/**
-	 * 상품 정보 수정
-	 */	
+	 * 특정 상품 정보 수정
+	 * @param productId, productName, categoryId, brandId, productPrice, productSize, productDescription
+	 * @return success or fail
+	 */
 	@RequestMapping(value = "/{productId}", method = RequestMethod.PUT)
 	public @ResponseBody String update(@PathVariable int productId, @RequestParam String productName, @RequestParam int categoryId, @RequestParam int brandId, @RequestParam int productPrice, @RequestParam String productDescription, @RequestParam String productSize){
 		Product product = new Product(productId, productName,new Category(categoryId), new Brand(brandId), productPrice, productDescription, productSize);

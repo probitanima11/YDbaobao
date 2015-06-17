@@ -18,6 +18,7 @@ public class AdminConfigService {
 	}
 	
 	public AdminConfig update(AdminConfig adminConfig) {
-		return adminConfigDao.update(adminConfig);
+		adminConfigDao.update(adminConfig);
+		return adminConfigDao.read();
 	}
 }

@@ -157,7 +157,6 @@
 					"&brandId=" + form.brandId.value + "&productPrice=" + form.productPrice.value + 
 					"&productDescription=" + form.productDescription.value + 
 					"&productSize=" + form.productSize.value;
-		debugger;
 		ydbaobao.ajax({
 				method : 'put',
 				url : '/admin/products/'+productId,

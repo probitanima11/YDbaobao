@@ -59,4 +59,9 @@ public class CategoryDao extends JdbcDaoSupport {
 		String sql = "update category set categoryCount = categoryCount-1 where categoryId = ?";
 		return getJdbcTemplate().update(sql, categoryId);
 	}
+
+	public void resetCount() {
+		String sql = "update CATEGORY set categoryCount = 0";
+		getJdbcTemplate().update(sql);
+	}
 }

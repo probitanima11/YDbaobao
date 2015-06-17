@@ -3,7 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <div id="horizontal-category-menu">
 	<ul>
-		<c:forEach var="category" items="${categories}" varStatus="status">
+		<li><a href="/categories?page=1">ALL</a></li>
+		<c:forEach var="category" items="${categories}" varStatus="status">	
 			<li><a href="/categories/${category.categoryId}?page=1">
 				<span><c:out value="${category.categoryName}"/></span>
 			</a></li>

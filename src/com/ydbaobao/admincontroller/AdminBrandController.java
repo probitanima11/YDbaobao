@@ -21,6 +21,10 @@ public class AdminBrandController {
 	@Resource
 	private BrandService brandService;
 	
+	/**
+	 * 브랜드 추가
+	 * @param brandName
+	 */
 	@RequestMapping(method=RequestMethod.POST)
 	public ResponseEntity<Object> create(@RequestParam String brandName) {
 		return JSONResponseUtil.getJSONResponse(brandService.createBrand(brandName), HttpStatus.OK);

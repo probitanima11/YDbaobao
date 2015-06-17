@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <ul>
-	<c:forEach var="product" items="${productList}" varStatus="status">
+	<c:forEach var="product" items="${products}" varStatus="status">
 		<li class="item">
 			<div align="center">
 				<a href="/products/${product.productId}"> 

@@ -151,6 +151,8 @@ public class ProductService {
 
 	public boolean deleteAll() {
 		if(productDao.deleteAll() >=1){
+			categoryDao.resetCount();
+			brandDao.resetCount();
 			return true;
 		}
 		return false;

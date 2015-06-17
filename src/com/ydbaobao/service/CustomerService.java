@@ -4,8 +4,6 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.ydbaobao.dao.CustomerDao;
@@ -47,10 +45,14 @@ public class CustomerService {
 		return customerDao.readCustomerById(customerId);
 	}
 
-	public void updateGrade(String customerId, String grade) {
+	public boolean updateGrade(String customerId, String grade) {
 		Customer customer = customerDao.readCustomerById(customerId);
 		customer.setCustomerGrade(grade);
-		customerDao.updateCustomer(customer);
+		if(customerDao.updateCustomer(customer) == 1) {
+			return true;
+		}
+		
+		return false;
 	}
 
 	public void delete(String customerId) {
