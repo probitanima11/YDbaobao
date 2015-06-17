@@ -23,7 +23,7 @@
 	<div id="main-container">
 		<div id="first-section" class="wrap content" style="position:relative; padding:25px 0;">
 			<div id="showcase">
-				<img id="indexImage" src="http://www.stylenoriter.co.kr/images/02.jpg">
+				<img id="indexImage">
 			</div>
 		</div>
 		<div id="second-section" class="wrap content">
