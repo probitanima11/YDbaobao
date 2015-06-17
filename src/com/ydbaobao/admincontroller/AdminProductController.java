@@ -48,6 +48,9 @@ public class AdminProductController {
 		return "admin/productManager";
 	}
 	
+	/**
+	 * 저장 된 상품 전체 삭제
+	 */
 	@RequestMapping(value = "", method = RequestMethod.DELETE)
 	public ResponseEntity<Object> deleteAll() {
 		if(productService.deleteAll()) {
