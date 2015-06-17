@@ -105,8 +105,9 @@ public class AdminProductController {
 	 * @return success or fail
 	 */
 	@RequestMapping(value = "/{productId}", method = RequestMethod.PUT)
-	public @ResponseBody String update(@PathVariable int productId, @RequestParam String productName, @RequestParam int categoryId, @RequestParam int brandId, @RequestParam int productPrice, @RequestParam String productDescription, @RequestParam String productSize){
-		Product product = new Product(productId, productName,new Category(categoryId), new Brand(brandId), productPrice, productDescription, productSize);
+	public @ResponseBody String update(@PathVariable int productId, Product product, Category category, Brand brand){
+		product.setCategory(category);
+		product.setBrand(brand);
 		if(productService.update(product)){
 			return "success";
 		}
