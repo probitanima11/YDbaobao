@@ -63,4 +63,17 @@ public class ProductController {
 		model.addAttribute("firstLetterList", new Brand().getFirstLetters());
 		return "products";
 	}
+	
+	@RequestMapping(value="/categories/{categoryId}/brands/{brandId}", method=RequestMethod.GET)
+	public String load(Model model, @RequestParam("page") String page, @PathVariable int categoryId, @PathVariable int brandId) {
+
+		//TODO paging 기능 추가
+		
+		model.addAttribute("products", productService.readByCategoryIdAndBrandId(categoryId, brandId));
+		model.addAttribute("brands", brandService.readBrands());
+		model.addAttribute("category", categoryService.readByCategoryId(categoryId));
+		model.addAttribute("categories", categoryService.read());
+		model.addAttribute("firstLetterList", new Brand().getFirstLetters());
+		return "products";
+	}
 }

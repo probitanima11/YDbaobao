@@ -45,8 +45,13 @@ public class CustomerDao extends JdbcDaoSupport {
 	}
 
 	public int updateCustomer(Customer customer) {
-		String sql = "update CUSTOMERS set customerName = ?, customerPassword = ?, gradeId = ?, customerPhone = ?, customerEmail = ?, customerAddress = ?, customerUpdateDate = default where customerId = ?";
-		return getJdbcTemplate().update(sql, customer.getCustomerName(), customer.getCustomerPassword(), customer.getCustomerGrade(), customer.getCustomerPhone(), customer.getCustomerEmail(), customer.getCustomerAddress(), customer.getCustomerId());		
+		String sql = "update CUSTOMERS set customerName = ?, customerPassword = ?, customerPhone = ?, customerEmail = ?, customerAddress = ?, customerUpdateDate = default where customerId = ?";
+		return getJdbcTemplate().update(sql, customer.getCustomerName(), customer.getCustomerPassword(), customer.getCustomerPhone(), customer.getCustomerEmail(), customer.getCustomerAddress(), customer.getCustomerId());		
+	}
+	
+	public int updateCustomerGrade(Customer customer) {
+		String sql = "update CUSTOMERS set gradeId = ? where customerId = ?";
+		return getJdbcTemplate().update(sql, customer.getCustomerGrade(), customer.getCustomerId());		
 	}
 	
 	public List<Customer> readCustomers() {

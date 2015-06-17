@@ -1,5 +1,7 @@
 package com.ydbaobao.admincontroller;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.slf4j.Logger;
@@ -53,7 +55,27 @@ public class AdminProductController {
 		model.addAttribute("product", new Product());
 		model.addAttribute("products", productService.readProducts());
 		model.addAttribute("brands", brandService.readBrands());
-		model.addAttribute("categories", categoryService.read());
+		List<Category> categories = categoryService.read();
+		int selectedCategoryId = -1;
+		categories.add(0, new Category(selectedCategoryId, "전체보기", 0));
+		model.addAttribute("selectedCategoryId", selectedCategoryId);
+		model.addAttribute("categories", categories);
+		return "admin/productManager";
+	}
+	
+	@RequestMapping(value = "/category", method = RequestMethod.GET)
+	public String readByCategoryId(Model model, @RequestParam int categoryId) {
+		model.addAttribute("product", new Product());
+		if(categoryId==-1){
+			model.addAttribute("products", productService.readProducts());
+		} else{
+			model.addAttribute("products", productService.readListByCategoryId(categoryId));
+		}
+		model.addAttribute("brands", brandService.readBrands());
+		List<Category> categories = categoryService.read();
+		categories.add(0, new Category(-1, "전체보기", 0));
+		model.addAttribute("selectedCategoryId", categoryId);
+		model.addAttribute("categories", categories);
 		return "admin/productManager";
 	}
 	

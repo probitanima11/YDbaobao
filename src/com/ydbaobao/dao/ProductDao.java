@@ -37,7 +37,7 @@ public class ProductDao extends JdbcDaoSupport {
 			public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
 				PreparedStatement ps = connection.prepareStatement(sql, new String[] {"productId"});
 				ps.setString(1, product.getProductName());
-				ps.setObject(2, product.getCategory().getCategoryId());
+				ps.setObject(2, null);
 				ps.setObject(3, product.getBrand().getBrandId());
 				ps.setString(4, product.getProductImage());
 				ps.setString(5, product.getProductSize());
@@ -175,5 +175,16 @@ public class ProductDao extends JdbcDaoSupport {
 	public int delete(Product product) {
 		String sql = "delete from PRODUCTS where productId=?";
 		return getJdbcTemplate().update(sql, product.getProductId());
+	}
+
+	public List<Product> readByCategoryIdAndBrandId(int categoryId, int brandId) {
+		String sql = "select * from PRODUCTS where categoryId = ? and brandId = ? ORDER BY productId DESC";
+		return getJdbcTemplate().query(sql, (rs, rowNum) -> new Product(
+				rs.getInt("productId"), rs.getString("productName"),
+				new Category(rs.getInt("categoryId"), null, 0), 
+				 new Brand(rs.getInt("brandId"), null, 0, 0, 0, 0, 0, 0, ""), 
+				 rs.getInt("productPrice"), rs.getString("productImage"), rs.getString("productDescription"),
+				 rs.getLong("productCreateDate"), rs.getLong("productUpdateDate"), rs.getString("productSize")),
+				 categoryId, brandId);
 	}
 }

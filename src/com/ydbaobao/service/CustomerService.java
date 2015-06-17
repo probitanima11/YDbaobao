@@ -48,7 +48,7 @@ public class CustomerService {
 	public boolean updateGrade(String customerId, String grade) {
 		Customer customer = customerDao.readCustomerById(customerId);
 		customer.setCustomerGrade(grade);
-		if(customerDao.updateCustomer(customer) == 1) {
+		if(customerDao.updateCustomerGrade(customer) == 1) {
 			return true;
 		}
 		

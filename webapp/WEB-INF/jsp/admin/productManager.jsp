@@ -20,7 +20,24 @@
 		<%@ include file="./_adminNav.jsp"%>		
 		<div id="content">
 			<h1>상품 관리</h1>
-			<button id="all-product-delete-btn">전체상품 삭제</button>
+			<button id="all-product-delete-btn">전체상품 삭제</button><br/><br/>
+			
+			<form:form class="category-form" method="GET" action="/admin/products/category" enctype="multipart/form-data">
+				<label class="control-label">카테고리 선택 :</label>
+				<select class="category-select" name="categoryId">
+					<c:forEach var="category" items="${categories}">
+					<c:choose>
+						<c:when test="${category.categoryId eq selectedCategoryId}">
+							<option value="${category.categoryId}" label="${category.categoryName}" selected="selected" />
+						</c:when>
+						<c:otherwise>
+							<option value="${category.categoryId}" label="${category.categoryName}" />
+						</c:otherwise>
+					</c:choose>
+					</c:forEach>
+				</select>
+			</form:form>
+			
 			<table id="product-table" style="width: 800px;">
 				<tr>
 					<th width="50px">상품ID</th>
@@ -178,6 +195,13 @@
 			var form = document.querySelectorAll('.product-update-form')[e.className];
 			form.categoryId.value = e.value;
 		}
+		
+		
+		document.body.querySelector('.category-select').addEventListener('change', function(e) {
+			e.target.parentElement.submit();
+		}, false);
+		
+		
 	</script>
 	<script src="/js/ydbaobao.js"></script>
 </body>

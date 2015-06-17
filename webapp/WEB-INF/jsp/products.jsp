@@ -26,13 +26,14 @@
 		<c:choose>
 			<c:when test="${not empty brand}">
 				<div style="font-size: 40px; padding:25px 0 15px 0;">${brand.brandName}</div>
+				<%@ include file="./commons/_brand.jsp"%>
 			</c:when>
 
 			<c:otherwise>
 				<div style="font-size: 40px; padding:25px 0 15px 0;">${category.categoryName}</div>
+				<%@ include file="./commons/_categoryBrand.jsp"%>
 			</c:otherwise>
 		</c:choose>
-		<%@ include file="./commons/_brand.jsp"%>
 	</div>
 	<div id="item-container" class="wrap content">
 		<%@ include file="./commons/_productsBox.jsp" %>
