@@ -81,7 +81,7 @@ public class ProductDao extends JdbcDaoSupport {
 						rs.getLong("productUpdateDate"), rs.getString("productSize")), start, quantity);
 	}
 
-	public List<Product> readListByCategoryId(int categoryId, int index, int quantity) {
+	public List<Product> readListByCategoryId(int categoryId, int page, int productsPerPage) {
 		String sql = "select * from PRODUCTS, brands where products.brandId = brands.brandId and categoryId=? ORDER BY productId desc limit ?, ?";
 		return getJdbcTemplate().query(
 				sql, (rs, rowNum) -> new Product(
@@ -90,7 +90,7 @@ public class ProductDao extends JdbcDaoSupport {
 						new Brand(rs.getInt("brandId"), rs.getString("brandName"), rs.getInt("brandCount"), rs.getInt("discount_1"), rs.getInt("discount_2"), rs.getInt("discount_3"), rs.getInt("discount_4"), rs.getInt("discount_5"), rs.getString("brandSize")),
 						rs.getInt("productPrice"), rs.getString("productImage"),
 						rs.getString("productDescription"), rs.getLong("productCreateDate"),
-						rs.getLong("productUpdateDate"), rs.getString("productSize")), categoryId, index, quantity);
+						rs.getLong("productUpdateDate"), rs.getString("productSize")), categoryId, (page - 1)*productsPerPage, productsPerPage);
 	}
 
 	public List<Product> readListByCategoryId(int categoryId) {
@@ -105,7 +105,7 @@ public class ProductDao extends JdbcDaoSupport {
 						rs.getLong("productUpdateDate"), rs.getString("productSize")), categoryId);
 	}
 	
-	public List<Product> readByProductName(String query, int index, int quantity) {
+	public List<Product> readByProductName(String query, int page, int productsPerPage) {
 		String sql = "select * from products, brands WHERE products.brandId = brands.brandId and productName REGEXP (?) order by productId desc limit ?, ?";
 		return getJdbcTemplate().query(
 				sql, (rs, rowNum) -> new Product(
@@ -114,7 +114,7 @@ public class ProductDao extends JdbcDaoSupport {
 						new Brand(rs.getInt("brandId"), rs.getString("brandName"), rs.getInt("brandCount"), rs.getInt("discount_1"), rs.getInt("discount_2"), rs.getInt("discount_3"), rs.getInt("discount_4"), rs.getInt("discount_5"), rs.getString("brandSize")),
 						rs.getInt("productPrice"), rs.getString("productImage"),
 						rs.getString("productDescription"), rs.getLong("productCreateDate"),
-						rs.getLong("productUpdateDate"), rs.getString("productSize")), query, index, quantity);
+						rs.getLong("productUpdateDate"), rs.getString("productSize")), query, (page - 1) * productsPerPage, productsPerPage);
 	}
 	
 	public List<Product> readByBrandName(String query, int index, int quantity) {
@@ -144,7 +144,7 @@ public class ProductDao extends JdbcDaoSupport {
 		return getJdbcTemplate().queryForObject(sql, Integer.class, query);
 	}
 
-	public List<Product> readListByBrandId(int brandId, int index, int quantity) {
+	public List<Product> readListByBrandId(int brandId, int page, int productsPerPage) {
 		String sql = "select * from PRODUCTS, BRANDS where BRANDS.brandId = PRODUCTS.brandId and PRODUCTS.brandId=? ORDER BY productId DESC limit ?, ?";
 		return getJdbcTemplate().query(
 				sql, (rs, rowNum) -> new Product(
@@ -153,7 +153,7 @@ public class ProductDao extends JdbcDaoSupport {
 						new Brand(rs.getInt("brandId"), rs.getString("brandName"), rs.getInt("brandCount"), rs.getInt("discount_1"), rs.getInt("discount_2"), rs.getInt("discount_3"), rs.getInt("discount_4"), rs.getInt("discount_5"), rs.getString("brandSize")),
 						rs.getInt("productPrice"), rs.getString("productImage"),
 						rs.getString("productDescription"), rs.getLong("productCreateDate"),
-						rs.getLong("productUpdateDate"), rs.getString("productSize")), brandId, index, quantity);
+						rs.getLong("productUpdateDate"), rs.getString("productSize")), brandId, (page - 1) * productsPerPage, productsPerPage);
 	}
 
 	public List<Product> readProductsList() {

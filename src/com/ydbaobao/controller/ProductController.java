@@ -14,8 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.support.CommonUtil;
 import com.ydbaobao.model.Brand;
-import com.ydbaobao.model.PageConfigParam;
+import com.ydbaobao.model.Category;
 import com.ydbaobao.model.SessionCustomer;
 import com.ydbaobao.service.AdminConfigService;
 import com.ydbaobao.service.BrandService;
@@ -51,18 +52,16 @@ public class ProductController {
 	}
 	
 	@RequestMapping(value="/categories/{categoryId}/products", method=RequestMethod.GET)
-	public String load(Model model, @RequestParam("page") String page, @PathVariable int categoryId) {
-		PageConfigParam p = new PageConfigParam(adminConfigService.read().getAdminDisplayProducts(), page, categoryService.readByCategoryId(categoryId).getCategoryCount());
-
-		if (p.getEnd() < p.getRange()) {
-			model.addAttribute("nextBtn", true);
-		}
-		model.addAttribute("selectedIndex", p.getSelectedIndex());
-		model.addAttribute("range", IntStream.range(p.getStart(), p.getEnd()).toArray());
-		model.addAttribute("products", productService.readListByCategoryId(categoryId, p.getIndex(), p.getQuantity()));
+	public String load(Model model, @RequestParam("page") int page, @PathVariable int categoryId) {
+		Category category = categoryService.readByCategoryId(categoryId);
+		
+		int totalPage = category.getCategoryCount() / CommonUtil.PRODUCTS_PER_PAGE + 1;
+		
+		model.addAttribute("totalPage", totalPage);
+		model.addAttribute("products", productService.readListByCategoryId(categoryId, page, CommonUtil.PRODUCTS_PER_PAGE));
 		model.addAttribute("brands", brandService.readBrands());
-		model.addAttribute("category", categoryService.readByCategoryId(categoryId));
-		model.addAttribute("categories", categoryService.readWithoutUnclassifiedCategory());
+		model.addAttribute("category", category);
+		model.addAttribute("categories", categoryService.read());
 		model.addAttribute("firstLetterList", new Brand().getFirstLetters());
 		return "products";
 	}
