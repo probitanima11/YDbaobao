@@ -42,7 +42,7 @@ public class ItemController {
 	@RequestMapping(value = "/cart", method = RequestMethod.GET)
 	public String cartForm(HttpSession session, Model model) throws IOException {
 		String customerId = ServletRequestUtil.getCustomerIdFromSession(session);
-		model.addAttribute("list", new Gson().toJson(itemDao.readCartList(customerId)));
+		model.addAttribute("items", itemDao.readCartList(customerId));
 		model.addAttribute("categories", categoryService.read());
 		Customer customer = customerDao.readCustomerById(customerId);
 		model.addAttribute("customerGrade", customer.getCustomerGrade());

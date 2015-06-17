@@ -68,7 +68,18 @@
 							<th>판매가</th>
 						</tr>
 					</thead>
-					<tbody></tbody>
+					<tbody>
+					<c:forEach var="item" items="${items}">
+						<tr data-id="${item.itemId}">
+							<td><input class="item-check" type="checkbox"></td>
+							<td class="item-image-container"><img class="item-image" src="/img/products/${item.product.productImage}"></td>
+							<td class="item-name-container"><span class="item-name">${item.product.productName}</span></td>
+							<td><span class="item-size">${item.size}</span></td>
+							<td><span class="item-quantity">${item.quantity}</span></td>
+							<td><span class="item-price">${item.product.productPrice * item.quantity}</span></td>
+						</tr>
+					</c:forEach>	
+					</tbody>
 					<tfoot>
 						<tr>
 							<td colspan="6">
@@ -92,19 +103,8 @@
 
 	<div id="footer">footer...</div>
 
-	<template id="cart-item-template">
-		<td><input class="item-check" type="checkbox"></td>
-		<td class="item-image-container"><img class="item-image" src=""></td>
-		<td class="item-name-container"><span class="item-name"></span></td>
-		<td><span class="item-size"></span></td>
-		<td><span class="item-quantity"></span></td>
-		<td><span class="item-price"></span></td>
-	</template>
-
 	<script>
 	window.addEventListener('load', function() {
-		var itemList = ${list};
-		loadCartList(itemList);
 		document.querySelector('#selection-delete-btn').addEventListener('click', function() {
 			var checkedItems = document.querySelectorAll('.item-check');
 			var length = checkedItems.length;
@@ -115,7 +115,7 @@
 						method : 'delete',
 						url : '/item/delete/' + tr.dataset.id,
 						success : function(req) {
-							document.querySelector("#total-price span").textContent -= document.querySelector('tr[data-id="'+ req.responseText + '"] .item-price').innerText;
+							document.querySelector('#total-price span').textContent -= document.querySelector('tr[data-id="'+ req.responseText + '"] .item-price').innerText;
 							document.querySelector('tr[data-id="'+ req.responseText + '"]').remove();
 						}
 					});
@@ -143,13 +143,13 @@
 		});
 		
 		document.querySelector('#select-order-btn').addEventListener('click', function() {
-			var checkList = document.querySelectorAll(".item-check");
+			var checkList = document.querySelectorAll('.item-check');
 			var checkLength = checkList.length;
 			var paramList = new Array();
 			var param = 'itemList=';
 			for(var i = 0; i < checkLength; i++) {
 				if(checkList[i].checked) {
-					paramList.push(checkList[i].parentNode.parentNode.getAttribute("data-id"));
+					paramList.push(checkList[i].parentNode.parentNode.getAttribute('data-id'));
 				}
 			}
 			param += paramList;
@@ -157,16 +157,18 @@
 		}, false); 
 		
 		document.querySelector('#order-btn').addEventListener('click', function() {
-			var checkList = document.querySelectorAll(".item-check");
+			var checkList = document.querySelectorAll('.item-check');
 			var checkLength = checkList.length;
 			var paramList = new Array();
 			var param = 'itemList=';
 			for(var i = 0; i < checkLength; i++) {
-				paramList.push(checkList[i].parentNode.parentNode.getAttribute("data-id"));
+				paramList.push(checkList[i].parentNode.parentNode.getAttribute('data-id'));
 			}
 			param += paramList;
 			order(param);
-		}, false); 
+		}, false);
+
+		addItemsPrice(); 
 
 	}, false);
 	
@@ -177,38 +179,20 @@
 			param : param,
 			success : function(req) {
 				alert('주문요청이 완료되었습니다.');
-				window.location.href = "/orders";
+				window.location.href = '/orders';
 			}
 		});
 	}
 
-	function loadCartList(itemList) {
-		var cartList = document.querySelector('#cart-list');
-
-		var length = itemList.length;
+	function addItemsPrice() {
+		var el = document.querySelectorAll('.item-price');
+		var length = el.length;
 		var totalPrice = 0;
-		for (var i = 0; i < length; i++) {
-			var tr = ydbaobao.createElement({
-		        name: 'tr',
-		        attrs: {
-		            'data-id': itemList[i].itemId
-		        },
-		    });
-
-			cartList.tBodies[0].appendChild(tr);
-
-			var itemTemplate = document.querySelector("#cart-item-template").content;
-			var item = document.importNode(itemTemplate, true);
-			item.querySelector('.item-name').textContent = itemList[i].product.productName;
-			item.querySelector('img').src = "/img/products/"+itemList[i].product.productImage;
-			item.querySelector('.item-size').textContent = itemList[i].size;
-			item.querySelector('.item-quantity').textContent = itemList[i].quantity;
-			var price = itemList[i].product.productPrice * itemList[i].quantity;
-			item.querySelector('.item-price').textContent = price;
-			tr.appendChild(item);	
-			totalPrice += price;
+		for(var i = 0; i < length; i++) {
+			totalPrice += parseInt(el[i].textContent);
 		}
-		document.querySelector("#total-price span").textContent = totalPrice;
+
+		document.querySelector('#total-price span').textContent = totalPrice;
 	}
 	</script>
 	<script src="/js/ydbaobao.js"></script>
