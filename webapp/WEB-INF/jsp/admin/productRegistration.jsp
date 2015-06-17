@@ -15,7 +15,7 @@
 	<div id="container">
 		<%@ include file="./_adminNav.jsp"%>
 		<div id="content">
-			<h1>상품등록</h1>
+			<h1>상품 등록</h1>
 			<div id="imageFiles">
 				<form:form class="imageUploadForm" method="post" action="/admin/products" modelAttribute="product" enctype="multipart/form-data">
 					<label class="control-label">브랜드 선택 :</label>
