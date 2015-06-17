@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.context.request.WebRequest;
 
 import com.support.JSONResponseUtil;
 import com.ydbaobao.model.Brand;
@@ -55,7 +54,7 @@ public class BrandController {
 		}
 		model.addAttribute("selectedIndex", p.getSelectedIndex());
 		model.addAttribute("range", IntStream.range(p.getStart(), p.getEnd()).toArray());
-		model.addAttribute("productList", productService.readListByBrandId(brandId, p.getIndex(), p.getQuantity()));
+		model.addAttribute("products", productService.readListByBrandId(brandId, p.getIndex(), p.getQuantity()));
 		model.addAttribute("brands", brandService.readBrands());
 		model.addAttribute("brand", brandService.readBrandByBrandId(brandId));
 		model.addAttribute("categories", categoryService.read());
