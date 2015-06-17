@@ -176,7 +176,7 @@
 			var searchValue = document.querySelector('#search-brand').value;
 			ydbaobao.ajax({
 				method : 'get',
-				url : '/api/brands/find?searchValue=' + searchValue,
+				url : '/admin/brands/find?searchValue=' + searchValue,
 				success : function(req) {
 					appendBrandList(JSON.parse(req.responseText));
 				}
