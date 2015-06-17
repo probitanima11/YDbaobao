@@ -125,12 +125,12 @@ public class AdminProductController {
 	 * @return success or fail
 	 */
 	@RequestMapping(value = "/{productId}", method = RequestMethod.PUT)
-	public @ResponseBody String update(@PathVariable int productId, Product product, Category category, Brand brand){
+	public ResponseEntity<Object> update(@PathVariable int productId, Product product, Category category, Brand brand){
 		product.setCategory(category);
 		product.setBrand(brand);
 		if(productService.update(product)){
-			return "success";
+			return JSONResponseUtil.getJSONResponse("success", HttpStatus.OK);
 		}
-		return "fail";
+		return JSONResponseUtil.getJSONResponse("fail", HttpStatus.OK);
 	}
 }
