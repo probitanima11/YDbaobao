@@ -2,6 +2,8 @@ package com.ydbaobao.admincontroller;
 
 import javax.annotation.Resource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.support.JSONResponseUtil;
@@ -24,6 +27,8 @@ import com.ydbaobao.service.ProductService;
 @Controller
 @RequestMapping("/admin/products")
 public class AdminProductController {
+	private static final Logger logger = LoggerFactory.getLogger(AdminProductController.class);
+	
 	@Resource
 	private ProductService productService;
 	@Resource
@@ -55,7 +60,7 @@ public class AdminProductController {
 	}
 	
 	/**
-	 * 상품 이미지 등록
+	 * 상품 이미지 등록(상품 등록)
 	 */
 	@RequestMapping(value="", method=RequestMethod.POST)
 	public String imageUpload(Model model, Product product, @RequestParam("imageFile") MultipartFile... imageFile) {
@@ -70,6 +75,9 @@ public class AdminProductController {
 		return "admin/productRegistration";
 	}
 	
+	/**
+	 * 전체 상품 삭제
+	 */
 	@RequestMapping(value = "", method = RequestMethod.DELETE)
 	public ResponseEntity<Object> deleteAll() {
 		if(productService.deleteAll()) {
@@ -78,6 +86,9 @@ public class AdminProductController {
 		return JSONResponseUtil.getJSONResponse("fail", HttpStatus.OK);
 	}
 	
+	/**
+	 * 개별 상품 삭제
+	 */
 	@RequestMapping(value = "/{productId}", method = RequestMethod.DELETE)
 	public ResponseEntity<Object> deleteProduct(@PathVariable int productId) {
 		if(productService.delete(productId)) {
@@ -85,9 +96,12 @@ public class AdminProductController {
 		}
 		return JSONResponseUtil.getJSONResponse("fail", HttpStatus.OK);
 	}
-	
-	@RequestMapping(value = "/{productId}/{productName}/{categoryId}/{brandId}/{productPrice}/{productSize}/{productDescription}", method = RequestMethod.PUT)
-	public @ResponseBody String update(@PathVariable int productId, @PathVariable String productName, @PathVariable int categoryId, @PathVariable int brandId, @PathVariable int productPrice, @PathVariable String productSize, @PathVariable String productDescription){
+
+	/**
+	 * 상품 정보 수정
+	 */	
+	@RequestMapping(value = "/{productId}", method = RequestMethod.PUT)
+	public @ResponseBody String update(@PathVariable int productId, @RequestParam String productName, @RequestParam int categoryId, @RequestParam int brandId, @RequestParam int productPrice, @RequestParam String productDescription, @RequestParam String productSize){
 		Product product = new Product(productId, productName,new Category(categoryId), new Brand(brandId), productPrice, productDescription, productSize);
 		if(productService.update(product)){
 			return "success";
