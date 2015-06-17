@@ -1,5 +1,6 @@
 package com.ydbaobao.controller;
 
+import java.io.File;
 import java.util.stream.IntStream;
 
 import javax.annotation.Resource;
@@ -45,6 +46,16 @@ public class HomeController {
 		model.addAttribute("categories", categorySevice.read());
 		model.addAttribute("brands", brandService.readBrands());
 		model.addAttribute("firstLetterList", new Brand().getFirstLetters());
+		
+		StringBuilder imgPath = new StringBuilder();
+		for (int i = 0; i < 8; i++) {
+			String filePath = "index_0" + i + ".jpg";
+			File f = new File("/home/baobao/index/"+filePath);
+			if (f.isFile()) {
+				imgPath.append(",/img/index/"+filePath);
+			} 
+		}
+		model.addAttribute("imgPath", imgPath);
 		return "index";
 	}
 }
