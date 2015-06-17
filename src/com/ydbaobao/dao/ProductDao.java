@@ -37,7 +37,7 @@ public class ProductDao extends JdbcDaoSupport {
 			public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
 				PreparedStatement ps = connection.prepareStatement(sql, new String[] {"productId"});
 				ps.setString(1, product.getProductName());
-				ps.setObject(2, product.getCategory().getCategoryId());
+				ps.setObject(2, null);
 				ps.setObject(3, product.getBrand().getBrandId());
 				ps.setString(4, product.getProductImage());
 				ps.setString(5, product.getProductSize());

@@ -34,7 +34,7 @@ public class ProductService {
 
 	public int create(int brandId) {
 		Brand brand = brandDao.readBrandByBrandId(brandId);
-		Product product = new Product(brand.getBrandName(), new Category(0), brand, brand.getBrandSize());
+		Product product = new Product(brand.getBrandName(), new Category(), brand, brand.getBrandSize());
 		int productId = productDao.create(product);
 		categoryDao.increaseCount(0);
 		brandDao.increaseCount(brandId);
