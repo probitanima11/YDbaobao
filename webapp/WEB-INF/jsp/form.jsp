@@ -93,12 +93,12 @@
 		//TOTO 유효성체크항목 추후 협의.
 		//joinCheck.setEmailValidation("join-userEmail", "join-userEmail-message");
 		// Name //
-		/* var bUpdate = "${isUpdate}";
+		var bUpdate = "${isUpdate}";
 		if(bUpdate !== "true")
 			joinCheck.setNameValidation("join-userId", "join-userId-message");
 		// Password //
 		joinCheck.setPasswordValidation("join-userPassword", "join-userPassword-message");
-		joinCheck.setPasswordValidation("join-userRePassword", "join-userRePassword-message"); */
+		joinCheck.setPasswordValidation("join-userRePassword", "join-userRePassword-message");
 	}
 	</script>
 	<script type="text/javascript" src="/js/joinCheck.js"></script>
