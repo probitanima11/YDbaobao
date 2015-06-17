@@ -17,6 +17,19 @@
 	<mvc:resources location="/fonts/" mapping="/fonts/**" />
 	<mvc:resources location="/js/" mapping="/js/**" />
 	<mvc:resources location="/css/" mapping="/css/**" />
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/search/**" />
+			<mvc:mapping path="/product/**" />
+			<mvc:mapping path="/products/**" />
+			<mvc:mapping path="/orders/**" />
+			<mvc:mapping path="/item/**" />
+			<mvc:mapping path="/brands/**" />
+			<mvc:mapping path="/categories/**" />
+			<mvc:mapping path="/imageUpload/**" />
+			<bean class="com.ydbaobao.intercepter.GradeCheckIntercepter" />
+		</mvc:interceptor>
+	</mvc:interceptors>
 
 	<bean id="viewResolver"
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver"
@@ -26,5 +39,5 @@
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
 
 	<mvc:resources mapping="/admin/**" location="/WEB-INF/admin/" />
-	
+
 </beans>

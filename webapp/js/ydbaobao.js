@@ -22,6 +22,28 @@ ydbaobao.ajax = function(o) {
 	req.send(o.param);
 };
 
+ydbaobao.ajaxFile = function(o) {
+	if (o.method === undefined || o.url === undefined || o.success === undefined) {
+		return;
+	}
+	var req = new XMLHttpRequest();
+	req.onreadystatechange = function() {
+		if (req.readyState == 4) {
+			if (req.status == 200) {
+				o.success(req);
+			} else {
+				document.body.innerHTML = req.responseText;
+			}
+		}
+	};
+	if (o.async === undefined) o.async = true;
+	req.open(o.method, o.url, o.async);
+	if (o.method.toLowerCase() == 'post' || o.method.toLowerCase() == 'put' || o.method.toLowerCase() == 'delete') {
+		req.setRequestHeader('Content-type', 'multipart/form-data');
+	}
+	req.send(o.param);
+};
+
 ydbaobao.createElement = function(o) {
 	var el = document.createElement(o.name);
 	if (o.attrs !== undefined) {

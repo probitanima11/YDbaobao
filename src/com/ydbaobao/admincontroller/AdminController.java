@@ -1,5 +1,10 @@
 package com.ydbaobao.admincontroller;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
@@ -8,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ydbaobao.dao.GradeDao;
 
@@ -59,5 +65,58 @@ public class AdminController {
 	public String manageGrade(Model model) {
 		model.addAttribute("grades", gradeDao.readGrades());
 		return "admin/gradeManager";
+	}
+
+	/**
+	 * 첫화면 이미지 설정 관리 페이지 
+	 * 이미지 경로와 저장된 이미지 갯수를 돌려준다.
+	 */
+	@RequestMapping(value = "/indexImages")
+	public String indexImage(Model model) {
+		List<String> imgPath = new ArrayList<String>();
+		String defaultPath = "/img/index/default.png";
+		int imgCount = 0;
+		for (int i = 0; i < 8; i++) {
+			String filePath = "index_0" + i + ".jpg";
+			File f = new File("/home/baobao/index/"+filePath);
+			if (f.isFile()) {
+				imgPath.add("/img/index/"+filePath);
+				imgCount++;
+			} else {
+				imgPath.add(defaultPath);
+			}
+		}
+		model.addAttribute("imgPath", imgPath);
+		model.addAttribute("imgCount", imgCount);
+		return "/admin/indexManager";
+	}
+	
+	/**
+	 * 첫화면 이미지 설정 관리 페이지 
+	 * 이미지 추가.
+	 * @throws IOException 
+	 * @throws IllegalStateException 
+	 */
+	@RequestMapping(value = "/indexImages", method = RequestMethod.POST)
+	public String indexImageCreate(Model model, @RequestParam MultipartFile profileImage, @RequestParam int imgCount) throws IllegalStateException, IOException {
+		profileImage.transferTo(new File("/home/baobao/index/index_0" + imgCount + ".jpg"));
+		
+		List<String> imgPath = new ArrayList<String>();
+		String defaultPath = "/img/index/default.png";
+		imgCount = 0;
+		for (int i = 0; i < 8; i++) {
+			String filePath = "index_0" + i + ".jpg";
+			File f = new File("/home/baobao/index/"+filePath);
+			if (f.isFile()) {
+				imgPath.add("/img/index/"+filePath);
+				imgCount++;
+			} else {
+				imgPath.add(defaultPath);
+			}
+		}
+		model.addAttribute("imgPath", imgPath);
+		model.addAttribute("imgCount", imgCount);
+		
+		return "/admin/indexManager";
 	}
 }

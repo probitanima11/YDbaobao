@@ -13,6 +13,7 @@
 		<li><a href="/admin/brands"><span>브랜드관리</span></a></li>
 		<li><a href="/admin/categories"><span>카테고리관리</span></a></li>
 		<li><a href="/admin/orders"><span>주문관리</span></a></li>
+		<li><a href="/admin/indexImages"><span>첫화면관리</span></a></li>
 		<li><a href="/admin/config"><span>관리자설정</span></a></li>
 	</ul>
 	<a href="/" style="text-decoration:none;"><div style="margin-top:10px; padding:15px 15px; font-size:12px; color:#fff; background-color:#EA6576">
