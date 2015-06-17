@@ -152,14 +152,18 @@
 			}
 		}
 		
-		function updateProduct(form, productId) { 
-			ydbaobao.ajax({
+		function updateProduct(form, productId) {
+		var params = "productName="+ form.productName.value + "&categoryId=" + form.categoryId.value + 
+					"&brandId=" + form.brandId.value + "&productPrice=" + form.productPrice.value + 
+					"&productDescription=" + form.productDescription.value + 
+					"&productSize=" + form.productSize.value;
+		ydbaobao.ajax({
 				method : 'put',
-				url : '/admin/products/'+ productId + '?productName=' + form.productName.value + '&categoryId=' + form.categoryId.value + '&brandId=' + form.brandId.value + '&productPrice=' + form.productPrice.value + '&productSize=' + form.productSize.value + '&productDescription=' + form.productDescription.value,
+				url : '/admin/products/'+productId,
+				param : params,
 				success : function(req) {
 					if (req.responseText === 'success') {
 						alert('상품정보가 수정되었습니다.');
-						location.reload();
 					}
 				}
 			});

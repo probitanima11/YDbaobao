@@ -2,6 +2,8 @@ package com.ydbaobao.admincontroller;
 
 import javax.annotation.Resource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -24,6 +26,8 @@ import com.ydbaobao.service.ProductService;
 @Controller
 @RequestMapping("/admin/products")
 public class AdminProductController {
+	private static final Logger logger = LoggerFactory.getLogger(AdminProductController.class);
+	
 	@Resource
 	private ProductService productService;
 	@Resource
@@ -55,7 +59,7 @@ public class AdminProductController {
 	}
 	
 	/**
-	 * 상품 이미지 등록
+	 * 상품 이미지 등록(상품 등록)
 	 */
 	@RequestMapping(value="", method=RequestMethod.POST)
 	public String imageUpload(Model model, Product product, @RequestParam("imageFile") MultipartFile... imageFile) {
@@ -94,16 +98,14 @@ public class AdminProductController {
 		}
 		return JSONResponseUtil.getJSONResponse("fail", HttpStatus.OK);
 	}
-	
+
 	/**
 	 * 특정 상품 정보 수정
 	 * @param productId, productName, categoryId, brandId, productPrice, productSize, productDescription
 	 * @return success or fail
 	 */
 	@RequestMapping(value = "/{productId}", method = RequestMethod.PUT)
-	public @ResponseBody String update(@PathVariable int productId, @RequestParam String productName, 
-			@RequestParam int categoryId, @RequestParam int brandId, @RequestParam int productPrice, 
-			@RequestParam String productSize, @RequestParam String productDescription){
+	public @ResponseBody String update(@PathVariable int productId, @RequestParam String productName, @RequestParam int categoryId, @RequestParam int brandId, @RequestParam int productPrice, @RequestParam String productDescription, @RequestParam String productSize){
 		Product product = new Product(productId, productName,new Category(categoryId), new Brand(brandId), productPrice, productDescription, productSize);
 		if(productService.update(product)){
 			return "success";
