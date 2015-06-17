@@ -49,7 +49,7 @@ public class CustomerController {
 	}
 	
 	@RequestMapping(value = "/update", method = RequestMethod.GET)
-	public String updateForm(Model model,HttpSession session) throws IOException {
+	public String updateForm(Model model, HttpSession session) throws IOException {
 		String customerId = ServletRequestUtil.getCustomerIdFromSession(session);
 		model.addAttribute("isUpdate", true);
 		model.addAttribute("customer", customerDao.findCustomerByCustomerId(customerId));
