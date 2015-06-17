@@ -163,7 +163,7 @@
 
 			ydbaobao.ajax({
 				method : 'post',
-				url : '/api/brands/',
+				url : '/admin/brands/',
 				param : 'brandName=' + brandName,
 				success : function(req) {
 					alert('브랜드가 추가되었습니다');

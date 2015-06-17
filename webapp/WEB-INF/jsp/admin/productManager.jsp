@@ -20,7 +20,7 @@
 		<%@ include file="./_adminNav.jsp"%>		
 		<div id="content">
 			<h1>상품 관리</h1>
-			<button id="all-product-delete-btn">상품 삭제</button>
+			<button id="all-product-delete-btn">전체상품 삭제</button>
 			<table id="product-table" style="width: 800px;">
 				<tr>
 					<th width="50px">상품ID</th>
@@ -153,17 +153,17 @@
 		}
 		
 		function updateProduct(form, productId) {
-		var param = "/" + form.productId.value + "/" + form.productName.value + "/" + 
-					form.categoryId.value + "/" + form.brandId.value + "/" + form.productPrice.value + "/" + 
-					form.productSize.value + "/" + form.productDescription.value; 
-		debugger;
+		var params = "productName="+ form.productName.value + "&categoryId=" + form.categoryId.value +
+					"&brandId=" + form.brandId.value + "&productPrice=" + form.productPrice.value + 
+					"&productDescription=" + form.productDescription.value + 
+					"&productSize=" + form.productSize.value;
 		ydbaobao.ajax({
 				method : 'put',
-				url : '/admin/products/'+param,
+				url : '/admin/products/'+productId,
+				param : params,
 				success : function(req) {
 					if (req.responseText === 'success') {
 						alert('상품정보가 수정되었습니다.');
-						location.reload();
 					}
 				}
 			});

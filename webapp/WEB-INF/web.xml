@@ -50,4 +50,14 @@
 		<filter-name>httpMethodFilter</filter-name>
 		<servlet-name>ydbaobao</servlet-name>
 	</filter-mapping>
+
+	<filter>
+		<filter-name>httpPutFormFilter</filter-name>
+		<filter-class>org.springframework.web.filter.HttpPutFormContentFilter</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>httpPutFormFilter</filter-name>
+		<servlet-name>ydbaobao</servlet-name>
+	</filter-mapping>
 </web-app>

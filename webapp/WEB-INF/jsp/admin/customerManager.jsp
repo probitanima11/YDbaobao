@@ -65,9 +65,18 @@
 	</div>
 	<script>
 		function deleteCustomer(customerId) {
-			var isDelete = confirm("다음의 고객 데이터가 삭제됩니다:"+customerId);
+			var isDelete = confirm(customerId + '의 고객 데이터가 삭제됩니다');
 			if (isDelete) {
-				window.location.href="/customers/"+customerId;
+				ydbaobao.ajax({
+					method:'delete',
+					url:'/admin/customers/' + customerId,
+					success: function(req){
+						if(req.responseText === 'success') {
+							alert('회원 정보가 삭제되었습니다');
+							document.querySelector('#customer-' + customerId).remove();
+						}
+					}
+				});
 			}
 		}
 	</script>

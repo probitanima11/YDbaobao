@@ -41,7 +41,7 @@ public class HomeController {
 		}
 		model.addAttribute("selectedIndex", p.getSelectedIndex());
 		model.addAttribute("range", IntStream.range(p.getStart(), p.getEnd()).toArray());
-		model.addAttribute("productList", productService.readRange(p.getIndex(), p.getQuantity()));
+		model.addAttribute("products", productService.readRange(p.getIndex(), p.getQuantity()));
 		model.addAttribute("categories", categorySevice.read());
 		model.addAttribute("brands", brandService.readBrands());
 		model.addAttribute("firstLetterList", new Brand().getFirstLetters());

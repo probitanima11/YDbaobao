@@ -6,7 +6,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ydbaobao.model.AdminConfig;
 import com.ydbaobao.service.AdminConfigService;
@@ -18,14 +17,14 @@ public class AdminConfigController {
 	private AdminConfigService adminConfigService;
 	
 	@RequestMapping(value = "", method = RequestMethod.GET)
-	public String config(Model model) {
+	public String read(Model model) {
 		model.addAttribute("adminConfig", adminConfigService.read());
 		return "admin/config";
 	}
 	
 	@RequestMapping(value = "", method = RequestMethod.PUT)
-	public String configUpdate(Model model, @RequestParam AdminConfig adminConfig) {
-		model.addAttribute("adminConfig", adminConfigService.update(adminConfig));
-		return "/admin/config";
+	public void configUpdate(Model model, AdminConfig adminConfig) {
+		System.out.println(adminConfig.getAdminDisplayProducts());
+		adminConfigService.update(adminConfig);
 	}
 }

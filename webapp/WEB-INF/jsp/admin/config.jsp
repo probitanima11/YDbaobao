@@ -16,13 +16,26 @@
 			<h1>관리자 설정</h1>
 		</div>
 
-		<!-- TODO method=POST -> PUT, action="/admin/config/update -> /admin/config" -->
-		<form:form id="confirm" modelAttribute="adminConfig" method="POST" action="/admin/config/update">
-			<form:input type="hidden" path="adminConfigId" value="${adminConfig.adminConfigId}" />
-			<form:input type="number" path="adminDisplayProducts" value="${adminConfig.adminDisplayProducts}"/>
-			<button type="submit">저장</button>
-			<button>취소</button>
-		</form:form>
+		<form>
+			<input type="hidden" id="adminConfigId" value="${adminConfig.adminConfigId}" />
+			<label for="adminDisplayProducts">페이지 당 상품 갯수</label>
+			<input type="number" id="adminDisplayProducts" value="${adminConfig.adminDisplayProducts}"/>
+			<button>저장</button>
+		</form>
 	</div>
+	<script>
+	var form = document.body.querySelector('form');
+	form.addEventListener('submit', function(e) {
+		ydbaobao.ajax({
+			method:'put',
+			url:"/admin/config",
+			param:"adminConfigId="+e.target.querySelector('#adminConfigId').value+"&adminDisplayProducts="+e.target.querySelector('#adminDisplayProducts').value,
+			success: function(req) {
+				debugger;
+			}
+		});
+	}, false);
+	</script>
+	<script src="/js/ydbaobao.js"></script>
 </body>
 </html>

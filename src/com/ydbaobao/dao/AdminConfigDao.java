@@ -25,11 +25,9 @@ public class AdminConfigDao extends JdbcDaoSupport {
 		return getJdbcTemplate().queryForObject(sql, (rs, rowNum) -> new AdminConfig(rs.getInt("adminConfigId"), rs.getInt("adminDisplayProducts")));
 	}
 	
-	public AdminConfig update(AdminConfig adminConfig) {
+	public void update(AdminConfig adminConfig) {
 		String sql = "update ADMINCONFIG set adminDisplayProducts = ?";
-		return getJdbcTemplate().queryForObject(sql, (rs, rowNum) -> new AdminConfig(
-				rs.getInt("adminConfigId"), rs.getInt("adminDisplayProducts"))
-				, adminConfig.getAdminDisplayProducts());
+		getJdbcTemplate().update(sql, adminConfig.getAdminDisplayProducts());
 	}
 	
 }

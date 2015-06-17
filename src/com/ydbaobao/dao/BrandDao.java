@@ -102,4 +102,9 @@ public class BrandDao extends JdbcDaoSupport {
 		String sql = "update BRANDS set brandCount = brandCount-1 where brandId = ?";
 		return getJdbcTemplate().update(sql, brandId);
 	}
+
+	public void resetCount() {
+		String sql = "update BRANDS set brandCount = 0";
+		getJdbcTemplate().update(sql);
+	}
 }
