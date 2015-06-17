@@ -86,15 +86,6 @@ public class ProductService {
 		return imageName;
 	}
 	
-	public Map<String, Integer> unregisteredProductsCountByBrand() {
-		List<Brand> brandList = brandDao.readBrands();
-		Map<String, Integer> map = new TreeMap<String, Integer>();
-		for(Brand brand:brandList){
-			map.put(brand.getBrandName(), productDao.unregisteredProductsCountByBrand(brand.getBrandId()));
-		}
-		return map;
-	}
-	
 	public List<Product> readListByCategoryId(int categoryId, int index, int quantity) {
 		return productDao.readListByCategoryId(categoryId, index, quantity);
 	}
@@ -153,6 +144,10 @@ public class ProductService {
 		if(productDao.deleteAll() >=1){
 			categoryDao.resetCount();
 			brandDao.resetCount();
+			File directory = new File("/home/baobao/products/");
+			for(File file : directory.listFiles()){
+				file.delete();
+			}
 			return true;
 		}
 		return false;
