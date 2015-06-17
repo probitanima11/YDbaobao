@@ -153,7 +153,7 @@
 		}
 		
 		function updateProduct(form, productId) {
-		var params = "productName="+ form.productName.value + "&categoryId=" + form.categoryId.value + 
+		var params = "productName="+ form.productName.value + "&categoryId=" + form.categoryId.value +
 					"&brandId=" + form.brandId.value + "&productPrice=" + form.productPrice.value + 
 					"&productDescription=" + form.productDescription.value + 
 					"&productSize=" + form.productSize.value;
