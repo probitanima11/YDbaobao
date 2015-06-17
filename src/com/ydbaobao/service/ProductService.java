@@ -3,8 +3,6 @@ package com.ydbaobao.service;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
 
 import javax.annotation.Resource;
 
@@ -161,5 +159,9 @@ public class ProductService {
 			return true;
 		}
 		return false;
+	}
+
+	public List<Product> readByCategoryIdAndBrandId(int categoryId, int brandId) {
+		return productDao.readByCategoryIdAndBrandId(categoryId, brandId);
 	}
 }
