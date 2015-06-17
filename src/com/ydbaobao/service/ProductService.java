@@ -76,7 +76,6 @@ public class ProductService {
 		String imageName = product.getProductId()+"."+extension;
 		try {
 			File imageFile = new File(ImageResizeUtil.savingPath + imageName);
-			logger.debug("저장경로 : {}", imageFile.getPath());
 			productImage.transferTo(imageFile);
 			product.setProductImage(imageName);
 			ImageResizeUtil.imageResize(imageFile.getPath(), extension);

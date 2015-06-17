@@ -42,23 +42,6 @@ public class ProductController {
 		return "product";
 	}
 	
-	@RequestMapping(value = "/products/{productId}", method = RequestMethod.DELETE)
-	public ResponseEntity<Object> deleteProduct(@PathVariable int productId) {
-		if(productService.delete(productId)) {
-			return JSONResponseUtil.getJSONResponse("success", HttpStatus.OK);
-		}
-		return JSONResponseUtil.getJSONResponse("fail", HttpStatus.OK);
-	}
-	
-	@RequestMapping(value = "/{productId}/{productName}/{categoryId}/{brandId}/{productPrice}/{productSize}/{productDescription}", method = RequestMethod.PUT)
-	public @ResponseBody String update(@PathVariable int productId, @PathVariable String productName, @PathVariable int categoryId, @PathVariable int brandId, @PathVariable int productPrice, @PathVariable String productSize, @PathVariable String productDescription){
-		Product product = new Product(productId, productName,new Category(categoryId), new Brand(brandId), productPrice, productDescription, productSize);
-		if(productService.update(product)){
-			return "success";
-		}
-		return "fail";
-	}
-	
 	@RequestMapping(value="/categories/{categoryId}", method=RequestMethod.GET)
 	public String load(Model model, @RequestParam("page") String page, @PathVariable int categoryId) {
 		PageConfigParam p = new PageConfigParam(adminConfigService.read().getAdminDisplayProducts(), page, categoryService.readByCategoryId(categoryId).getCategoryCount());
@@ -74,18 +57,5 @@ public class ProductController {
 		model.addAttribute("categories", categoryService.read());
 		model.addAttribute("firstLetterList", new Brand().getFirstLetters());
 		return "products";
-	}
-	
-	@RequestMapping(value="/imageUpload", method=RequestMethod.POST)
-	public String imageUpload(Model model, Product product, @RequestParam("imageFile") MultipartFile... imageFile) {
-		for(MultipartFile file:imageFile) {
-			int productId = productService.create(product.getBrand().getBrandId());
-			product.setProductId(productId);
-			String imageName = productService.uploadImage(product, file);
-			productService.updateProductImage(product, imageName);
-		}
-		model.addAttribute("brandList", brandService.readBrands());
-		model.addAttribute("unregisteredProductsCountByBrand", productService.unregisteredProductsCountByBrand());
-		return "admin/productRegistration";
 	}
 }
