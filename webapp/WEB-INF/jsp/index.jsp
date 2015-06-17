@@ -43,18 +43,14 @@
 		var imgPaths = "${imgPath}".substring(1).split(",");
 		var imgPathsLength = imgPaths.length;
 		var imgIndex = 0;
-		var curSlideNo = 0;
-		var nextSlideNo =null;
-		var fadeStart = false;
-		var curSlideLevel = 1;
-		var nextSlideLevel = 0;
-		
  		window.addEventListener("load", function() {
 			var imgEl = document.querySelector("#indexImage");
  			if(imgPaths[0].length === 0) {
  				imgEl.remove();
  				return;
  			}
+ 			imgEl.src = imgPaths[imgIndex];
+ 			addIndex();
  			
 			setInterval(function(){
 				fadeOut(imgEl);
