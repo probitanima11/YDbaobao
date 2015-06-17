@@ -113,7 +113,7 @@
 					var tr = checkedItems[i].parentElement.parentElement;
 					ydbaobao.ajax({
 						method : 'delete',
-						url : '/item/delete/' + tr.dataset.id,
+						url : '/carts/${customer.customerId}/items/' + tr.dataset.id,
 						success : function(req) {
 							document.querySelector('#total-price span').textContent -= document.querySelector('tr[data-id="'+ req.responseText + '"] .item-price').innerText;
 							document.querySelector('tr[data-id="'+ req.responseText + '"]').remove();

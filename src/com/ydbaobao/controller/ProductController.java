@@ -3,6 +3,7 @@ package com.ydbaobao.controller;
 import java.util.stream.IntStream;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ydbaobao.model.Brand;
 import com.ydbaobao.model.PageConfigParam;
+import com.ydbaobao.model.SessionCustomer;
 import com.ydbaobao.service.AdminConfigService;
 import com.ydbaobao.service.BrandService;
 import com.ydbaobao.service.CategoryService;
@@ -34,7 +36,8 @@ public class ProductController {
 	private AdminConfigService adminConfigService;
 
 	@RequestMapping(value = "/products/{productId}", method = RequestMethod.GET)
-	public String read(@PathVariable int productId, Model model) {
+	public String read(@PathVariable int productId, Model model, HttpSession session) {
+		model.addAttribute("customer", (SessionCustomer)session.getAttribute("sessionCustomer"));
 		model.addAttribute("product", productService.read(productId));
 		return "product";
 	}
