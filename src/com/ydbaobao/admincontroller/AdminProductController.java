@@ -95,8 +95,15 @@ public class AdminProductController {
 		return JSONResponseUtil.getJSONResponse("fail", HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/{productId}/{productName}/{categoryId}/{brandId}/{productPrice}/{productSize}/{productDescription}", method = RequestMethod.PUT)
-	public @ResponseBody String update(@PathVariable int productId, @PathVariable String productName, @PathVariable int categoryId, @PathVariable int brandId, @PathVariable int productPrice, @PathVariable String productSize, @PathVariable String productDescription){
+	/**
+	 * 특정 상품 정보 수정
+	 * @param productId, productName, categoryId, brandId, productPrice, productSize, productDescription
+	 * @return success or fail
+	 */
+	@RequestMapping(value = "/{productId}", method = RequestMethod.PUT)
+	public @ResponseBody String update(@PathVariable int productId, @RequestParam String productName, 
+			@RequestParam int categoryId, @RequestParam int brandId, @RequestParam int productPrice, 
+			@RequestParam String productSize, @RequestParam String productDescription){
 		Product product = new Product(productId, productName,new Category(categoryId), new Brand(brandId), productPrice, productDescription, productSize);
 		if(productService.update(product)){
 			return "success";
