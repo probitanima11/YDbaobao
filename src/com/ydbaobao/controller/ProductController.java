@@ -4,22 +4,17 @@ import java.util.stream.IntStream;
 
 import javax.annotation.Resource;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 
-import com.support.JSONResponseUtil;
 import com.ydbaobao.model.Brand;
-import com.ydbaobao.model.Category;
 import com.ydbaobao.model.PageConfigParam;
-import com.ydbaobao.model.Product;
 import com.ydbaobao.service.AdminConfigService;
 import com.ydbaobao.service.BrandService;
 import com.ydbaobao.service.CategoryService;
@@ -27,6 +22,8 @@ import com.ydbaobao.service.ProductService;
 
 @Controller
 public class ProductController {
+	private static final Logger logger = LoggerFactory.getLogger(ProductController.class);
+	
 	@Resource
 	private ProductService productService;
 	@Resource
@@ -42,6 +39,14 @@ public class ProductController {
 		return "product";
 	}
 	
+	@RequestMapping(value = "/categories", method = RequestMethod.GET)
+	public String loadAll(Model model, @RequestParam("page") String page) {
+		logger.debug("page : {}", page);
+		model.addAttribute("products", productService.readProducts());
+		model.addAttribute("categories", categoryService.read());
+		return "products";
+	}
+	
 	@RequestMapping(value="/categories/{categoryId}", method=RequestMethod.GET)
 	public String load(Model model, @RequestParam("page") String page, @PathVariable int categoryId) {
 		PageConfigParam p = new PageConfigParam(adminConfigService.read().getAdminDisplayProducts(), page, categoryService.readByCategoryId(categoryId).getCategoryCount());
@@ -51,7 +56,7 @@ public class ProductController {
 		}
 		model.addAttribute("selectedIndex", p.getSelectedIndex());
 		model.addAttribute("range", IntStream.range(p.getStart(), p.getEnd()).toArray());
-		model.addAttribute("productList", productService.readListByCategoryId(categoryId, p.getIndex(), p.getQuantity()));
+		model.addAttribute("products", productService.readListByCategoryId(categoryId, p.getIndex(), p.getQuantity()));
 		model.addAttribute("brands", brandService.readBrands());
 		model.addAttribute("category", categoryService.readByCategoryId(categoryId));
 		model.addAttribute("categories", categoryService.read());
