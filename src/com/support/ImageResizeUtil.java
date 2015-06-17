@@ -9,11 +9,9 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public class ImageResizeUtil {
-	//public static String savingPath = System.getProperty("user.home")+"/baobao/products/";
 	public static String savingPath = "/home/baobao/products/";
-	public static final int maxValue = 500;
-
-	public static void imageResize(String filePath, String imageType) throws IOException {
+	
+	public static void imageResize(String filePath, String imageType, int maxValue) throws IOException {
 		BufferedImage inputImage = ImageIO.read(new File(filePath));
 		double orignWidth = inputImage.getWidth();
 		double orignHeight = inputImage.getHeight();
