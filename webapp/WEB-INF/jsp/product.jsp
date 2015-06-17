@@ -147,9 +147,13 @@ h1 {
 			document.querySelector('.addtocart').addEventListener('click', function(e) {
 				addToCart(e);
 			}, false);
-			document.querySelector('.buyitnow').addEventListener('click', function(e) {
-				buyitnow(e);
-			}, false);
+
+			// 주석처리 한사람 : jyb
+			// 이유 : 현재 바로 주문하기로 안하고 장바구니에 담긴 다음, 그대로 주문으로 넘어감.
+			// document.querySelector('.buyitnow').addEventListener('click', function(e) {
+			// 	buyitnow(e);
+			// }, false);
+
 			productBuyContainer = document.querySelector("#product-buy-container");
 			document.addEventListener('scroll', function(e){
 				if (window.scrollY > 150) {
@@ -179,7 +183,7 @@ h1 {
 			ydbaobao.ajax({
 				/* TODO productId, size, quantity 전달. */
 				method : 'post',
-				url : '/item/add/',
+				url : '/carts/${customer.sessionId}',
 				param : param,
 				success : function(req) {
 					if(req.responseText === "fail")
@@ -203,7 +207,7 @@ h1 {
 			ydbaobao.ajax({
 				/* TODO productId, size, quantity 전달. */
 				method : 'post',
-				url : '/item/order/',
+				url : '/carts/${customer.sessionId}',
 				param : param,
 				success : function(req) {
 					if(req.responseText === "fail")
