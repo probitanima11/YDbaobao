@@ -20,9 +20,9 @@
 	<div id="main-container">
 		<div id="first-section" class="wrap content" style="height: 500px;">
 			<div class="joinForm">
-				<c:set var="actionUrl" value="/customer/create" />
+				<c:set var="actionUrl" value="/customers/create" />
 				<c:if test="${isUpdate}">
-					<c:set var="actionUrl" value="/customer/update" />
+					<c:set var="actionUrl" value="/customers/update" />
 				</c:if>
 
 				<form:form modelAttribute="customer" method="post"
@@ -93,7 +93,9 @@
 		//TOTO 유효성체크항목 추후 협의.
 		//joinCheck.setEmailValidation("join-userEmail", "join-userEmail-message");
 		// Name //
-		joinCheck.setNameValidation("join-userId", "join-userId-message");
+		var bUpdate = "${isUpdate}";
+		if(bUpdate !== "true")
+			joinCheck.setNameValidation("join-userId", "join-userId-message");
 		// Password //
 		joinCheck.setPasswordValidation("join-userPassword", "join-userPassword-message");
 		joinCheck.setPasswordValidation("join-userRePassword", "join-userRePassword-message");

@@ -75,12 +75,10 @@ public class CustomerController {
 	}
 	
 	@RequestMapping(value ="/update", method = RequestMethod.POST)
-	public String update(Customer customer, @RequestParam String customerAgainPassword, Model model) throws ExceptionForMessage{
-		//TODO VALIDATION CHECK
-//	public String create(@Valid Customer customer, BindingResult result, @RequestParam String customerAgainPassword, Model model) throws ExceptionForMessage{
-//		if(result.hasErrors()) {
-//			throw new JoinValidationException(extractValidationMessages(result));
-//        }
+	public String update(@Valid Customer customer, BindingResult result, @RequestParam String customerAgainPassword, Model model) throws ExceptionForMessage{
+		if(result.hasErrors()) {
+			throw new JoinValidationException(extractValidationMessages(result));
+        }
 		if(!customer.getCustomerPassword().equals(customerAgainPassword)) {
 			model.addAttribute("customer", new Customer());
 			model.addAttribute("message", "아이디와 비밀번호가 일치하지 않습니다.");
