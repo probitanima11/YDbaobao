@@ -68,18 +68,6 @@ public class ProductDao extends JdbcDaoSupport {
 		return getJdbcTemplate().update(sql, product.getProductName(), product.getCategory().getCategoryId(), product.getBrand().getBrandId(), product.getProductPrice(), product.getProductDescription(), product.getProductSize(), product.getProductImage(), product.getProductId());
 	}
 
-	public List<Product> readRange(int start, int quantity) {
-		String sql ="select * from PRODUCTS, brands where brands.brandId = PRODUCTS.brandId ORDER BY productId desc LIMIT ?, ?";
-		return getJdbcTemplate().query(
-				sql, (rs, rowNum) -> new Product(
-						rs.getInt("productId"), rs.getString("productName"),
-						new Category(rs.getInt("categoryId"), null, 0),
-						new Brand(rs.getInt("brandId"), rs.getString("brandName"), rs.getInt("brandCount"), rs.getInt("discount_1"), rs.getInt("discount_2"), rs.getInt("discount_3"), rs.getInt("discount_4"), rs.getInt("discount_5"), rs.getString("brandSize")),
-						rs.getInt("productPrice"), rs.getString("productImage"),
-						rs.getString("productDescription"), rs.getLong("productCreateDate"),
-						rs.getLong("productUpdateDate"), rs.getString("productSize")), start, quantity);
-	}
-
 	public List<Product> readListByCategoryId(int categoryId, int offset, int productsPerPage) {
 		String sql = "select * from PRODUCTS, brands where products.brandId = brands.brandId and categoryId=? ORDER BY productId desc limit ?, ?";
 		return getJdbcTemplate().query(
@@ -129,6 +117,24 @@ public class ProductDao extends JdbcDaoSupport {
 	public int countBySearchBrandName(String query) {
 		String sql = "select count(1) as count from products, brands WHERE products.brandId = brands.brandId and brandName REGEXP (?)";
 		return getJdbcTemplate().queryForObject(sql, Integer.class, query);
+	}
+	
+	/**
+	 * offset부터 productsPerPage만큼 상품 수를 불러온다
+	 * @param offset, productsPerPage
+	 * @param productsPerPage
+	 * @return PRODUCTS table에서 offset에서부터 productsPerPage 만큼 가져온 Products
+	 */
+	public List<Product> readRange(int offset, int productsPerPage) {
+		String sql ="select * from PRODUCTS, brands where brands.brandId = PRODUCTS.brandId ORDER BY productId desc LIMIT ?, ?";
+		return getJdbcTemplate().query(
+				sql, (rs, rowNum) -> new Product(
+						rs.getInt("productId"), rs.getString("productName"),
+						new Category(rs.getInt("categoryId"), null, 0),
+						new Brand(rs.getInt("brandId"), rs.getString("brandName"), rs.getInt("brandCount"), rs.getInt("discount_1"), rs.getInt("discount_2"), rs.getInt("discount_3"), rs.getInt("discount_4"), rs.getInt("discount_5"), rs.getString("brandSize")),
+						rs.getInt("productPrice"), rs.getString("productImage"),
+						rs.getString("productDescription"), rs.getLong("productCreateDate"),
+						rs.getLong("productUpdateDate"), rs.getString("productSize")), offset, productsPerPage);
 	}
 
 	/**
