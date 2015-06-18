@@ -58,4 +58,8 @@ public class CustomerService {
 	public void delete(String customerId) {
 		customerDao.deleteCustomer(customerId);
 	}
+
+	public Customer readCustomer(String customerId) {
+		return customerDao.findCustomerByCustomerId(customerId);
+	}
 }

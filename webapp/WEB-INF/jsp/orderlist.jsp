@@ -86,7 +86,7 @@
 
 	<script>
 	window.addEventListener('load', function() {
-		var orderList = ${order_list};
+		var orderList = ${orders};
 		loadOrderList(orderList);
 	}, false);
 

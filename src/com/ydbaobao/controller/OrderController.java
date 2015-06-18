@@ -5,8 +5,6 @@ import java.io.IOException;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -15,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.google.gson.Gson;
 import com.support.JSONResponseUtil;
 import com.support.ServletRequestUtil;
 import com.ydbaobao.service.CategoryService;
@@ -25,8 +22,6 @@ import com.ydbaobao.service.OrderService;
 @Controller
 @RequestMapping("/orders")
 public class OrderController {
-	private static final Logger logger = LoggerFactory.getLogger(OrderController.class);
-	
 	@Resource
 	private OrderService orderService;
 	@Resource
@@ -38,7 +33,7 @@ public class OrderController {
 	@RequestMapping()
 	public String readOrders(HttpSession session, Model model) throws IOException {
 		String customerId = ServletRequestUtil.getCustomerIdFromSession(session);
-		model.addAttribute("order_list", new Gson().toJson(orderService.readOrders(customerId)));
+		model.addAttribute("orders", orderService.readOrders(customerId));
 		model.addAttribute("categories", categoryService.read());
 		return "order";
 	}

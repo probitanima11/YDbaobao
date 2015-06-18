@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
@@ -30,9 +29,17 @@ public class OrderDao extends JdbcDaoSupport {
 		setDataSource(dataSource);
 	}
 
-	public List<Map<String, Object>> readOrders(String customerId) {
-		String sql = "select DATE_FORMAT(ORDERS.orderUpdateDate, '%Y-%c-%e') as orderUpdateDate, ORDERS.orderId, ORDERS.orderStatus, ORDERS.realPrice, ITEMS.itemId, ITEMS.size, ITEMS.quantity, PRODUCTS.productName from ORDERS, ITEMS, PRODUCTS where PRODUCTS.productId = ITEMS.productId and ORDERS.customerId = ? and ORDERS.orderId is not NULL and ORDERS.orderId = ITEMS.orderId order by ORDERS.orderId desc";
-		return getJdbcTemplate().queryForList(sql,customerId);
+	public List<Order> readOrders(String customerId) {
+		String sql = "select *, DATE_FORMAT(ORDERS.orderUpdateDate, '%Y-%c-%e') as orderDate from ORDERS where customerId = ?"; 
+		return getJdbcTemplate().query(
+				sql, (rs, rowNum) -> new Order(
+						rs.getInt("orderId"), 
+						rs.getString("orderStatus"),
+						new Customer(rs.getString("customerId")), 
+						rs.getInt("enuri"), 
+						rs.getInt("realPrice"), 
+						rs.getString("orderAddress"),
+						rs.getString("orderDate")), customerId);
 	}
 	
 	public Order readOrder(int orderId) {
@@ -41,7 +48,7 @@ public class OrderDao extends JdbcDaoSupport {
 				sql, (rs, rowNum) -> new Order(rs.getInt("orderId"), rs
 						.getString("orderStatus"), new Customer(rs
 								.getString("customerId")), rs.getInt("enuri"), rs
-								.getInt("realPrice"), rs.getString("orderAddress")),
+								.getInt("realPrice"), rs.getString("orderUpdateDate"), rs.getString("orderAddress")),
 								orderId);
 	}
 

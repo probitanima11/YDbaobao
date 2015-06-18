@@ -1,8 +1,6 @@
 package com.ydbaobao.controller;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.stream.IntStream;
 
 import javax.annotation.Resource;
@@ -12,12 +10,12 @@ import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.WebRequest;
 
+import com.support.CommonUtil;
 import com.ydbaobao.exception.ExceptionForMessage;
 import com.ydbaobao.exception.JoinValidationException;
 import com.ydbaobao.model.Brand;
@@ -93,7 +91,7 @@ public class HomeController {
 	@RequestMapping(value ="/join", method = RequestMethod.POST)
 	public String create(@Valid Customer customer, BindingResult result, @RequestParam String customerAgainPassword, Model model) throws ExceptionForMessage{
 		if(result.hasErrors()) {
-			throw new JoinValidationException(extractValidationMessages(result));
+			throw new JoinValidationException(CommonUtil.extractValidationMessages(result));
         }
 		if(!customer.getCustomerPassword().equals(customerAgainPassword)) {
 			model.addAttribute("customer", new Customer());
@@ -108,16 +106,5 @@ public class HomeController {
 	protected String logout(HttpSession session) {
 		session.invalidate();
 		return "redirect:/";
-	}
-
-	//TODO util로 빼기
-	private List<String> extractValidationMessages(BindingResult result) {
-		List<ObjectError> list = result.getAllErrors();
-		List<String> messageList = new ArrayList<>();
-		System.out.println(list);
-		for (ObjectError e : list) {
-			messageList.add(e.getDefaultMessage());
-		}
-		return messageList;
 	}
 }

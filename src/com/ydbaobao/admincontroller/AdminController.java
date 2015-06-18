@@ -1,22 +1,14 @@
 package com.ydbaobao.admincontroller;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 
-import com.support.ImageResizeUtil;
 import com.ydbaobao.dao.GradeDao;
 
 @Controller
@@ -43,7 +35,6 @@ public class AdminController {
 	public String check() {
 		return "admin/adminCheck";
 	}
-	
 
 	@RequestMapping(value = "/check", method = RequestMethod.POST)
 	public String checkForm(@RequestParam String adminPassword, HttpSession session) {

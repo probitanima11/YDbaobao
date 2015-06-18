@@ -328,7 +328,7 @@ ul#util li a span {
 	min-height: 400px;
 }
 
-#cart-list {
+#cart-list, #order-list {
 	width: 600px;
 	text-align: center;
 	margin: 0 auto;

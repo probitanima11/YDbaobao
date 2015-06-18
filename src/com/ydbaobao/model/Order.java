@@ -1,5 +1,8 @@
 package com.ydbaobao.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Order {
 	private int orderId;
 	private String orderStatus;
@@ -7,22 +10,26 @@ public class Order {
 	private int enuri;
 	private int realPrice;
 	private String orderAddress;
+	private String orderDate;
+	private List<Item> items;
 	
 	public Order() {
 		
 	}
 	
 	public Order(int orderId) {
-		this(orderId, null, null, 0, 0, null);
+		this(orderId, null, null, 0, 0, null, null);
 	}
 
-	public Order(int orderId, String orderStatus, Customer customer, int enuri, int realPrice, String orderAddress) {
+	public Order(int orderId, String orderStatus, Customer customer, int enuri, int realPrice, String orderAddress, String orderDate) {
 		this.orderId = orderId;
 		this.orderStatus = orderStatus;
 		this.customer = customer;
 		this.enuri = enuri;
 		this.realPrice = realPrice;
 		this.orderAddress = orderAddress;
+		this.orderDate = orderDate;
+		items = new ArrayList<Item>();
 	}
 
 	public int getOrderId() {
@@ -47,6 +54,14 @@ public class Order {
 
 	public String getOrderAddress() {
 		return orderAddress;
+	}
+	
+	public String getOrderDate() {
+		return orderDate;
+	}
+
+	public List<Item> getItems() {
+		return items;
 	}
 
 	public void setOrderId(int orderId) {
@@ -73,15 +88,33 @@ public class Order {
 		this.orderAddress = orderAddress;
 	}
 
+	public void setOrderDate(String orderDate) {
+		this.orderDate = orderDate;
+	}
+
+	public void setItems(List<Item> items) {
+		this.items = items;
+	}
+	
+	public void addItem(Item item) {
+		items.add(item);
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((customer == null) ? 0 : customer.hashCode());
+		result = prime * result
+				+ ((customer == null) ? 0 : customer.hashCode());
 		result = prime * result + enuri;
-		result = prime * result + ((orderAddress == null) ? 0 : orderAddress.hashCode());
+		result = prime * result + ((items == null) ? 0 : items.hashCode());
+		result = prime * result
+				+ ((orderAddress == null) ? 0 : orderAddress.hashCode());
+		result = prime * result
+				+ ((orderDate == null) ? 0 : orderDate.hashCode());
 		result = prime * result + orderId;
-		result = prime * result + ((orderStatus == null) ? 0 : orderStatus.hashCode());
+		result = prime * result
+				+ ((orderStatus == null) ? 0 : orderStatus.hashCode());
 		result = prime * result + realPrice;
 		return result;
 	}
@@ -102,10 +135,20 @@ public class Order {
 			return false;
 		if (enuri != other.enuri)
 			return false;
+		if (items == null) {
+			if (other.items != null)
+				return false;
+		} else if (!items.equals(other.items))
+			return false;
 		if (orderAddress == null) {
 			if (other.orderAddress != null)
 				return false;
 		} else if (!orderAddress.equals(other.orderAddress))
+			return false;
+		if (orderDate == null) {
+			if (other.orderDate != null)
+				return false;
+		} else if (!orderDate.equals(other.orderDate))
 			return false;
 		if (orderId != other.orderId)
 			return false;
@@ -121,7 +164,10 @@ public class Order {
 
 	@Override
 	public String toString() {
-		return "Order [orderId=" + orderId + ", orderStatus=" + orderStatus + ", customer=" + customer + ", enuri="
-				+ enuri + ", realPrice=" + realPrice + ", orderAddress=" + orderAddress + "]";
+		return "Order [orderId=" + orderId + ", orderStatus=" + orderStatus
+				+ ", customer=" + customer + ", enuri=" + enuri
+				+ ", realPrice=" + realPrice + ", orderAddress=" + orderAddress
+				+ ", orderDate=" + orderDate + ", items=" + items + "]";
 	}
+	
 }
