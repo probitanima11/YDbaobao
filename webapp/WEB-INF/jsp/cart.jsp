@@ -170,6 +170,10 @@
 
 		addItemsPrice(); 
 
+		priceWithComma();
+
+		totalPriceWithComma();
+
 	}, false);
 	
 	function order(param) {
@@ -194,6 +198,21 @@
 
 		document.querySelector('#total-price span').textContent = totalPrice;
 	}
+
+	function priceWithComma() {
+		var el = document.querySelectorAll('.item-price');
+		var length = el.length;
+
+		for(var i = 0; i < length; i++) {
+			el[i].textContent = parseInt(el[i].textContent).toLocaleString();
+		}
+	}
+
+	function totalPriceWithComma() {
+		 	var el = document.querySelector('#total-price span');
+		 	el.textContent = parseInt(el.textContent).toLocaleString();
+	}
+	
 	</script>
 	<script src="/js/ydbaobao.js"></script>
 </body>
