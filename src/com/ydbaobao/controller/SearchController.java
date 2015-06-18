@@ -3,7 +3,6 @@ package com.ydbaobao.controller;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.IntStream;
 
 import javax.annotation.Resource;
 
@@ -14,9 +13,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.context.request.WebRequest;
 
-import com.ydbaobao.model.PageConfigParam;
+import com.support.CommonUtil;
 import com.ydbaobao.model.Product;
 import com.ydbaobao.service.AdminConfigService;
 import com.ydbaobao.service.CategoryService;
@@ -34,41 +32,46 @@ public class SearchController {
 	@Resource
 	private AdminConfigService adminConfigService;
 
-	@RequestMapping(value = "", method = RequestMethod.GET)
-	public String search(Model model, WebRequest req, @RequestParam String terms, @RequestParam String select) {
-		model.addAttribute("categories", categoryService.read());
+	@RequestMapping(value = "/brands", method = RequestMethod.GET)
+	public String searchBrand(Model model, @RequestParam String brandName, @RequestParam int page) {
 		Pattern pt = Pattern.compile("^\\s{1,}|\\s{1,}$");
-		Matcher m = pt.matcher(terms);
+		Matcher m = pt.matcher(brandName);
 		String query = m.replaceAll("").replaceAll(" ", "|");
-		if (query.length() <1) {
+		
+		if (query.length() < 1) {
 			model.addAttribute("count", 0);
 			return "search";
 		}
-		int count = 0;
-		String selectOption = "상품명";
-		List<Product> products= null;
-		PageConfigParam p = null;
-		if (select.equals("product-name")) {
-			count = productService.countBySearchProductName(query);
-			p = new PageConfigParam(adminConfigService.read().getAdminDisplayProducts(), req.getParameter("index"), count);
-			products = productService.readByProductName(query, p.getIndex(), p.getQuantity());
-		}
-		if (select.equals("brand-name")) {
-			selectOption="브랜드명";
-			count = productService.countBySearchBrandName(query);
-			p = new PageConfigParam(16, req.getParameter("index"), count);
-			products = productService.readByBrandName(query, p.getIndex(), p.getQuantity());
-		}
-		if (p.getEnd() < p.getRange()) {
-			model.addAttribute("nextBtn", true);
-		}
-		model.addAttribute("productList", products);
+		int count = productService.countBySearchBrandName(query);
+		List<Product> products= productService.readByBrandName(query, page, CommonUtil.PRODUCTS_PER_PAGE);
+
+		model.addAttribute("totalPage", CommonUtil.countTotalPage(count));
+		model.addAttribute("categories", categoryService.read());
+		model.addAttribute("products", products);
 		model.addAttribute("count", count);
-		model.addAttribute("selectedIndex", p.getSelectedIndex());
-		model.addAttribute("range", IntStream.range(p.getStart(), p.getEnd()).toArray());
-		model.addAttribute("selected", selectOption);
-		model.addAttribute("select", select);
-		model.addAttribute("terms", terms);
+		model.addAttribute("terms", brandName);
+		model.addAttribute("query", query);
+		return "search";
+	}
+	
+	@RequestMapping(value = "/products", method = RequestMethod.GET)
+	public String search(Model model, @RequestParam String productName, @RequestParam int page) {
+		Pattern pt = Pattern.compile("^\\s{1,}|\\s{1,}$");
+		Matcher m = pt.matcher(productName);
+		String query = m.replaceAll("").replaceAll(" ", "|");
+		
+		if (query.length() < 1) {
+			model.addAttribute("count", 0);
+			return "search";
+		}
+		int count = productService.countBySearchProductName(query);
+		List<Product> products= productService.readByProductName(query, page, CommonUtil.PRODUCTS_PER_PAGE);
+
+		model.addAttribute("totalPage", CommonUtil.countTotalPage(count));
+		model.addAttribute("categories", categoryService.read());
+		model.addAttribute("products", products);
+		model.addAttribute("count", count);
+		model.addAttribute("terms", productName);
 		model.addAttribute("query", query);
 		return "search";
 	}

@@ -22,11 +22,11 @@
 		<%@ include file="./commons/_horizontalCategory.jsp"%>
 	</div>
 	<div id="main-container" class="wrap content">
-		<div class="search-message">요청하신 ${selected} : "${terms}"에 대해 ${count} 개의 검색결과가 있습니다.</div>
+		<div class="search-message"> ${terms}에 대해 ${count} 개의 검색결과가 있습니다.</div>
 	</div>
 	<div id="item-container" class="wrap content">
 		<%@ include file="./commons/_productsBox.jsp"%>
-		<%@ include file="./commons/_productsListBar.jsp"%>
+		<%@ include file="./commons/_paging.jsp"%>
 	</div>
 
 </body>
