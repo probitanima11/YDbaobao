@@ -1,7 +1,6 @@
 package com.ydbaobao.controller;
 
 import java.io.File;
-import java.util.stream.IntStream;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
@@ -20,7 +19,6 @@ import com.ydbaobao.exception.ExceptionForMessage;
 import com.ydbaobao.exception.JoinValidationException;
 import com.ydbaobao.model.Brand;
 import com.ydbaobao.model.Customer;
-import com.ydbaobao.model.PageConfigParam;
 import com.ydbaobao.model.SessionCustomer;
 import com.ydbaobao.service.AdminConfigService;
 import com.ydbaobao.service.BrandService;
@@ -43,14 +41,28 @@ public class HomeController {
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Model model, WebRequest req) {
-		PageConfigParam p = new PageConfigParam(adminConfigService.read().getAdminDisplayProducts(), req.getParameter("index"), productService.count());
-
-		if (p.getEnd() < p.getRange()) {
-			model.addAttribute("nextBtn", true);
+		model.addAttribute("totalPage", CommonUtil.countTotalPage(productService.count()));
+		model.addAttribute("products", productService.readRange(1, CommonUtil.PRODUCTS_PER_PAGE));
+		model.addAttribute("categories", categoryService.read());
+		model.addAttribute("brands", brandService.readBrands());
+		model.addAttribute("firstLetterList", new Brand().getFirstLetters());
+		
+		StringBuilder imgPath = new StringBuilder();
+		for (int i = 0; i < 8; i++) {
+			String filePath = "index_0" + i + ".jpg";
+			File f = new File("/home/baobao/index/"+filePath);
+			if (f.isFile()) {
+				imgPath.append(",/img/index/"+filePath);
+			} 
 		}
-		model.addAttribute("selectedIndex", p.getSelectedIndex());
-		model.addAttribute("range", IntStream.range(p.getStart(), p.getEnd()).toArray());
-		model.addAttribute("products", productService.readRange(p.getIndex(), p.getQuantity()));
+		model.addAttribute("imgPath", imgPath);
+		return "index";
+	}
+	
+	@RequestMapping(value = "/index", method = RequestMethod.GET)
+	public String homeWithPage(Model model, @RequestParam int page) {
+		model.addAttribute("totalPage", CommonUtil.countTotalPage(productService.count()));
+		model.addAttribute("products", productService.readRange(page, CommonUtil.PRODUCTS_PER_PAGE));
 		model.addAttribute("categories", categoryService.readWithoutUnclassifiedCategory());
 		model.addAttribute("brands", brandService.readBrands());
 		model.addAttribute("firstLetterList", new Brand().getFirstLetters());

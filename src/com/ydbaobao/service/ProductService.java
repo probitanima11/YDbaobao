@@ -122,8 +122,8 @@ public class ProductService {
 		return productDao.countBySearchBrandName(terms);
 	}
 
-	public List<Product> readRange(int start, int range) {
-		return productDao.readRange(start, range);
+	public List<Product> readRange(int page, int productsPerPage) {
+		return productDao.readRange((page - 1) * productsPerPage, productsPerPage);
 	}
 
 	public List<Product> readUnclassifiedProducts() {
@@ -165,5 +165,9 @@ public class ProductService {
 
 	public List<Product> readByCategoryIdAndBrandId(int categoryId, int brandId, int page, int productsPerPage) {
 		return productDao.readByCategoryIdAndBrandId(categoryId, brandId, (page - 1) * productsPerPage, productsPerPage);
+	}
+
+	public List<Product> readAll() {
+		return productDao.readProductsList();
 	}
 }
