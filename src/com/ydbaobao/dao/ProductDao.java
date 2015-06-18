@@ -67,7 +67,6 @@ public class ProductDao extends JdbcDaoSupport {
 		String sql = "update PRODUCTS set productName = ?, categoryId = ?, brandId = ?, productPrice=?, productDescription=?, productUpdateDate=default, productSize=?, productImage=? where productId = ?";
 		return getJdbcTemplate().update(sql, product.getProductName(), product.getCategory().getCategoryId(), product.getBrand().getBrandId(), product.getProductPrice(), product.getProductDescription(), product.getProductSize(), product.getProductImage(), product.getProductId());
 	}
-	
 
 	public List<Product> readRange(int start, int quantity) {
 		String sql ="select * from PRODUCTS, brands where brands.brandId = PRODUCTS.brandId ORDER BY productId desc LIMIT ?, ?";
@@ -91,18 +90,6 @@ public class ProductDao extends JdbcDaoSupport {
 						rs.getInt("productPrice"), rs.getString("productImage"),
 						rs.getString("productDescription"), rs.getLong("productCreateDate"),
 						rs.getLong("productUpdateDate"), rs.getString("productSize")), categoryId, offset, productsPerPage);
-	}
-
-	public List<Product> readListByCategoryId(int categoryId) {
-		String sql = "select * from PRODUCTS, brands where products.brandId = brands.brandId and categoryId=? ORDER BY productId desc";
-		return getJdbcTemplate().query(
-				sql, (rs, rowNum) -> new Product(
-						rs.getInt("productId"), rs.getString("productName"),
-						new Category(rs.getInt("categoryId"), null, 0),
-						new Brand(rs.getInt("brandId"), rs.getString("brandName"), rs.getInt("brandCount"), rs.getInt("discount_1"), rs.getInt("discount_2"), rs.getInt("discount_3"), rs.getInt("discount_4"), rs.getInt("discount_5"), rs.getString("brandSize")),
-						rs.getInt("productPrice"), rs.getString("productImage"),
-						rs.getString("productDescription"), rs.getLong("productCreateDate"),
-						rs.getLong("productUpdateDate"), rs.getString("productSize")), categoryId);
 	}
 	
 	public List<Product> readByProductName(String query, int page, int productsPerPage) {
@@ -144,6 +131,28 @@ public class ProductDao extends JdbcDaoSupport {
 		return getJdbcTemplate().queryForObject(sql, Integer.class, query);
 	}
 
+	/**
+	 * 카테고리의 전체 상품을 페이지에 따라 productsPerPage 수만큼 가져온다
+	 * @param categoryId, offset, productsPerPage
+	 * @return categoryId가 일치하는 상품들 중 offset부터 productsPerPage 만큼 가져온 Products
+	 */
+	public List<Product> readListByCategoryId(int categoryId) {
+		String sql = "select * from PRODUCTS, brands where products.brandId = brands.brandId and categoryId=? ORDER BY productId desc";
+		return getJdbcTemplate().query(
+				sql, (rs, rowNum) -> new Product(
+						rs.getInt("productId"), rs.getString("productName"),
+						new Category(rs.getInt("categoryId"), null, 0),
+						new Brand(rs.getInt("brandId"), rs.getString("brandName"), rs.getInt("brandCount"), rs.getInt("discount_1"), rs.getInt("discount_2"), rs.getInt("discount_3"), rs.getInt("discount_4"), rs.getInt("discount_5"), rs.getString("brandSize")),
+						rs.getInt("productPrice"), rs.getString("productImage"),
+						rs.getString("productDescription"), rs.getLong("productCreateDate"),
+						rs.getLong("productUpdateDate"), rs.getString("productSize")), categoryId);
+	}
+	
+	/**
+	 * 브랜드의 전체 상품을 페이지에 따라 productsPerPage 수만큼 가져온다
+	 * @param brandId, offset, productsPerPage
+	 * @return brandId가 일치하는 상품들 중 offset부터 productsPerPage 만큼 가져온 Products
+	 */
 	public List<Product> readListByBrandId(int brandId, int offset, int productsPerPage) {
 		String sql = "select * from PRODUCTS, BRANDS where BRANDS.brandId = PRODUCTS.brandId and PRODUCTS.brandId=? ORDER BY productId DESC limit ?, ?";
 		return getJdbcTemplate().query(
@@ -156,17 +165,11 @@ public class ProductDao extends JdbcDaoSupport {
 						rs.getLong("productUpdateDate"), rs.getString("productSize")), brandId, offset, productsPerPage);
 	}
 
-	public List<Product> readProductsList() {
-		String sql = "select * from PRODUCTS ORDER BY productId DESC";
-		return getJdbcTemplate()
-				.query(sql,
-						(rs, rowNum) -> new Product(rs.getInt("productId"), rs.getString("productName"), new Category(
-								rs.getInt("categoryId"), null, 0), new Brand(rs.getInt("brandId"), null, 0, 0, 0, 0, 0, 0, ""), rs
-								.getInt("productPrice"), rs.getString("productImage"), rs
-								.getString("productDescription"), rs.getLong("productCreateDate"), rs
-								.getLong("productUpdateDate"), rs.getString("productSize")));
-	}
-
+	/**
+	 * 카테고리 별 브랜드 상품을 페이지에 따라 productsPerPage 수만큼 가져온다
+	 * @param categoryId, brandId, offset, productsPerPage
+	 * @return categoryId와 brandId가 일치하는 상품들 중 offset부터 productsPerPage 만큼 가져온 Products
+	 */
 	public List<Product> readByCategoryIdAndBrandId(int categoryId, int brandId, int offset, int productsPerPage) {
 		String sql = "select * from PRODUCTS where categoryId = ? and brandId = ? ORDER BY productId DESC limit ?, ?";
 		return getJdbcTemplate().query(sql, (rs, rowNum) -> new Product(
@@ -176,6 +179,17 @@ public class ProductDao extends JdbcDaoSupport {
 				rs.getInt("productPrice"), rs.getString("productImage"), rs.getString("productDescription"),
 				rs.getLong("productCreateDate"), rs.getLong("productUpdateDate"), rs.getString("productSize")),
 				categoryId, brandId, offset, productsPerPage);
+	}
+	
+	public List<Product> readProductsList() {
+		String sql = "select * from PRODUCTS ORDER BY productId DESC";
+		return getJdbcTemplate()
+				.query(sql,
+						(rs, rowNum) -> new Product(rs.getInt("productId"), rs.getString("productName"), new Category(
+								rs.getInt("categoryId"), null, 0), new Brand(rs.getInt("brandId"), null, 0, 0, 0, 0, 0, 0, ""), rs
+								.getInt("productPrice"), rs.getString("productImage"), rs
+								.getString("productDescription"), rs.getLong("productCreateDate"), rs
+								.getLong("productUpdateDate"), rs.getString("productSize")));
 	}
 	
 	public int deleteAll() {
