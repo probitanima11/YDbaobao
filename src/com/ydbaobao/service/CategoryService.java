@@ -5,11 +5,13 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ydbaobao.dao.CategoryDao;
 import com.ydbaobao.model.Category;
 
 @Service
+@Transactional
 public class CategoryService {
 	@Resource
 	private CategoryDao categoryDao;

@@ -5,12 +5,14 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ydbaobao.dao.CustomerDao;
 import com.ydbaobao.exception.ExceptionForMessage;
 import com.ydbaobao.model.Customer;
 
 @Service
+@Transactional
 public class CustomerService {
 	@Resource
 	private CustomerDao customerDao;
