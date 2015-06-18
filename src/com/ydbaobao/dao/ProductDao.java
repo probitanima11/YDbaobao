@@ -80,7 +80,7 @@ public class ProductDao extends JdbcDaoSupport {
 						rs.getLong("productUpdateDate"), rs.getString("productSize")), categoryId, offset, productsPerPage);
 	}
 	
-	public List<Product> readByProductName(String query, int offset, int productsPerPage) {
+	public List<Product> readByProductName(String param, int offset, int productsPerPage) {
 		String sql = "select * from products, brands WHERE products.brandId = brands.brandId and productName REGEXP (?) order by productId desc limit ?, ?";
 		return getJdbcTemplate().query(
 				sql, (rs, rowNum) -> new Product(
@@ -89,10 +89,10 @@ public class ProductDao extends JdbcDaoSupport {
 						new Brand(rs.getInt("brandId"), rs.getString("brandName"), rs.getInt("brandCount"), rs.getInt("discount_1"), rs.getInt("discount_2"), rs.getInt("discount_3"), rs.getInt("discount_4"), rs.getInt("discount_5"), rs.getString("brandSize")),
 						rs.getInt("productPrice"), rs.getString("productImage"),
 						rs.getString("productDescription"), rs.getLong("productCreateDate"),
-						rs.getLong("productUpdateDate"), rs.getString("productSize")), query, offset, productsPerPage);
+						rs.getLong("productUpdateDate"), rs.getString("productSize")), param, offset, productsPerPage);
 	}
 	
-	public List<Product> readByBrandName(String query, int offset, int productsPerPage) {
+	public List<Product> readByBrandName(String param, int offset, int productsPerPage) {
 		String sql = "select * from products, brands WHERE products.brandId = brands.brandId and brandName REGEXP (?) order by productId desc limit ?, ?";
 		return getJdbcTemplate().query(
 				sql, (rs, rowNum) -> new Product(
@@ -101,7 +101,7 @@ public class ProductDao extends JdbcDaoSupport {
 						new Brand(rs.getInt("brandId"), rs.getString("brandName"), rs.getInt("brandCount"), rs.getInt("discount_1"), rs.getInt("discount_2"), rs.getInt("discount_3"), rs.getInt("discount_4"), rs.getInt("discount_5"), rs.getString("brandSize")),
 						rs.getInt("productPrice"), rs.getString("productImage"),
 						rs.getString("productDescription"), rs.getLong("productCreateDate"),
-						rs.getLong("productUpdateDate"), rs.getString("productSize")), query, offset, productsPerPage);
+						rs.getLong("productUpdateDate"), rs.getString("productSize")), param, offset, productsPerPage);
 	}
 
 	public int count() {
@@ -109,14 +109,14 @@ public class ProductDao extends JdbcDaoSupport {
 		return getJdbcTemplate().queryForObject(sql, Integer.class);
 	}
 
-	public int countBySearchProductName(String query) {
+	public int countBySearchProductName(String param) {
 		String sql = "select count(1) as count from products WHERE productName REGEXP (?)";
-		return getJdbcTemplate().queryForObject(sql, Integer.class, query);
+		return getJdbcTemplate().queryForObject(sql, Integer.class, param);
 	}
 	
-	public int countBySearchBrandName(String query) {
+	public int countBySearchBrandName(String param) {
 		String sql = "select count(1) as count from products, brands WHERE products.brandId = brands.brandId and brandName REGEXP (?)";
-		return getJdbcTemplate().queryForObject(sql, Integer.class, query);
+		return getJdbcTemplate().queryForObject(sql, Integer.class, param);
 	}
 	
 	/**
