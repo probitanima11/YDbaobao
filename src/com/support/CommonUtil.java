@@ -46,4 +46,13 @@ public class CommonUtil {
 		}
 		return messageList;
 	}
+	
+	/**
+	 * 
+	 * @param 전체 상품 갯수
+	 * @return 총 페이지 수
+	 */
+	public static Object countTotalPage(int count) {
+		return count / CommonUtil.PRODUCTS_PER_PAGE + 1;
+	}
 }

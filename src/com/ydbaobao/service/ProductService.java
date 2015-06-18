@@ -85,8 +85,8 @@ public class ProductService {
 		return imageName;
 	}
 	
-	public List<Product> readListByCategoryId(int categoryId, int index, int quantity) {
-		return productDao.readListByCategoryId(categoryId, index, quantity);
+	public List<Product> readListByCategoryId(int categoryId, int page, int productsPerPage) {
+		return productDao.readListByCategoryId(categoryId, (page - 1) * productsPerPage, productsPerPage);
 	}
 	
 	public List<Product> readProducts() {
@@ -135,8 +135,8 @@ public class ProductService {
 		return productList;
 	}
 
-	public List<Product> readListByBrandId(int brandId, int index, int quantity) {
-		return productDao.readListByBrandId(brandId, index, quantity);
+	public List<Product> readListByBrandId(int brandId, int page, int productsPerPage) {
+		return productDao.readListByBrandId(brandId, (page - 1) * productsPerPage, productsPerPage);
 	}
 
 	public boolean deleteAll() {
@@ -163,7 +163,7 @@ public class ProductService {
 		return false;
 	}
 
-	public List<Product> readByCategoryIdAndBrandId(int categoryId, int brandId) {
-		return productDao.readByCategoryIdAndBrandId(categoryId, brandId);
+	public List<Product> readByCategoryIdAndBrandId(int categoryId, int brandId, int page, int productsPerPage) {
+		return productDao.readByCategoryIdAndBrandId(categoryId, brandId, (page - 1) * productsPerPage, productsPerPage);
 	}
 }

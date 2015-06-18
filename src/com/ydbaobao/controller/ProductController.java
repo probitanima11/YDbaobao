@@ -1,6 +1,6 @@
 package com.ydbaobao.controller;
 
-import java.util.stream.IntStream;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.support.CommonUtil;
 import com.ydbaobao.model.Brand;
 import com.ydbaobao.model.Category;
+import com.ydbaobao.model.Product;
 import com.ydbaobao.model.SessionCustomer;
 import com.ydbaobao.service.AdminConfigService;
 import com.ydbaobao.service.BrandService;
@@ -45,19 +46,16 @@ public class ProductController {
 	
 	@RequestMapping(value = "/products", method = RequestMethod.GET)
 	public String loadAll(Model model, @RequestParam("page") String page) {
-		logger.debug("page : {}", page);
 		model.addAttribute("products", productService.readProducts());
 		model.addAttribute("categories", categoryService.readWithoutUnclassifiedCategory());
 		return "products";
 	}
 	
-	@RequestMapping(value="/categories/{categoryId}/products", method=RequestMethod.GET)
+	@RequestMapping(value="/categories/{categoryId}", method=RequestMethod.GET)
 	public String load(Model model, @RequestParam("page") int page, @PathVariable int categoryId) {
 		Category category = categoryService.readByCategoryId(categoryId);
 		
-		int totalPage = category.getCategoryCount() / CommonUtil.PRODUCTS_PER_PAGE + 1;
-		
-		model.addAttribute("totalPage", totalPage);
+		model.addAttribute("totalPage", CommonUtil.countTotalPage(category.getCategoryCount()));
 		model.addAttribute("products", productService.readListByCategoryId(categoryId, page, CommonUtil.PRODUCTS_PER_PAGE));
 		model.addAttribute("brands", brandService.readBrands());
 		model.addAttribute("category", category);
@@ -66,12 +64,12 @@ public class ProductController {
 		return "products";
 	}
 	
-	@RequestMapping(value="/categories/{categoryId}/brands/{brandId}/products", method=RequestMethod.GET)
-	public String load(Model model, @RequestParam("page") String page, @PathVariable int categoryId, @PathVariable int brandId) {
-
-		//TODO paging 기능 추가
+	@RequestMapping(value="/categories/{categoryId}/brands/{brandId}", method=RequestMethod.GET)
+	public String load(Model model, @RequestParam("page") int page, @PathVariable int categoryId, @PathVariable int brandId) {
+	List<Product> products = productService.readByCategoryIdAndBrandId(categoryId, brandId, page, CommonUtil.PRODUCTS_PER_PAGE);
 		
-		model.addAttribute("products", productService.readByCategoryIdAndBrandId(categoryId, brandId));
+		model.addAttribute("totalPage", CommonUtil.countTotalPage(products.size()));		
+		model.addAttribute("products", products);
 		model.addAttribute("brands", brandService.readBrands());
 		model.addAttribute("category", categoryService.readByCategoryId(categoryId));
 		model.addAttribute("categories", categoryService.readWithoutUnclassifiedCategory());
