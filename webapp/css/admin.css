@@ -127,3 +127,17 @@ ul#top li a span {
 #top-bar>ul>li>a>img {
   width: 85px;
 }
+
+#product-menu{
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+#product-menu .select-category{
+	float: left;
+}
+
+#product-menu .delete-all-product{
+	float: right;
+}
