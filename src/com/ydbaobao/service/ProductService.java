@@ -63,7 +63,6 @@ public class ProductService {
 			brandDao.increaseCount(newBrandId);
 			brandDao.decreaseCount(oldBrandId);
 		}
-		
 		if(productDao.update(product)==1){
 			return true;
 		}
