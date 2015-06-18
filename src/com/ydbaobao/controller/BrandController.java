@@ -1,7 +1,5 @@
 package com.ydbaobao.controller;
 
-import java.util.stream.IntStream;
-
 import javax.annotation.Resource;
 
 import org.springframework.http.HttpStatus;
@@ -16,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.support.CommonUtil;
 import com.support.JSONResponseUtil;
 import com.ydbaobao.model.Brand;
-import com.ydbaobao.model.PageConfigParam;
 import com.ydbaobao.service.BrandService;
 import com.ydbaobao.service.CategoryService;
 import com.ydbaobao.service.ProductService;
@@ -49,9 +46,7 @@ public class BrandController {
 	public String searchByBrandId(@RequestParam("page") int page, Model model, @PathVariable int brandId) {
 		Brand brand = brandService.readBrandByBrandId(brandId);
 		
-		int totalPage = brand.getBrandCount() / CommonUtil.PRODUCTS_PER_PAGE + 1;
-		
-		model.addAttribute("totalPage", totalPage);
+		model.addAttribute("totalPage", CommonUtil.countTotalPage(brand.getBrandCount()));
 		model.addAttribute("products", productService.readListByBrandId(brandId, page, CommonUtil.PRODUCTS_PER_PAGE));
 		model.addAttribute("brands", brandService.readBrands());
 		model.addAttribute("brand", brand);

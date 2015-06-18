@@ -81,7 +81,7 @@ public class ProductDao extends JdbcDaoSupport {
 						rs.getLong("productUpdateDate"), rs.getString("productSize")), start, quantity);
 	}
 
-	public List<Product> readListByCategoryId(int categoryId, int page, int productsPerPage) {
+	public List<Product> readListByCategoryId(int categoryId, int offset, int productsPerPage) {
 		String sql = "select * from PRODUCTS, brands where products.brandId = brands.brandId and categoryId=? ORDER BY productId desc limit ?, ?";
 		return getJdbcTemplate().query(
 				sql, (rs, rowNum) -> new Product(
@@ -90,7 +90,7 @@ public class ProductDao extends JdbcDaoSupport {
 						new Brand(rs.getInt("brandId"), rs.getString("brandName"), rs.getInt("brandCount"), rs.getInt("discount_1"), rs.getInt("discount_2"), rs.getInt("discount_3"), rs.getInt("discount_4"), rs.getInt("discount_5"), rs.getString("brandSize")),
 						rs.getInt("productPrice"), rs.getString("productImage"),
 						rs.getString("productDescription"), rs.getLong("productCreateDate"),
-						rs.getLong("productUpdateDate"), rs.getString("productSize")), categoryId, (page - 1)*productsPerPage, productsPerPage);
+						rs.getLong("productUpdateDate"), rs.getString("productSize")), categoryId, offset, productsPerPage);
 	}
 
 	public List<Product> readListByCategoryId(int categoryId) {
@@ -144,7 +144,7 @@ public class ProductDao extends JdbcDaoSupport {
 		return getJdbcTemplate().queryForObject(sql, Integer.class, query);
 	}
 
-	public List<Product> readListByBrandId(int brandId, int page, int productsPerPage) {
+	public List<Product> readListByBrandId(int brandId, int offset, int productsPerPage) {
 		String sql = "select * from PRODUCTS, BRANDS where BRANDS.brandId = PRODUCTS.brandId and PRODUCTS.brandId=? ORDER BY productId DESC limit ?, ?";
 		return getJdbcTemplate().query(
 				sql, (rs, rowNum) -> new Product(
@@ -153,7 +153,7 @@ public class ProductDao extends JdbcDaoSupport {
 						new Brand(rs.getInt("brandId"), rs.getString("brandName"), rs.getInt("brandCount"), rs.getInt("discount_1"), rs.getInt("discount_2"), rs.getInt("discount_3"), rs.getInt("discount_4"), rs.getInt("discount_5"), rs.getString("brandSize")),
 						rs.getInt("productPrice"), rs.getString("productImage"),
 						rs.getString("productDescription"), rs.getLong("productCreateDate"),
-						rs.getLong("productUpdateDate"), rs.getString("productSize")), brandId, (page - 1) * productsPerPage, productsPerPage);
+						rs.getLong("productUpdateDate"), rs.getString("productSize")), brandId, offset, productsPerPage);
 	}
 
 	public List<Product> readProductsList() {
@@ -167,6 +167,17 @@ public class ProductDao extends JdbcDaoSupport {
 								.getLong("productUpdateDate"), rs.getString("productSize")));
 	}
 
+	public List<Product> readByCategoryIdAndBrandId(int categoryId, int brandId, int offset, int productsPerPage) {
+		String sql = "select * from PRODUCTS where categoryId = ? and brandId = ? ORDER BY productId DESC limit ?, ?";
+		return getJdbcTemplate().query(sql, (rs, rowNum) -> new Product(
+				rs.getInt("productId"), rs.getString("productName"),
+				new Category(rs.getInt("categoryId"), null, 0), 
+				new Brand(rs.getInt("brandId"), null, 0, 0, 0, 0, 0, 0, ""), 
+				rs.getInt("productPrice"), rs.getString("productImage"), rs.getString("productDescription"),
+				rs.getLong("productCreateDate"), rs.getLong("productUpdateDate"), rs.getString("productSize")),
+				categoryId, brandId, offset, productsPerPage);
+	}
+	
 	public int deleteAll() {
 		String sql = "delete from PRODUCTS";
 		return getJdbcTemplate().update(sql);
@@ -175,17 +186,6 @@ public class ProductDao extends JdbcDaoSupport {
 	public int delete(Product product) {
 		String sql = "delete from PRODUCTS where productId=?";
 		return getJdbcTemplate().update(sql, product.getProductId());
-	}
-
-	public List<Product> readByCategoryIdAndBrandId(int categoryId, int brandId) {
-		String sql = "select * from PRODUCTS where categoryId = ? and brandId = ? ORDER BY productId DESC";
-		return getJdbcTemplate().query(sql, (rs, rowNum) -> new Product(
-				rs.getInt("productId"), rs.getString("productName"),
-				new Category(rs.getInt("categoryId"), null, 0), 
-				 new Brand(rs.getInt("brandId"), null, 0, 0, 0, 0, 0, 0, ""), 
-				 rs.getInt("productPrice"), rs.getString("productImage"), rs.getString("productDescription"),
-				 rs.getLong("productCreateDate"), rs.getLong("productUpdateDate"), rs.getString("productSize")),
-				 categoryId, brandId);
 	}
 
 	public void resetAutoIncrement() {
