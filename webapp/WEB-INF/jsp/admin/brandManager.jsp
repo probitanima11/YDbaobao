@@ -41,13 +41,15 @@
 			<button class="search-brand-btn">검색</button>
 			<table id="brand-table" style="width: 780px;">
 				<tr>
+					<th style="width:50px">구분</th>
 					<th style="width:150px">브랜드명</th>
 					<th style="width:320px">할인율</th>
 					<th style="width:100px">사이즈</th>
-					<th style="width:80px"></th>
+					<th style="width:80px">선택</th>
 				</tr>
-				<c:forEach var="brand" items="${brands}">
+				<c:forEach var="brand" varStatus="status" items="${brands}">
 					<tr id="brand_${brand.brandId}">
+						<td>${status.index+1}</td>
 						<td><input class="brandName" type="text" value="${brand.brandName}"
 							data-id="${brand.brandId}"></td>
 						<td class='discount_table'>
@@ -67,6 +69,7 @@
 					</tr>
 				</c:forEach>
 				<tr id="new-brand">
+					<td></td>
 					<td><input class="brandName" id="new-brandName" type="text"></td>
 					<td class='discount_table'>
 						1등급:<input type="text" value="0"> 

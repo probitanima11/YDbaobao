@@ -28,11 +28,13 @@
 			<h1>카테고리 관리</h1>
 			<table id="categories" style="width: 500px;">
 				<tr>
-					<th style="width:300px;">카테고리명</th>
-					<th style="width:200px;"></th>
+					<th style="width:50px">구분</th>
+					<th >카테고리명</th>
+					<th style="width:80;">선택</th>
 				</tr>
-				<c:forEach var="category" items="${categories}">
+				<c:forEach var="category" varStatus="status" items="${categories}">
 					<tr id="${category.categoryId}">
+						<td>${status.index+1}</td>
 						<td><input type="text" value="${category.categoryName}" data-id="${category.categoryId}"></td>
 						<td>
 							<button class="update-category-btn">수정</button>
@@ -41,6 +43,7 @@
 					</tr>
 				</c:forEach>
 				<tr>
+					<td></td>
 					<td><input id="new-category" type="text"></td>	
 					<td>
 						<button class="create-category-btn">추가</button>
