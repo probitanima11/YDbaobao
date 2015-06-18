@@ -98,16 +98,16 @@ public class ProductService {
 		return productList;
 	}
 	
-	public List<Product> readByProductName(String query, int index, int quantity) {
-		return productDao.readByProductName(query, index, quantity);
+	public List<Product> readByProductName(String query, int page, int productsPerPage) {
+		return productDao.readByProductName(query, (page - 1) * productsPerPage, productsPerPage);
 	}
 
 	public List<Product> readListByCategoryId(int categoryId) {
 		return productDao.readListByCategoryId(categoryId);
 	}
 	
-	public List<Product> readByBrandName(String query, int index, int quantity) {
-		return productDao.readByBrandName(query, index, quantity);
+	public List<Product> readByBrandName(String query, int page, int productsPerPage) {
+		return productDao.readByBrandName(query, (page - 1) * productsPerPage, productsPerPage);
 	}
 	
 	public int count() {
