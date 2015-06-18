@@ -97,31 +97,15 @@ public class ProductService {
 		}
 		return productList;
 	}
-	
-	public List<Product> readByProductName(String query, int page, int productsPerPage) {
-		return productDao.readByProductName(query, (page - 1) * productsPerPage, productsPerPage);
-	}
 
 	public List<Product> readListByCategoryId(int categoryId) {
 		return productDao.readListByCategoryId(categoryId);
-	}
-	
-	public List<Product> readByBrandName(String query, int page, int productsPerPage) {
-		return productDao.readByBrandName(query, (page - 1) * productsPerPage, productsPerPage);
 	}
 	
 	public int count() {
 		return productDao.count();
 	}
 	
-	public int countBySearchProductName(String terms) {
-		return productDao.countBySearchProductName(terms);
-	}
-	
-	public int countBySearchBrandName(String terms) {
-		return productDao.countBySearchBrandName(terms);
-	}
-
 	public List<Product> readRange(int page, int productsPerPage) {
 		return productDao.readRange((page - 1) * productsPerPage, productsPerPage);
 	}
