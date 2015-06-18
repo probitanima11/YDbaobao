@@ -25,7 +25,6 @@ import com.ydbaobao.dao.CustomerDao;
 import com.ydbaobao.exception.ExceptionForMessage;
 import com.ydbaobao.exception.JoinValidationException;
 import com.ydbaobao.model.Customer;
-import com.ydbaobao.model.SessionCustomer;
 import com.ydbaobao.service.CategoryService;
 import com.ydbaobao.service.CustomerService;
 
@@ -39,14 +38,7 @@ public class CustomerController {
 	@Resource
 	private CustomerDao customerDao;
 	
-	@RequestMapping(value = "/create", method = RequestMethod.GET)
-	public String form(Model model) {
-		model.addAttribute("customer", new Customer());
-		model.addAttribute("categories", categoryService.read());
-		return "form";
-	}
-	
-	@RequestMapping(value = "/update", method = RequestMethod.GET)
+	@RequestMapping(value = "/updateForm", method = RequestMethod.GET)
 	public String updateForm(Model model, HttpSession session) throws IOException {
 		String customerId = ServletRequestUtil.getCustomerIdFromSession(session);
 		model.addAttribute("isUpdate", true);
@@ -54,26 +46,7 @@ public class CustomerController {
 		return "form";
 	}
 	
-	@RequestMapping(value = "/{customerId}/grade/{grade}", method = RequestMethod.PUT)
-	public ResponseEntity<Object> update(@PathVariable String customerId, @PathVariable String grade) {
-		customerService.updateGrade(customerId, grade);
-		return JSONResponseUtil.getJSONResponse("등급 변경 완료.", HttpStatus.OK);
-	}
-	
-	@RequestMapping(value ="/create", method = RequestMethod.POST)
-	public String create(@Valid Customer customer, BindingResult result, @RequestParam String customerAgainPassword, Model model) throws ExceptionForMessage{
-		if(result.hasErrors()) {
-			throw new JoinValidationException(extractValidationMessages(result));
-        }
-		if(!customer.getCustomerPassword().equals(customerAgainPassword)) {
-			model.addAttribute("customer", new Customer());
-			model.addAttribute("message", "비밀번호가 일치하지 않습니다.");
-			return "form";
-		}
-		customerService.join(customer);
-		return "redirect:/";
-	}
-	
+	//TODO form을 put으로 넘기는 방법 찾기!
 	@RequestMapping(value ="/update", method = RequestMethod.POST)
 	public String update(@Valid Customer customer, BindingResult result, @RequestParam String customerAgainPassword, Model model) throws ExceptionForMessage{
 		if(result.hasErrors()) {
@@ -88,26 +61,13 @@ public class CustomerController {
 		return "index";
 	}
 	
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public String loginView(Model model) {
-		model.addAttribute("customer", new Customer());
-		model.addAttribute("categories", categoryService.read());
-		return "login";
+	@RequestMapping(value = "/{customerId}/grade/{grade}", method = RequestMethod.PUT)
+	public ResponseEntity<Object> update(@PathVariable String customerId, @PathVariable String grade) {
+		customerService.updateGrade(customerId, grade);
+		return JSONResponseUtil.getJSONResponse("등급 변경 완료.", HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	protected String login(@RequestParam String customerId, @RequestParam String customerPassword, HttpSession session, Model model) throws ExceptionForMessage {
-		SessionCustomer sessionCustomer = (customerService.login(customerId, customerPassword)).createSessionCustomer();
-		session.setAttribute("sessionCustomer", sessionCustomer);
-		return "redirect:/";
-	}
-	
-	@RequestMapping("/logout")
-	protected String logout(HttpSession session) {
-		session.invalidate();
-		return "redirect:/";
-	}
-	
+	//TODO util로 빼기
 	private List<String> extractValidationMessages(BindingResult result) {
 		List<ObjectError> list = result.getAllErrors();
 		List<String> messageList = new ArrayList<>();

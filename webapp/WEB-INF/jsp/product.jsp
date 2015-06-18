@@ -206,6 +206,7 @@ h1 {
 				size += el[i].name + "-";
 				quantity += el[i].value + "-";
 			}
+			
 			var param = 'productId=' + productId + '&size=' + size + '&quantity=' + quantity;
 			ydbaobao.ajax({
 				/* TODO productId, size, quantity 전달. */

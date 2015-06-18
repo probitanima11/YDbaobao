@@ -20,14 +20,24 @@
 	<mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/search/**" />
-			<mvc:mapping path="/product/**" />
+			<mvc:mapping path="/customers/**" />
 			<mvc:mapping path="/products/**" />
 			<mvc:mapping path="/orders/**" />
-			<mvc:mapping path="/item/**" />
 			<mvc:mapping path="/brands/**" />
+			<mvc:mapping path="/carts/**" />
 			<mvc:mapping path="/categories/**" />
 			<mvc:mapping path="/imageUpload/**" />
 			<bean class="com.ydbaobao.intercepter.GradeCheckIntercepter" />
+		</mvc:interceptor>
+	</mvc:interceptors>
+	
+	<!-- 관리자세션 확인을 위한 인터셉터 -->
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/admin/**" />
+			<mvc:exclude-mapping path="/admin"/>
+			<mvc:exclude-mapping path="/admin/check"/>
+			<bean class="com.ydbaobao.intercepter.SessionAdminIntercepter" />
 		</mvc:interceptor>
 	</mvc:interceptors>
 

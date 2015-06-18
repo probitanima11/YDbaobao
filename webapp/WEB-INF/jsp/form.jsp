@@ -20,13 +20,12 @@
 	<div id="main-container">
 		<div id="first-section" class="wrap content" style="height: 500px;">
 			<div class="joinForm">
-				<c:set var="actionUrl" value="/customers/create" />
+				<c:set var="actionUrl" value="/join" />
 				<c:if test="${isUpdate}">
 					<c:set var="actionUrl" value="/customers/update" />
 				</c:if>
 
-				<form:form modelAttribute="customer" method="post"
-					action="${actionUrl}">
+				<form:form modelAttribute="customer" method="post" action="${actionUrl}">
 
 					<c:set var="pageName" value="회원가입" />
 					<c:if test="${isUpdate}">

@@ -25,7 +25,7 @@ public class ItemDao extends JdbcDaoSupport {
 		setDataSource(dataSource);
 	}
 
-	public List<Item> readCartList(String customerId) {
+	public List<Item> readCartItems(String customerId) {
 		String sql = "select * from ITEMS A, PRODUCTS B where A.customerId= ? and A.orderId is NULL AND A.productId = B.productId";
 		try {
 			return getJdbcTemplate().query(sql, (rs, rowNum) -> new Item(
@@ -46,7 +46,7 @@ public class ItemDao extends JdbcDaoSupport {
 		getJdbcTemplate().update(sql, itemId);
 	}
 
-	public void addCart(String customerId, String productId, String size, int quantity) {
+	public void createItem(String customerId, String productId, String size, int quantity) {
 		String sql = "insert into ITEMS (customerId, productId, size, quantity) values(?, ?, ?, ?)";
 		getJdbcTemplate().update(sql, customerId, productId, size, quantity);
 	}

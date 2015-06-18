@@ -92,11 +92,11 @@
 						</tr>
 					</tfoot>
 				</table>
-			<div id="order-section">
-				<button id="selection-delete-btn" class="btn" style="float:left; background-color:#ccc">선택상품삭제</button>
-				<button id="select-order-btn" class="btn">선택주문하기</button>
-				<button id="order-btn" class="btn">전체주문하기</button>
-			</div>
+				<div id="order-section">
+					<button id="selection-delete-btn" class="btn" style="float:left; background-color:#ccc">선택상품삭제</button>
+					<button id="select-order-btn" class="btn">선택주문하기</button>
+					<button id="order-btn" class="btn">전체주문하기</button>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -113,7 +113,7 @@
 					var tr = checkedItems[i].parentElement.parentElement;
 					ydbaobao.ajax({
 						method : 'delete',
-						url : '/carts/${customer.customerId}/items/' + tr.dataset.id,
+						url : '/carts/${sessionCustomer.sessionId}/items/' + tr.dataset.id,
 						success : function(req) {
 							document.querySelector('#total-price span').textContent -= document.querySelector('tr[data-id="'+ req.responseText + '"] .item-price').innerText;
 							document.querySelector('tr[data-id="'+ req.responseText + '"]').remove();

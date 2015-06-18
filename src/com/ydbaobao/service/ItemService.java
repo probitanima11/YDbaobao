@@ -18,6 +18,14 @@ public class ItemService {
 	@Resource
 	private OrderDao orderDao;
 	
+	public void createItems(String customerId, String size, String quantity, String productId) {
+		String[] sizeArray = size.split("-");
+		String[] quantityArray = quantity.split("-");
+		for(int i=0; i< quantityArray.length; i++){
+			itemDao.createItem(customerId, productId, sizeArray[i], Integer.parseInt(quantityArray[i]));
+		}
+	}
+	
 	public List<Item> readOrderedItems(String customerId) {
 		return itemDao.readOrderedItems(customerId);
 	}
@@ -31,5 +39,9 @@ public class ItemService {
 
 	public void orderDirect(String customerId, String productId, String size, int quantity) {
 		itemDao.orderDirect(customerId, productId, orderDao.createOrder(customerId), size, quantity);
+	}
+
+	public List<Item> readCartItems(String customerId) {
+		return itemDao.readCartItems(customerId);
 	}
 }

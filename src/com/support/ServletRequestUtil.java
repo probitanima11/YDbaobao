@@ -25,10 +25,11 @@ public class ServletRequestUtil {
 	}
 
 	public static boolean hasAuthorizationFromCustomer(HttpSession session) throws IOException{
-		SessionCustomer sessionCustomer = (SessionCustomer)session.getAttribute("sessionCustomer");
-		if(session.getAttribute("sessionAdmin") != null)
-			return Boolean.TRUE;
-		if (!existedCustomerIdFromSession(session) || (sessionCustomer.getSessionGrade()).equals("0")) {
+//		SessionCustomer sessionCustomer = (SessionCustomer)session.getAttribute("sessionCustomer");
+//		if (!existedCustomerIdFromSession(session) || (sessionCustomer.getSessionGrade()).equals("0")) {
+//			return Boolean.FALSE;
+//		}
+		if (!existedCustomerIdFromSession(session)) {
 			return Boolean.FALSE;
 		}
 		return Boolean.TRUE;

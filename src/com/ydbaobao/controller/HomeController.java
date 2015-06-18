@@ -1,31 +1,41 @@
 package com.ydbaobao.controller;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.IntStream;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.WebRequest;
 
+import com.ydbaobao.exception.ExceptionForMessage;
+import com.ydbaobao.exception.JoinValidationException;
 import com.ydbaobao.model.Brand;
+import com.ydbaobao.model.Customer;
 import com.ydbaobao.model.PageConfigParam;
+import com.ydbaobao.model.SessionCustomer;
 import com.ydbaobao.service.AdminConfigService;
 import com.ydbaobao.service.BrandService;
 import com.ydbaobao.service.CategoryService;
+import com.ydbaobao.service.CustomerService;
 import com.ydbaobao.service.ProductService;
 
 @Controller
 public class HomeController {
-	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
-	
 	@Resource
-	private CategoryService categorySevice; 
+	private CategoryService categoryService; 
+	@Resource
+	private CustomerService customerService;
 	@Resource
 	private BrandService brandService;
 	@Resource
@@ -43,7 +53,7 @@ public class HomeController {
 		model.addAttribute("selectedIndex", p.getSelectedIndex());
 		model.addAttribute("range", IntStream.range(p.getStart(), p.getEnd()).toArray());
 		model.addAttribute("products", productService.readRange(p.getIndex(), p.getQuantity()));
-		model.addAttribute("categories", categorySevice.read());
+		model.addAttribute("categories", categoryService.read());
 		model.addAttribute("brands", brandService.readBrands());
 		model.addAttribute("firstLetterList", new Brand().getFirstLetters());
 		
@@ -57,5 +67,57 @@ public class HomeController {
 		}
 		model.addAttribute("imgPath", imgPath);
 		return "index";
+	}
+	
+	@RequestMapping(value = "/loginForm", method = RequestMethod.GET)
+	public String loginView(Model model) {
+		model.addAttribute("customer", new Customer());
+		model.addAttribute("categories", categoryService.read());
+		return "login";
+	}
+	
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	protected String login(@RequestParam String customerId, @RequestParam String customerPassword, HttpSession session, Model model) throws ExceptionForMessage {
+		SessionCustomer sessionCustomer = (customerService.login(customerId, customerPassword)).createSessionCustomer();
+		session.setAttribute("sessionCustomer", sessionCustomer);
+		return "redirect:/";
+	}
+	
+	@RequestMapping(value = "/joinForm", method = RequestMethod.GET)
+	public String form(Model model) {
+		model.addAttribute("customer", new Customer());
+		model.addAttribute("categories", categoryService.read());
+		return "form";
+	}
+	
+	@RequestMapping(value ="/join", method = RequestMethod.POST)
+	public String create(@Valid Customer customer, BindingResult result, @RequestParam String customerAgainPassword, Model model) throws ExceptionForMessage{
+		if(result.hasErrors()) {
+			throw new JoinValidationException(extractValidationMessages(result));
+        }
+		if(!customer.getCustomerPassword().equals(customerAgainPassword)) {
+			model.addAttribute("customer", new Customer());
+			model.addAttribute("message", "비밀번호가 일치하지 않습니다.");
+			return "form";
+		}
+		customerService.join(customer);
+		return "redirect:/";
+	}
+	
+	@RequestMapping("/logout")
+	protected String logout(HttpSession session) {
+		session.invalidate();
+		return "redirect:/";
+	}
+
+	//TODO util로 빼기
+	private List<String> extractValidationMessages(BindingResult result) {
+		List<ObjectError> list = result.getAllErrors();
+		List<String> messageList = new ArrayList<>();
+		System.out.println(list);
+		for (ObjectError e : list) {
+			messageList.add(e.getDefaultMessage());
+		}
+		return messageList;
 	}
 }

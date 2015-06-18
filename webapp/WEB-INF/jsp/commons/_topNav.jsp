@@ -7,15 +7,15 @@
 		<ul id="util">
 			<c:choose>
 				<c:when test="${not empty sessionCustomer}">
-					<li><a href="/customers/logout"><span>로그아웃</span></a></li>
-					<li><a href="/customers/update"><span>개인정보수정</span></a></li>
-					<li><a href="/carts/${sessionCustomer.sessionId}"><span>장바구니</span></a></li>
+					<li><a href="/logout"><span>로그아웃</span></a></li>
+					<li><a href="/customers/updateForm"><span>개인정보수정</span></a></li>
+					<li><a href="/carts"><span>장바구니</span></a></li>
 					<li><a href="/orders"><span>주문내역</span></a></li>
 					<li><a href="#"><span>문의</span></a></li>
 				</c:when>
 				<c:otherwise>
-					<li><a href="/customers/login"><span>로그인</span></a></li>
-					<li><a href="/customers/create"><span>회원가입</span></a></li>
+					<li><a href="/loginForm"><span>로그인</span></a></li>
+					<li><a href="/joinForm"><span>회원가입</span></a></li>
 					<li style="font-weight: bold;"><a href="/admin"><span style="color: #EA6576;">관리자</span></a></li>
 				</c:otherwise>
 			</c:choose>
