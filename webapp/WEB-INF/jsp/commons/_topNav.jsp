@@ -13,6 +13,9 @@
 					<li><a href="/orders"><span>주문내역</span></a></li>
 					<li><a href="#"><span>문의</span></a></li>
 				</c:when>
+				<c:when test="${not empty sessionAdmin}">
+					<li class="logout"><a href="/admin/logout"><span style="color: #EA6576;">[관리자 로그아웃]</span></a></li>
+				</c:when>
 				<c:otherwise>
 					<li><a href="/customers/login"><span>로그인</span></a></li>
 					<li><a href="/customers/create"><span>회원가입</span></a></li>
