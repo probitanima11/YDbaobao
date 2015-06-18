@@ -26,8 +26,9 @@ public class AdminBrandController {
 	 * @param brandName
 	 */
 	@RequestMapping(method=RequestMethod.POST)
-	public ResponseEntity<Object> create(@RequestParam String brandName) {
-		return JSONResponseUtil.getJSONResponse(brandService.createBrand(brandName), HttpStatus.OK);
+	public ResponseEntity<Object> create(@RequestParam String brandName, @RequestParam int discount_1, @RequestParam int discount_2, @RequestParam int discount_3, @RequestParam int discount_4, @RequestParam int discount_5, @RequestParam String brandSize) {
+		Brand brand = new Brand(brandName, 0, discount_1, discount_2, discount_3, discount_4, discount_5, brandSize);
+		return JSONResponseUtil.getJSONResponse(brandService.createBrand(brand), HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "", method = RequestMethod.GET)

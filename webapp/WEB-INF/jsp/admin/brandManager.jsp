@@ -66,10 +66,17 @@
 						</td>
 					</tr>
 				</c:forEach>
-				<tr>
-					<td><input class="brandName" id="new-brand" type="text"></td>
-					<td></td>
-					<td></td>
+				<tr id="new-brand">
+					<td><input class="brandName" id="new-brandName" type="text"></td>
+					<td class='discount_table'>
+						1등급:<input type="text" value="0"> 
+						2등급:<input type="text" value="0"> 
+						3등급:<input type="text" value="0"> 
+						4등급:<input type="text" value="0"> 
+						5등급:<input type="text" value="0">
+					</td>
+					<td class='brand_sizes'><input type="text"
+						value="${brand.brandSize}"></td>
 					<td>
 						<button class="create-brand-btn">추가</button>
 					</td>
@@ -157,17 +164,33 @@
 		}
 
 		function createBrand() {
-			var brandName = document.querySelector('#new-brand').value;
+			debugger;
+			var brandName = document.querySelector('#new-brandName').value;
+			var discountTable = document.querySelectorAll('#new-brand .discount_table input');
+			var value = 0;
+			var param = "brandName="+brandName+"&discount_1="+discountTable[0].value;
 
 			if(brandName === '') {
 				alert('브랜드 명을 입력해주세요');
 				return;
 			}
 
+			for (var i = 1; i < discountTable.length; i++) {
+				value = discountTable[i].value*1;
+				if (value > 100 || value < 0){
+					value = 0;
+					document.querySelector("#new-brand .discount_table input:nth-child("+(i+1)+")").value = 0;
+				}
+				param += "&discount_"+(i+1)+"="+value;
+			}
+			
+			var brandSize = document.querySelector("#new-brand .brand_sizes input").value;
+			param += "&brandSize="+brandSize;
+			
 			ydbaobao.ajax({
 				method : 'post',
 				url : '/admin/brands/',
-				param : 'brandName=' + brandName,
+				param : param,
 				success : function(req) {
 					alert('브랜드가 추가되었습니다');
 					location.reload();

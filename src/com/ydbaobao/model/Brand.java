@@ -22,6 +22,18 @@ public class Brand {
 		this.brandId = brandId;
 	}
 	
+	public Brand(String brandName, int brandCount, int discount_1, int discount_2, int discount_3, int discount_4, int discount_5, String brandSize) {
+		super();
+		this.brandName = brandName;
+		this.brandCount = brandCount;
+		this.discount_1 = discount_1;
+		this.discount_2 = discount_2;
+		this.discount_3 = discount_3;
+		this.discount_4 = discount_4;
+		this.discount_5 = discount_5;
+		this.brandSize = brandSize;
+	}
+	
 	public Brand(int brandId, String brandName, int brandCount, int discount_1, int discount_2, int discount_3, int discount_4, int discount_5, String brandSize) {
 		super();
 		this.brandId = brandId;
