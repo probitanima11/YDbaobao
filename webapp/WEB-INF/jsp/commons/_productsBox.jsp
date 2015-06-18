@@ -23,3 +23,11 @@
 		</li>
 	</c:forEach>
 </ul>
+<script>
+	var el = document.querySelectorAll('.item-price');
+	var length = el.length;
+
+	for(var i = 0; i < length; i++) {
+		el[i].textContent = parseInt(el[i].textContent).toLocaleString();
+	}
+</script>

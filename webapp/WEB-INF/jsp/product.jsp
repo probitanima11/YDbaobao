@@ -95,7 +95,7 @@ h1 {
 		</div>
 		<div id="product-buy-container">
 			<h1 class="product-name" style="margin-top: 25px; margin-left: 15px;">${product.productName}</h1>
-			<div class="product-price">${product.productPrice}원</div>
+			<div class="product-price">${product.productPrice}</div>
 			<div style="margin-top: 25px; margin-left: 15px;">
 				<h3>구매수량</h3>
 				<button onclick="qtyControl('minus')"><i class='fa fa-minus'></i></button>
@@ -169,6 +169,9 @@ h1 {
 			 } else {
 				 document.querySelector("#product-photo img").style.height = "100%";
 			 }
+
+			 // 가격에 comma 추가(5000 -> 5,000)
+			 priceWithComma();
 		}, false);
 
 		function addToCart(e) {
@@ -235,6 +238,11 @@ h1 {
 			 		}
 			 		break;
 			 }
+		 }
+
+		 function priceWithComma() {
+		 	var el = document.querySelector('.product-price');
+		 	el.textContent = parseInt(el.textContent).toLocaleString();
 		 }
 	</script>
 	<script src="/js/ydbaobao.js"></script>
