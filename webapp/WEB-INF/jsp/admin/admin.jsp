@@ -11,9 +11,14 @@
 <style>
 </style>
 <body>
-<div id="container">
-	<%@ include file="./_adminNav.jsp" %>
-	<div id="content"><h1>관리자페이지</h1></div>
-</div>
+	<div id="header" style="width: 100%;">
+		<%@ include file="./_adminTopNav.jsp"%>
+	</div>
+	<div id="container">
+		<%@ include file="./_adminNav.jsp"%>
+		<div id="content">
+			<h1>관리자페이지</h1>
+		</div>
+	</div>
 </body>
 </html>

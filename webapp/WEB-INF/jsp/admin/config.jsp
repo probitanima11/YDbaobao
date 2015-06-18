@@ -10,6 +10,9 @@
 <link rel="stylesheet" href="/css/font-awesome.min.css">
 </head>
 <body>
+	<div id="header" style="width: 100%;">
+		<%@ include file="./_adminTopNav.jsp"%>
+	</div>
 	<div id="container">
 		<%@ include file="./_adminNav.jsp"%>
 		<div id="content">
