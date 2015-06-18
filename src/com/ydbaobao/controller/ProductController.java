@@ -5,8 +5,6 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,8 +24,6 @@ import com.ydbaobao.service.ProductService;
 
 @Controller
 public class ProductController {
-	private static final Logger logger = LoggerFactory.getLogger(ProductController.class);
-	
 	@Resource
 	private ProductService productService;
 	@Resource
@@ -45,9 +41,12 @@ public class ProductController {
 	}
 	
 	@RequestMapping(value = "/categories", method = RequestMethod.GET)
-	public String loadAll(Model model, @RequestParam("page") String page) {
-		model.addAttribute("products", productService.readProducts());
+	public String loadAll(Model model, @RequestParam("page") int page) {
+		model.addAttribute("totalPage", CommonUtil.countTotalPage(productService.count()));
+		model.addAttribute("products", productService.readRange(page, CommonUtil.PRODUCTS_PER_PAGE));
 		model.addAttribute("categories", categoryService.read());
+		model.addAttribute("brands", brandService.readBrands());
+		model.addAttribute("firstLetterList", new Brand().getFirstLetters());
 		return "products";
 	}
 	
