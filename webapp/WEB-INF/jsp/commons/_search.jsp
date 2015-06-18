@@ -34,10 +34,10 @@
 		var selected = document.querySelector('.selected').value;
 		var param = document.querySelector('#search-param').value;
 		if(selected === '상품명') {
-			window.location.href = '/search/products?productName=' + param + '&page=1';
+			window.location.href = '/search/products?param=' + param + '&page=1';
 		}
 		if(selected === '브랜드명') {
-			window.location.href = '/search/brands?brandName=' + param + '&page=1';
+			window.location.href = '/search/brands?param=' + param + '&page=1';
 		}
 	}, false);
 </script>
