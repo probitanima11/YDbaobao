@@ -45,7 +45,7 @@
 			</ul>
 			<table id="product-table" style="width: 800px;">
 				<tr>
-					<th width="50px">상품ID</th>
+					<th width="50px">ID</th>
 					<th width="100px">상품이미지</th>
 					<th colspan="4">상세내역</th>
 					<th width="50px">선택</th>
