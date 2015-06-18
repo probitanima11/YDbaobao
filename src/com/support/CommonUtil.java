@@ -8,7 +8,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 
 public class CommonUtil {
-	final public static int PRODUCTS_PER_PAGE = 16;
+	final public static int PRODUCTS_PER_PAGE = 4;
 	
 	public static boolean isNumber(String str){
         boolean result = false; 

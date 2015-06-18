@@ -26,8 +26,25 @@
 	</div>
 	<div id="item-container" class="wrap content">
 		<%@ include file="./commons/_productsBox.jsp"%>
-		<%@ include file="./commons/_paging.jsp"%>
+		
+		<div class="contents-nav">
+			<ul>
+			</ul>
+		</div>
 	</div>
 
 </body>
+<script>
+	window.addEventListener('load', function() {
+		paging();
+	}, false);
+
+	function paging() {
+		for(var i = 1; i <= ${totalPage}; i++) {
+			var li = document.createElement('li');
+			li.innerHTML = '<a href="?param=${terms}&page=' + i + '">' + i + '</a>';
+			document.querySelector('.contents-nav ul').appendChild(li);
+		}
+	}
+</script>
 </html>

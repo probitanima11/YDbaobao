@@ -33,9 +33,9 @@ public class SearchController {
 	private AdminConfigService adminConfigService;
 
 	@RequestMapping(value = "/brands", method = RequestMethod.GET)
-	public String searchBrand(Model model, @RequestParam String brandName, @RequestParam int page) {
+	public String searchBrand(Model model, @RequestParam String param, @RequestParam int page) {
 		Pattern pt = Pattern.compile("^\\s{1,}|\\s{1,}$");
-		Matcher m = pt.matcher(brandName);
+		Matcher m = pt.matcher(param);
 		String query = m.replaceAll("").replaceAll(" ", "|");
 		
 		if (query.length() < 1) {
@@ -49,15 +49,15 @@ public class SearchController {
 		model.addAttribute("categories", categoryService.read());
 		model.addAttribute("products", products);
 		model.addAttribute("count", count);
-		model.addAttribute("terms", brandName);
+		model.addAttribute("terms", param);
 		model.addAttribute("query", query);
 		return "search";
 	}
 	
 	@RequestMapping(value = "/products", method = RequestMethod.GET)
-	public String search(Model model, @RequestParam String productName, @RequestParam int page) {
+	public String search(Model model, @RequestParam String param, @RequestParam int page) {
 		Pattern pt = Pattern.compile("^\\s{1,}|\\s{1,}$");
-		Matcher m = pt.matcher(productName);
+		Matcher m = pt.matcher(param);
 		String query = m.replaceAll("").replaceAll(" ", "|");
 		
 		if (query.length() < 1) {
@@ -71,7 +71,7 @@ public class SearchController {
 		model.addAttribute("categories", categoryService.read());
 		model.addAttribute("products", products);
 		model.addAttribute("count", count);
-		model.addAttribute("terms", productName);
+		model.addAttribute("terms", param);
 		model.addAttribute("query", query);
 		return "search";
 	}
