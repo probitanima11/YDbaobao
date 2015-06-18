@@ -19,6 +19,7 @@ import com.support.CommonUtil;
 import com.ydbaobao.exception.ExceptionForMessage;
 import com.ydbaobao.exception.JoinValidationException;
 import com.ydbaobao.model.Brand;
+import com.ydbaobao.model.Category;
 import com.ydbaobao.model.Customer;
 import com.ydbaobao.model.PageConfigParam;
 import com.ydbaobao.model.SessionCustomer;
@@ -51,7 +52,7 @@ public class HomeController {
 		model.addAttribute("selectedIndex", p.getSelectedIndex());
 		model.addAttribute("range", IntStream.range(p.getStart(), p.getEnd()).toArray());
 		model.addAttribute("products", productService.readRange(p.getIndex(), p.getQuantity()));
-		model.addAttribute("categories", categoryService.read());
+		model.addAttribute("categories", categoryService.readWithoutUnclassifiedCategory());
 		model.addAttribute("brands", brandService.readBrands());
 		model.addAttribute("firstLetterList", new Brand().getFirstLetters());
 		

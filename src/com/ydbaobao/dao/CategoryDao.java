@@ -28,6 +28,14 @@ public class CategoryDao extends JdbcDaoSupport {
 				rs.getString("categoryName"), rs.getInt("categoryCount")));
 	}
 
+	public List<Category> readWithoutUnclassifiedCategory() {
+		String sql = "select * from CATEGORY where categoryId not in('0')";
+		return getJdbcTemplate().query(sql, (rs, rowNum) -> new Category(
+				rs.getInt("categoryId"),
+				rs.getString("categoryName"), rs.getInt("categoryCount")));
+	}
+	
+	
 	public int update(long categoryId, String categoryName) {
 		String sql = "update CATEGORY set categoryName = ? where categoryId = ?";
 		return getJdbcTemplate().update(sql, categoryName, categoryId);

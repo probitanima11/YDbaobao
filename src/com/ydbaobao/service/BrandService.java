@@ -5,11 +5,13 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ydbaobao.dao.BrandDao;
 import com.ydbaobao.model.Brand;
 
 @Service
+@Transactional
 public class BrandService {
 
 	@Resource

@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ydbaobao.dao.ItemDao;
 import com.ydbaobao.dao.OrderDao;
@@ -15,6 +16,7 @@ import com.ydbaobao.model.Item;
 import com.ydbaobao.model.Order;
 
 @Service
+@Transactional
 public class OrderService {
 	@Resource
 	OrderDao orderDao;
