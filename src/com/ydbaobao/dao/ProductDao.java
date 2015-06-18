@@ -187,4 +187,9 @@ public class ProductDao extends JdbcDaoSupport {
 				 rs.getLong("productCreateDate"), rs.getLong("productUpdateDate"), rs.getString("productSize")),
 				 categoryId, brandId);
 	}
+
+	public void resetAutoIncrement() {
+		String sql = "alter table PRODUCTS auto_increment=1;";
+		getJdbcTemplate().update(sql);
+	}
 }

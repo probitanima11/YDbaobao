@@ -144,6 +144,7 @@ public class ProductService {
 		if(productDao.deleteAll() >=1){
 			categoryDao.resetCount();
 			brandDao.resetCount();
+			productDao.resetAutoIncrement();
 			File directory = new File("/home/baobao/products/");
 			for(File file : directory.listFiles()){
 				file.delete();
