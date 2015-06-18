@@ -17,6 +17,10 @@ public class CategoryService {
 	public List<Category> read() {
 		return categoryDao.read();
 	}
+	
+	public List<Category> readWithoutUnclassifiedCategory() {
+		return categoryDao.readWithoutUnclassifiedCategory();
+	}
 
 	public boolean update(long categoryId, String categoryName) {
 		if(categoryDao.update(categoryId, categoryName) == 1) {

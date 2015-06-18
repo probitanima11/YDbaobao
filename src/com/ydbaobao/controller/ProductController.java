@@ -46,7 +46,7 @@ public class ProductController {
 	public String loadAll(Model model, @RequestParam("page") String page) {
 		logger.debug("page : {}", page);
 		model.addAttribute("products", productService.readProducts());
-		model.addAttribute("categories", categoryService.read());
+		model.addAttribute("categories", categoryService.readWithoutUnclassifiedCategory());
 		return "products";
 	}
 	
@@ -62,7 +62,7 @@ public class ProductController {
 		model.addAttribute("products", productService.readListByCategoryId(categoryId, p.getIndex(), p.getQuantity()));
 		model.addAttribute("brands", brandService.readBrands());
 		model.addAttribute("category", categoryService.readByCategoryId(categoryId));
-		model.addAttribute("categories", categoryService.read());
+		model.addAttribute("categories", categoryService.readWithoutUnclassifiedCategory());
 		model.addAttribute("firstLetterList", new Brand().getFirstLetters());
 		return "products";
 	}
@@ -75,7 +75,7 @@ public class ProductController {
 		model.addAttribute("products", productService.readByCategoryIdAndBrandId(categoryId, brandId));
 		model.addAttribute("brands", brandService.readBrands());
 		model.addAttribute("category", categoryService.readByCategoryId(categoryId));
-		model.addAttribute("categories", categoryService.read());
+		model.addAttribute("categories", categoryService.readWithoutUnclassifiedCategory());
 		model.addAttribute("firstLetterList", new Brand().getFirstLetters());
 		return "products";
 	}
