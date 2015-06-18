@@ -41,13 +41,19 @@ public class BrandDao extends JdbcDaoSupport {
 				sql, (rs, rowNum) -> new Brand(rs.getInt("brandId"), rs.getString("brandName"), rs.getInt("brandCount"), rs.getInt("discount_1"), rs.getInt("discount_2"), rs.getInt("discount_3"), rs.getInt("discount_4"), rs.getInt("discount_5"), rs.getString("brandSize")));
 	}
 
-	public int createBrand(String brandName) {
+	public int createBrand(Brand brand) {
 		KeyHolder keyHolder = new GeneratedKeyHolder();
-		String sql = "insert into BRANDS(brandName) values(?)";
+		String sql = "insert into BRANDS(brandName, discount_1, discount_2, discount_3, discount_4, discount_5, brandSize) values(?, ?, ?, ?, ?, ?, ?)";
 		getJdbcTemplate().update(new PreparedStatementCreator() {
 			public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
 				PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-				ps.setString(1, brandName);
+				ps.setString(1, brand.getBrandName());
+				ps.setInt(2, brand.getDiscount_1());
+				ps.setInt(3, brand.getDiscount_2());
+				ps.setInt(4, brand.getDiscount_3());
+				ps.setInt(5, brand.getDiscount_4());
+				ps.setInt(6, brand.getDiscount_5());
+				ps.setString(7, brand.getBrandSize());
 				return ps;
 			}
 		}, keyHolder);

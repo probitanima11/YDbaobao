@@ -26,11 +26,11 @@ public class BrandService {
 		return brandDao.findBrands(searchValue);
 	}
 
-	public int createBrand(String brandName) {
-		if(brandDao.readBrandByBrandName(brandName) != null) {
+	public int createBrand(Brand brand) {
+		if(brandDao.readBrandByBrandName(brand.getBrandName()) != null) {
 			// TODO 브랜드명 중복 예외처리
 		}
-		return brandDao.createBrand(brandName);
+		return brandDao.createBrand(brand);
 	}
 
 	public void updateBrand(Brand brand) {

@@ -30,6 +30,9 @@
 </style>
 </head>
 <body>
+	<div id="header" style="width: 100%;">
+		<%@ include file="./_adminTopNav.jsp"%>
+	</div>
 	<div id="container">
 		<%@ include file="./_adminNav.jsp"%>
 		<div id="content">
@@ -38,13 +41,15 @@
 			<button class="search-brand-btn">검색</button>
 			<table id="brand-table" style="width: 780px;">
 				<tr>
+					<th style="width:50px">구분</th>
 					<th style="width:150px">브랜드명</th>
 					<th style="width:320px">할인율</th>
 					<th style="width:100px">사이즈</th>
-					<th style="width:80px"></th>
+					<th style="width:80px">선택</th>
 				</tr>
-				<c:forEach var="brand" items="${brands}">
+				<c:forEach var="brand" varStatus="status" items="${brands}">
 					<tr id="brand_${brand.brandId}">
+						<td>${status.index+1}</td>
 						<td><input class="brandName" type="text" value="${brand.brandName}"
 							data-id="${brand.brandId}"></td>
 						<td class='discount_table'>
@@ -63,10 +68,18 @@
 						</td>
 					</tr>
 				</c:forEach>
-				<tr>
-					<td><input class="brandName" id="new-brand" type="text"></td>
+				<tr id="new-brand">
 					<td></td>
-					<td></td>
+					<td><input class="brandName" id="new-brandName" type="text"></td>
+					<td class='discount_table'>
+						1등급:<input type="text" value="0"> 
+						2등급:<input type="text" value="0"> 
+						3등급:<input type="text" value="0"> 
+						4등급:<input type="text" value="0"> 
+						5등급:<input type="text" value="0">
+					</td>
+					<td class='brand_sizes'><input type="text"
+						value="${brand.brandSize}"></td>
 					<td>
 						<button class="create-brand-btn">추가</button>
 					</td>
@@ -154,17 +167,33 @@
 		}
 
 		function createBrand() {
-			var brandName = document.querySelector('#new-brand').value;
+			debugger;
+			var brandName = document.querySelector('#new-brandName').value;
+			var discountTable = document.querySelectorAll('#new-brand .discount_table input');
+			var value = 0;
+			var param = "brandName="+brandName+"&discount_1="+discountTable[0].value;
 
 			if(brandName === '') {
 				alert('브랜드 명을 입력해주세요');
 				return;
 			}
 
+			for (var i = 1; i < discountTable.length; i++) {
+				value = discountTable[i].value*1;
+				if (value > 100 || value < 0){
+					value = 0;
+					document.querySelector("#new-brand .discount_table input:nth-child("+(i+1)+")").value = 0;
+				}
+				param += "&discount_"+(i+1)+"="+value;
+			}
+			
+			var brandSize = document.querySelector("#new-brand .brand_sizes input").value;
+			param += "&brandSize="+brandSize;
+			
 			ydbaobao.ajax({
 				method : 'post',
 				url : '/admin/brands/',
-				param : 'brandName=' + brandName,
+				param : param,
 				success : function(req) {
 					alert('브랜드가 추가되었습니다');
 					location.reload();

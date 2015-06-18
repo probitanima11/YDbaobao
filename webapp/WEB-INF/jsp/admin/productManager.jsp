@@ -16,12 +16,15 @@
 </style>
 </head>
 <body>
+	<div id="header" style="width: 100%;">
+		<%@ include file="./_adminTopNav.jsp"%>
+	</div>
 	<div id="container">
 		<%@ include file="./_adminNav.jsp"%>		
 		<div id="content">
 			<h1>상품 관리</h1>
-			<button id="all-product-delete-btn">전체상품 삭제</button><br/><br/>
-			
+			<ul id="product-menu">
+			<li class="select-category">
 			<form:form class="category-form" method="GET" action="/admin/products/category" enctype="multipart/form-data">
 				<label class="control-label">카테고리 선택 :</label>
 				<select class="category-select" name="categoryId">
@@ -37,10 +40,12 @@
 					</c:forEach>
 				</select>
 			</form:form>
-			
+			</li>
+			<li class="delete-all-product"><button id="all-product-delete-btn">전체상품 삭제</button><br/><br/></li>
+			</ul>
 			<table id="product-table" style="width: 800px;">
 				<tr>
-					<th width="50px">상품ID</th>
+					<th width="50px">ID</th>
 					<th width="100px">상품이미지</th>
 					<th colspan="4">상세내역</th>
 					<th width="50px">선택</th>

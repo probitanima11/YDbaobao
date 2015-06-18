@@ -5,7 +5,7 @@
 	<c:redirect url="/admin/check" />
 </c:if>
 <div id="menu">
-	<div style="padding:15px 15px; color:#fff; background-color:#EA6576">관리자메뉴</div>
+	<a href="/admin" style="text-decoration:none;"><div style="padding:15px 15px; color:#fff; background-color:#EA6576">관리자메뉴</div></a>
 	<ul>
 		<li><a href="/admin/customers"><span>회원관리</span></a></li>
 		<li><a href="/admin/products/regist"><span>상품등록</span></a></li>
@@ -16,8 +16,4 @@
 		<li><a href="/admin/indexImages"><span>첫화면관리</span></a></li>
 		<li><a href="/admin/config"><span>관리자설정</span></a></li>
 	</ul>
-	<a href="/" style="text-decoration:none;"><div style="margin-top:10px; padding:15px 15px; font-size:12px; color:#fff; background-color:#EA6576">
-		<i class='fa fa-home'></i>  쇼핑몰로 이동
-	</div></a>
-	<a href="/admin/logout" style="text-decoration:none;"><div style="margin-top:10px; padding:15px 15px; font-size:12px; color:#fff; background-color:#454545">관리자 로그아웃</div></a>
 </div>    
