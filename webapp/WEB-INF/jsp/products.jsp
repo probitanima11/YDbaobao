@@ -28,7 +28,6 @@
 				<div style="font-size: 40px; padding:25px 0 15px 0;">${brand.brandName}</div>
 				<%@ include file="./commons/_brand.jsp"%>
 			</c:when>
-
 			<c:otherwise>
 				<div style="font-size: 40px; padding:25px 0 15px 0;">${category.categoryName}</div>
 				<%@ include file="./commons/_categoryBrand.jsp"%>

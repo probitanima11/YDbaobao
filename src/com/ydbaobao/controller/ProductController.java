@@ -57,7 +57,6 @@ public class ProductController {
 	@RequestMapping(value="/categories/{categoryId}/products", method=RequestMethod.GET)
 	public String load(Model model, @RequestParam("page") int page, @PathVariable int categoryId) {
 		Category category = categoryService.readByCategoryId(categoryId);
-		
 		model.addAttribute("totalPage", CommonUtil.countTotalPage(category.getCategoryCount()));
 		model.addAttribute("products", productService.readListByCategoryId(categoryId, page, CommonUtil.PRODUCTS_PER_PAGE));
 		model.addAttribute("brands", brandService.readBrands());

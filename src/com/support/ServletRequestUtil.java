@@ -11,7 +11,7 @@ public class ServletRequestUtil {
 	}
 	
 	public static boolean existedCustomerIdFromSession(HttpSession session) throws IOException {
-		if (session.getAttribute("sessionCustomer") == null) {
+		if (session.getAttribute("sessionCustomer") == null && session.getAttribute("sessionAdmin") == null) {
 			return Boolean.FALSE;
 		}
 		return Boolean.TRUE;
