@@ -35,8 +35,8 @@
 							<td><form:input path="adminDisplayProducts" type="number" min="1" value="${adminConfig.adminDisplayProducts}" /></td>
 						</tr>
 						<tr>
-							<td><form:label path="adminPassword">관리자 비밀번호</form:label></td>
-							<td><form:password path="adminPassword"></form:password></td>
+							<td><form:label path="adminPassword">관리자 비밀번호 수정</form:label></td>
+							<td><form:password path="adminPassword" maxlength="20"></form:password></td>
 						</tr>
 					</tbody>
 					<input type="submit" value="저장" />

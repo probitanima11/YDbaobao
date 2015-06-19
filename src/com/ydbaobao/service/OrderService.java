@@ -27,8 +27,12 @@ public class OrderService {
 	@Resource
 	ProductDao productDao;
 	
-	public List<Order> readOrders(String customerId) {
-		List<Order> orders = orderDao.readOrders(customerId);
+	public List<Order> readOrders() {
+		return orderDao.readOrders();
+	}
+	
+	public List<Order> readOrdersByCustomerId(String customerId) {
+		List<Order> orders = orderDao.readOrdersByCustomerId(customerId);
 		List<Item> items = itemDao.readOrderedItems(customerId);
 		return repackOrders(orders, items);
 	}

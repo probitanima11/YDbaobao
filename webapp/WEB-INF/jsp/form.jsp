@@ -13,8 +13,6 @@
 	<div id="header" style="width: 100%;">
 		<!-- 상단 navigator -->
 		<%@ include file="./commons/_topNav.jsp"%>
-		<!-- 브랜드/제품 검색바 -->
-		<%@ include file="./commons/_search.jsp"%>
 	</div>
 
 	<div id="main-container">
