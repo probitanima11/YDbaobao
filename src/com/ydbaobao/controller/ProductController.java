@@ -54,7 +54,7 @@ public class ProductController {
 	 * 카테고리 메뉴 별 상품 로드
 	 * @param categoryId, page
 	 */
-	@RequestMapping(value="/categories/{categoryId}", method=RequestMethod.GET)
+	@RequestMapping(value="/categories/{categoryId}/products", method=RequestMethod.GET)
 	public String load(Model model, @RequestParam("page") int page, @PathVariable int categoryId) {
 		Category category = categoryService.readByCategoryId(categoryId);
 		
@@ -71,7 +71,7 @@ public class ProductController {
 	 * 카테고리 별 브랜드 상품 로드
 	 * @param categoryId, brandId, page
 	 */
-	@RequestMapping(value="/categories/{categoryId}/brands/{brandId}", method=RequestMethod.GET)
+	@RequestMapping(value="/categories/{categoryId}/brands/{brandId}/products", method=RequestMethod.GET)
 	public String load(Model model, @RequestParam("page") int page, @PathVariable int categoryId, @PathVariable int brandId) {
 	List<Product> products = productService.readByCategoryIdAndBrandId(categoryId, brandId, page, CommonUtil.PRODUCTS_PER_PAGE);
 		
