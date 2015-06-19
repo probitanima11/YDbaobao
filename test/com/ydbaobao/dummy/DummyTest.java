@@ -57,7 +57,7 @@ public class DummyTest {
 	
 	@Test
 	public void insertCategorys() {
-		String[] categorys = {"상의", "하의", "모자", "신발", "수영복", "우주복", "속옷", "전투복", "특수장비"};
+		String[] categorys = {"상의일반", "하의일반", "티셔츠", "아우터", "반바지", "멜빵바지", "원피스", "스커트", "상하정장", "양말/스타킹", "속옷/수영복", "액세서리", "신발"};
 		int range = categorys.length;
 		for (int index=0; index < range; index++) {
 			String categoryName = categorys[index];
