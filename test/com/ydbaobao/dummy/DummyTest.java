@@ -76,7 +76,7 @@ public class DummyTest {
 					Product product = productService.read(productId);
 					product.setBrand(brand);
 					product.setCategory(category);
-					product.setProductName("더미상품");
+					product.setProductName("더미상 품");
 					product.setProductPrice(10000);
 					product.setProductSize("L|XL");
 					product.setProductDescription("더미상품입니다.");

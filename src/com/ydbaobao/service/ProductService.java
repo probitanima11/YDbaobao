@@ -63,6 +63,9 @@ public class ProductService {
 			brandDao.increaseCount(newBrandId);
 			brandDao.decreaseCount(oldBrandId);
 		}
+		if (null == product.getProductImage()) {
+			product.setProductImage(oldStatus.getProductImage());
+		}
 		if(productDao.update(product)==1){
 			return true;
 		}
