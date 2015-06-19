@@ -38,7 +38,7 @@ public class SearchController {
 			return "search";
 		}
 		int count = searchService.countBySearchBrandName(paramForQuery);
-		List<Product> products= searchService.readByBrandName(paramForQuery, page, CommonUtil.PRODUCTS_PER_PAGE);
+		List<Product> products= searchService.readByBrandName(paramForQuery, page, adminConfigService.read().getAdminDisplayProducts());
 
 		model.addAttribute("totalPage", CommonUtil.countTotalPage(count));
 		model.addAttribute("categories", categoryService.read());
@@ -59,7 +59,7 @@ public class SearchController {
 			return "search";
 		}
 		int count = searchService.countBySearchProductName(paramForQuery);
-		List<Product> products= searchService.readByProductName(paramForQuery, page, CommonUtil.PRODUCTS_PER_PAGE);
+		List<Product> products= searchService.readByProductName(paramForQuery, page, adminConfigService.read().getAdminDisplayProducts());
 
 		model.addAttribute("totalPage", CommonUtil.countTotalPage(count));
 		model.addAttribute("categories", categoryService.read());

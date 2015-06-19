@@ -132,6 +132,8 @@ h1 {
 			        name: 'input',
 			        attrs: {
 			            'class': 'qty-selector',
+			            'type' : 'number',
+			            'min'  : '1',
 			            'name' : sizeArray[i],
 			            'value': '1',
 			            'style': 'width: 32px; margin-left: 5px',
@@ -150,9 +152,9 @@ h1 {
 
 			// 주석처리 한사람 : jyb
 			// 이유 : 현재 바로 주문하기로 안하고 장바구니에 담긴 다음, 그대로 주문으로 넘어감.
-			// document.querySelector('.buyitnow').addEventListener('click', function(e) {
-			// 	buyitnow(e);
-			// }, false);
+			document.querySelector('.buyitnow').addEventListener('click', function(e) {
+			buyitnow(e);
+			}, false);
 
 			productBuyContainer = document.querySelector("#product-buy-container");
 			document.addEventListener('scroll', function(e){

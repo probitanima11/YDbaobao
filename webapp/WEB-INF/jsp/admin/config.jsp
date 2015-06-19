@@ -17,14 +17,30 @@
 		<%@ include file="./_adminNav.jsp"%>
 		<div id="content">
 			<h1>관리자 설정</h1>
+			<c:if test="${ not empty message}">
+				<div class="message">${message}</div>
+			</c:if>
+			<form:form class="admin-config" action="/admin/config" method="POST"
+				modelAttribute="adminConfig">
+				<form:input path="adminConfigId" type="hidden"
+					value="${adminConfig.adminConfigId}" />
+				<table>
+					<tbody>
+						<tr>
+							<th>구분</th>
+							<th>설정</th>
+							<th>선택</th>
+						</tr>
+						<tr>
+							<td><form:label path="adminDisplayProducts">페이지 당 상품 갯수</form:label></td>
+							<td><form:input path="adminDisplayProducts" type="number"
+									min="1" value="${adminConfig.adminDisplayProducts}" /></td>
+							<td><input type="submit" value="저장" /></td>
+						</tr>
+					</tbody>
+				</table>
+			</form:form>
 		</div>
-
-		<form:form class="config" action="/admin/config" method="put" modelAttribute="adminConfig">
-			<form:input path="adminConfigId" type="hidden" value="${adminConfig.adminConfigId}" />
-			<label for="adminDisplayProducts">페이지 당 상품 갯수</label>
-			<form:input path="adminDisplayProducts" type="number" value="${adminConfig.adminDisplayProducts}" />
-			<input type="submit" value="저장" />
-		</form:form>
 	</div>
 	<script>
 	
@@ -47,4 +63,10 @@
 	</script>
 	<script src="/js/ydbaobao.js"></script>
 </body>
+<style>
+.admin-config {
+	margin: 0 auto;
+	width: 400px;
+}
+</style>
 </html>
