@@ -44,7 +44,7 @@ public class ProductController {
 	public String loadAll(Model model, @RequestParam("page") int page) {
 		model.addAttribute("totalPage", CommonUtil.countTotalPage(productService.count()));
 		model.addAttribute("products", productService.readRange(page, CommonUtil.PRODUCTS_PER_PAGE));
-		model.addAttribute("categories", categoryService.read());
+		model.addAttribute("categories", categoryService.readWithoutUnclassifiedCategory());
 		model.addAttribute("brands", brandService.readBrands());
 		model.addAttribute("firstLetterList", new Brand().getFirstLetters());
 		return "products";
@@ -62,7 +62,7 @@ public class ProductController {
 		model.addAttribute("products", productService.readListByCategoryId(categoryId, page, CommonUtil.PRODUCTS_PER_PAGE));
 		model.addAttribute("brands", brandService.readBrands());
 		model.addAttribute("category", category);
-		model.addAttribute("categories", categoryService.read());
+		model.addAttribute("categories", categoryService.readWithoutUnclassifiedCategory());
 		model.addAttribute("firstLetterList", new Brand().getFirstLetters());
 		return "products";
 	}
