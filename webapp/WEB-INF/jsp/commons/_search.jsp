@@ -6,15 +6,38 @@
 			<a href="/"> <img
 				src="/image/yd_logo.gif" />
 			</a>
-			<form action="/search" method="get" id="search-form">
+			<div id="search-form">
 				<div id="search-bar">
-					<select name="select">
-						<option value="product-name">상품명</option>
-						<option value="brand-name">브랜드명</option>
-					</select> <input type="text" name="terms" />
+					<select id="select">
+						<option class="selected">상품명</option>
+						<option>브랜드명</option>
+					</select> 
+					<input id="search-param" type="text" />
 				</div>
-				<button class="btn">검색</button>
-			</form>
+				<button id="search-btn" class="btn">검색</button>
+			</div>
 		</div>
 	</div>
 </div>
+<script>
+	document.querySelector('#select').addEventListener('change', function(e) {
+		document.querySelector('.selected').classList.remove('selected');
+		
+		for(var i = 0 ; i < e.target.options.length; i++) {
+			if(e.target.options[i].value === e.target.value) {
+				e.target.options[i].classList.add('selected');
+			}	
+		}
+	}, false);
+
+	document.querySelector('#search-btn').addEventListener('click', function() {
+		var selected = document.querySelector('.selected').value;
+		var param = document.querySelector('#search-param').value;
+		if(selected === '상품명') {
+			window.location.href = '/search/products?param=' + param + '&page=1';
+		}
+		if(selected === '브랜드명') {
+			window.location.href = '/search/brands?param=' + param + '&page=1';
+		}
+	}, false);
+</script>

@@ -8,6 +8,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 
 public class CommonUtil {
+	final public static int PRODUCTS_PER_PAGE = 4;
+	
 	public static boolean isNumber(String str){
         boolean result = false; 
         try{
@@ -43,5 +45,14 @@ public class CommonUtil {
 			messageList.add(e.getDefaultMessage());
 		}
 		return messageList;
+	}
+	
+	/**
+	 * 
+	 * @param 전체 상품 갯수
+	 * @return 총 페이지 수
+	 */
+	public static Object countTotalPage(int count) {
+		return count / CommonUtil.PRODUCTS_PER_PAGE + 1;
 	}
 }

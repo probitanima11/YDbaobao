@@ -32,7 +32,11 @@
 
 			<div id="item-container" class="wrap content">
 				<%@ include file="./commons/_productsBox.jsp" %>
-				<%@ include file="./commons/_productsListBar.jsp" %>
+
+				<div class="contents-nav">
+					<ul>
+					</ul>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -56,6 +60,7 @@
 				fadeOut(imgEl);
 			}, 5000);
 			
+			paging();
 		}, false);
  		
  		var addIndex = function() {
@@ -112,6 +117,14 @@
 		obj.style.KhtmlOpacity = level;
 		obj.style.MsFilter = "'progid:DXImageTransform.Microsoft.Alpha(Opacity=" + (level * 100) + ")'";
 		obj.style.filter = "alpha(opacity=" + (level * 100) + ");"; 
+	}
+
+	function paging() {
+		for(var i = 1; i <= ${totalPage}; i++) {
+			var li = document.createElement('li');
+			li.innerHTML = '<a href="/index?page=' + i + '">' + i + '</a>';
+			document.querySelector('.contents-nav ul').appendChild(li);
+		}
 	}
 	</script>
 	<script src="/js/ydbaobao.js"></script>

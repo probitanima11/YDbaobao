@@ -88,8 +88,8 @@ public class ProductService {
 		return imageName;
 	}
 	
-	public List<Product> readListByCategoryId(int categoryId, int index, int quantity) {
-		return productDao.readListByCategoryId(categoryId, index, quantity);
+	public List<Product> readListByCategoryId(int categoryId, int page, int productsPerPage) {
+		return productDao.readListByCategoryId(categoryId, (page - 1) * productsPerPage, productsPerPage);
 	}
 	
 	public List<Product> readProducts() {
@@ -100,33 +100,17 @@ public class ProductService {
 		}
 		return productList;
 	}
-	
-	public List<Product> readByProductName(String query, int index, int quantity) {
-		return productDao.readByProductName(query, index, quantity);
-	}
 
 	public List<Product> readListByCategoryId(int categoryId) {
 		return productDao.readListByCategoryId(categoryId);
-	}
-	
-	public List<Product> readByBrandName(String query, int index, int quantity) {
-		return productDao.readByBrandName(query, index, quantity);
 	}
 	
 	public int count() {
 		return productDao.count();
 	}
 	
-	public int countBySearchProductName(String terms) {
-		return productDao.countBySearchProductName(terms);
-	}
-	
-	public int countBySearchBrandName(String terms) {
-		return productDao.countBySearchBrandName(terms);
-	}
-
-	public List<Product> readRange(int start, int range) {
-		return productDao.readRange(start, range);
+	public List<Product> readRange(int page, int productsPerPage) {
+		return productDao.readRange((page - 1) * productsPerPage, productsPerPage);
 	}
 
 	public List<Product> readUnclassifiedProducts() {
@@ -138,8 +122,8 @@ public class ProductService {
 		return productList;
 	}
 
-	public List<Product> readListByBrandId(int brandId, int index, int quantity) {
-		return productDao.readListByBrandId(brandId, index, quantity);
+	public List<Product> readListByBrandId(int brandId, int page, int productsPerPage) {
+		return productDao.readListByBrandId(brandId, (page - 1) * productsPerPage, productsPerPage);
 	}
 
 	public boolean deleteAll() {
@@ -166,7 +150,11 @@ public class ProductService {
 		return false;
 	}
 
-	public List<Product> readByCategoryIdAndBrandId(int categoryId, int brandId) {
-		return productDao.readByCategoryIdAndBrandId(categoryId, brandId);
+	public List<Product> readByCategoryIdAndBrandId(int categoryId, int brandId, int page, int productsPerPage) {
+		return productDao.readByCategoryIdAndBrandId(categoryId, brandId, (page - 1) * productsPerPage, productsPerPage);
+	}
+
+	public List<Product> readAll() {
+		return productDao.readProductsList();
 	}
 }

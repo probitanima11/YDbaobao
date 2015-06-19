@@ -36,8 +36,10 @@
 		</c:choose>
 	</div>
 	<div id="item-container" class="wrap content">
+		<!-- 상품 리스트 -->
 		<%@ include file="./commons/_productsBox.jsp" %>
-		<%@ include file="./commons/_productsListBar.jsp" %>
+		<!-- 페이지 -->
+		<%@ include file="./commons/_paging.jsp" %>
 	</div>
 	<script src="/js/ydbaobao.js"></script>
 </body>

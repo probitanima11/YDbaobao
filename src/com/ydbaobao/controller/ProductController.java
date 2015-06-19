@@ -1,12 +1,10 @@
 package com.ydbaobao.controller;
 
-import java.util.stream.IntStream;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,8 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.support.CommonUtil;
 import com.ydbaobao.model.Brand;
-import com.ydbaobao.model.PageConfigParam;
+import com.ydbaobao.model.Category;
+import com.ydbaobao.model.Product;
 import com.ydbaobao.model.SessionCustomer;
 import com.ydbaobao.service.AdminConfigService;
 import com.ydbaobao.service.BrandService;
@@ -24,8 +24,6 @@ import com.ydbaobao.service.ProductService;
 
 @Controller
 public class ProductController {
-	private static final Logger logger = LoggerFactory.getLogger(ProductController.class);
-	
 	@Resource
 	private ProductService productService;
 	@Resource
@@ -42,37 +40,43 @@ public class ProductController {
 		return "product";
 	}
 	
-	@RequestMapping(value = "/categories", method = RequestMethod.GET)
-	public String loadAll(Model model, @RequestParam("page") String page) {
-		logger.debug("page : {}", page);
-		model.addAttribute("products", productService.readProducts());
-		model.addAttribute("categories", categoryService.readWithoutUnclassifiedCategory());
-		return "products";
-	}
-	
-	@RequestMapping(value="/categories/{categoryId}", method=RequestMethod.GET)
-	public String load(Model model, @RequestParam("page") String page, @PathVariable int categoryId) {
-		PageConfigParam p = new PageConfigParam(adminConfigService.read().getAdminDisplayProducts(), page, categoryService.readByCategoryId(categoryId).getCategoryCount());
-
-		if (p.getEnd() < p.getRange()) {
-			model.addAttribute("nextBtn", true);
-		}
-		model.addAttribute("selectedIndex", p.getSelectedIndex());
-		model.addAttribute("range", IntStream.range(p.getStart(), p.getEnd()).toArray());
-		model.addAttribute("products", productService.readListByCategoryId(categoryId, p.getIndex(), p.getQuantity()));
+	@RequestMapping(value = "/products", method = RequestMethod.GET)
+	public String loadAll(Model model, @RequestParam("page") int page) {
+		model.addAttribute("totalPage", CommonUtil.countTotalPage(productService.count()));
+		model.addAttribute("products", productService.readRange(page, CommonUtil.PRODUCTS_PER_PAGE));
+		model.addAttribute("categories", categoryService.read());
 		model.addAttribute("brands", brandService.readBrands());
-		model.addAttribute("category", categoryService.readByCategoryId(categoryId));
-		model.addAttribute("categories", categoryService.readWithoutUnclassifiedCategory());
 		model.addAttribute("firstLetterList", new Brand().getFirstLetters());
 		return "products";
 	}
 	
-	@RequestMapping(value="/categories/{categoryId}/brands/{brandId}", method=RequestMethod.GET)
-	public String load(Model model, @RequestParam("page") String page, @PathVariable int categoryId, @PathVariable int brandId) {
-
-		//TODO paging 기능 추가
+	/**
+	 * 카테고리 메뉴 별 상품 로드
+	 * @param categoryId, page
+	 */
+	@RequestMapping(value="/categories/{categoryId}/products", method=RequestMethod.GET)
+	public String load(Model model, @RequestParam("page") int page, @PathVariable int categoryId) {
+		Category category = categoryService.readByCategoryId(categoryId);
 		
-		model.addAttribute("products", productService.readByCategoryIdAndBrandId(categoryId, brandId));
+		model.addAttribute("totalPage", CommonUtil.countTotalPage(category.getCategoryCount()));
+		model.addAttribute("products", productService.readListByCategoryId(categoryId, page, CommonUtil.PRODUCTS_PER_PAGE));
+		model.addAttribute("brands", brandService.readBrands());
+		model.addAttribute("category", category);
+		model.addAttribute("categories", categoryService.read());
+		model.addAttribute("firstLetterList", new Brand().getFirstLetters());
+		return "products";
+	}
+	
+	/**
+	 * 카테고리 별 브랜드 상품 로드
+	 * @param categoryId, brandId, page
+	 */
+	@RequestMapping(value="/categories/{categoryId}/brands/{brandId}/products", method=RequestMethod.GET)
+	public String load(Model model, @RequestParam("page") int page, @PathVariable int categoryId, @PathVariable int brandId) {
+	List<Product> products = productService.readByCategoryIdAndBrandId(categoryId, brandId, page, CommonUtil.PRODUCTS_PER_PAGE);
+		
+		model.addAttribute("totalPage", CommonUtil.countTotalPage(products.size()));		
+		model.addAttribute("products", products);
 		model.addAttribute("brands", brandService.readBrands());
 		model.addAttribute("category", categoryService.readByCategoryId(categoryId));
 		model.addAttribute("categories", categoryService.readWithoutUnclassifiedCategory());
