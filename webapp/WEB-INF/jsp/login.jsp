@@ -12,11 +12,9 @@
 	<div id="header" style="width: 100%;">
 		<!-- 상단 navigator -->
 		<%@ include file="./commons/_topNav.jsp"%>
-		<!-- 브랜드/제품 검색바 -->
-		<%@ include file="./commons/_search.jsp"%>
 	</div>
 	<div id="main-container">
-		<div id="first-section" class="wrap content" style="height: 500px;">
+		<div id="first-section" class="wrap" style="height: 500px;">
 			<div class="loginBox">
 				<form:form modelAttribute="customer" method="post" action="/login">
 					<h1>로그인</h1>

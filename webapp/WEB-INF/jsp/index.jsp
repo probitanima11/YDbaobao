@@ -48,6 +48,7 @@
 		var imgPathsLength = imgPaths.length;
 		var imgIndex = 0;
  		window.addEventListener("load", function() {
+ 			paging();
 			var imgEl = document.querySelector("#indexImage");
  			if(imgPaths[0].length === 0) {
  				imgEl.remove();
@@ -59,73 +60,65 @@
 				addIndex();
 				fadeOut(imgEl);
 			}, 5000);
-			
-			paging();
 		}, false);
  		
- 		var addIndex = function() {
+ 		function addIndex() {
  			if(imgIndex >= imgPathsLength-1)
  				imgIndex=0;
  			else
  				imgIndex++;
  		}
-	</script>
-	<script>
-	function fadeIn(id)
-	{
-		var level = 0;
-		var inTimer = null;
-		inTimer = setInterval( function(){ level = fadeInAction(id, level, inTimer); }, 50 );
-	}
 
-	function fadeInAction(id, level, inTimer)
-	{
-		level = level + 0.1;
-		changeOpacity(id, level);
-		if(level > 1) 
-		{
-			clearInterval(inTimer);
+		function fadeIn(id) {
+			var level = 0;
+			var inTimer = null;
+			inTimer = setInterval( function(){ level = fadeInAction(id, level, inTimer); }, 50 );
 		}
-		return level;
-	}
 
-	function fadeOut(id)
-	{
-		var level = 1;
-		var outTimer = null;
-		outTimer = setInterval( function(){ level = fadeOutAction(id, level, outTimer); }, 50 );
-	}
-
-	function fadeOutAction(id, level, outTimer)
-	{
-		level = level - 0.1;
-		changeOpacity(id, level);
-		if(level < 0) 
-		{
-			clearInterval(outTimer);
-			var imgEl = document.querySelector("#indexImage");
-			imgEl.src = imgPaths[imgIndex];
-			fadeIn(imgEl);
+		function fadeInAction(id, level, inTimer) {
+			level = level + 0.1;
+			changeOpacity(id, level);
+			if(level > 1) 
+			{
+				clearInterval(inTimer);
+			}
+			return level;
 		}
-		return level;
-	}
 
-	function changeOpacity(obj,level) 
-	{
-		obj.style.opacity = level; 
-		obj.style.MozOpacity = level; 
-		obj.style.KhtmlOpacity = level;
-		obj.style.MsFilter = "'progid:DXImageTransform.Microsoft.Alpha(Opacity=" + (level * 100) + ")'";
-		obj.style.filter = "alpha(opacity=" + (level * 100) + ");"; 
-	}
-
-	function paging() {
-		for(var i = 1; i <= ${totalPage}; i++) {
-			var li = document.createElement('li');
-			li.innerHTML = '<a href="/index?page=' + i + '">' + i + '</a>';
-			document.querySelector('.contents-nav ul').appendChild(li);
+		function fadeOut(id) {
+			var level = 1;
+			var outTimer = null;
+			outTimer = setInterval( function(){ level = fadeOutAction(id, level, outTimer); }, 50 );
 		}
-	}
+
+		function fadeOutAction(id, level, outTimer) {
+			level = level - 0.1;
+			changeOpacity(id, level);
+			if(level < 0) 
+			{
+				clearInterval(outTimer);
+				var imgEl = document.querySelector("#indexImage");
+				imgEl.src = imgPaths[imgIndex];
+				fadeIn(imgEl);
+			}
+			return level;
+		}
+
+		function changeOpacity(obj,level) {
+			obj.style.opacity = level; 
+			obj.style.MozOpacity = level; 
+			obj.style.KhtmlOpacity = level;
+			obj.style.MsFilter = "'progid:DXImageTransform.Microsoft.Alpha(Opacity=" + (level * 100) + ")'";
+			obj.style.filter = "alpha(opacity=" + (level * 100) + ");"; 
+		}
+
+		function paging() {
+			for(var i = 1; i <= ${totalPage}; i++) {
+				var li = document.createElement('li');
+				li.innerHTML = '<a href="/index?page=' + i + '">' + i + '</a>';
+				document.querySelector('.contents-nav ul').appendChild(li);
+			}
+		}
 	</script>
 	<script src="/js/ydbaobao.js"></script>
 </body>

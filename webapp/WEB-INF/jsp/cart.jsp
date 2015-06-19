@@ -53,9 +53,7 @@
 	<div id="main-container">
 		<div id="first-section" class="wrap content" style="padding:25px 0;">
 			<div id="progress-info">
-				<div class="on"><i class='fa fa-shopping-cart'></i>  장바구니  <i class='fa fa-chevron-right'></i></div>
-				<div><i class="fa fa-barcode"></i>  주문하기  <i class='fa fa-chevron-right'></i></div>
-				<div><i class="fa fa-archive"></i>  주문완료</div>
+				<div class="on"><i class='fa fa-shopping-cart'></i>  장바구니</div>
 			</div>
 			<div id="cart-section">
 				<table id="cart-list">
@@ -71,7 +69,7 @@
 					<tbody>
 					<c:forEach var="item" items="${items}">
 						<tr data-id="${item.itemId}">
-							<td><input class="item-check" type="checkbox"></td>
+							<td><input class="item-check" type="checkbox" onclick="calcSelectedPrice()"></td>
 							<td class="item-image-container"><img class="item-image" src="/img/products/${item.product.productImage}"></td>
 							<td class="item-name-container"><span class="item-name">${item.product.productName}</span></td>
 							<td><span class="item-size">${item.size}</span></td>
@@ -85,8 +83,17 @@
 							<td colspan="6">
 								<div style="float:left">
 								</div>
-								<div id="total-price" style="float:right; padding:15px; font-size:15px;">상품합계금액 : 
+								<div id="total-price" style="float:right; padding:15px; font-size:15px;">전체상품금액 : 
 									<span style="font-weight:800;"></span>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="6">
+								<div style="float:left">
+								</div>
+								<div id="selected-price" style="float:right; padding:15px; font-size:15px;">선택상품금액 : 
+									<span style="font-weight:800;">0</span>
 								</div>
 							</td>
 						</tr>
@@ -213,6 +220,18 @@
 		 	el.textContent = parseInt(el.textContent).toLocaleString();
 	}
 	
+	function calcSelectedPrice() {
+		var checkList = document.querySelectorAll('.item-check');
+		var checkLength = checkList.length;
+		var totalPrice = 0;
+		var paramList = [];
+		for(var i = 0; i < checkLength; i++) {
+			if(checkList[i].checked) {
+				totalPrice += checkList[i].parentNode.parentNode.querySelector('.item-price').innerText.replace(/,/g,"")*1;
+			}
+		}
+		document.querySelector('#selected-price span').textContent = parseInt(totalPrice).toLocaleString();
+	}
 	</script>
 	<script src="/js/ydbaobao.js"></script>
 </body>
