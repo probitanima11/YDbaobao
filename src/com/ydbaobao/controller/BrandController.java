@@ -1,5 +1,7 @@
 package com.ydbaobao.controller;
 
+import java.util.stream.IntStream;
+
 import javax.annotation.Resource;
 
 import org.springframework.http.HttpStatus;
@@ -45,8 +47,13 @@ public class BrandController {
 	@RequestMapping(value="/{brandId}/products", method=RequestMethod.GET)
 	public String searchByBrandId(@RequestParam("page") int page, Model model, @PathVariable int brandId) {
 		Brand brand = brandService.readBrandByBrandId(brandId);
+		int totalPage = CommonUtil.countTotalPage(brand.getBrandCount());
 		
-		model.addAttribute("totalPage", CommonUtil.countTotalPage(brand.getBrandCount()));
+		model.addAttribute("prev", CommonUtil.prevBlock(page));
+		model.addAttribute("next", CommonUtil.nextBlock(page, totalPage));
+		model.addAttribute("selectedIndex", page);
+		model.addAttribute("range", IntStream.range(CommonUtil.startPage(page), CommonUtil.endPage(page, totalPage)).toArray());
+		model.addAttribute("url", "/brands/" + brandId + "/products/?page=");
 		model.addAttribute("products", productService.readListByBrandId(brandId, page, CommonUtil.PRODUCTS_PER_PAGE));
 		model.addAttribute("brands", brandService.readBrands());
 		model.addAttribute("brand", brand);

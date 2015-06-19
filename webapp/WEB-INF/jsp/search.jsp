@@ -27,10 +27,9 @@
 	<div id="item-container" class="wrap content">
 		<%@ include file="./commons/_productsBox.jsp"%>
 		
-		<div class="contents-nav">
-			<ul>
-			</ul>
-		</div>
+		<c:if test="${count > 0}">
+			<%@ include file="./commons/_paging.jsp" %>
+		</c:if>
 	</div>
 
 </body>

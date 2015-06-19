@@ -1,6 +1,7 @@
 package com.ydbaobao.controller;
 
 import java.util.List;
+import java.util.stream.IntStream;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
@@ -42,7 +43,13 @@ public class ProductController {
 	
 	@RequestMapping(value = "/products", method = RequestMethod.GET)
 	public String loadAll(Model model, @RequestParam("page") int page) {
-		model.addAttribute("totalPage", CommonUtil.countTotalPage(productService.count()));
+		int totalPage = CommonUtil.countTotalPage(productService.count());
+		
+		model.addAttribute("prev", CommonUtil.prevBlock(page));
+		model.addAttribute("next", CommonUtil.nextBlock(page, totalPage));
+		model.addAttribute("selectedIndex", page);
+		model.addAttribute("range", IntStream.range(CommonUtil.startPage(page), CommonUtil.endPage(page, totalPage)).toArray());
+		model.addAttribute("url", "/products?page=");
 		model.addAttribute("products", productService.readRange(page, adminConfigService.read().getAdminDisplayProducts()));
 		model.addAttribute("categories", categoryService.readWithoutUnclassifiedCategory());
 		model.addAttribute("brands", brandService.readBrands());
@@ -57,7 +64,13 @@ public class ProductController {
 	@RequestMapping(value="/categories/{categoryId}/products", method=RequestMethod.GET)
 	public String load(Model model, @RequestParam("page") int page, @PathVariable int categoryId) {
 		Category category = categoryService.readByCategoryId(categoryId);
-		model.addAttribute("totalPage", CommonUtil.countTotalPage(category.getCategoryCount()));
+		int totalPage = CommonUtil.countTotalPage(category.getCategoryCount());
+
+		model.addAttribute("prev", CommonUtil.prevBlock(page));
+		model.addAttribute("next", CommonUtil.nextBlock(page, totalPage));
+		model.addAttribute("selectedIndex", page);
+		model.addAttribute("range", IntStream.range(CommonUtil.startPage(page), CommonUtil.endPage(page, totalPage)).toArray());
+		model.addAttribute("url", "/categories/" + categoryId + "/products?page=");
 		model.addAttribute("products", productService.readListByCategoryId(categoryId, page, adminConfigService.read().getAdminDisplayProducts()));
 		model.addAttribute("brands", brandService.readBrandsByCategoryId(categoryId));
 		model.addAttribute("category", category);
@@ -72,8 +85,14 @@ public class ProductController {
 	 */
 	@RequestMapping(value="/categories/{categoryId}/brands/{brandId}/products", method=RequestMethod.GET)
 	public String load(Model model, @RequestParam("page") int page, @PathVariable int categoryId, @PathVariable int brandId) {
-	List<Product> products = productService.readByCategoryIdAndBrandId(categoryId, brandId, page, CommonUtil.PRODUCTS_PER_PAGE);
-		model.addAttribute("totalPage", CommonUtil.countTotalPage(products.size()));		
+		List<Product> products = productService.readByCategoryIdAndBrandId(categoryId, brandId, page, CommonUtil.PRODUCTS_PER_PAGE);
+		int totalPage = (int) CommonUtil.countTotalPage(products.size());
+
+		model.addAttribute("prev", CommonUtil.prevBlock(page));
+		model.addAttribute("next", CommonUtil.nextBlock(page, totalPage));
+		model.addAttribute("selectedIndex", page);
+		model.addAttribute("range", IntStream.range(CommonUtil.startPage(page), CommonUtil.endPage(page, totalPage)).toArray());
+		model.addAttribute("url", "/categories/" + categoryId + "/brands/" + brandId + "/products?page=");
 		model.addAttribute("products", products);
 		model.addAttribute("selectedBrand", brandService.readBrandByBrandId(brandId));
 		model.addAttribute("brands", brandService.readBrandsByCategoryId(categoryId));

@@ -1,6 +1,7 @@
 package com.ydbaobao.controller;
 
 import java.io.File;
+import java.util.stream.IntStream;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
@@ -41,7 +42,13 @@ public class HomeController {
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Model model, WebRequest req) {
-		model.addAttribute("totalPage", CommonUtil.countTotalPage(productService.count()));
+		int totalPage = CommonUtil.countTotalPage(productService.count());
+		
+		model.addAttribute("prev", CommonUtil.prevBlock(1));
+		model.addAttribute("next", CommonUtil.nextBlock(1, totalPage));
+		model.addAttribute("selectedIndex", 1);
+		model.addAttribute("range", IntStream.range(CommonUtil.startPage(1), CommonUtil.endPage(1, totalPage)).toArray());
+		model.addAttribute("url", "/index?page=");
 		model.addAttribute("products", productService.readRange(1, adminConfigService.read().getAdminDisplayProducts()));
 		model.addAttribute("categories", categoryService.readWithoutUnclassifiedCategory());
 		model.addAttribute("brands", brandService.readBrands());
@@ -61,7 +68,13 @@ public class HomeController {
 	
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
 	public String homeWithPage(Model model, @RequestParam int page) {
-		model.addAttribute("totalPage", CommonUtil.countTotalPage(productService.count()));
+		int totalPage = CommonUtil.countTotalPage(productService.count());
+		
+		model.addAttribute("prev", CommonUtil.prevBlock(page));
+		model.addAttribute("next", CommonUtil.nextBlock(page, totalPage));
+		model.addAttribute("selectedIndex", page);
+		model.addAttribute("range", IntStream.range(CommonUtil.startPage(page), CommonUtil.endPage(page, totalPage)).toArray());
+		model.addAttribute("url", "/index?page=");
 		model.addAttribute("products", productService.readRange(page, adminConfigService.read().getAdminDisplayProducts()));
 		model.addAttribute("categories", categoryService.readWithoutUnclassifiedCategory());
 		model.addAttribute("brands", brandService.readBrands());

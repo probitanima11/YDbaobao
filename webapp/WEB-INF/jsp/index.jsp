@@ -33,10 +33,7 @@
 			<div id="item-container" class="wrap content">
 				<%@ include file="./commons/_productsBox.jsp" %>
 
-				<div class="contents-nav">
-					<ul>
-					</ul>
-				</div>
+				<%@ include file="./commons/_paging.jsp" %>
 			</div>
 		</div>
 	</div>
@@ -48,7 +45,7 @@
 		var imgPathsLength = imgPaths.length;
 		var imgIndex = 0;
  		window.addEventListener("load", function() {
- 			paging();
+ 			// paging();
 			var imgEl = document.querySelector("#indexImage");
  			if(imgPaths[0].length === 0) {
  				imgEl.remove();
