@@ -114,6 +114,18 @@ ul#top {
 	float:right;
 }
 
+/* input type number spinner hide*/
+input[type="number"]::-webkit-outer-spin-button, 
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+	text-align: right;
+    -moz-appearance:textfield;
+}
+
 ul#top li a {
 	text-decoration: none;
 	color: #454545;

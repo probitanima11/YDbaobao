@@ -35,7 +35,7 @@ public class AdminCategoryController {
 	 */
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public String read(Model model) {
-		model.addAttribute("categories", categoryService.read());
+		model.addAttribute("categories", categoryService.readWithoutUnclassifiedCategory());
 		return "admin/categoryManager";
 	}
 

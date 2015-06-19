@@ -25,9 +25,10 @@ public class AdminConfigController {
 		model.addAttribute("adminConfig", adminConfigService.read());
 		return "admin/config";
 	}
-	@RequestMapping(value = "", method = RequestMethod.PUT)
-	public void update(Model model, AdminConfig adminConfig) {
+	@RequestMapping(value = "", method = {RequestMethod.POST})
+	public String update(Model model, AdminConfig adminConfig) {
 		adminConfigService.update(adminConfig);
-		model.addAttribute("adminConfig", adminConfigService.read());
+		model.addAttribute("message", "설정이 변경되었습니다.");
+		return read(model);
 	}
 }
