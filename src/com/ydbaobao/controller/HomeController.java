@@ -43,7 +43,7 @@ public class HomeController {
 	public String home(Model model, WebRequest req) {
 		model.addAttribute("totalPage", CommonUtil.countTotalPage(productService.count()));
 		model.addAttribute("products", productService.readRange(1, CommonUtil.PRODUCTS_PER_PAGE));
-		model.addAttribute("categories", categoryService.read());
+		model.addAttribute("categories", categoryService.readWithoutUnclassifiedCategory());
 		model.addAttribute("brands", brandService.readBrands());
 		model.addAttribute("firstLetterList", new Brand().getFirstLetters());
 		
@@ -82,7 +82,7 @@ public class HomeController {
 	@RequestMapping(value = "/loginForm", method = RequestMethod.GET)
 	public String loginView(Model model) {
 		model.addAttribute("customer", new Customer());
-		model.addAttribute("categories", categoryService.read());
+		model.addAttribute("categories", categoryService.readWithoutUnclassifiedCategory());
 		return "login";
 	}
 	
@@ -96,7 +96,7 @@ public class HomeController {
 	@RequestMapping(value = "/joinForm", method = RequestMethod.GET)
 	public String form(Model model) {
 		model.addAttribute("customer", new Customer());
-		model.addAttribute("categories", categoryService.read());
+		model.addAttribute("categories", categoryService.readWithoutUnclassifiedCategory());
 		return "form";
 	}
 	
