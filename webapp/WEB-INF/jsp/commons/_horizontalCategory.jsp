@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:if test="${empty sessionAdmin}">
+	<c:redirect url="/loginForm" />
+</c:if>
 <div id="horizontal-category-menu">
 	<ul>
 		<li><a href="/products/?page=1">전체상품</a></li>

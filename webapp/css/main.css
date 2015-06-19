@@ -351,9 +351,7 @@ input[type=number] {
 /* 로그인/회원가입 폼 */
 .loginBox {
 	display: block;
-	float: left;
 	height: 500px;
-	width: 784px;
 }
 
 form#customer {
