@@ -50,7 +50,7 @@ public class BrandController {
 		model.addAttribute("products", productService.readListByBrandId(brandId, page, CommonUtil.PRODUCTS_PER_PAGE));
 		model.addAttribute("brands", brandService.readBrands());
 		model.addAttribute("brand", brand);
-		model.addAttribute("categories", categoryService.read());
+		model.addAttribute("categories", categoryService.readWithoutUnclassifiedCategory());
 		model.addAttribute("firstLetterList", new Brand().getFirstLetters());
 
 		return "products";
