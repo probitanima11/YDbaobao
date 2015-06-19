@@ -52,14 +52,15 @@ public class OrderDao extends JdbcDaoSupport {
 								orderId);
 	}
 
-	public int createOrder(String customerId) {
-		String sql = "insert into ORDERS values(default, '승인대기', ?, 0, 0, '', default, default)";
+	public int createOrder(String customerId, int totalPrice) {
+		String sql = "insert into ORDERS values(default, '승인대기', ?, 0, ?, '', default, default)";
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		getJdbcTemplate().update(new PreparedStatementCreator() {
 			public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
 				//TODO new String param 논의.(알파)
 				PreparedStatement ps = connection.prepareStatement(sql, new String[] { "orderId" });
 				ps.setString(1, customerId);
+				ps.setInt(2, totalPrice);
 				return ps;
 			}
 		}, keyHolder);
