@@ -51,7 +51,10 @@
 		<!-- 브랜드/제품 검색바 -->
 		<%@ include file="./commons/_search.jsp"%>
 	</div>
-
+	<div>
+		<!-- 수평 카테고리 메뉴 -->
+		<%@ include file="./commons/_horizontalCategory.jsp"%>
+	</div>
 	<div id="main-container">
 		<div id="first-section" class="wrap content" style="height: 500px;">
 			<div id="order-section">

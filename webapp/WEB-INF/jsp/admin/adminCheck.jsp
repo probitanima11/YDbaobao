@@ -11,7 +11,6 @@
 </head>
 <body>
 	<%@ include file="../commons/_topNav.jsp"%>
-	<%@ include file="../commons/_search.jsp"%>
 	<div class="joinForm">
 		<form id="customer" method="post" action="/admin/check">
 			<h1>관리자 로그인</h1>
