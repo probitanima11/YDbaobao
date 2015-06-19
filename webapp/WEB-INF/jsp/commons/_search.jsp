@@ -3,8 +3,8 @@
 <div id="brand-search-container">
 	<div id="brand-search-bar" class="wrap content">
 		<div id="search-bar-container">
-			<a href="/"> <img
-				src="/image/yd_logo.gif" />
+			<a href="/"> <img width="80" height="80"
+				src="/image/yd_logo.png" />
 			</a>
 			<div id="search-form">
 				<div id="search-bar">
