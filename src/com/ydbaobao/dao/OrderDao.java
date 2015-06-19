@@ -53,7 +53,7 @@ public class OrderDao extends JdbcDaoSupport {
 	}
 
 	public int createOrder(String customerId, int totalPrice) {
-		String sql = "insert into ORDERS values(default, '승인대기', ?, 0, ?, '', default, default)";
+		String sql = "insert into ORDERS values(default, 'I', ?, 0, ?, '', default, default)";
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		getJdbcTemplate().update(new PreparedStatementCreator() {
 			public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
