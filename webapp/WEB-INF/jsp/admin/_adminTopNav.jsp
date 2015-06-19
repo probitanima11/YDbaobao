@@ -5,7 +5,7 @@
 	style="width: 100%; border-bottom: 1px solid #ccc;">
 	<div id="top-bar" class="wrap content" style="height: 35px;">
 		<ul id="top">
-			<li class="logo"><a href="/"><img src="/image/yd_logo.gif"/></a></li>
+			<li class="logo"><a href="/"><img src="/image/logo_1.png"/></a></li>
 			<li class="logout"><a href="/admin/logout"><span style="color: #EA6576;">[관리자 로그아웃]</span></a></li>
 		</ul>
 	</div>
