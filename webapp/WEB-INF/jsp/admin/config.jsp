@@ -29,15 +29,17 @@
 						<tr>
 							<th>구분</th>
 							<th>설정</th>
-							<th>선택</th>
 						</tr>
 						<tr>
 							<td><form:label path="adminDisplayProducts">페이지 당 상품 갯수</form:label></td>
-							<td><form:input path="adminDisplayProducts" type="number"
-									min="1" value="${adminConfig.adminDisplayProducts}" /></td>
-							<td><input type="submit" value="저장" /></td>
+							<td><form:input path="adminDisplayProducts" type="number" min="1" value="${adminConfig.adminDisplayProducts}" /></td>
+						</tr>
+						<tr>
+							<td><form:label path="adminPassword">관리자 비밀번호</form:label></td>
+							<td><form:password path="adminPassword"></form:password></td>
 						</tr>
 					</tbody>
+					<input type="submit" value="저장" />
 				</table>
 			</form:form>
 		</div>

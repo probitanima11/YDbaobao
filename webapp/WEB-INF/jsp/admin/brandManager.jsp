@@ -45,6 +45,7 @@
 					<th style="width:150px">브랜드명</th>
 					<th style="width:320px">할인율</th>
 					<th style="width:100px">사이즈</th>
+					<th style="">수량</th>
 					<th style="width:80px">선택</th>
 				</tr>
 				<c:forEach var="brand" varStatus="status" items="${brands}">
@@ -61,6 +62,9 @@
 						</td>
 						<td class='brand_sizes'>
 							<input type="text" value="${brand.brandSize}">
+						</td>
+						<td class='brand_count'>
+							${brand.brandCount}
 						</td>	
 						<td>
 							<button class="update-brand-btn">수정</button>
@@ -80,6 +84,7 @@
 					</td>
 					<td class='brand_sizes'><input type="text"
 						value="${brand.brandSize}"></td>
+					<td></td>
 					<td>
 						<button class="create-brand-btn">추가</button>
 					</td>

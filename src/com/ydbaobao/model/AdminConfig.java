@@ -3,12 +3,14 @@ package com.ydbaobao.model;
 public class AdminConfig {
 	private int adminConfigId;
 	private int adminDisplayProducts;
+	private String adminPassword;
 	
 	public AdminConfig(){};
 	
-	public AdminConfig(int adminConfigId, int adminDisplayProducts) {
+	public AdminConfig(int adminConfigId, int adminDisplayProducts, String adminPassword) {
 		this.adminConfigId = adminConfigId;
 		this.adminDisplayProducts = adminDisplayProducts;
+		this.adminPassword = adminPassword;
 	}
 
 	public int getAdminConfigId() {
@@ -27,12 +29,22 @@ public class AdminConfig {
 		this.adminDisplayProducts = adminDisplayProducts;
 	}
 
+	public String getAdminPassword() {
+		return adminPassword;
+	}
+
+	public void setAdminPassword(String adminPassword) {
+		this.adminPassword = adminPassword;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + adminConfigId;
 		result = prime * result + adminDisplayProducts;
+		result = prime * result
+				+ ((adminPassword == null) ? 0 : adminPassword.hashCode());
 		return result;
 	}
 
@@ -49,12 +61,18 @@ public class AdminConfig {
 			return false;
 		if (adminDisplayProducts != other.adminDisplayProducts)
 			return false;
+		if (adminPassword == null) {
+			if (other.adminPassword != null)
+				return false;
+		} else if (!adminPassword.equals(other.adminPassword))
+			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
 		return "AdminConfig [adminConfigId=" + adminConfigId
-				+ ", adminDisplayProducts=" + adminDisplayProducts + "]";
+				+ ", adminDisplayProducts=" + adminDisplayProducts
+				+ ", adminPassword=" + adminPassword + "]";
 	}
 }
