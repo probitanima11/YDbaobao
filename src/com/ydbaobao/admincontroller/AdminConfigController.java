@@ -29,7 +29,8 @@ public class AdminConfigController {
 	@RequestMapping(value = "", method = {RequestMethod.POST})
 	public String update(Model model, AdminConfig adminConfig) {
 		CommonUtil.PRODUCTS_PER_PAGE = adminConfig.getAdminDisplayProducts();
-		if (null == adminConfig.getAdminPassword()) {
+		logger.debug(adminConfig.getAdminPassword());
+		if ("".equals(adminConfig.getAdminPassword())) {
 			adminConfig.setAdminPassword(adminConfigService.read().getAdminPassword());
 		}
 		adminConfigService.update(adminConfig);
