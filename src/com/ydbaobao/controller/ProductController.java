@@ -42,7 +42,7 @@ public class ProductController {
 		return "product";
 	}
 	
-	@RequestMapping(value = "/categories", method = RequestMethod.GET)
+	@RequestMapping(value = "/products", method = RequestMethod.GET)
 	public String loadAll(Model model, @RequestParam("page") String page) {
 		logger.debug("page : {}", page);
 		model.addAttribute("products", productService.readProducts());
@@ -50,7 +50,7 @@ public class ProductController {
 		return "products";
 	}
 	
-	@RequestMapping(value="/categories/{categoryId}", method=RequestMethod.GET)
+	@RequestMapping(value="/categories/{categoryId}/products", method=RequestMethod.GET)
 	public String load(Model model, @RequestParam("page") String page, @PathVariable int categoryId) {
 		PageConfigParam p = new PageConfigParam(adminConfigService.read().getAdminDisplayProducts(), page, categoryService.readByCategoryId(categoryId).getCategoryCount());
 
@@ -67,7 +67,7 @@ public class ProductController {
 		return "products";
 	}
 	
-	@RequestMapping(value="/categories/{categoryId}/brands/{brandId}", method=RequestMethod.GET)
+	@RequestMapping(value="/categories/{categoryId}/brands/{brandId}/products", method=RequestMethod.GET)
 	public String load(Model model, @RequestParam("page") String page, @PathVariable int categoryId, @PathVariable int brandId) {
 
 		//TODO paging 기능 추가
