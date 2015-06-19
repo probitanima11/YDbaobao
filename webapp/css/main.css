@@ -106,26 +106,23 @@ ul#util li a span {
 
 #brand-search-container {
 	border-bottom: 2px solid #EA6576;
+	height:90px;
 }
 
 #search-bar-container {
-	height: 94px;
 }
 
 #search-bar-container>a {
 	text-decoration: none;
-	float: left;
-	height: 1px;
-}
-
-#search-bar-container>a>img {
-	width: 185px;
+	float:left;
+	margin-top:5px;
 }
 
 #search-form {
-	float: left;
-	margin-top: 20px;
-	margin-left: 12px;
+	position:relative;
+	display:table;
+	margin:0 auto;
+	top:20px;
 }
 
 #search-form button {
