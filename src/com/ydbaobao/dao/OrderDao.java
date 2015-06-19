@@ -28,8 +28,21 @@ public class OrderDao extends JdbcDaoSupport {
 	private void initialize() {
 		setDataSource(dataSource);
 	}
+	
+	public List<Order> readOrders() {
+		String sql = "select *, DATE_FORMAT(ORDERS.orderUpdateDate, '%Y-%c-%e') as orderDate from ORDERS";
+		return getJdbcTemplate().query(sql, (rs, rowNum) -> new Order(
+					rs.getInt("orderId"),
+					rs.getString("orderStatus"),
+					new Customer(rs.getString("customerId")),
+					rs.getInt("enuri"),
+					rs.getInt("realPrice"),
+					rs.getString("orderAddress"),
+					rs.getString("orderDate")
+				));
+	}
 
-	public List<Order> readOrders(String customerId) {
+	public List<Order> readOrdersByCustomerId(String customerId) {
 		String sql = "select *, DATE_FORMAT(ORDERS.orderUpdateDate, '%Y-%c-%e') as orderDate from ORDERS where customerId = ?"; 
 		return getJdbcTemplate().query(
 				sql, (rs, rowNum) -> new Order(
