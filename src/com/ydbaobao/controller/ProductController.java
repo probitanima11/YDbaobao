@@ -59,7 +59,7 @@ public class ProductController {
 		Category category = categoryService.readByCategoryId(categoryId);
 		model.addAttribute("totalPage", CommonUtil.countTotalPage(category.getCategoryCount()));
 		model.addAttribute("products", productService.readListByCategoryId(categoryId, page, CommonUtil.PRODUCTS_PER_PAGE));
-		model.addAttribute("brands", brandService.readBrands());
+		model.addAttribute("brands", brandService.readBrandsByCategoryId(categoryId));
 		model.addAttribute("category", category);
 		model.addAttribute("categories", categoryService.readWithoutUnclassifiedCategory());
 		model.addAttribute("firstLetterList", new Brand().getFirstLetters());
@@ -73,10 +73,10 @@ public class ProductController {
 	@RequestMapping(value="/categories/{categoryId}/brands/{brandId}/products", method=RequestMethod.GET)
 	public String load(Model model, @RequestParam("page") int page, @PathVariable int categoryId, @PathVariable int brandId) {
 	List<Product> products = productService.readByCategoryIdAndBrandId(categoryId, brandId, page, CommonUtil.PRODUCTS_PER_PAGE);
-		
 		model.addAttribute("totalPage", CommonUtil.countTotalPage(products.size()));		
 		model.addAttribute("products", products);
-		model.addAttribute("brands", brandService.readBrands());
+		model.addAttribute("selectedBrand", brandService.readBrandByBrandId(brandId));
+		model.addAttribute("brands", brandService.readBrandsByCategoryId(categoryId));
 		model.addAttribute("category", categoryService.readByCategoryId(categoryId));
 		model.addAttribute("categories", categoryService.readWithoutUnclassifiedCategory());
 		model.addAttribute("firstLetterList", new Brand().getFirstLetters());
