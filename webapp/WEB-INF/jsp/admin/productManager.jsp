@@ -31,10 +31,10 @@
 					<c:forEach var="category" items="${categories}">
 					<c:choose>
 						<c:when test="${category.categoryId eq selectedCategoryId}">
-							<option value="${category.categoryId}" label="${category.categoryName}" selected="selected" />
+							<option value="${category.categoryId}" label="${category.categoryName}(${category.categoryCount})" selected="selected" />
 						</c:when>
 						<c:otherwise>
-							<option value="${category.categoryId}" label="${category.categoryName}" />
+							<option value="${category.categoryId}" label="${category.categoryName}(${category.categoryCount})" />
 						</c:otherwise>
 					</c:choose>
 					</c:forEach>
