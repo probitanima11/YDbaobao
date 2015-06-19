@@ -186,6 +186,7 @@
 				success : function(req) {
 					if (req.responseText === 'success') {
 						alert('상품정보가 수정되었습니다.');
+						location.reload();
 					}
 				}
 			});
