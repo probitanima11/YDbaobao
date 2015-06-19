@@ -24,6 +24,10 @@ public class BrandService {
 		return brandDao.readBrands();
 	}
 	
+	public List<Brand> readBrandsByCategoryId(int categoryId) {
+		return brandDao.readBrandsByCategoryId(categoryId);
+	}
+	
 	public List<Brand> findBrands(String searchValue) {
 		return brandDao.findBrands(searchValue);
 	}

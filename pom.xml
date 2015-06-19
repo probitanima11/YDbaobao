@@ -101,13 +101,6 @@
 			<version>2.3.1</version>
 		</dependency>
 
-		<!-- Annotation으로 오브젝트 기본 메소드 만들기 -->
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<version>1.16.4</version>
-		</dependency>
-
 		<!-- embedded tomcat -->
 		<dependency>
 			<groupId>javax.servlet</groupId>

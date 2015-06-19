@@ -14,7 +14,14 @@
 	<div id="brand-list">
 		<ul>
 			<c:forEach var="brand" items="${brands}">
-				<li><a href="/categories/${category.categoryId}/brands/${brand.brandId}/products?page=1"><i class='fa fa-bookmark'></i>  <span>${brand.brandName}</span></a></li>
+				<c:choose>
+					<c:when test="${not empty category.categoryId}">
+						<li><a href="/categories/${category.categoryId}/brands/${brand.brandId}/products?page=1"><i class='fa fa-bookmark'></i><span>${brand.brandName}(${brand.brandCount})</span></a></li>
+					</c:when>		
+					<c:otherwise>
+						<li><a href="/brands/${brand.brandId}/products?page=1"><i class='fa fa-bookmark'></i>  <span>${brand.brandName}(${brand.brandCount})</span></a></li>
+					</c:otherwise>			
+				</c:choose>				
 			</c:forEach>
 		</ul>
 	</div>	

@@ -42,7 +42,7 @@ public class HomeController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Model model, WebRequest req) {
 		model.addAttribute("totalPage", CommonUtil.countTotalPage(productService.count()));
-		model.addAttribute("products", productService.readRange(1, CommonUtil.PRODUCTS_PER_PAGE));
+		model.addAttribute("products", productService.readRange(1, adminConfigService.read().getAdminDisplayProducts()));
 		model.addAttribute("categories", categoryService.readWithoutUnclassifiedCategory());
 		model.addAttribute("brands", brandService.readBrands());
 		model.addAttribute("firstLetterList", new Brand().getFirstLetters());
@@ -62,7 +62,7 @@ public class HomeController {
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
 	public String homeWithPage(Model model, @RequestParam int page) {
 		model.addAttribute("totalPage", CommonUtil.countTotalPage(productService.count()));
-		model.addAttribute("products", productService.readRange(page, CommonUtil.PRODUCTS_PER_PAGE));
+		model.addAttribute("products", productService.readRange(page, adminConfigService.read().getAdminDisplayProducts()));
 		model.addAttribute("categories", categoryService.readWithoutUnclassifiedCategory());
 		model.addAttribute("brands", brandService.readBrands());
 		model.addAttribute("firstLetterList", new Brand().getFirstLetters());
