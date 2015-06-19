@@ -55,7 +55,7 @@ public class ItemDao extends JdbcDaoSupport {
 		String sql = "select * from ITEMS where itemId=?";
 		return getJdbcTemplate().queryForObject(sql, (rs, rowNum) -> new Item(
 				rs.getInt("itemId"), new Customer(rs.getString("customerId")),
-				new Product(),
+				new Product(rs.getInt("productId")),
 				new Order(),
 				rs.getString("size"), rs.getInt("quantity")), itemId);
 	}

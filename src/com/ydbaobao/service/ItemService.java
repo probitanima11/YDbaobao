@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ydbaobao.dao.ItemDao;
 import com.ydbaobao.dao.OrderDao;
+import com.ydbaobao.dao.ProductDao;
 import com.ydbaobao.model.Item;
 
 @Service
@@ -19,6 +20,8 @@ public class ItemService {
 	private ItemDao itemDao;
 	@Resource
 	private OrderDao orderDao;
+	@Resource
+	private ProductDao productDao;
 	
 	public void createItems(String customerId, String size, String quantity, String productId) {
 		String[] sizeArray = size.split("-");
@@ -40,7 +43,7 @@ public class ItemService {
 	}
 
 	public void orderDirect(String customerId, String productId, String size, int quantity) {
-		itemDao.orderDirect(customerId, productId, orderDao.createOrder(customerId), size, quantity);
+//		itemDao.orderDirect(customerId, productId, orderDao.createOrder(customerId), size, quantity);
 	}
 
 	public List<Item> readCartItems(String customerId) {
