@@ -27,9 +27,7 @@
 	<div id="item-container" class="wrap content">
 		<%@ include file="./commons/_productsBox.jsp"%>
 		
-		<c:if test="${count > 0}">
-			<%@ include file="./commons/_productListBar.jsp" %>
-		</c:if>
+		<%@ include file="./commons/_productListBar.jsp" %>
 	</div>
 
 </body>
