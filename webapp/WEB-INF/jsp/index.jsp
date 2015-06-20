@@ -33,7 +33,7 @@
 			<div id="item-container" class="wrap content">
 				<%@ include file="./commons/_productsBox.jsp" %>
 
-				<%@ include file="./commons/_paging.jsp" %>
+				<%@ include file="./commons/_productListBar.jsp" %>
 			</div>
 		</div>
 	</div>

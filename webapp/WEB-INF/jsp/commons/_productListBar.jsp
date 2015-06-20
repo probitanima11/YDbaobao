@@ -5,7 +5,14 @@
 	<a href="${url}${prev}" class="prevAndNext" style="float:left"><button>prev</button></a>
 		<ul>
 			<c:forEach var="page" items="${range}" varStatus="status">
-				<li><a href="${url}${page}">${page}</a></li>
+				<c:choose>
+					<c:when test="${page eq selectedIndex}">
+						<li><a href="${url}${page}"><span class="selectedIndex">${page}</span></a></li>
+					</c:when>
+					<c:otherwise>
+						<li><a href="${url}${page}"><span>${page}</span></a></li>
+					</c:otherwise>
+				</c:choose>
 			</c:forEach>
 		</ul>
 	<a href="${url}${next}" class="prevAndNext"><button>next</button></a>

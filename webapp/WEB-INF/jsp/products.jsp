@@ -45,7 +45,7 @@
 		<!-- 상품 리스트 -->
 		<%@ include file="./commons/_productsBox.jsp" %>
 		<!-- 페이지 -->
-		<%@ include file="./commons/_paging.jsp" %>
+		<%@ include file="./commons/_productListBar.jsp" %>
 	</div>
 	<script src="/js/ydbaobao.js"></script>
 </body>
