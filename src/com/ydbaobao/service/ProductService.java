@@ -92,15 +92,6 @@ public class ProductService {
 		return productDao.readListByCategoryId(categoryId, (page - 1) * productsPerPage, productsPerPage);
 	}
 	
-	public List<Product> readProducts() {
-		List<Product> productList = productDao.readProductsList();
-		for(Product product:productList){
-			Brand brand = product.getBrand();
-			brand.setBrandName(brandDao.readBrandByBrandId(brand.getBrandId()).getBrandName());
-		}
-		return productList;
-	}
-
 	public List<Product> readListByCategoryId(int categoryId) {
 		return productDao.readListByCategoryId(categoryId);
 	}
@@ -142,6 +133,8 @@ public class ProductService {
 
 	public boolean delete(int productId) {
 		Product product = productDao.read(productId);
+		categoryDao.decreaseCount(product.getCategory().getCategoryId());
+		brandDao.decreaseCount(product.getBrand().getBrandId());
 		File file = new File("/home/baobao/products/"+product.getProductImage());
 		if(productDao.delete(product) >=1){
 			file.delete();
@@ -154,7 +147,12 @@ public class ProductService {
 		return productDao.readByCategoryIdAndBrandId(categoryId, brandId, (page - 1) * productsPerPage, productsPerPage);
 	}
 
-	public List<Product> readAll() {
-		return productDao.readProductsList();
+	public List<Product> readProducts(int page, int productsPerPage) {
+		List<Product> products = productDao.readProductsList((page - 1) * productsPerPage, productsPerPage);
+		for(Product product:products){
+			Brand brand = product.getBrand();
+			brand.setBrandName(brandDao.readBrandByBrandId(brand.getBrandId()).getBrandName());
+		}
+		return products;
 	}
 }

@@ -1,6 +1,7 @@
 package com.ydbaobao.admincontroller;
 
 import java.util.List;
+import java.util.stream.IntStream;
 
 import javax.annotation.Resource;
 
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.support.CommonUtil;
 import com.support.JSONResponseUtil;
 import com.ydbaobao.model.Brand;
 import com.ydbaobao.model.Category;
@@ -50,13 +52,20 @@ public class AdminProductController {
 	 * 상품 관리 페이지 호출
 	 */
 	@RequestMapping(value = "", method = RequestMethod.GET)
-	public String read(Model model) {
+	public String read(Model model, @RequestParam int page) {
 		int selectedCategoryId = -1;
 		List<Category> categories = categoryService.read();
 		categories.add(0, new Category(selectedCategoryId, "전체보기", productService.count()));
-
+		
+		int totalPage = CommonUtil.countTotalPage(productService.count(), 16);
+		
+		model.addAttribute("prev", CommonUtil.prevBlock(page));
+		model.addAttribute("next", CommonUtil.nextBlock(page, totalPage));
+		model.addAttribute("selectedIndex", page);
+		model.addAttribute("range", IntStream.range(CommonUtil.startPage(page), CommonUtil.endPage(page, totalPage)).toArray());
+		model.addAttribute("url", "/admin/products?page=");
 		model.addAttribute("product", new Product());
-		model.addAttribute("products", productService.readProducts());
+		model.addAttribute("products", productService.readProducts(page, 16));
 		model.addAttribute("brands", brandService.readBrands());
 		model.addAttribute("selectedCategoryId", selectedCategoryId);
 		model.addAttribute("categories", categories);
@@ -64,13 +73,25 @@ public class AdminProductController {
 	}
 	
 	@RequestMapping(value = "/category", method = RequestMethod.GET)
-	public String readByCategoryId(Model model, @RequestParam int categoryId) {
+	public String readByCategoryId(Model model, @RequestParam int categoryId, @RequestParam int page) {
 		model.addAttribute("product", new Product());
-		if(categoryId==-1){
-			model.addAttribute("products", productService.readProducts());
+		List<Product> products;
+		int totalPage;
+		if(categoryId == -1){
+			products = productService.readProducts(page, 16);
+			totalPage = CommonUtil.countTotalPage(productService.count(), 16);
 		} else{
-			model.addAttribute("products", productService.readListByCategoryId(categoryId));
+			products = productService.readListByCategoryId(categoryId, page, 16);
+			totalPage = CommonUtil.countTotalPage(productService.readListByCategoryId(categoryId).size(), 16);
 		}
+		
+		model.addAttribute("prev", CommonUtil.prevBlock(page));
+		model.addAttribute("next", CommonUtil.nextBlock(page, totalPage));
+		model.addAttribute("selectedIndex", page);
+		model.addAttribute("range", IntStream.range(CommonUtil.startPage(page), CommonUtil.endPage(page, totalPage)).toArray());
+		model.addAttribute("url", "/admin/products/category?categoryId=" + categoryId + "&page=");
+	
+		model.addAttribute("products", products);
 		model.addAttribute("brands", brandService.readBrands());
 		List<Category> categories = categoryService.read();
 		categories.add(0, new Category(-1, "전체보기", 0));

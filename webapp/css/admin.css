@@ -153,3 +153,60 @@ ul#top li a span {
 #product-menu .delete-all-product{
 	float: right;
 }
+
+
+/* _productListBar.jsp */
+.contents-nav {
+	display: table;
+	margin: 0 auto;
+	margin-top: 15px;
+}
+
+.contents-nav > ul {
+	float: left;
+	display: inline;
+	padding: 0;
+}
+
+.contents-nav li {
+	list-style: none;
+	display: inline;
+	text-align: center;
+	margin-top: 10px;
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+.contents-nav li > a {
+	text-decoration: none;
+	color: #454545;
+}
+
+a.prevAndNext {
+	display: inline;
+	position: relative;
+	top: 13px;
+}
+
+a.prevAndNext>button {
+	color: #333;
+	background-color: #fff;
+	border-color: #ccc;
+	display: inline-block;
+	margin-bottom: 0;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: middle;
+	touch-action: manipulation;
+	cursor: pointer;
+	border-radius: 4px;
+	-webkit-appearance: button;
+}
+
+a.prevAndNext>button:focus {
+	outline: none;
+}
+
+.selectedIndex {
+	color: red;
+}

@@ -1,6 +1,7 @@
 package com.ydbaobao.controller;
 
 import java.util.List;
+import java.util.stream.IntStream;
 
 import javax.annotation.Resource;
 
@@ -40,7 +41,13 @@ public class SearchController {
 		int count = searchService.countBySearchBrandName(paramForQuery);
 		List<Product> products= searchService.readByBrandName(paramForQuery, page, adminConfigService.read().getAdminDisplayProducts());
 
-		model.addAttribute("totalPage", CommonUtil.countTotalPage(count));
+		int totalPage = CommonUtil.countTotalPage(count, CommonUtil.productsPerPage);
+
+		model.addAttribute("prev", CommonUtil.prevBlock(page));
+		model.addAttribute("next", CommonUtil.nextBlock(page, totalPage));
+		model.addAttribute("selectedIndex", page);
+		model.addAttribute("range", IntStream.range(CommonUtil.startPage(page), CommonUtil.endPage(page, totalPage)).toArray());
+		model.addAttribute("url", "/search/brands?param=" + param + "&page=");
 		model.addAttribute("categories", categoryService.read());
 		model.addAttribute("products", products);
 		model.addAttribute("count", count);
@@ -61,8 +68,14 @@ public class SearchController {
 		int count = searchService.countBySearchProductName(paramForQuery);
 		List<Product> products= searchService.readByProductName(paramForQuery, page, adminConfigService.read().getAdminDisplayProducts());
 
-		model.addAttribute("totalPage", CommonUtil.countTotalPage(count));
-		model.addAttribute("categories", categoryService.read());
+		int totalPage = CommonUtil.countTotalPage(count, CommonUtil.productsPerPage);
+
+		model.addAttribute("prev", CommonUtil.prevBlock(page));
+		model.addAttribute("next", CommonUtil.nextBlock(page, totalPage));
+		model.addAttribute("selectedIndex", page);
+		model.addAttribute("range", IntStream.range(CommonUtil.startPage(page), CommonUtil.endPage(page, totalPage)).toArray());
+		model.addAttribute("url", "/search/products?param=" + param + "&page=");
+		model.addAttribute("categories", categoryService.readWithoutUnclassifiedCategory());
 		model.addAttribute("products", products);
 		model.addAttribute("count", count);
 		model.addAttribute("terms", param);

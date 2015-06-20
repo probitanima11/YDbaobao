@@ -36,8 +36,7 @@ img.snap{
 			<h1>첫화면 관리</h1>
 
  			<form id="imgForm" enctype="multipart/form-data" action="/admin/indexImages/" method="post">
-				<!-- <input type="hidden" name="_method" value="delete" /> -->
-				<input type="file" id="imageFile"  name="profileImage" accept="image/x-png, image/gif, image/jpeg" style="display:none;" onchange="changeImage(this)"/>
+				<input type="file" id="imageFile"  name="imageFile" accept="image/x-png, image/gif, image/jpeg" style="display:none;" onchange="changeImage(this)"/>
 				<input type="hidden" id="imgIndex" name="imgIndex" value="${imgIndex}"/>
 			</form>
 			<table>

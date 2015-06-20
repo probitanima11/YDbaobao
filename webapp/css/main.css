@@ -21,8 +21,9 @@ html, body {
 	margin-right: 10px;
 }
 
-.contents-nav li>a {
+.contents-nav li > a {
 	text-decoration: none;
+	color: #454545;
 }
 
 .btn {
