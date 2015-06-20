@@ -92,15 +92,6 @@ public class ProductService {
 		return productDao.readListByCategoryId(categoryId, (page - 1) * productsPerPage, productsPerPage);
 	}
 	
-	public List<Product> readProducts() {
-		List<Product> productList = productDao.readProductsList();
-		for(Product product:productList){
-			Brand brand = product.getBrand();
-			brand.setBrandName(brandDao.readBrandByBrandId(brand.getBrandId()).getBrandName());
-		}
-		return productList;
-	}
-
 	public List<Product> readListByCategoryId(int categoryId) {
 		return productDao.readListByCategoryId(categoryId);
 	}
@@ -152,10 +143,6 @@ public class ProductService {
 
 	public List<Product> readByCategoryIdAndBrandId(int categoryId, int brandId, int page, int productsPerPage) {
 		return productDao.readByCategoryIdAndBrandId(categoryId, brandId, (page - 1) * productsPerPage, productsPerPage);
-	}
-
-	public List<Product> readAll() {
-		return productDao.readProductsList();
 	}
 
 	public List<Product> readProducts(int page, int productsPerPage) {

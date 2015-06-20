@@ -187,17 +187,6 @@ public class ProductDao extends JdbcDaoSupport {
 				categoryId, brandId, offset, productsPerPage);
 	}
 	
-	public List<Product> readProductsList() {
-		String sql = "select * from PRODUCTS ORDER BY productId DESC";
-		return getJdbcTemplate()
-				.query(sql,
-						(rs, rowNum) -> new Product(rs.getInt("productId"), rs.getString("productName"), new Category(
-								rs.getInt("categoryId"), null, 0), new Brand(rs.getInt("brandId"), null, 0, 0, 0, 0, 0, 0, ""), rs
-								.getInt("productPrice"), rs.getString("productImage"), rs
-								.getString("productDescription"), rs.getLong("productCreateDate"), rs
-								.getLong("productUpdateDate"), rs.getString("productSize")));
-	}
-	
 	public List<Product> readProductsList(int offset, int productsPerPage) {
 		String sql = "select * from PRODUCTS ORDER BY productId DESC limit ?, ?";
 		return getJdbcTemplate()
