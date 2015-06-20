@@ -57,7 +57,7 @@ public class AdminProductController {
 		List<Category> categories = categoryService.read();
 		categories.add(0, new Category(selectedCategoryId, "전체보기", productService.count()));
 		
-		int totalPage = CommonUtil.countTotalPage(productService.count());
+		int totalPage = CommonUtil.countTotalPage(productService.count(), 16);
 		
 		model.addAttribute("prev", CommonUtil.prevBlock(page));
 		model.addAttribute("next", CommonUtil.nextBlock(page, totalPage));
@@ -79,10 +79,10 @@ public class AdminProductController {
 		int totalPage;
 		if(categoryId == -1){
 			products = productService.readProducts(page, 16);
-			totalPage = CommonUtil.countTotalPage(productService.count());
+			totalPage = CommonUtil.countTotalPage(productService.count(), 16);
 		} else{
 			products = productService.readListByCategoryId(categoryId, page, 16);
-			totalPage = CommonUtil.countTotalPage(productService.readListByCategoryId(categoryId).size());
+			totalPage = CommonUtil.countTotalPage(productService.readListByCategoryId(categoryId).size(), 16);
 		}
 		
 		model.addAttribute("prev", CommonUtil.prevBlock(page));

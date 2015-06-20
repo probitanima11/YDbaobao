@@ -47,7 +47,7 @@ public class BrandController {
 	@RequestMapping(value="/{brandId}/products", method=RequestMethod.GET)
 	public String searchByBrandId(@RequestParam("page") int page, Model model, @PathVariable int brandId) {
 		Brand brand = brandService.readBrandByBrandId(brandId);
-		int totalPage = CommonUtil.countTotalPage(brand.getBrandCount());
+		int totalPage = CommonUtil.countTotalPage(brand.getBrandCount(), CommonUtil.PRODUCTS_PER_PAGE);
 		
 		model.addAttribute("prev", CommonUtil.prevBlock(page));
 		model.addAttribute("next", CommonUtil.nextBlock(page, totalPage));

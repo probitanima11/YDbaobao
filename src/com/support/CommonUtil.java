@@ -50,14 +50,14 @@ public class CommonUtil {
 	
 	/**
 	 * 전체 상품 갯수를 페이지 당 보여줄 상품 갯수로 나누어서 전체 페이지를 구한다
-	 * @param 전체 상품 갯수
+	 * @param 전체 상품 갯수, 페이지 당 보여줄 상품 갯수
 	 * @return 총 페이지 수
 	 */
-	public static int countTotalPage(int count) {
-		if(count % PRODUCTS_PER_PAGE == 0) {
-			return count / PRODUCTS_PER_PAGE;
+	public static int countTotalPage(int count , int productPerPage) {
+		if(count % productPerPage == 0) {
+			return count / productPerPage;
 		}
-		return count / PRODUCTS_PER_PAGE + 1;
+		return count / productPerPage + 1;
 	}
 
 	/**
