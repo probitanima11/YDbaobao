@@ -26,7 +26,7 @@
 		<servlet-name>ydbaobao</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
-
+	
 	<filter>
 		<filter-name>EncodingFilter</filter-name>
 		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
@@ -38,9 +38,9 @@
 
 	<filter-mapping>
 		<filter-name>EncodingFilter</filter-name>
-		<url-pattern>/*</url-pattern>
+		<servlet-name>ydbaobao</servlet-name>
 	</filter-mapping>
-
+	
 	<filter>
 		<filter-name>httpMethodFilter</filter-name>
 		<filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>
@@ -48,7 +48,7 @@
 
 	<filter-mapping>
 		<filter-name>httpMethodFilter</filter-name>
-		<url-pattern>/*</url-pattern>
+		<servlet-name>ydbaobao</servlet-name>
 	</filter-mapping>
 
 	<filter>
@@ -72,7 +72,6 @@
 
 	<filter-mapping>
 		<filter-name>MultipartFilter</filter-name>
-		<servlet-name>ydbaobao</servlet-name>
+		<servlet-name>/*</servlet-name>
 	</filter-mapping>
-
 </web-app>
