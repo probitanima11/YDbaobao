@@ -8,8 +8,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 
 public class CommonUtil {
-	public static int PRODUCTS_PER_PAGE = 16;
-	public static int PAGE_NUM = 10;
+	public static int productsPerPage = 16;
+	public static int limitPage = 10;
 	
 	public static boolean isNumber(String str){
         boolean result = false; 
@@ -66,8 +66,8 @@ public class CommonUtil {
 	 * @return 페이징에서 첫 번째 수
 	 */
 	public static int startPage(int page) {
-		int block = page / PAGE_NUM + 1;
-		return (block - 1) * PAGE_NUM + 1;
+		int block = page / limitPage + 1;
+		return (block - 1) * limitPage + 1;
 	}
 
 	/**
@@ -76,13 +76,13 @@ public class CommonUtil {
 	 * @return 페이징에서 마지막 페이지 수(for 조건문 때문에 출력하고자 하는 수보다 1을 더해준다)
 	 */
 	public static int endPage(int page, int totalPage) {
-		int block = page / PAGE_NUM + 1;
+		int block = page / limitPage + 1;
 		
 		// 마지막 페이질 경우
-		if((block - 1) * PAGE_NUM + PAGE_NUM >= totalPage) {
+		if((block - 1) * limitPage + limitPage >= totalPage) {
 			return totalPage + 1;
 		}
-		return (block - 1) * PAGE_NUM + PAGE_NUM + 1;
+		return (block - 1) * limitPage + limitPage + 1;
 	}
 
 	/**
@@ -91,14 +91,14 @@ public class CommonUtil {
 	 * @return 다음 블록의 첫 번째 수
 	 */
 	public static Object nextBlock(int page, int totalPage) {
-		int lastBlock = totalPage / PAGE_NUM; 
-		int block = page / PAGE_NUM + 1;
+		int lastBlock = totalPage / limitPage; 
+		int block = page / limitPage + 1;
 		
 		// 마지막 블록일 경우 마지막 페이지 반환
 		if(block >= lastBlock) {
 			return totalPage;
 		}
-		return block * PAGE_NUM + 1;
+		return block * limitPage + 1;
 	}
 
 	/**
@@ -107,12 +107,12 @@ public class CommonUtil {
 	 * @return 이전 블록의 첫 번째 수
 	 */
 	public static Object prevBlock(int page) {
-		int block = page / PAGE_NUM + 1;
+		int block = page / limitPage + 1;
 		
 		// 첫 블록일 경우 첫 페이지 반환
 		if(block <= 1) {
 			return 1;
 		}
-		return (block - 2) * PAGE_NUM + 1;
+		return (block - 2) * limitPage + 1;
 	}
 }

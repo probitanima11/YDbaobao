@@ -43,7 +43,7 @@ public class ProductController {
 	
 	@RequestMapping(value = "/products", method = RequestMethod.GET)
 	public String loadAll(Model model, @RequestParam("page") int page) {
-		int totalPage = CommonUtil.countTotalPage(productService.count(), CommonUtil.PRODUCTS_PER_PAGE);
+		int totalPage = CommonUtil.countTotalPage(productService.count(), CommonUtil.productsPerPage);
 		
 		model.addAttribute("prev", CommonUtil.prevBlock(page));
 		model.addAttribute("next", CommonUtil.nextBlock(page, totalPage));
@@ -64,7 +64,7 @@ public class ProductController {
 	@RequestMapping(value="/categories/{categoryId}/products", method=RequestMethod.GET)
 	public String load(Model model, @RequestParam("page") int page, @PathVariable int categoryId) {
 		Category category = categoryService.readByCategoryId(categoryId);
-		int totalPage = CommonUtil.countTotalPage(category.getCategoryCount(), CommonUtil.PRODUCTS_PER_PAGE);
+		int totalPage = CommonUtil.countTotalPage(category.getCategoryCount(), CommonUtil.productsPerPage);
 
 		model.addAttribute("prev", CommonUtil.prevBlock(page));
 		model.addAttribute("next", CommonUtil.nextBlock(page, totalPage));
@@ -85,8 +85,8 @@ public class ProductController {
 	 */
 	@RequestMapping(value="/categories/{categoryId}/brands/{brandId}/products", method=RequestMethod.GET)
 	public String load(Model model, @RequestParam("page") int page, @PathVariable int categoryId, @PathVariable int brandId) {
-		List<Product> products = productService.readByCategoryIdAndBrandId(categoryId, brandId, page, CommonUtil.PRODUCTS_PER_PAGE);
-		int totalPage = (int) CommonUtil.countTotalPage(products.size(), CommonUtil.PRODUCTS_PER_PAGE);
+		List<Product> products = productService.readByCategoryIdAndBrandId(categoryId, brandId, page, CommonUtil.productsPerPage);
+		int totalPage = (int) CommonUtil.countTotalPage(products.size(), CommonUtil.productsPerPage);
 
 		model.addAttribute("prev", CommonUtil.prevBlock(page));
 		model.addAttribute("next", CommonUtil.nextBlock(page, totalPage));

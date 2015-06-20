@@ -42,7 +42,7 @@ public class HomeController {
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Model model, WebRequest req) {
-		int totalPage = CommonUtil.countTotalPage(productService.count(), CommonUtil.PRODUCTS_PER_PAGE);
+		int totalPage = CommonUtil.countTotalPage(productService.count(), CommonUtil.productsPerPage);
 		
 		model.addAttribute("prev", CommonUtil.prevBlock(1));
 		model.addAttribute("next", CommonUtil.nextBlock(1, totalPage));
@@ -68,7 +68,7 @@ public class HomeController {
 	
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
 	public String homeWithPage(Model model, @RequestParam int page) {
-		int totalPage = CommonUtil.countTotalPage(productService.count(), CommonUtil.PRODUCTS_PER_PAGE);
+		int totalPage = CommonUtil.countTotalPage(productService.count(), CommonUtil.productsPerPage);
 		
 		model.addAttribute("prev", CommonUtil.prevBlock(page));
 		model.addAttribute("next", CommonUtil.nextBlock(page, totalPage));
