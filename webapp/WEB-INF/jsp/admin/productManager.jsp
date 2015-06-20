@@ -60,7 +60,7 @@
 					<td>카테고리 :</td>
 					<td>
 					<input id="categoryId" name="categoryId" type="hidden" value="${product.category.categoryId}"/>
-					<select class="${status.index}" onchange="setCategoryId(this)">
+						<select class="${status.index}" onchange="setCategoryId(this)">
 							<c:forEach var="category" items="${categories}">
 										<c:choose>
 											<c:when test="${category.categoryId eq product.category.categoryId}">
@@ -77,7 +77,7 @@
 					<td>브랜드 :</td>
 					<td>
 					<input id="brandId" name="brandId" type="hidden" value="${product.brand.brandId}"/>
-					<select class="${status.index}" onchange="setBrandId(this)">
+						<select class="${status.index}" onchange="setBrandId(this)">
 							<c:forEach var="brand" items="${brands}">
 										<c:choose>
 											<c:when test="${brand.brandId eq product.brand.brandId}">
@@ -113,6 +113,8 @@
 				</form:form>
 				</c:forEach>
 			</table>
+
+			<%@ include file="../commons/_productListBar.jsp" %>
 		</div>
 	</div>
 
@@ -204,7 +206,8 @@
 		
 		
 		document.body.querySelector('.category-select').addEventListener('change', function(e) {
-			e.target.parentElement.submit();
+			window.location.href = '/admin/products/category?categoryId=' + e.target.value + '&page=1';
+			// e.target.parentElement.submit();
 		}, false);
 		
 		

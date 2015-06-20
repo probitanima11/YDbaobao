@@ -157,4 +157,13 @@ public class ProductService {
 	public List<Product> readAll() {
 		return productDao.readProductsList();
 	}
+
+	public List<Product> readProducts(int page, int productsPerPage) {
+		List<Product> products = productDao.readProductsList((page - 1) * productsPerPage, productsPerPage);
+		for(Product product:products){
+			Brand brand = product.getBrand();
+			brand.setBrandName(brandDao.readBrandByBrandId(brand.getBrandId()).getBrandName());
+		}
+		return products;
+	}
 }

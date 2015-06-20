@@ -9,7 +9,7 @@
 	<ul>
 		<li><a href="/admin/customers"><span>회원관리</span></a></li>
 		<li><a href="/admin/products/regist"><span>상품등록</span></a></li>
-		<li><a href="/admin/products"><span>상품관리</span></a></li>
+		<li><a href="/admin/products?page=1"><span>상품관리</span></a></li>
 		<li><a href="/admin/brands"><span>브랜드관리</span></a></li>
 		<li><a href="/admin/categories"><span>카테고리관리</span></a></li>
 		<li><a href="/admin/orders"><span>주문관리</span></a></li>
