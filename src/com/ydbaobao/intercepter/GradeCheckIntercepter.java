@@ -4,20 +4,27 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.support.ServletRequestUtil;
 
 public class GradeCheckIntercepter extends HandlerInterceptorAdapter {
+	private static final Logger logger = LoggerFactory.getLogger(GradeCheckIntercepter.class);
+
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 		HttpSession session = request.getSession();
-		if (!ServletRequestUtil.hasAuthorizationFromCustomer(session)) {
-			response.sendRedirect("/");
-			return false;
+		if (ServletRequestUtil.hasAuthorizationFromCustomer(session)) {
+			return true;
 		}
-		return true;
+		if (ServletRequestUtil.hasAuthorizationFromCustomer(session)) {
+			return true;
+		}
+		response.sendRedirect("/");
+		return false;
 	}
 
 	@Override
