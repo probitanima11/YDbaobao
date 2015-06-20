@@ -133,6 +133,8 @@ public class ProductService {
 
 	public boolean delete(int productId) {
 		Product product = productDao.read(productId);
+		categoryDao.decreaseCount(product.getCategory().getCategoryId());
+		brandDao.decreaseCount(product.getBrand().getBrandId());
 		File file = new File("/home/baobao/products/"+product.getProductImage());
 		if(productDao.delete(product) >=1){
 			file.delete();
