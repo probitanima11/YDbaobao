@@ -10,29 +10,43 @@
 <style>
 	table {
 		text-align:center;
+		font-size:12px;
+	}
+	
+	th {
+		min-width:80px;
 	}
 
 	.waiting {
 		color: #DBC000;
 	}
 	
-	.info, .success, .claim {
+	.success {
+		color: #62C15B;
+	}
+	
+	.claim, .cancel {
+		color: #F15F5F;
+	}
+	
+	button.info, button.success, button.claim {
+		width: 75px;
 		border: 0;
 		padding: 5px;
 		color: #fff;
 	}
 	
-	.info {
+	button.info {
 		background-color: #4374D9;
 		border-bottom:2px solid #002C91;
 	}
 	
-	.success {
+	button.success {
 		background-color: #62C15B;
 		border-bottom:2px solid #086701;
 	}
 	
-	.claim {
+	button.claim {
 		background-color: #F15F5F;
 		border-bottom:2px solid #840000;
 	}
@@ -71,21 +85,21 @@
 								</td>
 							</c:when>
 							<c:when test="${order.orderStatus eq 'S'}">
-								<td colspan="1">주문승인</td>
+								<td colspan="1" class="success">주문승인</td>
 								<td>
-									<button class='info'>주문서보기</button>
+									<button class='info'><i class='fa fa-navicon'></i>  주문서보기</button>
 								</td>
 							</c:when>
 							<c:when test="${order.orderStatus eq 'R'}">
-								<td colspan="1">주문반려</td>
+								<td colspan="1" class='claim'>주문반려</td>
 								<td>
-									<button class='info'>주문서보기</button>
+									<button class='info'><i class='fa fa-navicon'></i>  주문서보기</button>
 								</td>
 							</c:when>
 							<c:when test="${order.orderStatus eq 'C'}">
-								<td colspan="1">주문취소</td>
+								<td colspan="1" class='cancel'>주문취소</td>
 								<td>
-									<button class='info'>주문서보기</button>
+									<button class='info'><i class='fa fa-navicon'></i>  주문서보기</button>
 								</td>
 							</c:when>
 							<c:otherwise>
@@ -97,5 +111,57 @@
 			</table>
 		</div>
 	</div>
+	<script>
+		window.addEventListener('load', function(){
+			var i;
+			var infoBtns = document.querySelectorAll('.info');
+			for (i = 0; i < infoBtns.length; i++) {
+				infoBtns[i].addEventListener('click', showOrder, false);
+			}
+			var checkBtns = document.querySelectorAll('.success');
+			for (i = 0; i < checkBtns.length; i++) {
+				checkBtns[i].addEventListener('click', checkOrder, false);
+			}
+			var claimBtns = document.querySelectorAll('.claim');
+			for (i = 0; i < claimBtns.length; i++) {
+				claimBtns[i].addEventListener('click', claimOrder, false);
+			}
+		}, false);
+		
+		function showOrder(e) {
+			var orderId = e.target.parentNode.parentNode.getAttribute('data-id');
+			ydbaobao.ajax({
+				method: "get",
+				url: "/admin/orders/read/"+orderId,
+				success: function(req){
+					console.log(req.responseText);
+				}
+			});
+		}
+		
+		function checkOrder(e) {
+			var orderId = e.target.parentNode.parentNode.getAttribute('data-id');
+			ydbaobao.ajax({
+				method: "post",
+				url: "/admin/orders/check/"+orderId,
+				success: function(req){
+					alert(req.responseText);
+				}
+			});
+		}
+		
+		function claimOrder(e) {
+			var orderId = e.target.parentNode.parentNode.getAttribute('data-id');
+			ydbaobao.ajax({
+				method: "post",
+				url: "/admin/orders/claim/"+orderId,
+				success: function(req){
+					alert(req.responseText);
+				}
+			});
+		}
+		
+	</script>
+	<script src="/js/ydbaobao.js"></script>
 </body>
 </html>

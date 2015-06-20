@@ -49,7 +49,10 @@ public class OrderService {
 	}
 
 	public Order readOrder(int orderId) {
-		return orderDao.readOrder(orderId);
+		Order order = orderDao.readOrder(orderId);
+		List<Item> items = itemDao.readItemsByOrderId(orderId);
+		order.setItems(items);
+		return order;
 	}
 
 	public void createOrder(String customerId, int[] itemList) {
@@ -61,5 +64,13 @@ public class OrderService {
 		}
 		int orderId = orderDao.createOrder(customerId, totalPrice);
 		itemDao.orderItems(orderId, itemList);
+	}
+
+	public void checkOrder(int orderId) {
+		orderDao.checkOrder(orderId);
+	}
+
+	public void claimOrder(int orderId) {
+		orderDao.claimOrder(orderId);
 	}
 }

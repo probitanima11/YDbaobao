@@ -79,4 +79,14 @@ public class OrderDao extends JdbcDaoSupport {
 		}, keyHolder);
 		return keyHolder.getKey().intValue();
 	}
+
+	public void checkOrder(int orderId) {
+		String sql = "update ORDERS set orderStatus = 'S' where orderId = ?";
+		getJdbcTemplate().update(sql, orderId);
+	}
+	
+	public void claimOrder(int orderId) {
+		String sql = "update ORDERS set orderStatus = 'R' where orderId = ?";
+		getJdbcTemplate().update(sql, orderId);
+	}
 }
