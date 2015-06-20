@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,7 +20,7 @@ import com.support.ImageResizeUtil;
 @Controller
 @RequestMapping("/admin/indexImages")
 public class AdminIndexController {
-
+	private static final Logger logger = LoggerFactory.getLogger(AdminIndexController.class);
 	/**
 	 * 첫화면 이미지 설정 관리 페이지 
 	 * 이미지 경로와 저장된 이미지 갯수를 돌려준다.
@@ -46,9 +48,10 @@ public class AdminIndexController {
 	 * @throws IllegalStateException 
 	 */
 	@RequestMapping(method = RequestMethod.POST)
-	public String indexImageCreate(Model model, @RequestParam MultipartFile profileImage, @RequestParam int imgIndex) throws IllegalStateException, IOException {
+	public String indexImageCreate(Model model, @RequestParam MultipartFile imageFile, @RequestParam int imgIndex) throws IllegalStateException, IOException {
 		String imgFilePath = "/home/baobao/index/index_0" + imgIndex + ".jpg";
-		profileImage.transferTo(new File(imgFilePath));
+		logger.debug(""+imageFile.getSize());
+		imageFile.transferTo(new File(imgFilePath));
 		ImageResizeUtil.imageResize(imgFilePath, "jpg", 800);
 		List<String> imgPath = new ArrayList<String>();
 		for (int i = 0; i < 8; i++) {

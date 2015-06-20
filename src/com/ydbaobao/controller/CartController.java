@@ -27,13 +27,28 @@ public class CartController {
 	@Resource
 	CategoryService categoryService;
 	
+	/**
+	 * 카트에 아이템 추가하기 
+	 * @param customerId
+	 * @param productId
+	 * @param size
+	 * @param quantity
+	 * @return
+	 * @throws IOException
+	 */
 	@RequestMapping(value = "/{customerId}", method = RequestMethod.POST)
 	public ResponseEntity<Object> createItem(@PathVariable String customerId, @RequestParam String productId, @RequestParam String size, @RequestParam String quantity) throws IOException {
-		// TODO 본인 확인
 		itemService.createItems(customerId, size, quantity, productId);
 		return JSONResponseUtil.getJSONResponse("success", HttpStatus.OK);
 	}
 	
+	/**
+	 * 카트 페이지 호출 
+	 * @param model
+	 * @param session
+	 * @return
+	 * @throws IOException
+	 */
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public String cartForm(Model model, HttpSession session) throws IOException {
 		String customerId = ServletRequestUtil.getCustomerIdFromSession(session);
@@ -42,9 +57,15 @@ public class CartController {
 		return "cart";
 	}
 	
+	/**
+	 * 카트에 아이템 삭제
+	 * @param customerId
+	 * @param itemId
+	 * @return
+	 * @throws IOException
+	 */
 	@RequestMapping(value = "/{customerId}/items/{itemId}", method = RequestMethod.DELETE)
 	public ResponseEntity<Object> deleteFromCart(@PathVariable String customerId, @PathVariable int itemId) throws IOException {
-		// TODO 본인 확인 
 		itemService.deleteCartList(customerId, itemId);
 		return JSONResponseUtil.getJSONResponse("" + itemId, HttpStatus.OK);
 	}

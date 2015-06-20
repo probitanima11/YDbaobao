@@ -29,7 +29,13 @@ public class OrderController {
 	@Resource
 	private CategoryService categoryService;
 
-	//TODO 주문목록 조회하기 
+	/**
+	 * 주문 내역 조회
+	 * @param session
+	 * @param model
+	 * @return
+	 * @throws IOException
+	 */
 	@RequestMapping()
 	public String readOrders(HttpSession session, Model model) throws IOException {
 		String customerId = ServletRequestUtil.getCustomerIdFromSession(session);
@@ -38,7 +44,13 @@ public class OrderController {
 		return "order";
 	}
 
-	//TODO 장바구니에서 주문하기 
+	/**
+	 * 장바구니에서 선택 된 아이템 주문서 호출
+	 * @param itemList
+	 * @param session
+	 * @return
+	 * @throws IOException
+	 */
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Object> createOrder(@RequestParam int[] itemList, HttpSession session) throws IOException{
 		String customerId = ServletRequestUtil.getCustomerIdFromSession(session);

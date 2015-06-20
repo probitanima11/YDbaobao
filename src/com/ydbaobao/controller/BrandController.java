@@ -45,7 +45,7 @@ public class BrandController {
 	 * @param 검색에 사용될 브랜드 Id, page 숫자
 	 */
 	@RequestMapping(value="/{brandId}/products", method=RequestMethod.GET)
-	public String searchByBrandId(@RequestParam("page") int page, Model model, @PathVariable int brandId) {
+	public String searchByBrandId(@RequestParam int page, Model model, @PathVariable int brandId) {
 		Brand brand = brandService.readBrandByBrandId(brandId);
 		int totalPage = CommonUtil.countTotalPage(brand.getBrandCount(), CommonUtil.productsPerPage);
 		
