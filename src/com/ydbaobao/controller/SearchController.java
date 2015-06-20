@@ -75,7 +75,7 @@ public class SearchController {
 		model.addAttribute("selectedIndex", page);
 		model.addAttribute("range", IntStream.range(CommonUtil.startPage(page), CommonUtil.endPage(page, totalPage)).toArray());
 		model.addAttribute("url", "/search/products?param=" + param + "&page=");
-		model.addAttribute("categories", categoryService.read());
+		model.addAttribute("categories", categoryService.readWithoutUnclassifiedCategory());
 		model.addAttribute("products", products);
 		model.addAttribute("count", count);
 		model.addAttribute("terms", param);
