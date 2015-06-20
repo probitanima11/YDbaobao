@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.support.CommonUtil;
 import com.ydbaobao.model.AdminConfig;
 import com.ydbaobao.service.AdminConfigService;
 
@@ -27,6 +28,11 @@ public class AdminConfigController {
 	}
 	@RequestMapping(value = "", method = {RequestMethod.POST})
 	public String update(Model model, AdminConfig adminConfig) {
+		CommonUtil.PRODUCTS_PER_PAGE = adminConfig.getAdminDisplayProducts();
+		logger.debug(adminConfig.getAdminPassword());
+		if ("".equals(adminConfig.getAdminPassword())) {
+			adminConfig.setAdminPassword(adminConfigService.read().getAdminPassword());
+		}
 		adminConfigService.update(adminConfig);
 		model.addAttribute("message", "설정이 변경되었습니다.");
 		return read(model);

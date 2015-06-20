@@ -27,24 +27,10 @@
 	<div id="item-container" class="wrap content">
 		<%@ include file="./commons/_productsBox.jsp"%>
 		
-		<div class="contents-nav">
-			<ul>
-			</ul>
-		</div>
+		<c:if test="${count > 0}">
+			<%@ include file="./commons/_productListBar.jsp" %>
+		</c:if>
 	</div>
 
 </body>
-<script>
-	window.addEventListener('load', function() {
-		paging();
-	}, false);
-
-	function paging() {
-		for(var i = 1; i <= ${totalPage}; i++) {
-			var li = document.createElement('li');
-			li.innerHTML = '<a href="?param=${terms}&page=' + i + '">' + i + '</a>';
-			document.querySelector('.contents-nav ul').appendChild(li);
-		}
-	}
-</script>
 </html>

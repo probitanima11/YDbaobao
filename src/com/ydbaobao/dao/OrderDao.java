@@ -28,8 +28,21 @@ public class OrderDao extends JdbcDaoSupport {
 	private void initialize() {
 		setDataSource(dataSource);
 	}
+	
+	public List<Order> readOrders() {
+		String sql = "select *, DATE_FORMAT(ORDERS.orderUpdateDate, '%Y-%c-%e') as orderDate from ORDERS";
+		return getJdbcTemplate().query(sql, (rs, rowNum) -> new Order(
+					rs.getInt("orderId"),
+					rs.getString("orderStatus"),
+					new Customer(rs.getString("customerId")),
+					rs.getInt("enuri"),
+					rs.getInt("realPrice"),
+					rs.getString("orderAddress"),
+					rs.getString("orderDate")
+				));
+	}
 
-	public List<Order> readOrders(String customerId) {
+	public List<Order> readOrdersByCustomerId(String customerId) {
 		String sql = "select *, DATE_FORMAT(ORDERS.orderUpdateDate, '%Y-%c-%e') as orderDate from ORDERS where customerId = ?"; 
 		return getJdbcTemplate().query(
 				sql, (rs, rowNum) -> new Order(
@@ -52,14 +65,15 @@ public class OrderDao extends JdbcDaoSupport {
 								orderId);
 	}
 
-	public int createOrder(String customerId) {
-		String sql = "insert into ORDERS values(default, '승인대기', ?, 0, 0, '', default, default)";
+	public int createOrder(String customerId, int totalPrice) {
+		String sql = "insert into ORDERS values(default, 'I', ?, 0, ?, '', default, default)";
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		getJdbcTemplate().update(new PreparedStatementCreator() {
 			public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
 				//TODO new String param 논의.(알파)
 				PreparedStatement ps = connection.prepareStatement(sql, new String[] { "orderId" });
 				ps.setString(1, customerId);
+				ps.setInt(2, totalPrice);
 				return ps;
 			}
 		}, keyHolder);

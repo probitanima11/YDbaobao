@@ -51,12 +51,13 @@ public class AdminProductController {
 	 */
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public String read(Model model) {
+		int selectedCategoryId = -1;
+		List<Category> categories = categoryService.read();
+		categories.add(0, new Category(selectedCategoryId, "전체보기", productService.count()));
+
 		model.addAttribute("product", new Product());
 		model.addAttribute("products", productService.readProducts());
 		model.addAttribute("brands", brandService.readBrands());
-		List<Category> categories = categoryService.read();
-		int selectedCategoryId = -1;
-		categories.add(0, new Category(selectedCategoryId, "전체보기", 0));
 		model.addAttribute("selectedCategoryId", selectedCategoryId);
 		model.addAttribute("categories", categories);
 		return "admin/productManager";

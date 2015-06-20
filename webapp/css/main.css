@@ -21,8 +21,9 @@ html, body {
 	margin-right: 10px;
 }
 
-.contents-nav li>a {
+.contents-nav li > a {
 	text-decoration: none;
+	color: #454545;
 }
 
 .btn {
@@ -351,9 +352,7 @@ input[type=number] {
 /* 로그인/회원가입 폼 */
 .loginBox {
 	display: block;
-	float: left;
 	height: 500px;
-	width: 784px;
 }
 
 form#customer {

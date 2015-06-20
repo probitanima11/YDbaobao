@@ -12,8 +12,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ydbaobao.dao.ItemDao;
 import com.ydbaobao.dao.OrderDao;
+import com.ydbaobao.dao.ProductDao;
 import com.ydbaobao.model.Item;
 import com.ydbaobao.model.Order;
+import com.ydbaobao.model.Product;
 
 @Service
 @Transactional
@@ -22,9 +24,15 @@ public class OrderService {
 	OrderDao orderDao;
 	@Resource
 	ItemDao itemDao;
+	@Resource
+	ProductDao productDao;
 	
-	public List<Order> readOrders(String customerId) {
-		List<Order> orders = orderDao.readOrders(customerId);
+	public List<Order> readOrders() {
+		return orderDao.readOrders();
+	}
+	
+	public List<Order> readOrdersByCustomerId(String customerId) {
+		List<Order> orders = orderDao.readOrdersByCustomerId(customerId);
 		List<Item> items = itemDao.readOrderedItems(customerId);
 		return repackOrders(orders, items);
 	}
@@ -45,7 +53,13 @@ public class OrderService {
 	}
 
 	public void createOrder(String customerId, int[] itemList) {
-		int orderId = orderDao.createOrder(customerId);
+		int totalPrice = 0;
+		for(int i=0; i<itemList.length; i++) {
+			Item item = itemDao.readItemByItemId(itemList[i]);
+			Product product = productDao.read(item.getProduct().getProductId());
+			totalPrice += product.getProductPrice() * item.getQuantity();
+		}
+		int orderId = orderDao.createOrder(customerId, totalPrice);
 		itemDao.orderItems(orderId, itemList);
 	}
 }

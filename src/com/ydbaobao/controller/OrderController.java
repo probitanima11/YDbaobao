@@ -39,7 +39,7 @@ public class OrderController {
 	@RequestMapping()
 	public String readOrders(HttpSession session, Model model) throws IOException {
 		String customerId = ServletRequestUtil.getCustomerIdFromSession(session);
-		model.addAttribute("orders", orderService.readOrders(customerId));
+		model.addAttribute("orders", orderService.readOrdersByCustomerId(customerId));
 		model.addAttribute("categories", categoryService.read());
 		return "order";
 	}
