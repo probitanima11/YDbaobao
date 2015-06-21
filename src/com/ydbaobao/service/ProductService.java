@@ -51,6 +51,9 @@ public class ProductService {
 
 	public Product readByDiscount(int productId, SessionCustomer sessionCustomer) {
 		Product product = productDao.read(productId);
+		if (null == sessionCustomer) {
+			return product;
+		}
 		String grade = customerDao.readCustomerById(sessionCustomer.getSessionId()).getCustomerGrade();
 		Brand brand = brandDao.readBrandByBrandId(product.getBrand().getBrandId());
 		return product.discount(brand.getDiscountRate(grade));
