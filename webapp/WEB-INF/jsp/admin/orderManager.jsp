@@ -30,7 +30,6 @@
 	}
 	
 	button.info, button.success, button.claim {
-		width: 75px;
 		border: 0;
 		padding: 5px;
 		color: #fff;
