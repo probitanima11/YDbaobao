@@ -3,6 +3,9 @@ package com.ydbaobao.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class Brand {
 	private int brandId;
 	private String brandName;
@@ -53,6 +56,25 @@ public class Brand {
 			firstLetters.add(ch);	
 		}
 		return firstLetters;
+	}
+
+	public int getDiscountRate(String grade) {
+		if ("1".equals(grade)) {
+			return this.discount_1;
+		}
+		if ("2".equals(grade)) {
+			return this.discount_2;
+		}
+		if ("3".equals(grade)) {
+			return this.discount_3;
+		}
+		if ("4".equals(grade)) {
+			return this.discount_4;
+		}
+		if ("5".equals(grade)) {
+			return this.discount_5;
+		}
+		return 0;
 	}
 
 	public int getBrandId() {

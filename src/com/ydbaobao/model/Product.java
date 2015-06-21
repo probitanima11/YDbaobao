@@ -1,5 +1,6 @@
 package com.ydbaobao.model;
 
+
 public class Product {
 	private int productId;
 	private String productName;
@@ -11,27 +12,28 @@ public class Product {
 	private long productCreateDate;
 	private long productUpdateDate;
 	private String productSize;
-	
+
 	public Product() {
 	}
-	
+
 	public Product(int productId) {
 		this(productId, null, new Category(), new Brand(), 0, null, null, 0, 0, null);
 	}
-	
+
 	public Product(int productId, String productName, int productPrice, String productImage, String productSize) {
 		this(productId, productName, new Category(), new Brand(), productPrice, productImage, null, 0, 0, productSize);
 	}
-	
-	public Product(String productName, Category category, Brand brand, String productSize){
+
+	public Product(String productName, Category category, Brand brand, String productSize) {
 		super();
 		this.productName = productName;
 		this.category = category;
 		this.brand = brand;
 		this.productSize = productSize;
 	}
-	
-	public Product(int productId, String productName, Category category, Brand brand, int productPrice, String productDecription, String productSize){
+
+	public Product(int productId, String productName, Category category, Brand brand, int productPrice,
+			String productDecription, String productSize) {
 		super();
 		this.productId = productId;
 		this.productName = productName;
@@ -41,9 +43,10 @@ public class Product {
 		this.productDescription = productDecription;
 		this.productSize = productSize;
 	}
-	
+
 	public Product(int productId, String productName, Category category, Brand brand, int productPrice,
-			String productImage, String productDescription, long productCreateDate, long productUpdateDate, String productSize) {
+			String productImage, String productDescription, long productCreateDate, long productUpdateDate,
+			String productSize) {
 		this.productId = productId;
 		this.productName = productName;
 		this.category = category;
@@ -54,6 +57,15 @@ public class Product {
 		this.productCreateDate = productCreateDate;
 		this.productUpdateDate = productUpdateDate;
 		this.productSize = productSize;
+	}
+
+	public void discount(int discountRate) {
+		int rate = 100 - discountRate;
+		this.productPrice = roundingOff((double) this.productPrice * rate / 100);
+	}
+
+	private int roundingOff(double price) {
+		return (int) Math.round(price/100.0) * 100;
 	}
 
 	public int getProductId() {

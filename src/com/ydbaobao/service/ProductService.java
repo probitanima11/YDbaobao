@@ -15,10 +15,12 @@ import org.springframework.web.multipart.MultipartFile;
 import com.support.ImageResizeUtil;
 import com.ydbaobao.dao.BrandDao;
 import com.ydbaobao.dao.CategoryDao;
+import com.ydbaobao.dao.CustomerDao;
 import com.ydbaobao.dao.ProductDao;
 import com.ydbaobao.model.Brand;
 import com.ydbaobao.model.Category;
 import com.ydbaobao.model.Product;
+import com.ydbaobao.model.SessionCustomer;
 
 @Service
 @Transactional
@@ -31,6 +33,8 @@ public class ProductService {
 	BrandDao brandDao;
 	@Resource
 	CategoryDao categoryDao;
+	@Resource
+	CustomerDao customerDao;
 
 	public int create(int brandId) {
 		Brand brand = brandDao.readBrandByBrandId(brandId);
@@ -100,8 +104,18 @@ public class ProductService {
 		return productDao.count();
 	}
 	
-	public List<Product> readRange(int page, int productsPerPage) {
-		return productDao.readRange((page - 1) * productsPerPage, productsPerPage);
+	public List<Product> readRange(int page, int productsPerPage, SessionCustomer sessionCustomer) {
+		List<Product> products = productDao.readRange((page - 1) * productsPerPage, productsPerPage);
+		//회원 등급에 따라 다르게 변경 한 뒤, 100원 단위까지 표시하며 10원 단위 이하에서 반올림할 것.
+		if (null == sessionCustomer) {
+			return products;
+		}
+		String grade = customerDao.readCustomerById(sessionCustomer.getSessionId()).getCustomerGrade();
+		for (Product product : products) {
+			Brand brand = brandDao.readBrandByBrandId(product.getBrand().getBrandId());
+			product.discount(brand.getDiscountRate(grade));
+		}
+		return products;
 	}
 
 	public List<Product> readUnclassifiedProducts() {
