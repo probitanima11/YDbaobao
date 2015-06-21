@@ -36,8 +36,9 @@ public class ProductController {
 
 	@RequestMapping(value = "/products/{productId}", method = RequestMethod.GET)
 	public String read(@PathVariable int productId, Model model, HttpSession session) {
-		model.addAttribute("customer", (SessionCustomer) session.getAttribute("sessionCustomer"));
-		model.addAttribute("product", productService.read(productId));
+		SessionCustomer sessionCustomer = (SessionCustomer) session.getAttribute("sessionCustomer");
+		model.addAttribute("customer", sessionCustomer);
+		model.addAttribute("product", productService.readByDiscount(productId, sessionCustomer));
 		return "product";
 	}
 

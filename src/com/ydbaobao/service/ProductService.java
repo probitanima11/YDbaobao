@@ -26,7 +26,7 @@ import com.ydbaobao.model.SessionCustomer;
 @Transactional
 public class ProductService {
 	private static final Logger logger = LoggerFactory.getLogger(ProductService.class);
-	
+
 	@Resource
 	ProductDao productDao;
 	@Resource
@@ -49,10 +49,17 @@ public class ProductService {
 		return productDao.read(productId);
 	}
 
+	public Product readByDiscount(int productId, SessionCustomer sessionCustomer) {
+		Product product = productDao.read(productId);
+		String grade = customerDao.readCustomerById(sessionCustomer.getSessionId()).getCustomerGrade();
+		Brand brand = brandDao.readBrandByBrandId(product.getBrand().getBrandId());
+		return product.discount(brand.getDiscountRate(grade));
+	}
+
 	public void updateProductImage(Product product, String imageName) {
 		productDao.updateProductImage(product.getProductId(), imageName);
 	}
-	
+
 	public Boolean update(Product product) {
 		Product oldStatus = productDao.read(product.getProductId());
 		long oldCategoryId = oldStatus.getCategory().getCategoryId();
@@ -70,16 +77,16 @@ public class ProductService {
 		if (null == product.getProductImage()) {
 			product.setProductImage(oldStatus.getProductImage());
 		}
-		if(productDao.update(product)==1){
+		if (productDao.update(product) == 1) {
 			return true;
 		}
 		return false;
 	}
-	
+
 	public String uploadImage(Product product, MultipartFile productImage) {
 		String[] imageSplitName = productImage.getOriginalFilename().split("\\.");
-		String extension = imageSplitName[imageSplitName.length-1];
-		String imageName = product.getProductId()+"."+extension;
+		String extension = imageSplitName[imageSplitName.length - 1];
+		String imageName = product.getProductId() + "." + extension;
 		try {
 			File imageFile = new File(ImageResizeUtil.savingPath + imageName);
 			productImage.transferTo(imageFile);
@@ -91,7 +98,7 @@ public class ProductService {
 		}
 		return imageName;
 	}
-	
+
 	private List<Product> discountAndRoundOff(SessionCustomer sessionCustomer, List<Product> products) {
 		if (null == sessionCustomer) {
 			return products;
@@ -103,47 +110,51 @@ public class ProductService {
 		}
 		return products;
 	}
-	
+
 	public List<Product> readRange(int page, int productsPerPage, SessionCustomer sessionCustomer) {
 		List<Product> products = productDao.readRange((page - 1) * productsPerPage, productsPerPage);
 		return discountAndRoundOff(sessionCustomer, products);
 	}
-	
-	public List<Product> readListByCategoryId(int categoryId, int page, int productsPerPage, SessionCustomer sessionCustomer) {
-		List<Product> products = productDao.readListByCategoryId(categoryId, (page - 1) * productsPerPage, productsPerPage);
+
+	public List<Product> readListByCategoryId(int categoryId, int page, int productsPerPage,
+			SessionCustomer sessionCustomer) {
+		List<Product> products = productDao.readListByCategoryId(categoryId, (page - 1) * productsPerPage,
+				productsPerPage);
 		return discountAndRoundOff(sessionCustomer, products);
 	}
-	
+
 	public List<Product> readListByBrandId(int brandId, int page, int productsPerPage, SessionCustomer sessionCustomer) {
 		List<Product> products = productDao.readListByBrandId(brandId, (page - 1) * productsPerPage, productsPerPage);
 		return discountAndRoundOff(sessionCustomer, products);
 	}
-	
-	public List<Product> readByCategoryIdAndBrandId(int categoryId, int brandId, int page, int productsPerPage, SessionCustomer sessionCustomer) {
-		List<Product> products = productDao.readByCategoryIdAndBrandId(categoryId, brandId, (page - 1) * productsPerPage, productsPerPage);
+
+	public List<Product> readByCategoryIdAndBrandId(int categoryId, int brandId, int page, int productsPerPage,
+			SessionCustomer sessionCustomer) {
+		List<Product> products = productDao.readByCategoryIdAndBrandId(categoryId, brandId, (page - 1)
+				* productsPerPage, productsPerPage);
 		return discountAndRoundOff(sessionCustomer, products);
 	}
 
 	public List<Product> readProductsForAdmin(int page, int productsPerPage) {
 		List<Product> products = productDao.readProductsList((page - 1) * productsPerPage, productsPerPage);
-		for(Product product:products){
+		for (Product product : products) {
 			Brand brand = product.getBrand();
 			brand.setBrandName(brandDao.readBrandByBrandId(brand.getBrandId()).getBrandName());
 		}
 		return products;
 	}
-	
+
 	public List<Product> readListByCategoryIdForAdmin(int categoryId, int page, int productsPerPage) {
 		return productDao.readListByCategoryId(categoryId, (page - 1) * productsPerPage, productsPerPage);
 	}
-	
+
 	public int count() {
 		return productDao.count();
 	}
-	
+
 	public List<Product> readUnclassifiedProducts() {
 		List<Product> productList = productDao.readListByCategoryId(0);
-		for(Product product:productList){
+		for (Product product : productList) {
 			Brand brand = product.getBrand();
 			brand.setBrandName(brandDao.readBrandByBrandId(brand.getBrandId()).getBrandName());
 		}
@@ -151,12 +162,12 @@ public class ProductService {
 	}
 
 	public boolean deleteAll() {
-		if(productDao.deleteAll() >=1){
+		if (productDao.deleteAll() >= 1) {
 			categoryDao.resetCount();
 			brandDao.resetCount();
 			productDao.resetAutoIncrement();
 			File directory = new File("/home/baobao/products/");
-			for(File file : directory.listFiles()){
+			for (File file : directory.listFiles()) {
 				file.delete();
 			}
 			return true;
@@ -168,8 +179,8 @@ public class ProductService {
 		Product product = productDao.read(productId);
 		categoryDao.decreaseCount(product.getCategory().getCategoryId());
 		brandDao.decreaseCount(product.getBrand().getBrandId());
-		File file = new File("/home/baobao/products/"+product.getProductImage());
-		if(productDao.delete(product) >=1){
+		File file = new File("/home/baobao/products/" + product.getProductImage());
+		if (productDao.delete(product) >= 1) {
 			file.delete();
 			return true;
 		}

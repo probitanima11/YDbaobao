@@ -62,9 +62,10 @@ public class Product {
 		this.isSoldout = isSoldout;
 	}
 
-	public void discount(int discountRate) {
+	public Product discount(int discountRate) {
 		int rate = 100 - discountRate;
 		this.productPrice = roundingOff((double) this.productPrice * rate / 100);
+		return this;
 	}
 
 	private int roundingOff(double price) {
