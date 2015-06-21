@@ -63,6 +63,7 @@ public class SearchController {
 		model.addAttribute("count", count);
 		model.addAttribute("terms", terms);
 		model.addAttribute("query", termsForQuery);
+		model.addAttribute("select", "브랜드명");
 		return "search";
 	}
 
@@ -91,6 +92,7 @@ public class SearchController {
 		model.addAttribute("count", count);
 		model.addAttribute("terms", terms);
 		model.addAttribute("query", termsForQuery);
+		model.addAttribute("select", "상품명");
 		return "search";
 	}
 }
