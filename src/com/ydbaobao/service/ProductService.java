@@ -55,6 +55,24 @@ public class ProductService {
 		Brand brand = brandDao.readBrandByBrandId(product.getBrand().getBrandId());
 		return product.discount(brand.getDiscountRate(grade));
 	}
+	
+	public List<Product> readByProductName(String termsForQuery, int page, int productsPerPage, SessionCustomer sessionCustomer) {
+		List<Product> products = productDao.readByProductName(termsForQuery, (page - 1) * productsPerPage, productsPerPage);
+		return discountAndRoundOff(sessionCustomer, products);
+	}
+	
+	public List<Product> readByBrandName(String termsForQuery, int page, int productsPerPage, SessionCustomer sessionCustomer) {
+		List<Product> products = productDao.readByBrandName(termsForQuery, (page - 1) * productsPerPage, productsPerPage);
+		return discountAndRoundOff(sessionCustomer, products);
+	}
+	
+	public int countBySearchProductName(String termsForQuery) {
+		return productDao.countBySearchProductName(termsForQuery);
+	}
+	
+	public int countBySearchBrandName(String termsForQuery) {
+		return productDao.countBySearchBrandName(termsForQuery);
+	}
 
 	public void updateProductImage(Product product, String imageName) {
 		productDao.updateProductImage(product.getProductId(), imageName);

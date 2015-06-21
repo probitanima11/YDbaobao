@@ -11,7 +11,7 @@
 						<option class="selected">상품명</option>
 						<option>브랜드명</option>
 					</select> 
-					<input id="search-param" type="text" />
+					<input id="search-terms" type="text" />
 				</div>
 				<button id="search-btn" class="btn">검색</button>
 			</div>
@@ -31,12 +31,12 @@
 
 	document.querySelector('#search-btn').addEventListener('click', function() {
 		var selected = document.querySelector('.selected').value;
-		var param = document.querySelector('#search-param').value;
+		var terms = document.querySelector('#search-terms').value;
 		if(selected === '상품명') {
-			window.location.href = '/search/products?param=' + param + '&page=1';
+			window.location.href = '/search/products?terms=' + terms + '&page=1';
 		}
 		if(selected === '브랜드명') {
-			window.location.href = '/search/brands?param=' + param + '&page=1';
+			window.location.href = '/search/brands?terms=' + terms + '&page=1';
 		}
 	}, false);
 </script>
