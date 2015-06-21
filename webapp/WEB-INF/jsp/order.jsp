@@ -5,10 +5,10 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" type="text/css" href="/css/main.css">
+<link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css">
 <style>
 #order-section {
-	overflow: scroll;
-	height: 450px;
+	margin:25px 0px;
 }
 
 .order-head {
@@ -66,7 +66,10 @@ tfoot tr {
 		<%@ include file="./commons/_horizontalCategory.jsp"%>
 	</div>
 	<div id="main-container">
-		<div id="first-section" class="wrap content" style="height: 500px;">
+		<div id="first-section" class="wrap content">
+			<div id="progress-info">
+				<div class="on"><i class='fa fa-archive'></i>  주문내역</div>
+			</div>
 			<div id="order-section">
 				<table id="order-list">
 					<thead>

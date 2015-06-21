@@ -142,7 +142,7 @@ public class AdminProductController {
 
 	/**
 	 * 특정 상품 정보 수정
-	 * @param productId, productName, categoryId, brandId, productPrice, productSize, productDescription
+	 * @param productId, productName, categoryId, brandId, productPrice, productDescription, productSize, isSoldout
 	 * @return success or fail
 	 */
 	@RequestMapping(value = "/{productId}", method = RequestMethod.PUT)

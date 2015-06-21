@@ -327,7 +327,7 @@ input[type=number] {
 	font-size: 12px;
 }
 
-.item .item-info .item-price {
+.item .item-info .item-price, .item .item-info .item-soldout {
 	color: #EA6576;
 	font-weight: 500;
 	font-size: 20px;

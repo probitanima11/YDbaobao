@@ -55,7 +55,7 @@ public class ProductDao extends JdbcDaoSupport {
 						new Brand(rs.getInt("brandId"), null, 0, 0, 0, 0, 0, 0, ""),
 						rs.getInt("productPrice"), rs.getString("productImage"),
 						rs.getString("productDescription"), rs.getLong("productCreateDate"),
-						rs.getLong("productUpdateDate"), rs.getString("productSize")), productId);
+						rs.getLong("productUpdateDate"), rs.getString("productSize"), rs.getInt("isSoldout")), productId);
 	}
 	
 	public int updateProductImage(int productId, String imageName) {
@@ -64,8 +64,8 @@ public class ProductDao extends JdbcDaoSupport {
 	}
 
 	public int update(Product product) {
-		String sql = "update PRODUCTS set productName = ?, categoryId = ?, brandId = ?, productPrice=?, productDescription=?, productUpdateDate=default, productSize=?, productImage=? where productId = ?";
-		return getJdbcTemplate().update(sql, product.getProductName(), product.getCategory().getCategoryId(), product.getBrand().getBrandId(), product.getProductPrice(), product.getProductDescription(), product.getProductSize(), product.getProductImage(), product.getProductId());
+		String sql = "update PRODUCTS set productName = ?, categoryId = ?, brandId = ?, productPrice=?, productDescription=?, productUpdateDate=default, productSize=?, productImage=?, isSoldout = ? where productId = ?";
+		return getJdbcTemplate().update(sql, product.getProductName(), product.getCategory().getCategoryId(), product.getBrand().getBrandId(), product.getProductPrice(), product.getProductDescription(), product.getProductSize(), product.getProductImage(), product.getIsSoldout(), product.getProductId());
 	}
 
 	public List<Product> readListByCategoryId(int categoryId, int offset, int productsPerPage) {
@@ -77,7 +77,7 @@ public class ProductDao extends JdbcDaoSupport {
 						new Brand(rs.getInt("brandId"), rs.getString("brandName"), rs.getInt("brandCount"), rs.getInt("discount_1"), rs.getInt("discount_2"), rs.getInt("discount_3"), rs.getInt("discount_4"), rs.getInt("discount_5"), rs.getString("brandSize")),
 						rs.getInt("productPrice"), rs.getString("productImage"),
 						rs.getString("productDescription"), rs.getLong("productCreateDate"),
-						rs.getLong("productUpdateDate"), rs.getString("productSize")), categoryId, offset, productsPerPage);
+						rs.getLong("productUpdateDate"), rs.getString("productSize"), rs.getInt("isSoldout")), categoryId, offset, productsPerPage);
 	}
 	
 	public List<Product> readByProductName(String param, int offset, int productsPerPage) {
@@ -89,7 +89,7 @@ public class ProductDao extends JdbcDaoSupport {
 						new Brand(rs.getInt("brandId"), rs.getString("brandName"), rs.getInt("brandCount"), rs.getInt("discount_1"), rs.getInt("discount_2"), rs.getInt("discount_3"), rs.getInt("discount_4"), rs.getInt("discount_5"), rs.getString("brandSize")),
 						rs.getInt("productPrice"), rs.getString("productImage"),
 						rs.getString("productDescription"), rs.getLong("productCreateDate"),
-						rs.getLong("productUpdateDate"), rs.getString("productSize")), param, offset, productsPerPage);
+						rs.getLong("productUpdateDate"), rs.getString("productSize"), rs.getInt("isSoldout")), param, offset, productsPerPage);
 	}
 	
 	public List<Product> readByBrandName(String param, int offset, int productsPerPage) {
@@ -101,7 +101,7 @@ public class ProductDao extends JdbcDaoSupport {
 						new Brand(rs.getInt("brandId"), rs.getString("brandName"), rs.getInt("brandCount"), rs.getInt("discount_1"), rs.getInt("discount_2"), rs.getInt("discount_3"), rs.getInt("discount_4"), rs.getInt("discount_5"), rs.getString("brandSize")),
 						rs.getInt("productPrice"), rs.getString("productImage"),
 						rs.getString("productDescription"), rs.getLong("productCreateDate"),
-						rs.getLong("productUpdateDate"), rs.getString("productSize")), param, offset, productsPerPage);
+						rs.getLong("productUpdateDate"), rs.getString("productSize"), rs.getInt("isSoldout")), param, offset, productsPerPage);
 	}
 
 	public int count() {
@@ -134,7 +134,7 @@ public class ProductDao extends JdbcDaoSupport {
 						new Brand(rs.getInt("brandId"), rs.getString("brandName"), rs.getInt("brandCount"), rs.getInt("discount_1"), rs.getInt("discount_2"), rs.getInt("discount_3"), rs.getInt("discount_4"), rs.getInt("discount_5"), rs.getString("brandSize")),
 						rs.getInt("productPrice"), rs.getString("productImage"),
 						rs.getString("productDescription"), rs.getLong("productCreateDate"),
-						rs.getLong("productUpdateDate"), rs.getString("productSize")), offset, productsPerPage);
+						rs.getLong("productUpdateDate"), rs.getString("productSize"), rs.getInt("isSoldout")), offset, productsPerPage);
 	}
 
 	/**
@@ -151,7 +151,7 @@ public class ProductDao extends JdbcDaoSupport {
 						new Brand(rs.getInt("brandId"), rs.getString("brandName"), rs.getInt("brandCount"), rs.getInt("discount_1"), rs.getInt("discount_2"), rs.getInt("discount_3"), rs.getInt("discount_4"), rs.getInt("discount_5"), rs.getString("brandSize")),
 						rs.getInt("productPrice"), rs.getString("productImage"),
 						rs.getString("productDescription"), rs.getLong("productCreateDate"),
-						rs.getLong("productUpdateDate"), rs.getString("productSize")), categoryId);
+						rs.getLong("productUpdateDate"), rs.getString("productSize"), rs.getInt("isSoldout")), categoryId);
 	}
 	
 	/**
@@ -168,7 +168,7 @@ public class ProductDao extends JdbcDaoSupport {
 						new Brand(rs.getInt("brandId"), rs.getString("brandName"), rs.getInt("brandCount"), rs.getInt("discount_1"), rs.getInt("discount_2"), rs.getInt("discount_3"), rs.getInt("discount_4"), rs.getInt("discount_5"), rs.getString("brandSize")),
 						rs.getInt("productPrice"), rs.getString("productImage"),
 						rs.getString("productDescription"), rs.getLong("productCreateDate"),
-						rs.getLong("productUpdateDate"), rs.getString("productSize")), brandId, offset, productsPerPage);
+						rs.getLong("productUpdateDate"), rs.getString("productSize"), rs.getInt("isSoldout")), brandId, offset, productsPerPage);
 	}
 
 	/**
@@ -183,7 +183,7 @@ public class ProductDao extends JdbcDaoSupport {
 				new Category(rs.getInt("categoryId"), null, 0), 
 				new Brand(rs.getInt("brandId"), null, 0, 0, 0, 0, 0, 0, ""), 
 				rs.getInt("productPrice"), rs.getString("productImage"), rs.getString("productDescription"),
-				rs.getLong("productCreateDate"), rs.getLong("productUpdateDate"), rs.getString("productSize")),
+				rs.getLong("productCreateDate"), rs.getLong("productUpdateDate"), rs.getString("productSize"), rs.getInt("isSoldout")),
 				categoryId, brandId, offset, productsPerPage);
 	}
 	
@@ -196,7 +196,7 @@ public class ProductDao extends JdbcDaoSupport {
 								new Brand(rs.getInt("brandId"), null, 0, 0, 0, 0, 0, 0, ""), 
 								rs.getInt("productPrice"), rs.getString("productImage"), 
 								rs.getString("productDescription"), rs.getLong("productCreateDate"), 
-								rs.getLong("productUpdateDate"), rs.getString("productSize")), offset, productsPerPage);
+								rs.getLong("productUpdateDate"), rs.getString("productSize"), rs.getInt("isSoldout")), offset, productsPerPage);
 	}
 	
 	public int deleteAll() {

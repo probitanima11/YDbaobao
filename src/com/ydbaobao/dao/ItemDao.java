@@ -31,7 +31,7 @@ public class ItemDao extends JdbcDaoSupport {
 			return getJdbcTemplate().query(sql, (rs, rowNum) -> new Item(
 					rs.getInt("itemId"),
 					new Customer(rs.getString("customerId")),
-					new Product(rs.getInt("productId"),rs.getString("productName"), rs.getInt("productPrice"), rs.getString("productImage"), rs.getString("productSize")),
+					new Product(rs.getInt("productId"),rs.getString("productName"), rs.getInt("productPrice"), rs.getString("productImage"), rs.getString("productSize"), rs.getInt("isSoldout")),
 					new Order(rs.getInt("orderId")),
 					rs.getString("size"),
 					rs.getInt("quantity")
@@ -66,7 +66,7 @@ public class ItemDao extends JdbcDaoSupport {
 			return getJdbcTemplate().query(sql, (rs, rowNum) -> new Item(
 					rs.getInt("itemId"),
 					new Customer(rs.getString("customerId")),
-					new Product(rs.getInt("productId"),rs.getString("productName"), rs.getInt("productPrice"), rs.getString("productImage"), rs.getString("productSize")),
+					new Product(rs.getInt("productId"), rs.getString("productName"), rs.getInt("productPrice"), rs.getString("productImage"), rs.getString("productSize"), rs.getInt("isSoldout")),
 					new Order(rs.getInt("orderId")),
 					rs.getString("size"),
 					rs.getInt("quantity")
@@ -87,5 +87,17 @@ public class ItemDao extends JdbcDaoSupport {
 	public void orderDirect(String customerId, String productId, int orderId, String size, int quantity) {
 		String sql = "insert into ITEMS (customerId, productId, orderId, size, quantity) values(?, ?, ?, ?, ?)";
 		getJdbcTemplate().update(sql, customerId, productId, orderId, size, quantity);		
+	}
+
+	public List<Item> readItemsByOrderId(int orderId) {
+		String sql = "select * from ITEMS A, PRODUCTS B where A.productId = B.productId AND orderId = ?";
+		return getJdbcTemplate().query(sql, (rs, rownum) -> new Item(
+					rs.getInt("itemId"),
+					new Customer(rs.getString("customerId")),
+					new Product(rs.getInt("productId"), rs.getString("productName"), rs.getInt("productPrice"), rs.getString("productImage"), rs.getString("productSize"), rs.getInt("isSoldout")),
+					new Order(rs.getInt("orderId")),
+					rs.getString("size"),
+					rs.getInt("quantity")
+				), orderId);
 	}
 }

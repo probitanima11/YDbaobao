@@ -1,6 +1,5 @@
 package com.ydbaobao.model;
 
-
 public class Product {
 	private int productId;
 	private String productName;
@@ -12,16 +11,19 @@ public class Product {
 	private long productCreateDate;
 	private long productUpdateDate;
 	private String productSize;
+	private int isSoldout;
 
 	public Product() {
 	}
 
 	public Product(int productId) {
-		this(productId, null, new Category(), new Brand(), 0, null, null, 0, 0, null);
+		this(productId, null, new Category(), new Brand(), 0, null, null, 0, 0, null, 0);
 	}
 
-	public Product(int productId, String productName, int productPrice, String productImage, String productSize) {
-		this(productId, productName, new Category(), new Brand(), productPrice, productImage, null, 0, 0, productSize);
+	public Product(int productId, String productName, int productPrice, String productImage, String productSize,
+			int isSoldout) {
+		this(productId, productName, new Category(), new Brand(), productPrice, productImage, null, 0, 0, productSize,
+				isSoldout);
 	}
 
 	public Product(String productName, Category category, Brand brand, String productSize) {
@@ -46,7 +48,7 @@ public class Product {
 
 	public Product(int productId, String productName, Category category, Brand brand, int productPrice,
 			String productImage, String productDescription, long productCreateDate, long productUpdateDate,
-			String productSize) {
+			String productSize, int isSoldout) {
 		this.productId = productId;
 		this.productName = productName;
 		this.category = category;
@@ -57,6 +59,7 @@ public class Product {
 		this.productCreateDate = productCreateDate;
 		this.productUpdateDate = productUpdateDate;
 		this.productSize = productSize;
+		this.isSoldout = isSoldout;
 	}
 
 	public void discount(int discountRate) {
@@ -65,87 +68,95 @@ public class Product {
 	}
 
 	private int roundingOff(double price) {
-		return (int) Math.round(price/100.0) * 100;
+		return (int) Math.round(price / 100.0) * 100;
 	}
 
 	public int getProductId() {
 		return productId;
 	}
 
-	public String getProductName() {
-		return productName;
-	}
-
-	public Category getCategory() {
-		return category;
-	}
-
-	public Brand getBrand() {
-		return brand;
-	}
-
-	public int getProductPrice() {
-		return productPrice;
-	}
-
-	public String getProductImage() {
-		return productImage;
-	}
-
-	public String getProductDescription() {
-		return productDescription;
-	}
-
-	public long getProductCreateDate() {
-		return productCreateDate;
-	}
-
-	public long getProductUpdateDate() {
-		return productUpdateDate;
-	}
-
-	public String getProductSize() {
-		return productSize;
-	}
-
 	public void setProductId(int productId) {
 		this.productId = productId;
+	}
+
+	public String getProductName() {
+		return productName;
 	}
 
 	public void setProductName(String productName) {
 		this.productName = productName;
 	}
 
+	public Category getCategory() {
+		return category;
+	}
+
 	public void setCategory(Category category) {
 		this.category = category;
+	}
+
+	public Brand getBrand() {
+		return brand;
 	}
 
 	public void setBrand(Brand brand) {
 		this.brand = brand;
 	}
 
+	public int getProductPrice() {
+		return productPrice;
+	}
+
 	public void setProductPrice(int productPrice) {
 		this.productPrice = productPrice;
+	}
+
+	public String getProductImage() {
+		return productImage;
 	}
 
 	public void setProductImage(String productImage) {
 		this.productImage = productImage;
 	}
 
+	public String getProductDescription() {
+		return productDescription;
+	}
+
 	public void setProductDescription(String productDescription) {
 		this.productDescription = productDescription;
+	}
+
+	public long getProductCreateDate() {
+		return productCreateDate;
 	}
 
 	public void setProductCreateDate(long productCreateDate) {
 		this.productCreateDate = productCreateDate;
 	}
 
+	public long getProductUpdateDate() {
+		return productUpdateDate;
+	}
+
 	public void setProductUpdateDate(long productUpdateDate) {
 		this.productUpdateDate = productUpdateDate;
 	}
 
+	public String getProductSize() {
+		return productSize;
+	}
+
 	public void setProductSize(String productSize) {
 		this.productSize = productSize;
+	}
+
+	public int getIsSoldout() {
+		return isSoldout;
+	}
+
+	public void setIsSoldout(int isSoldout) {
+		this.isSoldout = isSoldout;
 	}
 
 	@Override
@@ -154,6 +165,7 @@ public class Product {
 		int result = 1;
 		result = prime * result + ((brand == null) ? 0 : brand.hashCode());
 		result = prime * result + ((category == null) ? 0 : category.hashCode());
+		result = prime * result + isSoldout;
 		result = prime * result + (int) (productCreateDate ^ (productCreateDate >>> 32));
 		result = prime * result + ((productDescription == null) ? 0 : productDescription.hashCode());
 		result = prime * result + productId;
@@ -183,6 +195,8 @@ public class Product {
 			if (other.category != null)
 				return false;
 		} else if (!category.equals(other.category))
+			return false;
+		if (isSoldout != other.isSoldout)
 			return false;
 		if (productCreateDate != other.productCreateDate)
 			return false;
@@ -220,6 +234,8 @@ public class Product {
 		return "Product [productId=" + productId + ", productName=" + productName + ", category=" + category
 				+ ", brand=" + brand + ", productPrice=" + productPrice + ", productImage=" + productImage
 				+ ", productDescription=" + productDescription + ", productCreateDate=" + productCreateDate
-				+ ", productUpdateDate=" + productUpdateDate + ", productSize=" + productSize + "]";
+				+ ", productUpdateDate=" + productUpdateDate + ", productSize=" + productSize + ", isSoldout="
+				+ isSoldout + "]";
 	}
+
 }
