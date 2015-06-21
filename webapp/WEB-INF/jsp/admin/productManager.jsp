@@ -13,6 +13,9 @@
 	font-size:12px;
 	text-align:center;
 }
+td.tdhead {
+	width:55px;
+}
 </style>
 </head>
 <body>
@@ -51,32 +54,32 @@
 					<th width="50px">선택</th>
 				</tr>
 				<c:forEach var="product" varStatus="status" items="${products}">
-				<form:form class="product-update-form" action="" modelAttribute="product">
+				<form:form class="product-update-form" action="" modelAttribute="product" id="product_${product.productId}">
 				<tr>
 					<td rowspan="4">${product.productId}
 					<form:input path="productId" type="hidden" value="${product.productId}"/></td>
 					<td rowspan="4"><img class="productImg" src="/img/products/${product.productImage}" width="150">
 					<form:input path="productImage" type="hidden" value="${product.productImage}"/></td>
-					<td>카테고리 :</td>
+					<td class='tdhead'>카테고리 :</td>
 					<td>
-					<input id="categoryId" name="categoryId" type="hidden" value="${product.category.categoryId}"/>
+					<input name="categoryId" type="hidden" value="${product.category.categoryId}"/>
 						<select class="${status.index}" onchange="setCategoryId(this)">
 							<c:forEach var="category" items="${categories}">
 										<c:choose>
 											<c:when test="${category.categoryId eq product.category.categoryId}">
-												<option value="${category.categoryId}" label="${category.categoryName}" selected="selected"/>
+												<option value="${category.categoryId}" selected="selected">${category.categoryName }</option>
 											</c:when>
 											<c:otherwise>
-												<option value="${category.categoryId}" label="${category.categoryName}" />
+												<option value="${category.categoryId}">${category.categoryName }</option>
 											</c:otherwise>
 										</c:choose>
 										
 							</c:forEach>
 						</select>
 					</td>
-					<td>브랜드 :</td>
+					<td class='tdhead'>브랜드 :</td>
 					<td>
-					<input id="brandId" name="brandId" type="hidden" value="${product.brand.brandId}"/>
+					<input name="brandId" type="hidden" value="${product.brand.brandId}"/>
 						<select class="${status.index}" onchange="setBrandId(this)">
 							<c:forEach var="brand" items="${brands}">
 										<c:choose>
@@ -90,25 +93,34 @@
 							</c:forEach>
 						</select>
 					</td>
-					<td rowspan="4"><button type="button" id="update-product-btn" class="${status.index}" value="${product.productId}">수정</button><br/>
-					<button type="button" id="delete-product-btn" class="${status.index}" value="${product.productId}">삭제</button> 
+					<td rowspan="4"><button type="button" class="update-product-btn" class="${status.index}" value="${product.productId}">수정</button><br/>
+					<button type="button" class="delete-product-btn" class="${status.index}" value="${product.productId}">삭제</button> 
 					</td>
 				</tr>
 				<tr>
-					<td>제품명 :</td>
+					<td class='tdhead'>제품명 :</td>
 					<td><form:input path="productName" class="productName" value="${product.productName}"/></td>
-					<td>사이즈 :</td>
-					<td><form:input path="productSize" type="text" id="product-size-input" value="${product.productSize}"/></td>
+					<td class='tdhead'>사이즈 :</td>
+					<td><form:input path="productSize" type="text" value="${product.productSize}"/></td>
 				</tr>
 				<tr>
-					<td>가 격 :</td>
+					<td class='tdhead'>가 격 :</td>
 					<td><form:input type="number" path="productPrice" value="${product.productPrice}" min="0" /></td>
-					<td></td>
-					<td></td>
+					<td class='tdhead'>품 절 :</td>
+					<td>
+						<c:choose>
+							<c:when test="${product.isSoldout == 1 }">
+								<input type="checkbox" class="isSoldout" checked />
+							</c:when>
+							<c:otherwise>
+								<input type="checkbox" class="isSoldout" />
+							</c:otherwise>
+						</c:choose>
+					</td>
 				</tr>
 				<tr>
-					<td>상품소개 :</td>
-					<td colspan="3"><textarea name="productDescription" rows="4" cols="70">${product.productDescription}</textarea></td>
+					<td class='tdhead'>상품소개 :</td>
+					<td colspan="3"><textarea name="productDescription" rows="4" style="width:100%;">${product.productDescription}</textarea></td>
 				</tr>
 				</form:form>
 				</c:forEach>
@@ -141,11 +153,11 @@
 		}
 		
 		function setDeleteProductBtn() {
-			var deleteBtn = document.querySelectorAll('#delete-product-btn');
+			var deleteBtn = document.querySelectorAll('.delete-product-btn');
 			for (var i = 0; i < deleteBtn.length; i++) {
 				deleteBtn[i].addEventListener('click', function(e) {
 					debugger;
-					var form = document.querySelectorAll('.product-update-form')[e.target.className];
+					var form = document.querySelector('#product_'+e.target.value);
 					deleteProduct(form, e.target.value);
 				}, false);
 			}
@@ -167,21 +179,28 @@
 		}
 		
 		function setUpdateProductBtn() {
-			var updateBtn = document.querySelectorAll('#update-product-btn');
+			var updateBtn = document.querySelectorAll('.update-product-btn');
 			for (var i = 0; i < updateBtn.length; i++) {
 				updateBtn[i].addEventListener('click', function(e) {
-					var form = document.querySelectorAll('.product-update-form')[e.target.className];
+					var form = document.querySelector('#product_'+e.target.value);
 					updateProduct(form, e.target.value);
 				}, false);
 			}
 		}
 		
 		function updateProduct(form, productId) {
+		var isSoldout = form[11].checked;
+		if (isSoldout) {
+			isSoldout = 1;
+		} else {
+			isSoldout = 0;
+		}
 		var params = "productName="+ form.productName.value + "&categoryId=" + form.categoryId.value +
 					"&brandId=" + form.brandId.value + "&productPrice=" + form.productPrice.value + 
 					"&productDescription=" + form.productDescription.value + 
-					"&productSize=" + form.productSize.value;
-		ydbaobao.ajax({
+					"&productSize=" + form.productSize.value +
+					"&isSoldout=" + isSoldout;
+		 ydbaobao.ajax({
 				method : 'put',
 				url : '/admin/products/'+productId,
 				param : params,

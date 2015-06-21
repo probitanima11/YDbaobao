@@ -14,9 +14,18 @@
 						<div class="item-name">
 							<c:out value="${product.productName}" />
 						</div>
-						<div class="item-price">
-							<c:out value="${product.productPrice}" />
-						</div>
+						<c:choose>
+							<c:when test="${product.isSoldout == 1}">
+								<div class="item-soldout">
+									<c:out value="품절" />
+								</div>
+							</c:when>
+							<c:otherwise>
+								<div class="item-price">
+									<c:out value="${product.productPrice}" />
+								</div>
+							</c:otherwise>
+						</c:choose>
 					</div>
 				</a>
 			</div>

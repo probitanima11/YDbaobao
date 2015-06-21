@@ -65,12 +65,19 @@ h1 {
 	background-color: #EA6576;
 }
 
-#product-display {
-	
+.btn.disabled {
+	background-color: #c8c8c8;
 }
 
 #product-display img {
 	width: 100%;
+}
+
+.isSoldout {
+	color: #EA6576;
+	font-weight:800;
+	font-size: 40px;
+	padding:10px;
 }
 </style>
 </head>
@@ -104,10 +111,19 @@ h1 {
 				<!-- <input class="qty-selector" value="1" style="width: 32px;" onkeypress="return isNumberKey(event);"> -->
 				<button onclick="qtyControl('plus')"><i class='fa fa-plus'></i></button>
 			</div>
-			<div class="button-group">
-				<button class="btn addtocart">장바구니</button>
-				<button class="btn buyitnow">바로주문</button>
-			</div>
+			<c:choose>
+				<c:when test="${product.isSoldout == 1}" >
+					<div class="isSoldout">품 절</div>
+					<button class="btn addtocart disabled" disabled>장바구니</button>
+					<button class="btn buyitnow disabled" disabled>바로주문</button>
+				</c:when>
+				<c:otherwise>
+					<div class="button-group">
+						<button class="btn addtocart">장바구니</button>
+						<button class="btn buyitnow">바로주문</button>
+					</div>
+				</c:otherwise>
+			</c:choose>
 		</div>
 	</div>
 	<div id="footer">footer...</div>

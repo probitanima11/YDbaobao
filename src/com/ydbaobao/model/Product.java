@@ -11,16 +11,17 @@ public class Product {
 	private long productCreateDate;
 	private long productUpdateDate;
 	private String productSize;
+	private int isSoldout;
 	
 	public Product() {
 	}
 	
 	public Product(int productId) {
-		this(productId, null, new Category(), new Brand(), 0, null, null, 0, 0, null);
+		this(productId, null, new Category(), new Brand(), 0, null, null, 0, 0, null, 0);
 	}
 	
-	public Product(int productId, String productName, int productPrice, String productImage, String productSize) {
-		this(productId, productName, new Category(), new Brand(), productPrice, productImage, null, 0, 0, productSize);
+	public Product(int productId, String productName, int productPrice, String productImage, String productSize, int isSoldout) {
+		this(productId, productName, new Category(), new Brand(), productPrice, productImage, null, 0, 0, productSize, isSoldout);
 	}
 	
 	public Product(String productName, Category category, Brand brand, String productSize){
@@ -43,7 +44,7 @@ public class Product {
 	}
 	
 	public Product(int productId, String productName, Category category, Brand brand, int productPrice,
-			String productImage, String productDescription, long productCreateDate, long productUpdateDate, String productSize) {
+			String productImage, String productDescription, long productCreateDate, long productUpdateDate, String productSize, int isSoldout) {
 		this.productId = productId;
 		this.productName = productName;
 		this.category = category;
@@ -54,6 +55,7 @@ public class Product {
 		this.productCreateDate = productCreateDate;
 		this.productUpdateDate = productUpdateDate;
 		this.productSize = productSize;
+		this.isSoldout = isSoldout;
 	}
 
 	public int getProductId() {
@@ -95,6 +97,10 @@ public class Product {
 	public String getProductSize() {
 		return productSize;
 	}
+	
+	public int getIsSoldout() {
+		return isSoldout;
+	}
 
 	public void setProductId(int productId) {
 		this.productId = productId;
@@ -135,21 +141,35 @@ public class Product {
 	public void setProductSize(String productSize) {
 		this.productSize = productSize;
 	}
+	
+	public void setIsSoldout(int isSoldout) {
+		this.isSoldout = isSoldout;
+	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((brand == null) ? 0 : brand.hashCode());
-		result = prime * result + ((category == null) ? 0 : category.hashCode());
-		result = prime * result + (int) (productCreateDate ^ (productCreateDate >>> 32));
-		result = prime * result + ((productDescription == null) ? 0 : productDescription.hashCode());
+		result = prime * result
+				+ ((category == null) ? 0 : category.hashCode());
+		result = prime * result + isSoldout;
+		result = prime * result
+				+ (int) (productCreateDate ^ (productCreateDate >>> 32));
+		result = prime
+				* result
+				+ ((productDescription == null) ? 0 : productDescription
+						.hashCode());
 		result = prime * result + productId;
-		result = prime * result + ((productImage == null) ? 0 : productImage.hashCode());
-		result = prime * result + ((productName == null) ? 0 : productName.hashCode());
+		result = prime * result
+				+ ((productImage == null) ? 0 : productImage.hashCode());
+		result = prime * result
+				+ ((productName == null) ? 0 : productName.hashCode());
 		result = prime * result + productPrice;
-		result = prime * result + ((productSize == null) ? 0 : productSize.hashCode());
-		result = prime * result + (int) (productUpdateDate ^ (productUpdateDate >>> 32));
+		result = prime * result
+				+ ((productSize == null) ? 0 : productSize.hashCode());
+		result = prime * result
+				+ (int) (productUpdateDate ^ (productUpdateDate >>> 32));
 		return result;
 	}
 
@@ -171,6 +191,8 @@ public class Product {
 			if (other.category != null)
 				return false;
 		} else if (!category.equals(other.category))
+			return false;
+		if (isSoldout != other.isSoldout)
 			return false;
 		if (productCreateDate != other.productCreateDate)
 			return false;
@@ -205,9 +227,13 @@ public class Product {
 
 	@Override
 	public String toString() {
-		return "Product [productId=" + productId + ", productName=" + productName + ", category=" + category
-				+ ", brand=" + brand + ", productPrice=" + productPrice + ", productImage=" + productImage
-				+ ", productDescription=" + productDescription + ", productCreateDate=" + productCreateDate
-				+ ", productUpdateDate=" + productUpdateDate + ", productSize=" + productSize + "]";
+		return "Product [productId=" + productId + ", productName="
+				+ productName + ", category=" + category + ", brand=" + brand
+				+ ", productPrice=" + productPrice + ", productImage="
+				+ productImage + ", productDescription=" + productDescription
+				+ ", productCreateDate=" + productCreateDate
+				+ ", productUpdateDate=" + productUpdateDate + ", productSize="
+				+ productSize + ", isSoldout=" + isSoldout + "]";
 	}
+	
 }
