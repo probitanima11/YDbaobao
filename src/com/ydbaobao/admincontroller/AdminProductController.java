@@ -65,7 +65,7 @@ public class AdminProductController {
 		model.addAttribute("range", IntStream.range(CommonUtil.startPage(page), CommonUtil.endPage(page, totalPage)).toArray());
 		model.addAttribute("url", "/admin/products?page=");
 		model.addAttribute("product", new Product());
-		model.addAttribute("products", productService.readProducts(page, 16));
+		model.addAttribute("products", productService.readProductsForAdmin(page, 16));
 		model.addAttribute("brands", brandService.readBrands());
 		model.addAttribute("selectedCategoryId", selectedCategoryId);
 		model.addAttribute("categories", categories);
@@ -78,11 +78,11 @@ public class AdminProductController {
 		List<Product> products;
 		int totalPage;
 		if(categoryId == -1){
-			products = productService.readProducts(page, 16);
+			products = productService.readProductsForAdmin(page, 16);
 			totalPage = CommonUtil.countTotalPage(productService.count(), 16);
 		} else{
-			products = productService.readListByCategoryId(categoryId, page, 16);
-			totalPage = CommonUtil.countTotalPage(productService.readListByCategoryId(categoryId).size(), 16);
+			products = productService.readListByCategoryIdForAdmin(categoryId, page, 16);
+			totalPage = CommonUtil.countTotalPage(categoryService.readByCategoryId(categoryId).getCategoryCount(), 16);
 		}
 		
 		model.addAttribute("prev", CommonUtil.prevBlock(page));

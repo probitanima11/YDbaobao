@@ -66,7 +66,7 @@ public class ProductController {
 	 *            , page
 	 */
 	@RequestMapping(value = "/categories/{categoryId}/products", method = RequestMethod.GET)
-	public String load(Model model, @RequestParam("page") int page, @PathVariable int categoryId) {
+	public String load(Model model, HttpSession session, @RequestParam("page") int page, @PathVariable int categoryId) {
 		Category category = categoryService.readByCategoryId(categoryId);
 		int totalPage = CommonUtil.countTotalPage(category.getCategoryCount(), CommonUtil.productsPerPage);
 
@@ -77,7 +77,7 @@ public class ProductController {
 				.toArray());
 		model.addAttribute("url", "/categories/" + categoryId + "/products?page=");
 		model.addAttribute("products", productService.readListByCategoryId(categoryId, page, adminConfigService.read()
-				.getAdminDisplayProducts()));
+				.getAdminDisplayProducts(), (SessionCustomer) session.getAttribute("sessionCustomer")));
 		model.addAttribute("brands", brandService.readBrandsByCategoryId(categoryId));
 		model.addAttribute("category", category);
 		model.addAttribute("categories", categoryService.readWithoutUnclassifiedCategory());
@@ -92,10 +92,10 @@ public class ProductController {
 	 *            , brandId, page
 	 */
 	@RequestMapping(value = "/categories/{categoryId}/brands/{brandId}/products", method = RequestMethod.GET)
-	public String load(Model model, @RequestParam("page") int page, @PathVariable int categoryId,
+	public String load(HttpSession session, Model model, @RequestParam("page") int page, @PathVariable int categoryId,
 			@PathVariable int brandId) {
 		List<Product> products = productService.readByCategoryIdAndBrandId(categoryId, brandId, page,
-				CommonUtil.productsPerPage);
+				CommonUtil.productsPerPage, (SessionCustomer) session.getAttribute("sessionCustomer"));
 		int totalPage = (int) CommonUtil.countTotalPage(products.size(), CommonUtil.productsPerPage);
 
 		model.addAttribute("prev", CommonUtil.prevBlock(page));

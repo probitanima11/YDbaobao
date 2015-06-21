@@ -3,6 +3,7 @@ package com.ydbaobao.controller;
 import java.util.stream.IntStream;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.support.CommonUtil;
 import com.support.JSONResponseUtil;
 import com.ydbaobao.model.Brand;
+import com.ydbaobao.model.SessionCustomer;
 import com.ydbaobao.service.BrandService;
 import com.ydbaobao.service.CategoryService;
 import com.ydbaobao.service.ProductService;
@@ -36,7 +38,7 @@ public class BrandController {
 	 * @return 검색된 결과를 JSON 데이타로 전달
 	 */
 	@RequestMapping(value = "/{firstLetter}", method = RequestMethod.GET)
-	public ResponseEntity<Object> searchByFirstLetter(@PathVariable String firstLetter) {
+	public ResponseEntity<Object> readByFirstLetter(@PathVariable String firstLetter) {
 		return JSONResponseUtil.getJSONResponse(brandService.search(firstLetter), HttpStatus.OK);
 	}
 	
@@ -45,7 +47,7 @@ public class BrandController {
 	 * @param 검색에 사용될 브랜드 Id, page 숫자
 	 */
 	@RequestMapping(value="/{brandId}/products", method=RequestMethod.GET)
-	public String searchByBrandId(@RequestParam int page, Model model, @PathVariable int brandId) {
+	public String readByBrandId(HttpSession session, @RequestParam int page, Model model, @PathVariable int brandId) {
 		Brand brand = brandService.readBrandByBrandId(brandId);
 		int totalPage = CommonUtil.countTotalPage(brand.getBrandCount(), CommonUtil.productsPerPage);
 		
@@ -54,7 +56,7 @@ public class BrandController {
 		model.addAttribute("selectedIndex", page);
 		model.addAttribute("range", IntStream.range(CommonUtil.startPage(page), CommonUtil.endPage(page, totalPage)).toArray());
 		model.addAttribute("url", "/brands/" + brandId + "/products/?page=");
-		model.addAttribute("products", productService.readListByBrandId(brandId, page, CommonUtil.productsPerPage));
+		model.addAttribute("products", productService.readListByBrandId(brandId, page, CommonUtil.productsPerPage, (SessionCustomer) session.getAttribute("sessionCustomer")));
 		model.addAttribute("brands", brandService.readBrands());
 		model.addAttribute("brand", brand);
 		model.addAttribute("categories", categoryService.readWithoutUnclassifiedCategory());

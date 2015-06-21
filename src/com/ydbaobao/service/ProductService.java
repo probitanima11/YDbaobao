@@ -92,21 +92,7 @@ public class ProductService {
 		return imageName;
 	}
 	
-	public List<Product> readListByCategoryId(int categoryId, int page, int productsPerPage) {
-		return productDao.readListByCategoryId(categoryId, (page - 1) * productsPerPage, productsPerPage);
-	}
-	
-	public List<Product> readListByCategoryId(int categoryId) {
-		return productDao.readListByCategoryId(categoryId);
-	}
-	
-	public int count() {
-		return productDao.count();
-	}
-	
-	public List<Product> readRange(int page, int productsPerPage, SessionCustomer sessionCustomer) {
-		List<Product> products = productDao.readRange((page - 1) * productsPerPage, productsPerPage);
-		//회원 등급에 따라 다르게 변경 한 뒤, 100원 단위까지 표시하며 10원 단위 이하에서 반올림할 것.
+	private List<Product> discountAndRoundOff(SessionCustomer sessionCustomer, List<Product> products) {
 		if (null == sessionCustomer) {
 			return products;
 		}
@@ -117,7 +103,44 @@ public class ProductService {
 		}
 		return products;
 	}
+	
+	public List<Product> readRange(int page, int productsPerPage, SessionCustomer sessionCustomer) {
+		List<Product> products = productDao.readRange((page - 1) * productsPerPage, productsPerPage);
+		return discountAndRoundOff(sessionCustomer, products);
+	}
+	
+	public List<Product> readListByCategoryId(int categoryId, int page, int productsPerPage, SessionCustomer sessionCustomer) {
+		List<Product> products = productDao.readListByCategoryId(categoryId, (page - 1) * productsPerPage, productsPerPage);
+		return discountAndRoundOff(sessionCustomer, products);
+	}
+	
+	public List<Product> readListByBrandId(int brandId, int page, int productsPerPage, SessionCustomer sessionCustomer) {
+		List<Product> products = productDao.readListByBrandId(brandId, (page - 1) * productsPerPage, productsPerPage);
+		return discountAndRoundOff(sessionCustomer, products);
+	}
+	
+	public List<Product> readByCategoryIdAndBrandId(int categoryId, int brandId, int page, int productsPerPage, SessionCustomer sessionCustomer) {
+		List<Product> products = productDao.readByCategoryIdAndBrandId(categoryId, brandId, (page - 1) * productsPerPage, productsPerPage);
+		return discountAndRoundOff(sessionCustomer, products);
+	}
 
+	public List<Product> readProductsForAdmin(int page, int productsPerPage) {
+		List<Product> products = productDao.readProductsList((page - 1) * productsPerPage, productsPerPage);
+		for(Product product:products){
+			Brand brand = product.getBrand();
+			brand.setBrandName(brandDao.readBrandByBrandId(brand.getBrandId()).getBrandName());
+		}
+		return products;
+	}
+	
+	public List<Product> readListByCategoryIdForAdmin(int categoryId, int page, int productsPerPage) {
+		return productDao.readListByCategoryId(categoryId, (page - 1) * productsPerPage, productsPerPage);
+	}
+	
+	public int count() {
+		return productDao.count();
+	}
+	
 	public List<Product> readUnclassifiedProducts() {
 		List<Product> productList = productDao.readListByCategoryId(0);
 		for(Product product:productList){
@@ -125,10 +148,6 @@ public class ProductService {
 			brand.setBrandName(brandDao.readBrandByBrandId(brand.getBrandId()).getBrandName());
 		}
 		return productList;
-	}
-
-	public List<Product> readListByBrandId(int brandId, int page, int productsPerPage) {
-		return productDao.readListByBrandId(brandId, (page - 1) * productsPerPage, productsPerPage);
 	}
 
 	public boolean deleteAll() {
@@ -155,18 +174,5 @@ public class ProductService {
 			return true;
 		}
 		return false;
-	}
-
-	public List<Product> readByCategoryIdAndBrandId(int categoryId, int brandId, int page, int productsPerPage) {
-		return productDao.readByCategoryIdAndBrandId(categoryId, brandId, (page - 1) * productsPerPage, productsPerPage);
-	}
-
-	public List<Product> readProducts(int page, int productsPerPage) {
-		List<Product> products = productDao.readProductsList((page - 1) * productsPerPage, productsPerPage);
-		for(Product product:products){
-			Brand brand = product.getBrand();
-			brand.setBrandName(brandDao.readBrandByBrandId(brand.getBrandId()).getBrandName());
-		}
-		return products;
 	}
 }
