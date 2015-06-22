@@ -27,6 +27,16 @@ td.tdhead {
 		<div id="content">
 			<h1>상품 관리</h1>
 			<ul id="product-menu">
+			<form id="search-form">
+				<div id="search-bar">
+					<select id="select">
+						<option class="selected">상품명</option>
+						<option>상품번호</option>
+					</select> 
+					<input id="search-terms" type="text" />
+				</div>
+				<button id="search-btn" class="btn" type="submit">검색</button>
+			</form>
 			<li class="select-category">
 			<form:form class="category-form" method="GET" action="/admin/products/category" enctype="multipart/form-data">
 				<label class="control-label">카테고리 선택 :</label>
@@ -135,6 +145,27 @@ td.tdhead {
 			document.querySelector('#all-product-delete-btn').addEventListener('click', deleteAllProducts, false);
 			setUpdateProductBtn();
 			setDeleteProductBtn();
+
+			document.querySelector('#select').addEventListener('change', function(e) {
+				document.querySelector('.selected').classList.remove('selected');
+				for(var i = 0 ; i < e.target.options.length; i++) {
+					if(e.target.options[i].value === e.target.value) {
+						e.target.options[i].classList.add('selected');
+					}	
+				}
+			}, false);
+
+			document.querySelector("#search-form").addEventListener('submit', function(e) {
+				e.preventDefault();
+				var selected = document.querySelector('.selected').value;
+				var terms = document.querySelector('#search-terms').value;
+				if(selected === '상품명') {
+					window.location.href = '/admin/products/search?productName=' + terms +'&page=1';
+				}
+				if(selected === '상품번호') {
+					window.location.href = '/admin/products/' + terms +'?page=1';
+				}
+			}, false);
 		}, false);
 
 		function deleteAllProducts() {
