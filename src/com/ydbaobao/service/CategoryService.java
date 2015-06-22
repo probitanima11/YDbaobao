@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ydbaobao.dao.CategoryDao;
+import com.ydbaobao.dao.ProductDao;
 import com.ydbaobao.model.Category;
 
 @Service
@@ -15,6 +16,8 @@ import com.ydbaobao.model.Category;
 public class CategoryService {
 	@Resource
 	private CategoryDao categoryDao;
+	@Resource
+	private ProductDao productDao;
 
 	public List<Category> read() {
 		return categoryDao.read();
@@ -32,6 +35,7 @@ public class CategoryService {
 	}
 
 	public boolean delete(long categoryId) {
+		productDao.changeUnclassifiedCategory(categoryId);
 		if(categoryDao.delete(categoryId) == 1) {
 			return true;
 		}

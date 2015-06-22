@@ -213,4 +213,9 @@ public class ProductDao extends JdbcDaoSupport {
 		String sql = "alter table PRODUCTS auto_increment=1;";
 		getJdbcTemplate().update(sql);
 	}
+
+	public void changeUnclassifiedCategory(long categoryId) {
+		String sql = "update PRODUCTS set categoryId = 0 where categoryId = ?";
+		getJdbcTemplate().update(sql, categoryId);
+	}
 }
