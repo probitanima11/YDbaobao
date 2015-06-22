@@ -16,7 +16,6 @@ public class ServletRequestUtil {
 	}
 
 	public static boolean existedCustomerIdFromSession(HttpSession session, String sessionAttribute) throws IOException {
-		logger.debug("sessionAttribute={}", session.getAttribute(sessionAttribute));
 		if (session.getAttribute(sessionAttribute) == null) {
 			return Boolean.FALSE;
 		}

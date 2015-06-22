@@ -76,14 +76,14 @@
 							<td><span class="item-quantity">${item.quantity}</span></td>
 							<td><span class="item-price">${item.product.productPrice * item.quantity}</span></td>
 						</tr>
-					</c:forEach>	
+					</c:forEach>
 					</tbody>
 					<tfoot>
 						<tr>
 							<td colspan="6">
 								<div style="float:left">
 								</div>
-								<div id="total-price" style="float:right; padding:15px; font-size:15px;">전체상품금액 : 
+								<div id="total-price" style="float:right; padding:15px; font-size:15px;">전체상품금액 :
 									<span style="font-weight:800;"></span>
 								</div>
 							</td>
@@ -92,7 +92,7 @@
 							<td colspan="6">
 								<div style="float:left">
 								</div>
-								<div id="selected-price" style="float:right; padding:15px; font-size:15px;">선택상품금액 : 
+								<div id="selected-price" style="float:right; padding:15px; font-size:15px;">선택상품금액 :
 									<span style="font-weight:800;">0</span>
 								</div>
 							</td>
@@ -124,6 +124,8 @@
 						success : function(req) {
 							document.querySelector('#total-price span').textContent -= document.querySelector('tr[data-id="'+ req.responseText + '"] .item-price').innerText;
 							document.querySelector('tr[data-id="'+ req.responseText + '"]').remove();
+							addItemsPrice();
+							calcSelectedPrice();
 						}
 					});
 				}
@@ -148,7 +150,7 @@
 				checkedItems[j].checked = true;
 			}
 		});
-		
+
 		document.querySelector('#select-order-btn').addEventListener('click', function() {
 			var checkList = document.querySelectorAll('.item-check');
 			var checkLength = checkList.length;
@@ -161,8 +163,8 @@
 			}
 			param += paramList;
 			order(param);
-		}, false); 
-		
+		}, false);
+
 		document.querySelector('#order-btn').addEventListener('click', function() {
 			var checkList = document.querySelectorAll('.item-check');
 			var checkLength = checkList.length;
@@ -175,14 +177,14 @@
 			order(param);
 		}, false);
 
-		addItemsPrice(); 
+		addItemsPrice();
 
 		priceWithComma();
 
 		totalPriceWithComma();
 
 	}, false);
-	
+
 	function order(param) {
 		ydbaobao.ajax({
 			method : 'post',
@@ -200,10 +202,10 @@
 		var length = el.length;
 		var totalPrice = 0;
 		for(var i = 0; i < length; i++) {
-			totalPrice += parseInt(el[i].textContent);
+			totalPrice += parseInt(el[i].textContent.replace(",", ""));
 		}
 
-		document.querySelector('#total-price span').textContent = totalPrice;
+		document.querySelector('#total-price span').textContent = totalPrice.toLocaleString();
 	}
 
 	function priceWithComma() {
@@ -217,9 +219,9 @@
 
 	function totalPriceWithComma() {
 		 	var el = document.querySelector('#total-price span');
-		 	el.textContent = parseInt(el.textContent).toLocaleString();
+		 	el.textContent = parseInt(el.textContent.replace(",", "")).toLocaleString();
 	}
-	
+
 	function calcSelectedPrice() {
 		var checkList = document.querySelectorAll('.item-check');
 		var checkLength = checkList.length;
@@ -236,7 +238,3 @@
 	<script src="/js/ydbaobao.js"></script>
 </body>
 </html>
-
-
-
-
