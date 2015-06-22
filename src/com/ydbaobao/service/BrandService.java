@@ -51,6 +51,9 @@ public class BrandService {
 	}
 
 	public List<Brand> search(String firstLetter) {
+		if(firstLetter.equals("all")) {
+			return brandDao.search("");
+		}
 		return brandDao.search(firstLetter);
 	}
 }

@@ -25,9 +25,13 @@ function setBrandSearchEvent() {
 }
 
 function searchBrand(target) {
+	var firstLetter = target.textContent;
+	if(target.textContent === '#') {
+		firstLetter = 'all'
+	}
 	ydbaobao.ajax({
 		method:'get',
-			url:'/brands/' + target.textContent,
+			url:'/brands/' + firstLetter,
 			success: function(req) {
 				changeBrandList(JSON.parse(req.responseText));
 			}

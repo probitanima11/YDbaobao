@@ -6,6 +6,7 @@
 	<div id="brand-initial-tab">
 		<label>브랜드 선택</label>
 		<ul>
+			<li class="first-letter"><span>#</span><li>
 			<c:forEach var="firstLetter" items="${firstLetterList}">
 				<li class="first-letter"><span>${firstLetter}</span></li>
 			</c:forEach>
@@ -52,9 +53,13 @@ function setBrandSearchEvent() {
 }
 
 function searchBrand(target) {
+	var firstLetter = target.textContent;
+	if(target.textContent === '#') {
+		firstLetter = 'all'
+	}
 	ydbaobao.ajax({
 		method:'get',
-			url:'/brands/' + target.textContent,
+			url:'/brands/' + firstLetter,
 			success: function(req) {
 				changeBrandList(JSON.parse(req.responseText));
 			}
