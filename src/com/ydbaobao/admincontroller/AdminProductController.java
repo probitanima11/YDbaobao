@@ -84,7 +84,9 @@ public class AdminProductController {
 			products = productService.readListByCategoryIdForAdmin(categoryId, page, 16);
 			totalPage = CommonUtil.countTotalPage(categoryService.readByCategoryId(categoryId).getCategoryCount(), 16);
 		}
-		
+		int selectedCategoryId = -1;
+		List<Category> categories = categoryService.read();
+		categories.add(0, new Category(selectedCategoryId, "전체보기", productService.count()));
 		model.addAttribute("prev", CommonUtil.prevBlock(page));
 		model.addAttribute("next", CommonUtil.nextBlock(page, totalPage));
 		model.addAttribute("selectedIndex", page);
@@ -93,8 +95,6 @@ public class AdminProductController {
 	
 		model.addAttribute("products", products);
 		model.addAttribute("brands", brandService.readBrands());
-		List<Category> categories = categoryService.read();
-		categories.add(0, new Category(-1, "전체보기", 0));
 		model.addAttribute("selectedCategoryId", categoryId);
 		model.addAttribute("categories", categories);
 		return "admin/productManager";
