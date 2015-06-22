@@ -26,7 +26,12 @@ public class ItemService {
 	public void createItems(String customerId, String size, String quantity, String productId) {
 		String[] sizeArray = size.split("-");
 		String[] quantityArray = quantity.split("-");
+
 		for(int i=0; i< quantityArray.length; i++){
+			if(sizeArray.length == 0) {
+				itemDao.createItem(customerId, productId, "0", Integer.parseInt(quantityArray[i]));
+				return;
+			}
 			itemDao.createItem(customerId, productId, sizeArray[i], Integer.parseInt(quantityArray[i]));
 		}
 	}
