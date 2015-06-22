@@ -226,14 +226,16 @@
 			for (var i = 0; i < brandsLength; i++) {
 				row = table.insertRow(1);
 				row.id = "brand_"+json[i].brandId;
-				row.insertCell(0).innerHTML = "<td><input class='brandName' type='text' value='"+json[i].brandName+"' data-id='"+json[i].brandId+"'></td>";
-				cell = row.insertCell(1);
-				cell.className = "discount_table";
-				cell.innerHTML = "<td>1등급:<input type='text' value='"+json[i].discount_1+"'>2등급:<input type='text' value='"+json[i].discount_2+"'>3등급:<input type='text' value='"+json[i].discount_3+"'>4등급:<input type='text' value='"+json[i].discount_4+"'>5등급:<input type='text' value='"+json[i].discount_5+"'></td>";
+				row.insertCell(0).innerHTML = '<td>' + (i + 1) + '</td>';
+				row.insertCell(1).innerHTML = '<td><input class="brandName" type="text" value="' + json[i].brandName + '" data-id="' + json[i].brandId + '"></td>';
 				cell = row.insertCell(2);
-				cell.className = "brand_sizes";
-				cell.innerHTML = "<td class='brand_sizes'><input type='text' value='"+json[i].brandSize+"'></td>";
-				row.insertCell(3).innerHTML = "<td><button class='update-brand-btn'>수정</button><button class='delete-brand-btn'>삭제</button></td>";
+				cell.className = 'discount_table';
+				cell.innerHTML = '<td>1등급:<input type="text" value="' + json[i].discount_1 + '">2등급:<input type="text" value="' + json[i].discount_2 + '">3등급:<input type="text" value="' + json[i].discount_3 + '">4등급:<input type="text" value="' + json[i].discount_4 + '">5등급:<input type="text" value="' + json[i].discount_5 + '"></td>';
+				cell = row.insertCell(3);
+				cell.className = 'brand_sizes';
+				cell.innerHTML = '<td class="brand_sizes"><input type="text" value="' + json[i].brandSize + '"></td>';
+				row.insertCell(4).innerHTML = '<td>' + json[i].brandCount + '</td>';
+				row.insertCell(5).innerHTML = '<td><button class="update-brand-btn">수정</button><button class="delete-brand-btn">삭제</button></td>';
 			}
 			setBrandEvent();
 		}
