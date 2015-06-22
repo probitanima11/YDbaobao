@@ -37,6 +37,11 @@
 	tfoot tr{
 		padding:10px;
 	}
+
+	.sold-out {
+		color: red;
+		font-weight: bold;
+	}
 </style>
 </head>
 <body>
@@ -68,14 +73,28 @@
 					</thead>
 					<tbody>
 					<c:forEach var="item" items="${items}">
-						<tr data-id="${item.itemId}">
-							<td><input class="item-check" type="checkbox" onclick="calcSelectedPrice()"></td>
-							<td class="item-image-container"><img class="item-image" src="/img/products/${item.product.productImage}"></td>
-							<td class="item-name-container"><span class="item-name">${item.product.productName}</span></td>
-							<td><span class="item-size">${item.size}</span></td>
-							<td><span class="item-quantity">${item.quantity}</span></td>
-							<td><span class="item-price">${item.product.productPrice * item.quantity}</span></td>
-						</tr>
+						<c:choose>
+							<c:when test="${item.product.isSoldout eq 1}">
+								<tr data-id="${item.itemId}">
+									<td><input type="checkbox" onclick="" disabled></td>
+									<td class="item-image-container"><img class="item-image" src="/img/products/${item.product.productImage}"></td>
+									<td class="item-name-container"><span class="item-name">${item.product.productName}</span><span class="sold-out"> [품절]</span></td>
+									<td><span class="item-size">${item.size}</span></td>
+									<td><span class="item-quantity">${item.quantity}</span></td>
+									<td><span>${item.product.productPrice * item.quantity}</span></td>
+								</tr>
+							</c:when>
+							<c:otherwise>
+								<tr data-id="${item.itemId}">
+									<td><input class="item-check" type="checkbox" onclick="calcSelectedPrice()"></td>
+									<td class="item-image-container"><img class="item-image" src="/img/products/${item.product.productImage}"></td>
+									<td class="item-name-container"><span class="item-name">${item.product.productName}</span></td>
+									<td><span class="item-size">${item.size}</span></td>
+									<td><span class="item-quantity">${item.quantity}</span></td>
+									<td><span class="item-price">${item.product.productPrice * item.quantity}</span></td>
+								</tr>
+							</c:otherwise>
+						</c:choose>
 					</c:forEach>
 					</tbody>
 					<tfoot>
