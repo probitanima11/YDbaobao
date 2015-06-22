@@ -31,7 +31,7 @@ public class ProductDao extends JdbcDaoSupport {
 	}
 	
 	public int create(Product product) {
-		String sql = "insert into PRODUCTS values(default, ?, ?, ?, default, ?, default, default, default, ?)";
+		String sql = "insert into PRODUCTS values(default, ?, ?, ?, default, ?, default, default, default, ?, default)";
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		getJdbcTemplate().update(new PreparedStatementCreator() {
 			public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
