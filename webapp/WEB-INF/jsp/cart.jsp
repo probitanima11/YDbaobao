@@ -154,12 +154,16 @@
 		document.querySelector('#select-order-btn').addEventListener('click', function() {
 			var checkList = document.querySelectorAll('.item-check');
 			var checkLength = checkList.length;
-			var paramList = new Array();
+			var paramList = [];
 			var param = 'itemList=';
 			for(var i = 0; i < checkLength; i++) {
 				if(checkList[i].checked) {
 					paramList.push(checkList[i].parentNode.parentNode.getAttribute('data-id'));
 				}
+			}
+			if(paramList.length === 0) {
+				alert('상품을 선택해주세요');
+				return;
 			}
 			param += paramList;
 			order(param);
