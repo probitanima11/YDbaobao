@@ -161,6 +161,7 @@
 				for(var i = 0; i < length; i++) {
 					checkedItems[i].checked = false;
 				}
+				calcSelectedPrice();
 				return;
 			}
 
@@ -168,6 +169,7 @@
 			for(var j = 0; j < length; j++) {
 				checkedItems[j].checked = true;
 			}
+			calcSelectedPrice();
 		});
 
 		document.querySelector('#select-order-btn').addEventListener('click', function() {
