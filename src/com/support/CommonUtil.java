@@ -67,6 +67,9 @@ public class CommonUtil {
 	 */
 	public static int startPage(int page) {
 		int block = page / limitPage + 1;
+		if(page % limitPage == 0) {
+			block -= 1;
+		}
 		return (block - 1) * limitPage + 1;
 	}
 
@@ -77,7 +80,9 @@ public class CommonUtil {
 	 */
 	public static int endPage(int page, int totalPage) {
 		int block = page / limitPage + 1;
-		
+		if(page % limitPage == 0) {
+			block -= 1;
+		}
 		// 마지막 페이질 경우
 		if((block - 1) * limitPage + limitPage >= totalPage) {
 			return totalPage + 1;
@@ -93,7 +98,9 @@ public class CommonUtil {
 	public static Object nextBlock(int page, int totalPage) {
 		int lastBlock = totalPage / limitPage; 
 		int block = page / limitPage + 1;
-		
+		if(page % limitPage == 0) {
+			block -= 1;
+		}
 		// 마지막 블록일 경우 마지막 페이지 반환
 		if(block >= lastBlock) {
 			return totalPage;
@@ -108,7 +115,9 @@ public class CommonUtil {
 	 */
 	public static Object prevBlock(int page) {
 		int block = page / limitPage + 1;
-		
+		if(page % limitPage == 0) {
+			block -= 1;
+		}
 		// 첫 블록일 경우 첫 페이지 반환
 		if(block <= 1) {
 			return 1;
