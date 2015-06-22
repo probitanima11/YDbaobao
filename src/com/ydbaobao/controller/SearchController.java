@@ -57,7 +57,7 @@ public class SearchController {
 		model.addAttribute("selectedIndex", page);
 		model.addAttribute("range", IntStream.range(CommonUtil.startPage(page), CommonUtil.endPage(page, totalPage))
 				.toArray());
-		model.addAttribute("url", "/search/brands?param=" + terms + "&page=");
+		model.addAttribute("url", "/search/brands?terms=" + terms + "&page=");
 		model.addAttribute("categories", categoryService.read());
 		model.addAttribute("products", products);
 		model.addAttribute("count", count);
@@ -86,7 +86,7 @@ public class SearchController {
 		model.addAttribute("selectedIndex", page);
 		model.addAttribute("range", IntStream.range(CommonUtil.startPage(page), CommonUtil.endPage(page, totalPage))
 				.toArray());
-		model.addAttribute("url", "/search/products?param=" + terms + "&page=");
+		model.addAttribute("url", "/search/products?terms=" + terms + "&page=");
 		model.addAttribute("categories", categoryService.readWithoutUnclassifiedCategory());
 		model.addAttribute("products", products);
 		model.addAttribute("count", count);
