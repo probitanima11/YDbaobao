@@ -34,10 +34,10 @@ td.tdhead {
 					<c:forEach var="category" items="${categories}">
 					<c:choose>
 						<c:when test="${category.categoryId eq selectedCategoryId}">
-							<option value="${category.categoryId}" label="${category.categoryName}(${category.categoryCount})" selected="selected" />
+							<option value="${category.categoryId}" label="${category.categoryName}(${category.categoryCount})" selected="selected">${category.categoryName}</option>
 						</c:when>
 						<c:otherwise>
-							<option value="${category.categoryId}" label="${category.categoryName}(${category.categoryCount})" />
+							<option value="${category.categoryId}" label="${category.categoryName}(${category.categoryCount})">${category.categoryName}</option>
 						</c:otherwise>
 					</c:choose>
 					</c:forEach>
@@ -84,10 +84,10 @@ td.tdhead {
 							<c:forEach var="brand" items="${brands}">
 										<c:choose>
 											<c:when test="${brand.brandId eq product.brand.brandId}">
-												<option value="${brand.brandId}" label="${brand.brandName}" selected="selected"/>
+												<option value="${brand.brandId}" label="${brand.brandName}" selected="selected">${brand.brandName}</option>
 											</c:when>
 											<c:otherwise>
-												<option value="${brand.brandId}" label="${brand.brandName}" />
+												<option value="${brand.brandId}" label="${brand.brandName}">${brand.brandName}</option>
 											</c:otherwise>
 										</c:choose>
 							</c:forEach>
