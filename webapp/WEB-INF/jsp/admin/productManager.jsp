@@ -27,6 +27,19 @@ td.tdhead {
 		<div id="content">
 			<h1>상품 관리</h1>
 			<ul id="product-menu">
+			<form id="search-form">
+				<div id="search-bar">
+					<select id="select">
+						<option class="selected">상품명</option>
+						<option>상품번호</option>
+					</select> 
+					<input id="search-terms" type="text" />
+				</div>
+				<button id="search-btn" class="btn" type="submit">검색</button>
+				<c:if test="${not empty searchMessage}">
+					<div>${searchMessage}</div>
+				</c:if>
+			</form>
 			<li class="select-category">
 			<form:form class="category-form" method="GET" action="/admin/products/category" enctype="multipart/form-data">
 				<label class="control-label">카테고리 선택 :</label>
@@ -34,10 +47,10 @@ td.tdhead {
 					<c:forEach var="category" items="${categories}">
 					<c:choose>
 						<c:when test="${category.categoryId eq selectedCategoryId}">
-							<option value="${category.categoryId}" label="${category.categoryName}(${category.categoryCount})" selected="selected" />
+							<option value="${category.categoryId}" label="${category.categoryName}(${category.categoryCount})" selected="selected">${category.categoryName}</option>
 						</c:when>
 						<c:otherwise>
-							<option value="${category.categoryId}" label="${category.categoryName}(${category.categoryCount})" />
+							<option value="${category.categoryId}" label="${category.categoryName}(${category.categoryCount})">${category.categoryName}</option>
 						</c:otherwise>
 					</c:choose>
 					</c:forEach>
@@ -84,10 +97,10 @@ td.tdhead {
 							<c:forEach var="brand" items="${brands}">
 										<c:choose>
 											<c:when test="${brand.brandId eq product.brand.brandId}">
-												<option value="${brand.brandId}" label="${brand.brandName}" selected="selected"/>
+												<option value="${brand.brandId}" label="${brand.brandName}" selected="selected">${brand.brandName}</option>
 											</c:when>
 											<c:otherwise>
-												<option value="${brand.brandId}" label="${brand.brandName}" />
+												<option value="${brand.brandId}" label="${brand.brandName}">${brand.brandName}</option>
 											</c:otherwise>
 										</c:choose>
 							</c:forEach>
@@ -105,7 +118,7 @@ td.tdhead {
 				</tr>
 				<tr>
 					<td class='tdhead'>가 격 :</td>
-					<td><form:input type="number" path="productPrice" value="${product.productPrice}" min="0" /></td>
+					<td><form:input type="number" path="productPrice" value="${product.productPrice}" min="0" max="100000000" /></td>
 					<td class='tdhead'>품 절 :</td>
 					<td>
 						<c:choose>
@@ -135,6 +148,27 @@ td.tdhead {
 			document.querySelector('#all-product-delete-btn').addEventListener('click', deleteAllProducts, false);
 			setUpdateProductBtn();
 			setDeleteProductBtn();
+
+			document.querySelector('#select').addEventListener('change', function(e) {
+				document.querySelector('.selected').classList.remove('selected');
+				for(var i = 0 ; i < e.target.options.length; i++) {
+					if(e.target.options[i].value === e.target.value) {
+						e.target.options[i].classList.add('selected');
+					}	
+				}
+			}, false);
+
+			document.querySelector("#search-form").addEventListener('submit', function(e) {
+				e.preventDefault();
+				var selected = document.querySelector('.selected').value;
+				var terms = document.querySelector('#search-terms').value;
+				if(selected === '상품명') {
+					window.location.href = '/admin/products/search?productName=' + terms +'&page=1';
+				}
+				if(selected === '상품번호') {
+					window.location.href = '/admin/products/' + terms +'?page=1';
+				}
+			}, false);
 		}, false);
 
 		function deleteAllProducts() {
@@ -144,7 +178,6 @@ td.tdhead {
 					url : '/admin/products',
 					success : function(req) {
 						if(req.responseText === 'success') {
-							alert('전체 상품이 삭제되었습니다');
 							location.reload();
 						}
 					}
@@ -170,7 +203,6 @@ td.tdhead {
 					url : '/admin/products/'+productId,
 					success : function(req) {
 						if(req.responseText === 'success') {
-							alert('상품이 삭제되었습니다');
 							location.reload();
 						}
 					}

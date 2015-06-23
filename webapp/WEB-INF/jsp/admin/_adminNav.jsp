@@ -5,7 +5,7 @@
 	<c:redirect url="/admin/check" />
 </c:if>
 <div id="menu">
-	<a href="/admin" style="text-decoration:none;"><div style="padding:15px 15px; color:#fff; background-color:#EA6576">관리자메뉴</div></a>
+	<div style="padding:15px 15px; color:#fff; background-color:#EA6576">관리자메뉴</div>
 	<ul>
 		<li><a href="/admin/customers"><span>회원관리</span></a></li>
 		<li><a href="/admin/products/regist"><span>상품등록</span></a></li>

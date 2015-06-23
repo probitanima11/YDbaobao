@@ -39,6 +39,7 @@ public class ProductController {
 		SessionCustomer sessionCustomer = (SessionCustomer) session.getAttribute("sessionCustomer");
 		model.addAttribute("customer", sessionCustomer);
 		model.addAttribute("product", productService.readByDiscount(productId, sessionCustomer));
+		model.addAttribute("categories", categoryService.readWithoutUnclassifiedCategory());
 		return "product";
 	}
 

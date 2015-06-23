@@ -1,9 +1,11 @@
 package com.ydbaobao.admincontroller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +24,7 @@ import com.support.JSONResponseUtil;
 import com.ydbaobao.model.Brand;
 import com.ydbaobao.model.Category;
 import com.ydbaobao.model.Product;
+import com.ydbaobao.model.SessionCustomer;
 import com.ydbaobao.service.BrandService;
 import com.ydbaobao.service.CategoryService;
 import com.ydbaobao.service.ProductService;
@@ -96,6 +99,49 @@ public class AdminProductController {
 		model.addAttribute("products", products);
 		model.addAttribute("brands", brandService.readBrands());
 		model.addAttribute("selectedCategoryId", categoryId);
+		model.addAttribute("categories", categories);
+		return "admin/productManager";
+	}
+	
+	@RequestMapping(value = "/{productId}", method = RequestMethod.GET)
+	public String readByProductId(Model model, @PathVariable int productId, @RequestParam int page) {
+		model.addAttribute("product", new Product());
+		List<Product> products = new ArrayList<Product>();
+		products.add(productService.read(productId));
+
+		List<Category> categories = categoryService.read();
+		categories.add(0, new Category(-1, "전체보기", productService.count()));
+
+		model.addAttribute("prev", CommonUtil.prevBlock(page));
+		model.addAttribute("next", CommonUtil.nextBlock(page, page));
+		model.addAttribute("selectedIndex", page);
+		model.addAttribute("url", "/admin/products/" + productId + "?page=");
+		model.addAttribute("range", IntStream.range(CommonUtil.startPage(page), CommonUtil.endPage(page, page)).toArray());
+	
+		model.addAttribute("products", products);
+		model.addAttribute("brands", brandService.readBrands());
+		model.addAttribute("categories", categories);
+		return "admin/productManager";
+	}
+	
+	@RequestMapping(value = "/search", method = RequestMethod.GET)
+	public String readByProductName(HttpSession session, Model model, @RequestParam String productName, @RequestParam int page) {
+		String terms = productService.preprocessingTerms(productName);
+		model.addAttribute("product", new Product());
+		List<Product> products = productService.readByProductName(terms, page, 16, (SessionCustomer) session.getAttribute("sessionCustomer"));
+		int count = productService.countBySearchProductName(terms);
+		model.addAttribute("searchMessage", "상품명 \'"+productName+"\'에 대한 검색 결과가 "+count+" 건 있습니다.");
+		int totalPage = CommonUtil.countTotalPage(count, CommonUtil.productsPerPage);
+		List<Category> categories = categoryService.read();
+		categories.add(0, new Category(-1, "전체보기", productService.count()));
+
+		model.addAttribute("prev", CommonUtil.prevBlock(page));
+		model.addAttribute("next", CommonUtil.nextBlock(page, page));
+		model.addAttribute("selectedIndex", page);
+		model.addAttribute("url", "/admin/products/search?productName=" + terms + "&page=");
+		model.addAttribute("range", IntStream.range(CommonUtil.startPage(page), CommonUtil.endPage(page, totalPage)).toArray());
+		model.addAttribute("products", products);
+		model.addAttribute("brands", brandService.readBrands());
 		model.addAttribute("categories", categories);
 		return "admin/productManager";
 	}

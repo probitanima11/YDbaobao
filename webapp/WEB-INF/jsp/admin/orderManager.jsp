@@ -131,7 +131,7 @@
 			var orderId = e.target.parentNode.parentNode.getAttribute('data-id');
 			ydbaobao.ajax({
 				method: "get",
-				url: "/admin/orders/read/"+orderId,
+				url: "/admin/orders/"+orderId,
 				success: function(req){
 					console.log(req.responseText);
 				}
@@ -141,10 +141,12 @@
 		function checkOrder(e) {
 			var orderId = e.target.parentNode.parentNode.getAttribute('data-id');
 			ydbaobao.ajax({
-				method: "post",
-				url: "/admin/orders/check/"+orderId,
+				method: "put",
+				param: "orderStatus="+"S",
+				url: "/admin/orders/"+orderId,
 				success: function(req){
 					alert(req.responseText);
+					window.location.href="/admin/orders";
 				}
 			});
 		}
@@ -152,10 +154,12 @@
 		function claimOrder(e) {
 			var orderId = e.target.parentNode.parentNode.getAttribute('data-id');
 			ydbaobao.ajax({
-				method: "post",
-				url: "/admin/orders/claim/"+orderId,
+				method: "put",
+				param: "orderStatus="+"R",
+				url: "/admin/orders/"+orderId,
 				success: function(req){
 					alert(req.responseText);
+					window.location.href="/admin/orders";
 				}
 			});
 		}

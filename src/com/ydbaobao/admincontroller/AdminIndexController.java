@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.support.ImageResizeUtil;
-
 @Controller
 @RequestMapping("/admin/indexImages")
 public class AdminIndexController {
@@ -49,13 +47,14 @@ public class AdminIndexController {
 	 */
 	@RequestMapping(method = RequestMethod.POST)
 	public String indexImageCreate(Model model, @RequestParam MultipartFile imageFile, @RequestParam int imgIndex) throws IllegalStateException, IOException {
-		String imgFilePath = "/home/baobao/index/index_0" + imgIndex + ".jpg";
-		logger.debug(""+imageFile.getSize());
+		String[] originName = imageFile.getOriginalFilename().split("\\.");
+		String imageType = originName[originName.length-1];
+		
+		String imgFilePath = "/home/baobao/index/index_0" + imgIndex + "." + imageType;
 		imageFile.transferTo(new File(imgFilePath));
-		ImageResizeUtil.imageResize(imgFilePath, "jpg", 800);
 		List<String> imgPath = new ArrayList<String>();
 		for (int i = 0; i < 8; i++) {
-			String filePath = "index_0" + i + ".jpg";
+			String filePath = "index_0" + i + "." + imageType;
 			File f = new File("/home/baobao/index/"+filePath);
 			if (f.isFile()) {
 				imgPath.add("/img/index/"+filePath);

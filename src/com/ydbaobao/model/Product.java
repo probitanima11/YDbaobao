@@ -21,8 +21,8 @@ public class Product {
 	}
 
 	public Product(int productId, String productName, int productPrice, String productImage, String productSize,
-			int isSoldout) {
-		this(productId, productName, new Category(), new Brand(), productPrice, productImage, null, 0, 0, productSize,
+			int isSoldout, Brand brand) {
+		this(productId, productName, new Category(), brand, productPrice, productImage, null, 0, 0, productSize,
 				isSoldout);
 	}
 

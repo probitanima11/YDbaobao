@@ -6,6 +6,7 @@
 	<div id="brand-initial-tab">
 		<label>브랜드 선택</label>
 		<ul>
+			<li class="first-letter"><span>#</span><li>
 			<c:forEach var="firstLetter" items="${firstLetterList}">
 				<li class="first-letter"><span>${firstLetter}</span></li>
 			</c:forEach>
