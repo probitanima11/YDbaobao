@@ -139,14 +139,15 @@ tfoot tr {
 	}, false);
 	
 	function orderCancel(orderId) {
+		if (confirm("정말 주문취소 하시겠습니까??") == false){
+		    return;
+		}
 		ydbaobao.ajax({
 			method : 'put',
 			url : '/orders/cancel/' + orderId,
 			success : function(req) {
-				var list = document.querySelectorAll("tr[data-id='" + orderId + "']");
-				for(var i=0; i<list.length; i++) {
-					list[i].remove();
-				}
+				document.querySelectorAll(".order-head[data-id='" + orderId + "'] > td")[2].innerText = "주문취소";
+				document.querySelectorAll(".order-head[data-id='" + orderId + "'] > td")[3].remove();
 			}
 		});
 	}
