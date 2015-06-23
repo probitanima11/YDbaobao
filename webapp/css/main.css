@@ -112,10 +112,6 @@ ul#util li a span {
 	padding: 10px 5px;
 }
 
-#main-container {
-  min-height: 500px;
-}
-
 .search-message {
 	font-size: 20px;
 	margin: 10px 0px 0px 10px;
