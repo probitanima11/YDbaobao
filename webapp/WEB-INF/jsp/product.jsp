@@ -98,6 +98,10 @@ i {
 		<!-- 브랜드/제품 검색바 -->
 		<%@ include file="./commons/_search.jsp"%>
 	</div>
+	<div>
+		<!-- 수평 카테고리 메뉴 -->
+		<%@ include file="./commons/_horizontalCategory.jsp"%>
+	</div>
 	<div id="product-container" class="content wrap" style="position: relative;">
 		<div id="product-info-container">
 			<div align = center id="product-photo">
@@ -134,7 +138,9 @@ i {
 		</div>
 		<div id="product-display">${product.productDescription}</div>
 	</div>
-	<div id="footer">footer...</div>
+	<div id="footer">
+		<%@ include file="./commons/_footer.jsp"%>
+	</div>
 	<script>
 		var productId = ${product.productId};
 		var sizeArray = "${product.productSize}".split('|');

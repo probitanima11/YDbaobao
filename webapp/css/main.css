@@ -440,8 +440,8 @@ form#customer {
 
 #footer {
 	position: relative;
-	s min-height: 200px;
-	padding: 20px;
+	s min-height: 50px;
+	padding: 10px;
 	background-color: #888;
 	color: #fff;
 }

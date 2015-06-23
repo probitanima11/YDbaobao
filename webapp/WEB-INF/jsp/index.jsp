@@ -38,7 +38,7 @@
 		</div>
 	</div>
 	<div id="footer">
-		<div class="content wrap">Footer...</div>
+		<%@ include file="./commons/_footer.jsp"%>
 	</div>
 	<script>
 		var imgPaths = "${imgPath}".substring(1).split(",");

@@ -131,7 +131,9 @@
 		</div>
 	</div>
 
-	<div id="footer">footer...</div>
+	<div id="footer">
+		<%@ include file="./commons/_footer.jsp"%>
+	</div>
 
 	<script>
 	window.addEventListener('load', function() {

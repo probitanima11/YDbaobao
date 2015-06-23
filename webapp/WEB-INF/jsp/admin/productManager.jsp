@@ -175,7 +175,6 @@ td.tdhead {
 					url : '/admin/products',
 					success : function(req) {
 						if(req.responseText === 'success') {
-							alert('전체 상품이 삭제되었습니다');
 							location.reload();
 						}
 					}
@@ -201,7 +200,6 @@ td.tdhead {
 					url : '/admin/products/'+productId,
 					success : function(req) {
 						if(req.responseText === 'success') {
-							alert('상품이 삭제되었습니다');
 							location.reload();
 						}
 					}

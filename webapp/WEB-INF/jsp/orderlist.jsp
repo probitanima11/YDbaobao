@@ -72,7 +72,9 @@
 		</div>
 	</div>
 
-	<div id="footer">footer...</div>
+	<div id="footer">
+		<%@ include file="./commons/_footer.jsp"%>
+	</div>
 
 	<template id="order-item-template">
 		<td class="order-date-td"><span class="order-date"></span></td>
