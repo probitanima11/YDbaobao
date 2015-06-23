@@ -11,7 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.support.JSONResponseUtil;
+import com.ydbaobao.model.Order;
+import com.ydbaobao.model.Payment;
 import com.ydbaobao.service.OrderService;
+import com.ydbaobao.service.PaymentService;
 
 @Controller
 @RequestMapping("/admin/orders")
@@ -19,6 +22,9 @@ public class AdminOrderController {
 	
 	@Resource
 	private OrderService orderService;
+	
+	@Resource
+	private PaymentService paymentService;
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public String manageOrder(Model model) {
@@ -33,10 +39,12 @@ public class AdminOrderController {
 	
 	@RequestMapping(value = "/check/{orderId}", method = RequestMethod.POST)
 	public ResponseEntity<Object> checkOrder(@PathVariable int orderId) {
-		if (orderService.readOrder(orderId).getOrderStatus().equals('C')) {
+		Order order = orderService.readOrder(orderId);
+		if (order.getOrderStatus().equals('C')) {
 			return JSONResponseUtil.getJSONResponse("이미 취소된 주문입니다.", HttpStatus.OK);
 		}
 		orderService.checkOrder(orderId);
+		paymentService.createPayment(new Payment(order.getCustomer(), "P", order.getRealPrice()));
 		return JSONResponseUtil.getJSONResponse("주문승인완료", HttpStatus.OK);
 	}
 	
