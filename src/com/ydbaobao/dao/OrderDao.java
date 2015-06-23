@@ -81,7 +81,7 @@ public class OrderDao extends JdbcDaoSupport {
 	}
 
 	public void updateOrder(int orderId, String orderStatus) {
-		String sql = "update ORDERS set orderStatus = ? where orderId = ?";
+		String sql = "update ORDERS set orderStatus = ?, orderUpdateDate = default where orderId = ?";
 		getJdbcTemplate().update(sql, orderStatus, orderId);		
 	}
 }
