@@ -34,7 +34,7 @@ public class ItemService {
 				continue;
 			}
 			if(itemDao.isItemByProductIdAndSize(productId, sizeArray[i])){
-				itemDao.updateItem(itemDao.readItemByProductIdAndSize(productId, sizeArray[i]).getItemId(), quantityArray[i]);
+				itemDao.updateItem(itemDao.readItemByProductIdAndSize(productId, sizeArray[i]).getItemId(), Integer.parseInt(quantityArray[i]));
 			}
 			else{
 				itemDao.createItem(customerId, productId, sizeArray[i], Integer.parseInt(quantityArray[i]));
@@ -63,8 +63,11 @@ public class ItemService {
 			Product product = item.getProduct();
 			int discountRate = product.getBrand().getDiscountRate(item.getCustomer().getCustomerGrade());
 			product.discount(discountRate);
-			logger.debug("rate={} pridce={}", discountRate, product.getProductPrice());
 		}
 		return items;
+	}
+
+	public void updateQuantity(int itemId, int quantity) {
+		itemDao.updateItem(itemId, quantity);
 	}
 }

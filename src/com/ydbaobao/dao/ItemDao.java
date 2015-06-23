@@ -116,7 +116,7 @@ public class ItemDao extends JdbcDaoSupport {
 				rs.getString("size"), rs.getInt("quantity")), productId, size);
 	}
 
-	public int updateItem(int itemId, String quantity) {
+	public int updateItem(int itemId, int quantity) {
 		String sql = "update ITEMS set quantity = ? where itemId = ?";
 		return getJdbcTemplate().update(sql, quantity, itemId);
 	}

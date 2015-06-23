@@ -63,6 +63,18 @@ public class CartController {
 	}
 	
 	/**
+	 * 카트 페이지 개수 수정 
+	 * @param model
+	 * @param session
+	 * @return
+	 * @throws IOException
+	 */
+	@RequestMapping(value = "", method = RequestMethod.POST)
+	public String cartUpdate(@RequestParam int quantity, @RequestParam int itemId, Model model, HttpSession session) throws IOException {
+		itemService.updateQuantity(itemId, quantity);
+		return cartForm(model, session);
+	}
+	/**
 	 * 카트에 아이템 삭제
 	 * @param customerId
 	 * @param itemId
