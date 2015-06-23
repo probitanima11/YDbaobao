@@ -11,19 +11,30 @@
 <style>
 #product-info-container {
 	position: relative;
-	width: 620px;
+	height: 300px;
 	padding: 25px 0;
 	margin-bottom: 100px;
-	outline: 1px solid #EA6576;
+	/* outline: 1px solid #EA6576; */
 }
 
 #product-photo {
 	position: relative;
+	float : left;
 	width: 500px;
-	height: 500px;
+	height: 320px;
 	margin: 0 auto;
 	overflow: hidden;
-	outline: 1px solid #ccc;
+}
+
+#product-display {
+	position: relative;
+	width: 850px;
+	height: 300px;
+	padding : 20px;
+	margin-top: -50px;
+	margin-left: 40px;
+	margin-bottom: 50px;
+	outline: 1px solid #EA6576;
 }
 
 h1 {
@@ -33,10 +44,9 @@ h1 {
 }
 
 #product-buy-container {
-	position: absolute; 
-	top: 0; 
-	left: 100%; 
-	margin-left: -350px; 
+	float:right;
+	margin-top: -25px; 
+	margin-right: 100px; 
 	width: 350px;
 }
 
@@ -92,43 +102,43 @@ i {
 		<!-- 브랜드/제품 검색바 -->
 		<%@ include file="./commons/_search.jsp"%>
 	</div>
-	<div id="product-container" class="content wrap"
-		style="position: relative;">
+	<div id="product-container" class="content wrap" style="position: relative;">
 		<div id="product-info-container">
-			<div align=center id="product-photo">
-				<img
-					src="/img/products/${product.productImage}">
+			<div align = center id="product-photo">
+				<img src="/img/products/${product.productImage}">
 			</div>
-
-			<div id="product-display">
-				${product.productDescription}
-			</div>
-		</div>
-		<div id="product-buy-container">
-			<h1 class="product-name" style="margin-top: 25px; margin-left: 15px;">${product.productName}</h1>
-			<div class="product-price">${product.productPrice}</div>
-			<div style="margin-top: 25px; margin-left: 15px;">
-				<h3>구매수량</h3>
-				<button onclick="qtyControl('minus')"><i class='fa fa-minus'></i></button>
+			<div id="product-buy-container">
+				<h1 class="product-name"
+					style="margin-top: 25px; margin-left: 15px;">${product.productName}</h1>
+				<div class="product-price">${product.productPrice}</div>
+				<div style="margin-top: 25px; margin-left: 15px;">
+					<h3>구매수량</h3>
+					<button onclick="qtyControl('minus')">
+						<i class='fa fa-minus'></i>
+					</button>
 					<ul id="quantity" style="display: inline-block; padding: 0px">
 					</ul>
-				<!-- <input class="qty-selector" value="1" style="width: 32px;" onkeypress="return isNumberKey(event);"> -->
-				<button onclick="qtyControl('plus')"><i class='fa fa-plus'></i></button>
+					<!-- <input class="qty-selector" value="1" style="width: 32px;" onkeypress="return isNumberKey(event);"> -->
+					<button onclick="qtyControl('plus')">
+						<i class='fa fa-plus'></i>
+					</button>
+				</div>
+				<c:choose>
+					<c:when test="${product.isSoldout == 1}">
+						<div class="isSoldout">품 절</div>
+						<button class="btn addtocart disabled" disabled>장바구니</button>
+						<button class="btn buyitnow disabled" disabled>바로주문</button>
+					</c:when>
+					<c:otherwise>
+						<div class="button-group">
+							<button class="btn addtocart">장바구니</button>
+							<button class="btn buyitnow">바로주문</button>
+						</div>
+					</c:otherwise>
+				</c:choose>
 			</div>
-			<c:choose>
-				<c:when test="${product.isSoldout == 1}" >
-					<div class="isSoldout">품 절</div>
-					<button class="btn addtocart disabled" disabled>장바구니</button>
-					<button class="btn buyitnow disabled" disabled>바로주문</button>
-				</c:when>
-				<c:otherwise>
-					<div class="button-group">
-						<button class="btn addtocart">장바구니</button>
-						<button class="btn buyitnow">바로주문</button>
-					</div>
-				</c:otherwise>
-			</c:choose>
 		</div>
+		<div id="product-display">${product.productDescription}</div>
 	</div>
 	<div id="footer">footer...</div>
 	<script>
