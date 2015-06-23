@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,7 +17,7 @@ import com.ydbaobao.model.Item;
 @Service
 @Transactional
 public class ItemService {
-
+	private static final Logger logger = LoggerFactory.getLogger(ItemService.class);
 	@Resource
 	private ItemDao itemDao;
 	@Resource
@@ -23,19 +25,22 @@ public class ItemService {
 	@Resource
 	private ProductDao productDao;
 	
-	public void createItems(String customerId, String size, String quantity, String productId) {
+	public void createItems(String customerId, String size, String quantity, int productId) {
 		String[] sizeArray = size.split("-");
 		String[] quantityArray = quantity.split("-");
-
 		for(int i=0; i< quantityArray.length; i++){
-			if(sizeArray.length == 0) {
-				itemDao.createItem(customerId, productId, "0", Integer.parseInt(quantityArray[i]));
-				return;
+			if(quantityArray[i].equals("0")){
+				continue;
 			}
-			itemDao.createItem(customerId, productId, sizeArray[i], Integer.parseInt(quantityArray[i]));
+			if(itemDao.isItemByProductIdAndSize(productId, sizeArray[i])){
+				itemDao.updateItem(itemDao.readItemByProductIdAndSize(productId, sizeArray[i]).getItemId(), quantityArray[i]);
+			}
+			else{
+				itemDao.createItem(customerId, productId, sizeArray[i], Integer.parseInt(quantityArray[i]));
+			}
 		}
 	}
-	
+
 	public List<Item> readOrderedItems(String customerId) {
 		return itemDao.readOrderedItems(customerId);
 	}
@@ -47,7 +52,7 @@ public class ItemService {
 		itemDao.deleteCartList(itemId);
 	}
 
-	public void orderDirect(String customerId, String productId, String size, int quantity) {
+	public void orderDirect(String customerId, int productId, String size, int quantity) {
 //		itemDao.orderDirect(customerId, productId, orderDao.createOrder(customerId), size, quantity);
 	}
 

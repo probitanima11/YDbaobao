@@ -46,7 +46,7 @@ public class ItemDao extends JdbcDaoSupport {
 		getJdbcTemplate().update(sql, itemId);
 	}
 
-	public void createItem(String customerId, String productId, String size, int quantity) {
+	public void createItem(String customerId, int productId, String size, int quantity) {
 		String sql = "insert into ITEMS (customerId, productId, size, quantity) values(?, ?, ?, ?)";
 		getJdbcTemplate().update(sql, customerId, productId, size, quantity);
 	}
@@ -84,7 +84,7 @@ public class ItemDao extends JdbcDaoSupport {
 		getJdbcTemplate().update(sql, orderId);
 	}
 
-	public void orderDirect(String customerId, String productId, int orderId, String size, int quantity) {
+	public void orderDirect(String customerId, int productId, int orderId, String size, int quantity) {
 		String sql = "insert into ITEMS (customerId, productId, orderId, size, quantity) values(?, ?, ?, ?, ?)";
 		getJdbcTemplate().update(sql, customerId, productId, orderId, size, quantity);		
 	}
@@ -99,5 +99,27 @@ public class ItemDao extends JdbcDaoSupport {
 					rs.getString("size"),
 					rs.getInt("quantity")
 				), orderId);
+	}
+
+	public boolean isItemByProductIdAndSize(int productId, String size) {
+		String sql = "select count(1) from ITEMS where productId = ? and size = ?";
+		if(getJdbcTemplate().queryForObject(sql, Integer.class, productId, size) >0){
+			return true;
+		}
+		return false;
+	}
+	
+	public Item readItemByProductIdAndSize(int productId, String size) {
+		String sql = "select * from ITEMS where productId = ? and size = ?";
+		return getJdbcTemplate().queryForObject(sql, (rs, rowNum) -> new Item(
+				rs.getInt("itemId"), new Customer(rs.getString("customerId")),
+				new Product(rs.getInt("productId")),
+				new Order(),
+				rs.getString("size"), rs.getInt("quantity")), productId, size);
+	}
+
+	public int updateItem(int itemId, String quantity) {
+		String sql = "update ITEMS set quantity = ? where itemId = ?";
+		return getJdbcTemplate().update(sql, quantity, itemId);
 	}
 }
