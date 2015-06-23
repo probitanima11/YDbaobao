@@ -80,6 +80,7 @@ tfoot tr {
 							<th>수량</th>
 							<th>판매가</th>
 							<th>주문상태</th>
+							<th>관리</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -90,6 +91,7 @@ tfoot tr {
 								<c:choose>
 									<c:when test="${order.orderStatus eq 'I'}">
 										<td colspan="1">주문대기</td>
+										<td colspan="1"><button class="order-cancel">취소</button></td>
 									</c:when>
 									<c:when test="${order.orderStatus eq 'S'}">
 										<td colspan="1">주문승인</td>
@@ -124,6 +126,31 @@ tfoot tr {
 	<div id="footer">
 		<%@ include file="./commons/_footer.jsp"%>
 	</div>
+
+	<script>
+	window.addEventListener('load', function() {
+		var readyList = document.querySelectorAll('.order-cancel');
+		for(var i=0; i<readyList.length; i++) {
+			readyList[i].addEventListener('click', function(e) {
+				var orderId = e.target.parentNode.parentNode.getAttribute('data-id');
+				orderCancel(orderId);
+			});
+		}
+	}, false);
+	
+	function orderCancel(orderId) {
+		ydbaobao.ajax({
+			method : 'put',
+			url : '/orders/cancel/' + orderId,
+			success : function(req) {
+				var list = document.querySelectorAll("tr[data-id='" + orderId + "']");
+				for(var i=0; i<list.length; i++) {
+					list[i].remove();
+				}
+			}
+		});
+	}
+	</script>
 	<script src="/js/ydbaobao.js"></script>
 </body>
 </html>
