@@ -36,6 +36,9 @@ td.tdhead {
 					<input id="search-terms" type="text" />
 				</div>
 				<button id="search-btn" class="btn" type="submit">검색</button>
+				<c:if test="${not empty searchMessage}">
+					<div>${searchMessage}</div>
+				</c:if>
 			</form>
 			<li class="select-category">
 			<form:form class="category-form" method="GET" action="/admin/products/category" enctype="multipart/form-data">
