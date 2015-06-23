@@ -146,6 +146,7 @@
 				url: "/admin/orders/"+orderId,
 				success: function(req){
 					alert(req.responseText);
+					window.location.href="/admin/orders";
 				}
 			});
 		}
@@ -158,6 +159,7 @@
 				url: "/admin/orders/"+orderId,
 				success: function(req){
 					alert(req.responseText);
+					window.location.href="/admin/orders";
 				}
 			});
 		}
