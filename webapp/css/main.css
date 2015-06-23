@@ -37,6 +37,18 @@ html, body {
 	cursor: pointer;
 }
 
+.home {
+	float: left;
+	list-style: none;
+	color: #454545;
+	font-size: 20px;
+	padding-top: 5px;
+}
+
+.home a {
+	color: #454545;
+}
+
 a.prevAndNext {
 	display: inline;
 	position: relative;
@@ -412,6 +424,7 @@ form#customer {
 	padding: 8px 24px;
 	margin: 0;
 	float: right;
+	cursor: pointer;
 }
 
 #customer h1 {
@@ -427,8 +440,8 @@ form#customer {
 
 #footer {
 	position: relative;
-	s min-height: 200px;
-	padding: 20px;
+	s min-height: 50px;
+	padding: 10px;
 	background-color: #888;
 	color: #fff;
 }

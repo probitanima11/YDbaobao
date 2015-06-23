@@ -11,19 +11,30 @@
 <style>
 #product-info-container {
 	position: relative;
-	width: 620px;
+	height: 300px;
 	padding: 25px 0;
 	margin-bottom: 100px;
-	outline: 1px solid #EA6576;
+	/* outline: 1px solid #EA6576; */
 }
 
 #product-photo {
 	position: relative;
+	float : left;
 	width: 500px;
-	height: 500px;
+	height: 320px;
 	margin: 0 auto;
 	overflow: hidden;
-	outline: 1px solid #ccc;
+}
+
+#product-display {
+	position: relative;
+	width: 850px;
+	height: 300px;
+	padding : 20px;
+	margin-top: -50px;
+	margin-left: 40px;
+	margin-bottom: 50px;
+	outline: 1px solid #EA6576;
 }
 
 h1 {
@@ -33,10 +44,9 @@ h1 {
 }
 
 #product-buy-container {
-	position: absolute; 
-	top: 0; 
-	left: 100%; 
-	margin-left: -350px; 
+	float:right;
+	margin-top: -25px; 
+	margin-right: 100px; 
 	width: 350px;
 }
 
@@ -61,10 +71,6 @@ h1 {
 	margin-right: 10px;
 }
 
-.btn.buyitnow {
-	background-color: #EA6576;
-}
-
 .btn.disabled {
 	background-color: #c8c8c8;
 }
@@ -79,6 +85,10 @@ h1 {
 	font-size: 40px;
 	padding:10px;
 }
+
+i {
+	cursor: pointer;
+}
 </style>
 </head>
 <body>
@@ -88,45 +98,49 @@ h1 {
 		<!-- 브랜드/제품 검색바 -->
 		<%@ include file="./commons/_search.jsp"%>
 	</div>
-	<div id="product-container" class="content wrap"
-		style="position: relative;">
+	<div>
+		<!-- 수평 카테고리 메뉴 -->
+		<%@ include file="./commons/_horizontalCategory.jsp"%>
+	</div>
+	<div id="product-container" class="content wrap" style="position: relative;">
 		<div id="product-info-container">
-			<div align=center id="product-photo">
-				<img
-					src="/img/products/${product.productImage}">
+			<div align = center id="product-photo">
+				<img src="/img/products/${product.productImage}">
 			</div>
-
-			<div id="product-display">
-				${product.productDescription}
-			</div>
-		</div>
-		<div id="product-buy-container">
-			<h1 class="product-name" style="margin-top: 25px; margin-left: 15px;">${product.productName}</h1>
-			<div class="product-price">${product.productPrice}</div>
-			<div style="margin-top: 25px; margin-left: 15px;">
-				<h3>구매수량</h3>
-				<button onclick="qtyControl('minus')"><i class='fa fa-minus'></i></button>
+			<div id="product-buy-container">
+				<h1 class="product-name"
+					style="margin-top: 25px; margin-left: 15px;">${product.productName}</h1>
+				<div class="product-price">${product.productPrice}</div>
+				<div style="margin-top: 25px; margin-left: 15px;">
+					<h3>구매수량</h3>
+					<button onclick="qtyControl('minus')">
+						<i class='fa fa-minus'></i>
+					</button>
 					<ul id="quantity" style="display: inline-block; padding: 0px">
 					</ul>
-				<!-- <input class="qty-selector" value="1" style="width: 32px;" onkeypress="return isNumberKey(event);"> -->
-				<button onclick="qtyControl('plus')"><i class='fa fa-plus'></i></button>
+					<!-- <input class="qty-selector" value="1" style="width: 32px;" onkeypress="return isNumberKey(event);"> -->
+					<button onclick="qtyControl('plus')">
+						<i class='fa fa-plus'></i>
+					</button>
+				</div>
+				<c:choose>
+					<c:when test="${product.isSoldout == 1}">
+						<div class="isSoldout">품 절</div>
+						<button class="btn addtocart disabled" disabled>장바구니</button>
+					</c:when>
+					<c:otherwise>
+						<div class="button-group">
+							<button class="btn addtocart">장바구니</button>
+						</div>
+					</c:otherwise>
+				</c:choose>
 			</div>
-			<c:choose>
-				<c:when test="${product.isSoldout == 1}" >
-					<div class="isSoldout">품 절</div>
-					<button class="btn addtocart disabled" disabled>장바구니</button>
-					<button class="btn buyitnow disabled" disabled>바로주문</button>
-				</c:when>
-				<c:otherwise>
-					<div class="button-group">
-						<button class="btn addtocart">장바구니</button>
-						<button class="btn buyitnow">바로주문</button>
-					</div>
-				</c:otherwise>
-			</c:choose>
 		</div>
+		<div id="product-display">${product.productDescription}</div>
 	</div>
-	<div id="footer">footer...</div>
+	<div id="footer">
+		<%@ include file="./commons/_footer.jsp"%>
+	</div>
 	<script>
 		var productId = ${product.productId};
 		var sizeArray = "${product.productSize}".split('|');
@@ -164,12 +178,6 @@ h1 {
 			
 			document.querySelector('.addtocart').addEventListener('click', function(e) {
 				addToCart(e);
-			}, false);
-
-			// 주석처리 한사람 : jyb
-			// 이유 : 현재 바로 주문하기로 안하고 장바구니에 담긴 다음, 그대로 주문으로 넘어감.
-			document.querySelector('.buyitnow').addEventListener('click', function(e) {
-			buyitnow(e);
 			}, false);
 
 			productBuyContainer = document.querySelector("#product-buy-container");
@@ -212,32 +220,6 @@ h1 {
 					else
 						alert('장바구니에 담겼습니다.');
 						
-				}
-			});
-		}
-
-		function buyitnow(e) {
-			var el = document.querySelectorAll(".qty-selector");
-			var size = "";
-			var quantity = "";
-			for(var i=0;i<el.length;i++){
-				size += el[i].name + "-";
-				quantity += el[i].value + "-";
-			}
-			
-			var param = 'productId=' + productId + '&size=' + size + '&quantity=' + quantity;
-			ydbaobao.ajax({
-				/* TODO productId, size, quantity 전달. */
-				method : 'post',
-				url : '/carts/${customer.sessionId}',
-				param : param,
-				success : function(req) {
-					if(req.responseText === "fail")
-						alert('로그인이 필요합니다.');
-					else {
-						alert('주문요청이 완료되었습니다.');
-						window.location.href = "/orders";
-					}
 				}
 			});
 		}

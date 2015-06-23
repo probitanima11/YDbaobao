@@ -4,18 +4,21 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ydbaobao.service.AdminConfigService;
+import com.ydbaobao.service.CustomerService;
 
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
 	@Resource
 	private AdminConfigService adminConfigService; 
-
+	@Resource
+	private CustomerService customerService;
 	/**
 	 * 관리자 페이지 접근을 위한 GET 요청을 응답. session 체크를 하여 sessionAdmin이 Null일 경우 관리자 번호
 	 * 체크 페이지로 포워딩.
@@ -34,11 +37,11 @@ public class AdminController {
 	}
 
 	@RequestMapping(value = "/check", method = RequestMethod.POST)
-	public String checkForm(@RequestParam String adminPassword,
-			HttpSession session) {
+	public String checkForm(@RequestParam String adminPassword, HttpSession session, Model model) {
 		if (adminPassword.equals(adminConfigService.read().getAdminPassword())) {
 			session.setAttribute("sessionAdmin", adminPassword);
-			return "admin/admin";
+			model.addAttribute("customers", customerService.readCustomers());
+			return "admin/customerManager";
 		}
 		return "admin/adminCheck";
 	}

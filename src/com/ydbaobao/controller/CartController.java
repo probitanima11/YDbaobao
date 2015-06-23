@@ -53,7 +53,7 @@ public class CartController {
 	public String cartForm(Model model, HttpSession session) throws IOException {
 		String customerId = ServletRequestUtil.getCustomerIdFromSession(session);
 		model.addAttribute("items", itemService.readCartItems(customerId));
-		model.addAttribute("categories", categoryService.read());
+		model.addAttribute("categories", categoryService.readWithoutUnclassifiedCategory());
 		return "cart";
 	}
 	

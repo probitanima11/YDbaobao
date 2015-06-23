@@ -46,21 +46,25 @@
 	</div>
 	<script>
 	
-	window.addEventListener('load', fucntion() {
+	/* 주석처리 한 사람 : jyb
+	 * id="config" 를 가진 element가 존재하지 않음
+	 * 회원 등급 변경 기능이 없음
+	 */
+	// window.addEventListener('load', function() {
 		
-		document.body.querySelector('#config').addEventListener('', function(e) {
+	// 	document.body.querySelector('#config').addEventListener('', function(e) {
 			
-			ydbaobao.ajax({
-				method:'put',
-				url:'/admin/config/',
-				success: function(req){
-					if(req.responseText === 'success') {
-						alert('회원 등급이 변경되었습니다');
-					}
-				}
-			});			
-		}, false);
-	}, false);
+	// 		ydbaobao.ajax({
+	// 			method:'put',
+	// 			url:'/admin/config/',
+	// 			success: function(req){
+	// 				if(req.responseText === 'success') {
+	// 					alert('회원 등급이 변경되었습니다');
+	// 				}
+	// 			}
+	// 		});			
+	// 	}, false);
+	// }, false);
 	
 	</script>
 	<script src="/js/ydbaobao.js"></script>
