@@ -40,6 +40,10 @@ public class OrderService {
 	public List<Order> readOrdersByCustomerId(String customerId) {
 		List<Order> orders = orderDao.readOrdersByCustomerId(customerId);
 		List<Item> items = itemDao.readOrderedItems(customerId);
+		for (Item item : items) {
+			Product product = item.getProduct();
+			product.setProductPrice(productService.readByDiscount(product, item.getCustomer()).getProductPrice());
+		}
 		return repackOrders(orders, items);
 	}
 	
