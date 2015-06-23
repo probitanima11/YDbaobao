@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -82,4 +83,8 @@ public class OrderController {
 	//TODO 상품화면에서 주문하기
 	//TODO 주문사항 변경하기
 	//TODO 주문 취소하기
+	@RequestMapping(value = "/cancel/{orderId}", method = RequestMethod.PUT)
+	public ResponseEntity<Object> createOrder(@PathVariable int orderId){
+		return JSONResponseUtil.getJSONResponse("", HttpStatus.OK);
+	}
 }
