@@ -30,5 +30,8 @@
 		<%@ include file="./commons/_productListBar.jsp" %>
 	</div>
 
+	<div id="footer">
+		<%@ include file="./commons/_footer.jsp"%>
+	</div>
 </body>
 </html>

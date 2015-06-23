@@ -7,6 +7,8 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,12 +22,16 @@ import com.ydbaobao.model.Product;
 @Service
 @Transactional
 public class OrderService {
+	private static final Logger logger = LoggerFactory.getLogger(OrderService.class);
+	
 	@Resource
 	OrderDao orderDao;
 	@Resource
 	ItemDao itemDao;
 	@Resource
 	ProductDao productDao;
+	@Resource
+	ProductService productService;
 	
 	public List<Order> readOrders() {
 		return orderDao.readOrders();
@@ -54,13 +60,21 @@ public class OrderService {
 		order.setItems(items);
 		return order;
 	}
+	
+	public Item readItemByItemId(int itemId) {
+		Item item = itemDao.readItemByItemId(itemId);
+		Product product = item.getProduct(); 
+		product.setProductPrice(productService.readByDiscount(product, item.getCustomer()).getProductPrice());
+		return item;
+	}
 
 	public void createOrder(String customerId, int[] itemList) {
 		int totalPrice = 0;
 		for(int i=0; i<itemList.length; i++) {
 			Item item = itemDao.readItemByItemId(itemList[i]);
 			Product product = productDao.read(item.getProduct().getProductId());
-			totalPrice += product.getProductPrice() * item.getQuantity();
+			int price = productService.readByDiscount(product, item.getCustomer()).getProductPrice();
+			totalPrice += price * item.getQuantity();
 		}
 		int orderId = orderDao.createOrder(customerId, totalPrice);
 		itemDao.orderItems(orderId, itemList);

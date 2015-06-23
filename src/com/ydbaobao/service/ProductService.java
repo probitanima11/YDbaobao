@@ -3,6 +3,8 @@ package com.ydbaobao.service;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.annotation.Resource;
 
@@ -19,6 +21,7 @@ import com.ydbaobao.dao.CustomerDao;
 import com.ydbaobao.dao.ProductDao;
 import com.ydbaobao.model.Brand;
 import com.ydbaobao.model.Category;
+import com.ydbaobao.model.Customer;
 import com.ydbaobao.model.Product;
 import com.ydbaobao.model.SessionCustomer;
 
@@ -55,6 +58,15 @@ public class ProductService {
 			return product;
 		}
 		String grade = customerDao.readCustomerById(sessionCustomer.getSessionId()).getCustomerGrade();
+		Brand brand = brandDao.readBrandByBrandId(product.getBrand().getBrandId());
+		return product.discount(brand.getDiscountRate(grade));
+	}
+	
+	public Product readByDiscount(Product product, Customer customer) {
+		if (null == customer) {
+			return product;
+		}
+		String grade = customerDao.readCustomerById(customer.getCustomerId()).getCustomerGrade();
 		Brand brand = brandDao.readBrandByBrandId(product.getBrand().getBrandId());
 		return product.discount(brand.getDiscountRate(grade));
 	}
@@ -205,5 +217,12 @@ public class ProductService {
 			return true;
 		}
 		return false;
+	}
+	
+	public String preprocessingTerms(String terms) {
+		Pattern pt = Pattern.compile("^\\s{1,}|\\s{1,}$");
+		Matcher m = pt.matcher(terms);
+		String query = m.replaceAll("").replaceAll(" ", "|");
+		return query;
 	}
 }

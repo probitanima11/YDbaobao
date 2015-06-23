@@ -49,5 +49,4 @@ public class CategoryDaoTest {
 		int result = categoryDao.create("새로운 카테고리");
 		assertEquals(1, result);
 	}
-
 }

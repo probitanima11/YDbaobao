@@ -1,5 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -46,6 +47,10 @@
 	button {
 		cursor: pointer;
 	}
+	.item-quantity{
+		width: 45px;
+	}
+	
 </style>
 </head>
 <body>
@@ -81,22 +86,26 @@
 							<c:when test="${item.product.isSoldout eq 1}">
 								<tr data-id="${item.itemId}">
 									<td><input type="checkbox" onclick="" disabled></td>
-									<td class="item-image-container"><img class="item-image" src="/img/products/${item.product.productImage}"></td>
-									<td class="item-name-container"><span class="item-name">${item.product.productName}</span><span class="sold-out"> [품절]</span></td>
-									<td><span class="item-size">${item.size}</span></td>
-									<td><span class="item-quantity">${item.quantity}</span></td>
-									<td><span>${item.product.productPrice * item.quantity}</span></td>
-								</tr>
-							</c:when>
-							<c:otherwise>
-								<tr data-id="${item.itemId}">
-									<td><input class="item-check" type="checkbox" onclick="calcSelectedPrice()"></td>
-									<td class="item-image-container"><img class="item-image" src="/img/products/${item.product.productImage}"></td>
-									<td class="item-name-container"><span class="item-name">${item.product.productName}</span></td>
+									<td class="item-image-container"><a href="/products/${item.product.productId}" style="text-decoration:none"><img class="item-image" src="/img/products/${item.product.productImage}"></a></td>
+									<td class="item-name-container"><a href="/products/${item.product.productId}" style="text-decoration:none"><span class="item-name">${item.product.productName}</span><span class="sold-out"> [품절]</span></a></td>
 									<td><span class="item-size">${item.size}</span></td>
 									<td><span class="item-quantity">${item.quantity}</span></td>
 									<td><span class="item-price">${item.product.productPrice * item.quantity}</span></td>
 								</tr>
+							</c:when>
+							<c:otherwise>
+								<form:form class="item-form" action="/carts" method="POST" id="item_${item.itemId}">
+									<input type="hidden" name="itemId" value="${item.itemId}" />
+									<tr data-id="${item.itemId}">
+										<td><input class="item-check" type="checkbox" onclick="calcSelectedPrice()"></td>
+										<td class="item-image-container"><a href="/products/${item.product.productId}" style="text-decoration:none"><img class="item-image" src="/img/products/${item.product.productImage}"></a></td>
+										<td class="item-name-container"><a href="/products/${item.product.productId}" style="text-decoration:none"><span class="item-name">${item.product.productName}</span></a></td>
+										<td><span class="item-size">${item.size}</span></td>
+										<td><input type="number" class ="item-quantity" name="quantity" value ="${item.quantity}"/>
+										<input type="submit" class="quantity-update-btn" value="변경"/></td>
+										<td><span class="item-price">${item.product.productPrice * item.quantity}</span></td>
+									</tr>
+								</form:form>
 							</c:otherwise>
 						</c:choose>
 					</c:forEach>
@@ -182,7 +191,6 @@
 			var checkList = document.querySelectorAll('.item-check');
 			var checkLength = checkList.length;
 			var paramList = [];
-			var param = 'itemList=';
 			for(var i = 0; i < checkLength; i++) {
 				if(checkList[i].checked) {
 					paramList.push(checkList[i].parentNode.parentNode.getAttribute('data-id'));
@@ -192,20 +200,25 @@
 				alert('상품을 선택해주세요');
 				return;
 			}
-			param += paramList;
-			order(param);
+			ydbaobao.post({
+				path : "/orders/confirm",
+				params : {itemList : paramList}
+			});
+			//order(param);
 		}, false);
 
 		document.querySelector('#order-btn').addEventListener('click', function() {
 			var checkList = document.querySelectorAll('.item-check');
 			var checkLength = checkList.length;
 			var paramList = new Array();
-			var param = 'itemList=';
 			for(var i = 0; i < checkLength; i++) {
 				paramList.push(checkList[i].parentNode.parentNode.getAttribute('data-id'));
 			}
-			param += paramList;
-			order(param);
+			ydbaobao.post({
+				path : "/orders/confirm",
+				params : {itemList : paramList}
+			});
+			//order(param);
 		}, false);
 
 		addItemsPrice();
@@ -215,8 +228,10 @@
 		totalPriceWithComma();
 
 	}, false);
+	
 
 	function order(param) {
+		window.location.href = '/orders/?';
 		ydbaobao.ajax({
 			method : 'post',
 			url : '/orders',
@@ -227,6 +242,34 @@
 			}
 		});
 	}
+	
+	/* function orderConfirm(param) {
+		
+	} */
+	
+	/* function post(path, params, method) {
+	    method = method || "post"; // Set method to post by default if not specified.
+
+	    // The rest of this code assumes you are not using a library.
+	    // It can be made less wordy if you use one.
+	    var form = document.createElement("form");
+	    form.setAttribute("method", method);
+	    form.setAttribute("action", path);
+
+	    for(var key in params) {
+	        if(params.hasOwnProperty(key)) {
+	            var hiddenField = document.createElement("input");
+	            hiddenField.setAttribute("type", "hidden");
+	            hiddenField.setAttribute("name", key);
+	            hiddenField.setAttribute("value", params[key]);
+
+	            form.appendChild(hiddenField);
+	         }
+	    }
+
+	    document.body.appendChild(form);
+	    form.submit();
+	} */
 
 	function addItemsPrice() {
 		var el = document.querySelectorAll('.item-price');

@@ -11,11 +11,11 @@ import com.ydbaobao.dao.ItemDao;
 import com.ydbaobao.dao.OrderDao;
 import com.ydbaobao.dao.ProductDao;
 import com.ydbaobao.model.Item;
+import com.ydbaobao.model.Product;
 
 @Service
 @Transactional
 public class ItemService {
-
 	@Resource
 	private ItemDao itemDao;
 	@Resource
@@ -23,19 +23,31 @@ public class ItemService {
 	@Resource
 	private ProductDao productDao;
 	
-	public void createItems(String customerId, String size, String quantity, String productId) {
+	public void createItems(String customerId, String size, String quantity, int productId) {
 		String[] sizeArray = size.split("-");
 		String[] quantityArray = quantity.split("-");
-
 		for(int i=0; i< quantityArray.length; i++){
+			if(quantityArray[i].equals("0")){
+				continue;
+			}
 			if(sizeArray.length == 0) {
-				itemDao.createItem(customerId, productId, "0", Integer.parseInt(quantityArray[i]));
+				if(itemDao.isItemByProductIdAndSize(productId, "-")){
+					itemDao.updateItem(itemDao.readItemByProductIdAndSize(productId, sizeArray[i]).getItemId(), Integer.parseInt(quantityArray[i]));
+				}
+				else{
+					itemDao.createItem(customerId, productId, "-", Integer.parseInt(quantityArray[i]));
+				}
 				return;
 			}
-			itemDao.createItem(customerId, productId, sizeArray[i], Integer.parseInt(quantityArray[i]));
+			if(itemDao.isItemByProductIdAndSize(productId, sizeArray[i])){
+				itemDao.updateItem(itemDao.readItemByProductIdAndSize(productId, sizeArray[i]).getItemId(), Integer.parseInt(quantityArray[i]));
+			}
+			else{
+				itemDao.createItem(customerId, productId, sizeArray[i], Integer.parseInt(quantityArray[i]));
+			}
 		}
 	}
-	
+
 	public List<Item> readOrderedItems(String customerId) {
 		return itemDao.readOrderedItems(customerId);
 	}
@@ -47,11 +59,21 @@ public class ItemService {
 		itemDao.deleteCartList(itemId);
 	}
 
-	public void orderDirect(String customerId, String productId, String size, int quantity) {
+	public void orderDirect(String customerId, int productId, String size, int quantity) {
 //		itemDao.orderDirect(customerId, productId, orderDao.createOrder(customerId), size, quantity);
 	}
 
 	public List<Item> readCartItems(String customerId) {
-		return itemDao.readCartItems(customerId);
+		List<Item> items = itemDao.readCartItems(customerId);
+		for (Item item : items) {
+			Product product = item.getProduct();
+			int discountRate = product.getBrand().getDiscountRate(item.getCustomer().getCustomerGrade());
+			product.discount(discountRate);
+		}
+		return items;
+	}
+
+	public void updateQuantity(int itemId, int quantity) {
+		itemDao.updateItem(itemId, quantity);
 	}
 }
