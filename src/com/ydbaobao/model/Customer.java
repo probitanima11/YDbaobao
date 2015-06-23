@@ -42,6 +42,10 @@ public class Customer {
 	public Customer(String customerId) {
 		this(customerId, null, null, null, null, null, null);
 	}
+	
+	public Customer(String customerId, String customerName, String customerGrade) {
+		this(customerId, customerName, null, customerGrade, null, null, null);
+	}
 
 	public Customer(String customerId, String customerName, String customerPassword, String customerPhone, String customerEmail, String customerAddress) {
 		this(customerId, customerName, customerPassword, null, customerPhone, customerEmail, customerAddress);
