@@ -42,7 +42,7 @@ public class CartController {
 	 * @throws IOException
 	 */
 	@RequestMapping(value = "/{customerId}", method = RequestMethod.POST)
-	public ResponseEntity<Object> createItem(@PathVariable String customerId, @RequestParam String productId, @RequestParam String size, @RequestParam String quantity) throws IOException {
+	public ResponseEntity<Object> createItem(@PathVariable String customerId, @RequestParam int productId, @RequestParam String size, @RequestParam String quantity) throws IOException {
 		itemService.createItems(customerId, size, quantity, productId);
 		return JSONResponseUtil.getJSONResponse("success", HttpStatus.OK);
 	}
