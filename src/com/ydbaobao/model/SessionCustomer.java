@@ -4,43 +4,32 @@ public class SessionCustomer {
 
 	private String sessionId;
 	private String sessionName;
-	private String sessionGrade;
 	
-	public SessionCustomer(String sessionId, String sessionName, String sessionGrade) {
+	public SessionCustomer(String sessionId, String sessionName) {
 		this.sessionId = sessionId;
 		this.sessionName = sessionName;
-		this.sessionGrade = sessionGrade;
 	}
 
 	public String getSessionId() {
 		return sessionId;
 	}
 
-	public String getSessionName() {
-		return sessionName;
-	}
-
-	public String getSessionGrade() {
-		return sessionGrade;
-	}
-
 	public void setSessionId(String sessionId) {
 		this.sessionId = sessionId;
+	}
+
+	public String getSessionName() {
+		return sessionName;
 	}
 
 	public void setSessionName(String sessionName) {
 		this.sessionName = sessionName;
 	}
 
-	public void setSessionGrade(String sessionGrade) {
-		this.sessionGrade = sessionGrade;
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((sessionGrade == null) ? 0 : sessionGrade.hashCode());
 		result = prime * result + ((sessionId == null) ? 0 : sessionId.hashCode());
 		result = prime * result + ((sessionName == null) ? 0 : sessionName.hashCode());
 		return result;
@@ -55,11 +44,6 @@ public class SessionCustomer {
 		if (getClass() != obj.getClass())
 			return false;
 		SessionCustomer other = (SessionCustomer) obj;
-		if (sessionGrade == null) {
-			if (other.sessionGrade != null)
-				return false;
-		} else if (!sessionGrade.equals(other.sessionGrade))
-			return false;
 		if (sessionId == null) {
 			if (other.sessionId != null)
 				return false;
@@ -75,7 +59,7 @@ public class SessionCustomer {
 
 	@Override
 	public String toString() {
-		return "SessionCustomer [sessionId=" + sessionId + ", sessionName=" + sessionName + ", sessionGrade="
-				+ sessionGrade + "]";
+		return "SessionCustomer [sessionId=" + sessionId + ", sessionName=" + sessionName + "]";
 	}
+	
 }

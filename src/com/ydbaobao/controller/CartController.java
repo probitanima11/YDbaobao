@@ -1,10 +1,13 @@
 package com.ydbaobao.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -16,12 +19,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.support.JSONResponseUtil;
 import com.support.ServletRequestUtil;
+import com.ydbaobao.model.Item;
 import com.ydbaobao.service.CategoryService;
 import com.ydbaobao.service.ItemService;
 
 @Controller
 @RequestMapping("/carts")
 public class CartController {
+	private static final Logger logger = LoggerFactory.getLogger(CartController.class);
 	@Resource
 	ItemService itemService;
 	@Resource
@@ -37,7 +42,7 @@ public class CartController {
 	 * @throws IOException
 	 */
 	@RequestMapping(value = "/{customerId}", method = RequestMethod.POST)
-	public ResponseEntity<Object> createItem(@PathVariable String customerId, @RequestParam String productId, @RequestParam String size, @RequestParam String quantity) throws IOException {
+	public ResponseEntity<Object> createItem(@PathVariable String customerId, @RequestParam int productId, @RequestParam String size, @RequestParam String quantity) throws IOException {
 		itemService.createItems(customerId, size, quantity, productId);
 		return JSONResponseUtil.getJSONResponse("success", HttpStatus.OK);
 	}
@@ -53,7 +58,7 @@ public class CartController {
 	public String cartForm(Model model, HttpSession session) throws IOException {
 		String customerId = ServletRequestUtil.getCustomerIdFromSession(session);
 		model.addAttribute("items", itemService.readCartItems(customerId));
-		model.addAttribute("categories", categoryService.read());
+		model.addAttribute("categories", categoryService.readWithoutUnclassifiedCategory());
 		return "cart";
 	}
 	

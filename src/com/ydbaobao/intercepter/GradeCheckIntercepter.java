@@ -23,7 +23,7 @@ public class GradeCheckIntercepter extends HandlerInterceptorAdapter {
 		if (ServletRequestUtil.hasAuthorizationFromAdmin(session)) {
 			return true;
 		}
-		response.sendRedirect("/");
+		response.sendRedirect("/loginForm");
 		return false;
 	}
 

@@ -25,6 +25,10 @@ public class Brand {
 		this.brandId = brandId;
 	}
 	
+	public Brand(int brandId, String brandName, int discount_1, int discount_2, int discount_3, int discount_4, int discount_5) {
+		this(brandId, brandName, 0, discount_1, discount_2, discount_3, discount_4, discount_5, null);
+	}
+	
 	public Brand(String brandName, int brandCount, int discount_1, int discount_2, int discount_3, int discount_4, int discount_5, String brandSize) {
 		super();
 		this.brandName = brandName;
