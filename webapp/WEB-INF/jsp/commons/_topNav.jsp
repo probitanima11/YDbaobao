@@ -4,6 +4,7 @@
 <div id="util-container"
 	style="width: 100%; border-bottom: 1px solid #ccc;">
 	<div id="util-bar" class="wrap content" style="height: 35px;">
+		<li class="home"><a href="/"><i class="fa fa-home"></i></a></li>
 		<ul id="util">
 			<c:choose>
 				<c:when test="${not empty sessionCustomer}">
