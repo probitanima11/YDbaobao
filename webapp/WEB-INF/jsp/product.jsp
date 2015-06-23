@@ -71,10 +71,6 @@ h1 {
 	margin-right: 10px;
 }
 
-.btn.buyitnow {
-	background-color: #EA6576;
-}
-
 .btn.disabled {
 	background-color: #c8c8c8;
 }
@@ -88,6 +84,10 @@ h1 {
 	font-weight:800;
 	font-size: 40px;
 	padding:10px;
+}
+
+i {
+	cursor: pointer;
 }
 </style>
 </head>
@@ -127,12 +127,10 @@ h1 {
 					<c:when test="${product.isSoldout == 1}">
 						<div class="isSoldout">품 절</div>
 						<button class="btn addtocart disabled" disabled>장바구니</button>
-						<button class="btn buyitnow disabled" disabled>바로주문</button>
 					</c:when>
 					<c:otherwise>
 						<div class="button-group">
 							<button class="btn addtocart">장바구니</button>
-							<button class="btn buyitnow">바로주문</button>
 						</div>
 					</c:otherwise>
 				</c:choose>
@@ -182,12 +180,6 @@ h1 {
 				addToCart(e);
 			}, false);
 
-			// 주석처리 한사람 : jyb
-			// 이유 : 현재 바로 주문하기로 안하고 장바구니에 담긴 다음, 그대로 주문으로 넘어감.
-			document.querySelector('.buyitnow').addEventListener('click', function(e) {
-			buyitnow(e);
-			}, false);
-
 			productBuyContainer = document.querySelector("#product-buy-container");
 			document.addEventListener('scroll', function(e){
 				if (window.scrollY > 150) {
@@ -228,32 +220,6 @@ h1 {
 					else
 						alert('장바구니에 담겼습니다.');
 						
-				}
-			});
-		}
-
-		function buyitnow(e) {
-			var el = document.querySelectorAll(".qty-selector");
-			var size = "";
-			var quantity = "";
-			for(var i=0;i<el.length;i++){
-				size += el[i].name + "-";
-				quantity += el[i].value + "-";
-			}
-			
-			var param = 'productId=' + productId + '&size=' + size + '&quantity=' + quantity;
-			ydbaobao.ajax({
-				/* TODO productId, size, quantity 전달. */
-				method : 'post',
-				url : '/carts/${customer.sessionId}',
-				param : param,
-				success : function(req) {
-					if(req.responseText === "fail")
-						alert('로그인이 필요합니다.');
-					else {
-						alert('주문요청이 완료되었습니다.');
-						window.location.href = "/orders";
-					}
 				}
 			});
 		}

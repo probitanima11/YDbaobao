@@ -42,6 +42,10 @@
 		color: red;
 		font-weight: bold;
 	}
+
+	button {
+		cursor: pointer;
+	}
 </style>
 </head>
 <body>

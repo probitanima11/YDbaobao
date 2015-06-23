@@ -128,7 +128,7 @@ public class Customer {
 	}
 	
 	public SessionCustomer createSessionCustomer() {
-		return new SessionCustomer(customerId, customerName, customerGrade);
+		return new SessionCustomer(customerId, customerName);
 	}
 
 	@Override
