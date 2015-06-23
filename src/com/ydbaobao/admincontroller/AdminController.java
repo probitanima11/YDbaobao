@@ -4,19 +4,15 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.ydbaobao.dao.GradeDao;
 import com.ydbaobao.service.AdminConfigService;
 
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
-	@Resource
-	private GradeDao gradeDao;
 	@Resource
 	private AdminConfigService adminConfigService; 
 
@@ -54,11 +50,5 @@ public class AdminController {
 		}
 		session.removeAttribute("sessionAdmin");
 		return "redirect:/";
-	}
-
-	@RequestMapping(value = "/manage/grade", method = RequestMethod.GET)
-	public String manageGrade(Model model) {
-		model.addAttribute("grades", gradeDao.readGrades());
-		return "admin/gradeManager";
 	}
 }
