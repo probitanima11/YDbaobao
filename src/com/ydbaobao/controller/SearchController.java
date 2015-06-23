@@ -31,16 +31,9 @@ public class SearchController {
 	@Resource
 	private AdminConfigService adminConfigService;
 
-	private String preprocessingTerms(String terms) {
-		Pattern pt = Pattern.compile("^\\s{1,}|\\s{1,}$");
-		Matcher m = pt.matcher(terms);
-		String query = m.replaceAll("").replaceAll(" ", "|");
-		return query;
-	}
-
 	@RequestMapping(value = "/brands", method = RequestMethod.GET)
 	public String searchBrand(HttpSession session, Model model, @RequestParam String terms, @RequestParam int page) {
-		String termsForQuery = this.preprocessingTerms(terms);
+		String termsForQuery = productService.preprocessingTerms(terms);
 
 		if (termsForQuery.length() < 1) {
 			model.addAttribute("count", 0);
@@ -69,7 +62,7 @@ public class SearchController {
 
 	@RequestMapping(value = "/products", method = RequestMethod.GET)
 	public String search(HttpSession session, Model model, @RequestParam String terms, @RequestParam int page) {
-		String termsForQuery = this.preprocessingTerms(terms);
+		String termsForQuery = productService.preprocessingTerms(terms);
 
 		if (termsForQuery.length() < 1) {
 			model.addAttribute("count", 0);

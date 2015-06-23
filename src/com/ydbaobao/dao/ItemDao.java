@@ -44,6 +44,7 @@ public class ItemDao extends JdbcDaoSupport {
 		}
 	}
 
+	
 	public void deleteCartList(int itemId) {
 		String sql = "delete from ITEMS where itemId = ?";
 		getJdbcTemplate().update(sql, itemId);
@@ -55,11 +56,12 @@ public class ItemDao extends JdbcDaoSupport {
 	}
 
 	public Item readItemByItemId(int itemId) {
-		String sql = "select * from ITEMS where itemId=?";
-		return getJdbcTemplate().queryForObject(
-				sql,
-				(rs, rowNum) -> new Item(rs.getInt("itemId"), new Customer(rs.getString("customerId")), new Product(rs
-						.getInt("productId")), new Order(), rs.getString("size"), rs.getInt("quantity")), itemId);
+		String sql = "select * from ITEMS A, PRODUCTS B where A.itemId=? AND A.productId = B.productId";
+		return getJdbcTemplate().queryForObject(sql, (rs, rowNum) -> new Item(
+				rs.getInt("itemId"), new Customer(rs.getString("customerId")),
+				new Product(rs.getInt("productId"),rs.getString("productName"), rs.getInt("productPrice"), rs.getString("productImage"), rs.getString("productSize"), rs.getInt("isSoldout"), new Brand()),
+				new Order(),
+				rs.getString("size"), rs.getInt("quantity")), itemId);
 	}
 
 	public List<Item> readOrderedItems(String customerId) {
@@ -78,15 +80,15 @@ public class ItemDao extends JdbcDaoSupport {
 
 	public void orderItems(int orderId, int[] itemList) {
 		String sql = "update ITEMS set orderId = ? where itemId = " + itemList[0];
-		for (int i = 1; i < itemList.length; i++) {
+		for (int i=1; i<itemList.length; i++) {
 			sql += " or itemId = " + itemList[i];
 		}
 		getJdbcTemplate().update(sql, orderId);
 	}
 
-	public void orderDirect(String customerId, int productId, int orderId, String size, int quantity) {
+	public void orderDirect(String customerId, String productId, int orderId, String size, int quantity) {
 		String sql = "insert into ITEMS (customerId, productId, orderId, size, quantity) values(?, ?, ?, ?, ?)";
-		getJdbcTemplate().update(sql, customerId, productId, orderId, size, quantity);
+		getJdbcTemplate().update(sql, customerId, productId, orderId, size, quantity);		
 	}
 
 	public List<Item> readItemsByOrderId(int orderId) {
@@ -98,7 +100,7 @@ public class ItemDao extends JdbcDaoSupport {
 						.getString("productImage"), rs.getString("productSize"), rs.getInt("isSoldout"), new Brand()), new Order(rs
 						.getInt("orderId")), rs.getString("size"), rs.getInt("quantity")), orderId);
 	}
-
+	
 	public boolean isItemByProductIdAndSize(int productId, String size) {
 		String sql = "select count(1) from ITEMS where productId = ? and size = ?";
 		if(getJdbcTemplate().queryForObject(sql, Integer.class, productId, size) >0){

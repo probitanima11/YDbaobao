@@ -1,6 +1,8 @@
 package com.ydbaobao.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
@@ -15,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.support.JSONResponseUtil;
 import com.support.ServletRequestUtil;
+import com.ydbaobao.dao.ItemDao;
+import com.ydbaobao.model.Item;
 import com.ydbaobao.service.CategoryService;
 import com.ydbaobao.service.ItemService;
 import com.ydbaobao.service.OrderService;
@@ -28,6 +32,8 @@ public class OrderController {
 	private ItemService itemService;
 	@Resource
 	private CategoryService categoryService;
+	@Resource
+	private ItemDao itemDao;
 
 	/**
 	 * 주문 내역 조회
@@ -56,6 +62,16 @@ public class OrderController {
 		String customerId = ServletRequestUtil.getCustomerIdFromSession(session);
 		orderService.createOrder(customerId, itemList);
 		return JSONResponseUtil.getJSONResponse("", HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/confirm", method = RequestMethod.POST)
+	public String orderConfirm(@RequestParam int[] itemList, Model model) {
+		List<Item> list = new ArrayList<Item>();
+		for (int itemId : itemList) {
+			list.add(itemDao.readItemByItemId(itemId));
+		}
+		model.addAttribute("items", list);
+		return "orderConfirm";
 	}
 	
 	//TODO 상품화면에서 주문하기
