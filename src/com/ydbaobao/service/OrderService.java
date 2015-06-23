@@ -80,11 +80,8 @@ public class OrderService {
 		itemDao.orderItems(orderId, itemList);
 	}
 
-	public void checkOrder(int orderId) {
-		orderDao.checkOrder(orderId);
-	}
-
-	public void claimOrder(int orderId) {
-		orderDao.claimOrder(orderId);
+	public void updateOrder(int orderId, String orderStatus) {
+		logger.debug("orderId: {}, orderStatus: {}", orderId, orderStatus);
+		orderDao.updateOrder(orderId, orderStatus);
 	}
 }

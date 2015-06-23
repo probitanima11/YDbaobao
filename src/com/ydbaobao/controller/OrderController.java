@@ -55,7 +55,7 @@ public class OrderController {
 	}
 
 	/**
-	 * 장바구니에서 선택 된 아이템 주문서 호출
+	 * 장바구니에서 선택 된 아이템을 주문서 생성
 	 * @param itemList
 	 * @param session
 	 * @return
