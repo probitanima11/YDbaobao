@@ -13,7 +13,6 @@ public class SessionAdminIntercepter extends HandlerInterceptorAdapter {
 	
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-		logger.debug("preHandle");
 		if(request.getSession().getAttribute("sessionAdmin") == null) {
 			response.sendRedirect("/");
 			return Boolean.FALSE;
