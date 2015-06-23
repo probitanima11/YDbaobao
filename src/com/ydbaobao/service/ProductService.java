@@ -3,6 +3,8 @@ package com.ydbaobao.service;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.annotation.Resource;
 
@@ -206,5 +208,12 @@ public class ProductService {
 			return true;
 		}
 		return false;
+	}
+	
+	public String preprocessingTerms(String terms) {
+		Pattern pt = Pattern.compile("^\\s{1,}|\\s{1,}$");
+		Matcher m = pt.matcher(terms);
+		String query = m.replaceAll("").replaceAll(" ", "|");
+		return query;
 	}
 }
