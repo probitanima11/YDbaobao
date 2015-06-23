@@ -71,7 +71,7 @@ public class ItemDao extends JdbcDaoSupport {
 					sql,
 					(rs, rowNum) -> new Item(rs.getInt("itemId"), new Customer(rs.getString("customerId")),
 							new Product(rs.getInt("productId"), rs.getString("productName"), rs.getInt("productPrice"),
-									rs.getString("productImage"), rs.getString("productSize"), rs.getInt("isSoldout"), new Brand()),
+									rs.getString("productImage"), rs.getString("productSize"), rs.getInt("isSoldout"), new Brand(rs.getInt("brandId"))),
 							new Order(rs.getInt("orderId")), rs.getString("size"), rs.getInt("quantity")), customerId);
 		} catch (EmptyResultDataAccessException e) {
 			return null;
