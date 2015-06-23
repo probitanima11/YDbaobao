@@ -21,6 +21,7 @@ import com.ydbaobao.dao.CustomerDao;
 import com.ydbaobao.dao.ProductDao;
 import com.ydbaobao.model.Brand;
 import com.ydbaobao.model.Category;
+import com.ydbaobao.model.Customer;
 import com.ydbaobao.model.Product;
 import com.ydbaobao.model.SessionCustomer;
 
@@ -57,6 +58,15 @@ public class ProductService {
 			return product;
 		}
 		String grade = customerDao.readCustomerById(sessionCustomer.getSessionId()).getCustomerGrade();
+		Brand brand = brandDao.readBrandByBrandId(product.getBrand().getBrandId());
+		return product.discount(brand.getDiscountRate(grade));
+	}
+	
+	public Product readByDiscount(Product product, Customer customer) {
+		if (null == customer) {
+			return product;
+		}
+		String grade = customerDao.readCustomerById(customer.getCustomerId()).getCustomerGrade();
 		Brand brand = brandDao.readBrandByBrandId(product.getBrand().getBrandId());
 		return product.discount(brand.getDiscountRate(grade));
 	}

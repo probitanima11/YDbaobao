@@ -4,8 +4,6 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,7 +16,6 @@ import com.ydbaobao.model.Product;
 @Service
 @Transactional
 public class ItemService {
-	private static final Logger logger = LoggerFactory.getLogger(ItemService.class);
 	@Resource
 	private ItemDao itemDao;
 	@Resource
@@ -63,7 +60,6 @@ public class ItemService {
 			Product product = item.getProduct();
 			int discountRate = product.getBrand().getDiscountRate(item.getCustomer().getCustomerGrade());
 			product.discount(discountRate);
-			logger.debug("rate={} pridce={}", discountRate, product.getProductPrice());
 		}
 		return items;
 	}

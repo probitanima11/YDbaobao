@@ -7,6 +7,8 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -26,6 +28,8 @@ import com.ydbaobao.service.OrderService;
 @Controller
 @RequestMapping("/orders")
 public class OrderController {
+	private static final Logger logger = LoggerFactory.getLogger(OrderController.class);
+	
 	@Resource
 	private OrderService orderService;
 	@Resource
@@ -68,9 +72,10 @@ public class OrderController {
 	public String orderConfirm(@RequestParam int[] itemList, Model model) {
 		List<Item> list = new ArrayList<Item>();
 		for (int itemId : itemList) {
-			list.add(itemDao.readItemByItemId(itemId));
+			list.add(orderService.readItemByItemId(itemId));
 		}
 		model.addAttribute("items", list);
+		logger.debug("item list {}", list);
 		return "orderConfirm";
 	}
 	
