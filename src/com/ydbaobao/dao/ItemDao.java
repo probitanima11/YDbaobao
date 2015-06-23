@@ -52,10 +52,10 @@ public class ItemDao extends JdbcDaoSupport {
 	}
 
 	public Item readItemByItemId(int itemId) {
-		String sql = "select * from ITEMS where itemId=?";
+		String sql = "select * from ITEMS A, PRODUCTS B where A.itemId=? AND A.productId = B.productId";
 		return getJdbcTemplate().queryForObject(sql, (rs, rowNum) -> new Item(
 				rs.getInt("itemId"), new Customer(rs.getString("customerId")),
-				new Product(rs.getInt("productId")),
+				new Product(rs.getInt("productId"),rs.getString("productName"), rs.getInt("productPrice"), rs.getString("productImage"), rs.getString("productSize"), rs.getInt("isSoldout")),
 				new Order(),
 				rs.getString("size"), rs.getInt("quantity")), itemId);
 	}
