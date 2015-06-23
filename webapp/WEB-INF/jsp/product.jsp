@@ -79,6 +79,10 @@ h1 {
 	font-size: 40px;
 	padding:10px;
 }
+
+i {
+	cursor: pointer;
+}
 </style>
 </head>
 <body>

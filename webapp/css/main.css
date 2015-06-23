@@ -412,6 +412,7 @@ form#customer {
 	padding: 8px 24px;
 	margin: 0;
 	float: right;
+	cursor: pointer;
 }
 
 #customer h1 {

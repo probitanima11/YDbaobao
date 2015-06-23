@@ -7,6 +7,14 @@ html, body {
 	color: #454545;
 }
 
+button {
+	cursor: pointer;
+}
+
+input[type='submit'] {
+	cursor: pointer;
+}
+
 #container {
 	width: 980px;
 	background-color: #fff;
