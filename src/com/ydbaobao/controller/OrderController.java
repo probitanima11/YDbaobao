@@ -40,7 +40,7 @@ public class OrderController {
 	public String readOrders(HttpSession session, Model model) throws IOException {
 		String customerId = ServletRequestUtil.getCustomerIdFromSession(session);
 		model.addAttribute("orders", orderService.readOrdersByCustomerId(customerId));
-		model.addAttribute("categories", categoryService.read());
+		model.addAttribute("categories", categoryService.readWithoutUnclassifiedCategory());
 		return "order";
 	}
 
