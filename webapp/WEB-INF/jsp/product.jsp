@@ -140,7 +140,9 @@ h1 {
 		</div>
 		<div id="product-display">${product.productDescription}</div>
 	</div>
-	<div id="footer">footer...</div>
+	<div id="footer">
+		<%@ include file="./commons/_footer.jsp"%>
+	</div>
 	<script>
 		var productId = ${product.productId};
 		var sizeArray = "${product.productSize}".split('|');
