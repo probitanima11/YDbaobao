@@ -118,7 +118,7 @@ td.tdhead {
 				</tr>
 				<tr>
 					<td class='tdhead'>가 격 :</td>
-					<td><form:input type="number" path="productPrice" value="${product.productPrice}" min="0" /></td>
+					<td><form:input type="number" path="productPrice" value="${product.productPrice}" min="0" max="100000000" /></td>
 					<td class='tdhead'>품 절 :</td>
 					<td>
 						<c:choose>

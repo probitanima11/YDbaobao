@@ -40,6 +40,10 @@ public class OrderService {
 	public List<Order> readOrdersByCustomerId(String customerId) {
 		List<Order> orders = orderDao.readOrdersByCustomerId(customerId);
 		List<Item> items = itemDao.readOrderedItems(customerId);
+		for (Item item : items) {
+			Product product = item.getProduct();
+			product.setProductPrice(productService.readByDiscount(product, item.getCustomer()).getProductPrice());
+		}
 		return repackOrders(orders, items);
 	}
 	
@@ -80,11 +84,8 @@ public class OrderService {
 		itemDao.orderItems(orderId, itemList);
 	}
 
-	public void checkOrder(int orderId) {
-		orderDao.checkOrder(orderId);
-	}
-
-	public void claimOrder(int orderId) {
-		orderDao.claimOrder(orderId);
+	public void updateOrder(int orderId, String orderStatus) {
+		logger.debug("orderId: {}, orderStatus: {}", orderId, orderStatus);
+		orderDao.updateOrder(orderId, orderStatus);
 	}
 }
