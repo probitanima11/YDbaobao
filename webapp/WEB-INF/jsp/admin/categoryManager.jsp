@@ -108,7 +108,6 @@
 					url:'/admin/categories/' + categoryId,
 					success: function(req) {
 						if(req.responseText === 'success') {
-							alert('카테고리가 삭제되었습니다');
 							document.getElementById(categoryId).remove();
 						}
 					}
