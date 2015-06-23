@@ -29,7 +29,7 @@ public class ItemDao extends JdbcDaoSupport {
 	// int brandId, String brandName, int discount_1, int discount_2, int
 	// discount_3, int discount_4, int discount_5
 	public List<Item> readCartItems(String customerId) {
-		String sql = "select * from ITEMS A, PRODUCTS B, CUSTOMERS as C, BRANDS as D where A.customerId= ? and A.orderId is NULL AND A.productId = B.productId AND A.customerId = C.customerId AND B.brandId = D.brandId";
+		String sql = "select * from ITEMS A, PRODUCTS B, CUSTOMERS as C, BRANDS as D where A.customerId= ? and A.orderId is NULL AND A.productId = B.productId AND A.customerId = C.customerId AND B.brandId = D.brandId order by A.productId";
 		try {
 			return getJdbcTemplate().query(
 					sql,
@@ -102,7 +102,7 @@ public class ItemDao extends JdbcDaoSupport {
 	}
 	
 	public boolean isItemByProductIdAndSize(int productId, String size) {
-		String sql = "select count(1) from ITEMS where productId = ? and size = ?";
+		String sql = "select count(1) from ITEMS where productId = ? and size = ? and orderId is NULL";
 		if(getJdbcTemplate().queryForObject(sql, Integer.class, productId, size) >0){
 			return true;
 		}
@@ -110,7 +110,7 @@ public class ItemDao extends JdbcDaoSupport {
 	}
 	
 	public Item readItemByProductIdAndSize(int productId, String size) {
-		String sql = "select * from ITEMS where productId = ? and size = ?";
+		String sql = "select * from ITEMS where productId = ? and size = ? and orderId is NULL";
 		return getJdbcTemplate().queryForObject(sql, (rs, rowNum) -> new Item(
 				rs.getInt("itemId"), new Customer(rs.getString("customerId")),
 				new Product(rs.getInt("productId")),
