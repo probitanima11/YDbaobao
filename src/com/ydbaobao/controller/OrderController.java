@@ -85,7 +85,6 @@ public class OrderController {
 	//TODO 주문 취소하기
 	@RequestMapping(value = "/cancel/{orderId}", method = RequestMethod.PUT)
 	public ResponseEntity<Object> createOrder(@PathVariable int orderId){
-		System.out.println("server access success");
 		return JSONResponseUtil.getJSONResponse("", HttpStatus.OK);
 	}
 }
