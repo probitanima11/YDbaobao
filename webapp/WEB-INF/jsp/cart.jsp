@@ -1,5 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -46,6 +47,10 @@
 	button {
 		cursor: pointer;
 	}
+	.item-quantity{
+		width: 45px;
+	}
+	
 </style>
 </head>
 <body>
@@ -85,18 +90,22 @@
 									<td class="item-name-container"><a href="/products/${item.product.productId}" style="text-decoration:none"><span class="item-name">${item.product.productName}</span><span class="sold-out"> [품절]</span></a></td>
 									<td><span class="item-size">${item.size}</span></td>
 									<td><span class="item-quantity">${item.quantity}</span></td>
-									<td><span>${item.product.productPrice * item.quantity}</span></td>
+									<td><span class="item-price">${item.product.productPrice * item.quantity}</span></td>
 								</tr>
 							</c:when>
 							<c:otherwise>
-								<tr data-id="${item.itemId}">
-									<td><input class="item-check" type="checkbox" onclick="calcSelectedPrice()"></td>
-									<td class="item-image-container"><a href="/products/${item.product.productId}" style="text-decoration:none"><img class="item-image" src="/img/products/${item.product.productImage}"></a></td>
-									<td class="item-name-container"><a href="/products/${item.product.productId}" style="text-decoration:none"><span class="item-name">${item.product.productName}</span></a></td>
-									<td><span class="item-size">${item.size}</span></td>
-									<td><span class="item-quantity">${item.quantity}</span></td>
-									<td><span class="item-price">${item.product.productPrice * item.quantity}</span></td>
-								</tr>
+								<form:form class="item-form" action="/carts" method="POST" id="item_${item.itemId}">
+									<input type="hidden" name="itemId" value="${item.itemId}" />
+									<tr data-id="${item.itemId}">
+										<td><input class="item-check" type="checkbox" onclick="calcSelectedPrice()"></td>
+										<td class="item-image-container"><a href="/products/${item.product.productId}" style="text-decoration:none"><img class="item-image" src="/img/products/${item.product.productImage}"></a></td>
+										<td class="item-name-container"><a href="/products/${item.product.productId}" style="text-decoration:none"><span class="item-name">${item.product.productName}</span></a></td>
+										<td><span class="item-size">${item.size}</span></td>
+										<td><input type="number" class ="item-quantity" name="quantity" value ="${item.quantity}"/>
+										<input type="submit" class="quantity-update-btn" value="변경"/></td>
+										<td><span class="item-price">${item.product.productPrice * item.quantity}</span></td>
+									</tr>
+								</form:form>
 							</c:otherwise>
 						</c:choose>
 					</c:forEach>
@@ -219,6 +228,7 @@
 		totalPriceWithComma();
 
 	}, false);
+	
 
 	function order(param) {
 		window.location.href = '/orders/?';

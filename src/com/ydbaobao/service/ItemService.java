@@ -30,8 +30,17 @@ public class ItemService {
 			if(quantityArray[i].equals("0")){
 				continue;
 			}
+			if(sizeArray.length == 0) {
+				if(itemDao.isItemByProductIdAndSize(productId, "-")){
+					itemDao.updateItem(itemDao.readItemByProductIdAndSize(productId, sizeArray[i]).getItemId(), Integer.parseInt(quantityArray[i]));
+				}
+				else{
+					itemDao.createItem(customerId, productId, "-", Integer.parseInt(quantityArray[i]));
+				}
+				return;
+			}
 			if(itemDao.isItemByProductIdAndSize(productId, sizeArray[i])){
-				itemDao.updateItem(itemDao.readItemByProductIdAndSize(productId, sizeArray[i]).getItemId(), quantityArray[i]);
+				itemDao.updateItem(itemDao.readItemByProductIdAndSize(productId, sizeArray[i]).getItemId(), Integer.parseInt(quantityArray[i]));
 			}
 			else{
 				itemDao.createItem(customerId, productId, sizeArray[i], Integer.parseInt(quantityArray[i]));
@@ -62,5 +71,9 @@ public class ItemService {
 			product.discount(discountRate);
 		}
 		return items;
+	}
+
+	public void updateQuantity(int itemId, int quantity) {
+		itemDao.updateItem(itemId, quantity);
 	}
 }
