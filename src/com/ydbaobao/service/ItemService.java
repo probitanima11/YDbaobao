@@ -13,6 +13,7 @@ import com.ydbaobao.dao.ItemDao;
 import com.ydbaobao.dao.OrderDao;
 import com.ydbaobao.dao.ProductDao;
 import com.ydbaobao.model.Item;
+import com.ydbaobao.model.Product;
 
 @Service
 @Transactional
@@ -57,6 +58,13 @@ public class ItemService {
 	}
 
 	public List<Item> readCartItems(String customerId) {
-		return itemDao.readCartItems(customerId);
+		List<Item> items = itemDao.readCartItems(customerId);
+		for (Item item : items) {
+			Product product = item.getProduct();
+			int discountRate = product.getBrand().getDiscountRate(item.getCustomer().getCustomerGrade());
+			product.discount(discountRate);
+			logger.debug("rate={} pridce={}", discountRate, product.getProductPrice());
+		}
+		return items;
 	}
 }
