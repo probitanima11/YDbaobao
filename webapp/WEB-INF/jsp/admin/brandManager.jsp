@@ -163,7 +163,6 @@
 					method : 'delete',
 					url : '/admin/brands/' + brandId,
 					success : function(req) {
-						alert('브랜드가 삭제되었습니다');
 						document.getElementById('brand_' + brandId).remove();
 					}
 				});
