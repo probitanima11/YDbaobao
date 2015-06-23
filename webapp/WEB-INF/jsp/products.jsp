@@ -47,6 +47,9 @@
 		<!-- 페이지 -->
 		<%@ include file="./commons/_productListBar.jsp" %>
 	</div>
+	<div id="footer">
+		<%@ include file="./commons/_footer.jsp"%>
+	</div>
 	<script src="/js/ydbaobao.js"></script>
 </body>
 </html>
