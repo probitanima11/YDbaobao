@@ -1,6 +1,7 @@
 package com.ydbaobao.service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,13 +50,17 @@ public class OrderService {
 	
 	private List<Order> repackOrders(List<Order> orders, List<Item> items) {
 		Map<String,Order> mapOrders = new HashMap<String,Order>();
-		for (Order order : orders)
+		for (Order order : orders) {
 			mapOrders.put(""+order.getOrderId(),order);
+		}
 		
 		for (Item item : items) {
 			mapOrders.get(""+item.getOrder().getOrderId()).addItem(item);
 		}
-		return new ArrayList<Order>(mapOrders.values());
+		
+		List<Order> list = new ArrayList<Order>(mapOrders.values());
+		Collections.reverse(list);
+		return list;
 	}
 
 	public Order readOrder(int orderId) {

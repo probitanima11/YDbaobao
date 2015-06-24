@@ -30,7 +30,7 @@ public class OrderDao extends JdbcDaoSupport {
 	}
 	
 	public List<Order> readOrders() {
-		String sql = "select *, DATE_FORMAT(ORDERS.orderUpdateDate, '%Y-%c-%e') as orderDate from ORDERS";
+		String sql = "select *, DATE_FORMAT(ORDERS.orderUpdateDate, '%Y-%c-%e') as orderDate from ORDERS order by orderUpdateDate desc";
 		return getJdbcTemplate().query(sql, (rs, rowNum) -> new Order(
 					rs.getInt("orderId"),
 					rs.getString("orderStatus"),
@@ -43,7 +43,7 @@ public class OrderDao extends JdbcDaoSupport {
 	}
 
 	public List<Order> readOrdersByCustomerId(String customerId) {
-		String sql = "select *, DATE_FORMAT(ORDERS.orderUpdateDate, '%Y-%c-%e') as orderDate from ORDERS where customerId = ?"; 
+		String sql = "select *, DATE_FORMAT(ORDERS.orderUpdateDate, '%Y-%c-%e') as orderDate from ORDERS where customerId = ? order by ORDERS.orderUpdateDate desc"; 
 		return getJdbcTemplate().query(
 				sql, (rs, rowNum) -> new Order(
 						rs.getInt("orderId"), 
