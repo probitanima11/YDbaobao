@@ -86,7 +86,7 @@
 						<c:choose>
 							<c:when test="${item.product.isSoldout eq 1}">
 								<tr data-id="${item.itemId}">
-									<td><input type="checkbox" onclick="" disabled></td>
+									<td><input type="checkbox" class="soldout-item-check" onclick=""></td>
 									<td class="item-image-container"><a href="/products/${item.product.productId}" style="text-decoration:none"><img class="item-image" src="/img/products/${item.product.productImage}"></a></td>
 									<td class="item-name-container"><a href="/products/${item.product.productId}" style="text-decoration:none"><span class="item-name">${item.product.productName}</span><span class="sold-out"> [품절]</span></a></td>
 									<td><span class="item-size">${item.size}</span></td>
@@ -150,25 +150,11 @@
 	<script>
 	window.addEventListener('load', function() {
 		document.querySelector('#selection-delete-btn').addEventListener('click', function() {
-			var checkedItems = document.querySelectorAll('.item-check');
-			var length = checkedItems.length;
-			for(var i = 0; i < length; i++) {
-				if(checkedItems[i].checked) {
-					var tr = checkedItems[i].parentElement.parentElement;
-					ydbaobao.ajax({
-						method : 'delete',
-						url : '/carts/${sessionCustomer.sessionId}/items/' + tr.dataset.id,
-						success : function(req) {
-							document.querySelector('#total-price span').textContent -= document.querySelector('tr[data-id="'+ req.responseText + '"] .order-price').innerText;
-							document.querySelector('tr[data-id="'+ req.responseText + '"]').remove();
-							addItemsPrice();
-							calcSelectedPrice();
-						}
-					});
-				}
-			}
+			debugger;
+			deleteCheckedItems(".item-check");			
+			deleteCheckedItems(".soldout-item-check");			
 		});
-
+		
 		document.querySelector('#select-all-btn').addEventListener('click', function(e) {
 			var checkedItems = document.querySelectorAll('.item-check');
 			var length = checkedItems.length;
@@ -229,6 +215,28 @@
 		totalPriceWithComma();
 
 	}, false);
+	
+	
+	function deleteCheckedItems(className){
+		debugger;
+		var checkedItems = document.querySelectorAll(className);
+		var length = checkedItems.length;
+		for(var i = 0; i < length; i++) {
+			if(checkedItems[i].checked) {
+				var tr = checkedItems[i].parentElement.parentElement;
+				ydbaobao.ajax({
+					method : 'delete',
+					url : '/carts/${sessionCustomer.sessionId}/items/' + tr.dataset.id,
+					success : function(req) {
+						document.querySelector('#total-price span').textContent -= document.querySelector('tr[data-id="'+ req.responseText + '"] .order-price').innerText;
+						document.querySelector('tr[data-id="'+ req.responseText + '"]').remove();
+						addItemsPrice();
+						calcSelectedPrice();
+					}
+				});
+			}
+		}
+	}
 	
 
 	function order(param) {

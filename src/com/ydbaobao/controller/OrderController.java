@@ -76,7 +76,6 @@ public class OrderController {
 			list.add(orderService.readItemByItemId(itemId));
 		}
 		model.addAttribute("items", list);
-		logger.debug("item list {}", list);
 		return "orderConfirm";
 	}
 	
