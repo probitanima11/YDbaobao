@@ -50,7 +50,7 @@
 	.item-quantity{
 		width: 45px;
 	}
-	
+
 </style>
 </head>
 <body>
@@ -151,10 +151,10 @@
 	window.addEventListener('load', function() {
 		document.querySelector('#selection-delete-btn').addEventListener('click', function() {
 			debugger;
-			deleteCheckedItems(".item-check");			
-			deleteCheckedItems(".soldout-item-check");			
+			deleteCheckedItems(".item-check");
+			deleteCheckedItems(".soldout-item-check");
 		});
-		
+
 		document.querySelector('#select-all-btn').addEventListener('click', function(e) {
 			var checkedItems = document.querySelectorAll('.item-check');
 			var length = checkedItems.length;
@@ -219,8 +219,8 @@
 		totalPriceWithComma();
 
 	}, false);
-	
-	
+
+
 	function deleteCheckedItems(className){
 		debugger;
 		var checkedItems = document.querySelectorAll(className);
@@ -241,7 +241,7 @@
 			}
 		}
 	}
-	
+
 
 	function order(param) {
 		window.location.href = '/orders/?';
@@ -288,7 +288,7 @@
 		var paramList = [];
 		for(var i = 0; i < checkLength; i++) {
 			if(checkList[i].checked) {
-				totalPrice += checkList[i].parentNode.parentNode.querySelector('.order-price').innerText.replace(/,/g,"")*1;
+				totalPrice += checkList[i].parentNode.parentNode.querySelector('.order-price').textContent.replace(/,/g,"")*1;
 			}
 		}
 		document.querySelector('#selected-price span').textContent = parseInt(totalPrice).toLocaleString();
