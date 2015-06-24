@@ -15,7 +15,7 @@
 		<%@ include file="./commons/_topNav.jsp"%>
 	</div>
 	<div id="main-container">
-		<div id="first-section" class="wrap" style="height: 500px;">
+		<div id="first-section" class="wrap" style="height: 635px;">
 			<div class="loginBox">
 				<form:form modelAttribute="customer" method="post" action="/login">
 					<h1>로그인</h1>
@@ -32,6 +32,9 @@
 				</form:form>
 			</div>
 		</div>
+	</div>
+	<div id="footer">
+		<%@ include file="./commons/_footer.jsp"%>
 	</div>
 </body>
 </html>
