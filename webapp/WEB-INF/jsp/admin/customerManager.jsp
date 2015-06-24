@@ -54,7 +54,22 @@
 							<td>${customer.customerId}</td>
 							<td>${customer.customerName}</td>
 							<td>${customer.customerEmail}</td>
-							<td>${customer.customerGrade}</td>
+							<td>
+							
+							<select id="gradeSelector" class="${customer.customerId}" onchange="changeGrade(this)">
+									<c:forEach varStatus="status" begin="0" end="5" step="1">
+										<c:choose>
+											<c:when test="${customer.customerGrade eq status.index}">
+												<option name="${status.index}" value="${status.index}" selected="selected">${status.index}</option>
+											</c:when>
+											<c:otherwise>
+												<option name="${status.index}" value="${status.index}">${status.index}</option>
+											</c:otherwise>
+										</c:choose>
+
+									</c:forEach>
+							</select> 
+							</td>
 							<td>${customer.customerCreateDate}</td>
 							<td>
 								<a href="/admin/customers/${customer.customerId}"><button class="btn btn-warn"><i class="fa fa-info-circle"></i>  상세정보</button></a>
@@ -81,6 +96,22 @@
 					}
 				});
 			}
+		}
+		
+		function changeGrade(e){
+			var customerId = e.className;
+			var grade = e.options.selectedIndex;
+			
+			ydbaobao.ajax({
+				method:'put',
+				url:'/admin/customers/' + customerId + '?grade=' + grade,
+				success: function(req){
+					if(req.responseText === 'success') {
+						alert('회원 등급이 변경되었습니다');
+					}
+				}
+			});
+			
 		}
 	</script>
 </body>
