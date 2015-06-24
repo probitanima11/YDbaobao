@@ -53,12 +53,12 @@
 			<table id="customer-table" style="width: 800px;">
 				<thead>
 					<tr>
-						<th>회원아이디</th>
-						<th>회원이름</th>
-						<th>이메일</th>
-						<th>등급</th>
-						<th>가입일</th>
-						<th>  </th>
+						<th width="115px">회원아이디</th>
+						<th width="115px">회원이름</th>
+						<th width="200px">이메일</th>
+						<th width="50px">등급</th>
+						<th width="200px">가입일</th>
+						<th width="120px">비고</th>
 					</tr>
 				</thead>
 				<tbody>
