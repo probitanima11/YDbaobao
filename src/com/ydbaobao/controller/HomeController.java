@@ -69,6 +69,7 @@ public class HomeController {
 			}
 		}
 		model.addAttribute("imgPath", imgPath);
+		model.addAttribute("isHome", "home");
 		return "index";
 	}
 
