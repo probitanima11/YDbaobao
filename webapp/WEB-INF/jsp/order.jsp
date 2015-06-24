@@ -40,7 +40,7 @@ tbody td {
 	height: 50px;
 }
 
-.item-price {
+.order-price {
 	font-weight: 800;
 }
 
@@ -77,8 +77,9 @@ tfoot tr {
 							<th></th>
 							<th>상품설명</th>
 							<th>사이즈</th>
+							<th>상품가격</th>
 							<th>수량</th>
-							<th>판매가</th>
+							<th>주문금액</th>
 							<th>주문상태</th>
 							<th>관리</th>
 						</tr>
@@ -86,7 +87,7 @@ tfoot tr {
 					<tbody>
 						<c:forEach var="order" items="${orders}">
 							<tr class="order-head" data-id="${order.orderId}">
-								<td colspan="4">${order.orderDate}</td>
+								<td colspan="5">${order.orderDate}</td>
 								<td colspan="1">${order.realPrice}</td>
 								<c:choose>
 									<c:when test="${order.orderStatus eq 'I'}">
@@ -113,8 +114,9 @@ tfoot tr {
 										src="/img/products/${item.product.productImage}"></td>
 									<td class="item-name-container"><span class="item-name">${item.product.productName}</span></td>
 									<td><span class="item-size">${item.size}</span></td>
+									<td><span class="item-price">${item.product.productPrice}</span></td>
 									<td><span class="item-quantity">${item.quantity}</span></td>
-									<td><span class="item-price">${item.product.productPrice * item.quantity}</span></td>
+									<td><span class="order-price">${item.product.productPrice * item.quantity}</span></td>
 								</tr>
 							</c:forEach>
 						</c:forEach>
@@ -139,14 +141,15 @@ tfoot tr {
 	}, false);
 	
 	function orderCancel(orderId) {
+		if (confirm("정말 주문취소 하시겠습니까??") == false){
+		    return;
+		}
 		ydbaobao.ajax({
 			method : 'put',
 			url : '/orders/cancel/' + orderId,
 			success : function(req) {
-				var list = document.querySelectorAll("tr[data-id='" + orderId + "']");
-				for(var i=0; i<list.length; i++) {
-					list[i].remove();
-				}
+				document.querySelectorAll(".order-head[data-id='" + orderId + "'] > td")[2].innerText = "주문취소";
+				document.querySelectorAll(".order-head[data-id='" + orderId + "'] > td")[3].remove();
 			}
 		});
 	}

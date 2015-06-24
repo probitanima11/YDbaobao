@@ -76,7 +76,6 @@ public class OrderController {
 			list.add(orderService.readItemByItemId(itemId));
 		}
 		model.addAttribute("items", list);
-		logger.debug("item list {}", list);
 		return "orderConfirm";
 	}
 	
@@ -85,6 +84,7 @@ public class OrderController {
 	//TODO 주문 취소하기
 	@RequestMapping(value = "/cancel/{orderId}", method = RequestMethod.PUT)
 	public ResponseEntity<Object> createOrder(@PathVariable int orderId){
+		orderService.updateOrder(orderId, "C");
 		return JSONResponseUtil.getJSONResponse("", HttpStatus.OK);
 	}
 }

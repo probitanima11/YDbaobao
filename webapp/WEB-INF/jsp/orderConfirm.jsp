@@ -28,7 +28,7 @@
 		width:50px;
 		height:50px;
 	}
-	.item-price {
+	.order-price {
 		font-weight:800;
 	}
 	tfoot {
@@ -66,8 +66,9 @@
 						<tr>
 							<th colspan="2">상품설명</th>
 							<th>사이즈</th>
+							<th>상품가격</th>
 							<th>수량</th>
-							<th>판매가</th>
+							<th>주문금액</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -76,8 +77,9 @@
 							<td class="item-image-container"><img class="item-image" src="/img/products/${item.product.productImage}"></td>
 							<td class="item-name-container"><span class="item-name">${item.product.productName}</span></td>
 							<td><span class="item-size">${item.size}</span></td>
+							<td><span class="item-price">${item.product.productPrice}</span></td>
 							<td><span class="item-quantity">${item.quantity}</span></td>
-							<td><span class="item-price">${item.product.productPrice * item.quantity}</span></td>
+							<td><span class="order-price">${item.product.productPrice * item.quantity}</span></td>
 						</tr>
 					</c:forEach>
 					</tbody>
@@ -141,7 +143,7 @@
 	}
 
 	function addItemsPrice() {
-		var el = document.querySelectorAll('.item-price');
+		var el = document.querySelectorAll('.order-price');
 		var length = el.length;
 		var totalPrice = 0;
 		for(var i = 0; i < length; i++) {
@@ -152,7 +154,7 @@
 	}
 	
 	function priceWithComma() {
-		var el = document.querySelectorAll('.item-price');
+		var el = document.querySelectorAll('.order-price');
 		var length = el.length;
 
 		for(var i = 0; i < length; i++) {

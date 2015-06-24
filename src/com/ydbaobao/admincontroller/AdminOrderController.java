@@ -12,7 +12,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.support.JSONResponseUtil;
+import com.ydbaobao.model.Order;
+import com.ydbaobao.model.Payment;
 import com.ydbaobao.service.OrderService;
+import com.ydbaobao.service.PaymentService;
 
 @Controller
 @RequestMapping("/admin/orders")
@@ -20,6 +23,9 @@ public class AdminOrderController {
 	
 	@Resource
 	private OrderService orderService;
+	
+	@Resource
+	private PaymentService paymentService;
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public String manageOrder(Model model) {
@@ -31,7 +37,7 @@ public class AdminOrderController {
 	public ResponseEntity<Object> readOrder(@PathVariable int orderId) {
 		return JSONResponseUtil.getJSONResponse(orderService.readOrder(orderId), HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(value = "/{orderId}", method = RequestMethod.PUT)
 	public ResponseEntity<Object> updateOrder(@PathVariable int orderId, @RequestParam String orderStatus) {
 		if (orderService.readOrder(orderId).getOrderStatus().equals('C')) {
