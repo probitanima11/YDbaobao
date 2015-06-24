@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,6 +28,11 @@ img.snap{
 </style>
 </head>
 <body>
+	<c:if test="${null ne errorMessage}">
+		<script>
+			alert("${errorMessage}");
+		</script>
+	</c:if>
 	<div id="header" style="width: 100%;">
 		<%@ include file="./_adminTopNav.jsp"%>
 	</div>
@@ -48,7 +54,7 @@ img.snap{
 								<i onclick="addClick(${status.index})" style="color: rgb(234, 101, 118); font-size: 100px; width: 100%; text-align: center;" class="fa fa-plus-circle"></i>
 							</c:if>
 							<c:if test="${path != ''}">
-								<img id="hoverImage${status.index}" class="hover" onclick="deleteClick(${status.index})" onmouseout="mouseOut(${status.index})" src="/image/delete_hover.png">
+								<img id="hoverImage${status.index}" class="hover" onclick="deleteClick(this)" onmouseout="mouseOut(${status.index})" src="/image/delete_hover.png">
 								<img class="snap" src="${path}" onmouseover="mouseOver(${status.index})">
 							</c:if>
 						</a>
@@ -93,10 +99,10 @@ img.snap{
 		document.querySelector("#hoverImage"+imgIndex).style.display = "none";
 	}
 	
-	function deleteClick(imgIndex) {
-		var form = document.querySelector("#imgForm");
+	function deleteClick(el) {
+		/* var form = document.querySelector("#imgForm");
 		form.action = action="/admin/indexImages/"+imgIndex;
-		form.submit();
+		form.submit(); */
 	}
 	</script>
 	<script src="/js/ydbaobao.js"></script>
