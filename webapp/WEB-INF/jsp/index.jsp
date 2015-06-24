@@ -22,9 +22,11 @@
 	</div>
 	<div id="main-container">
 		<div id="first-section" class="wrap content" style="position:relative; padding:25px 0;">
-			<div id="showcase">
-				<img id="indexImage">
-			</div>
+			<c:if test="${not empty isHome}">
+				<div id="showcase">
+					<img id="indexImage">
+				</div>
+			</c:if>
 		</div>
 		<div id="second-section" class="wrap content">
 			<!-- 브랜드 탭(A~Z) 메뉴 -->
