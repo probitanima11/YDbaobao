@@ -11,13 +11,16 @@
 </head>
 <body>
 	<%@ include file="../commons/_topNav.jsp"%>
-	<div class="joinForm">
+	<div class="joinForm" style="height: 635px;">
 		<form id="customer" method="post" action="/admin/check">
 			<h1>관리자 로그인</h1>
 			<label for="adminPassword">비밀번호</label> <input
 				type="password" name="adminPassword" value="1111" /><br />
 			<button type="submit">확인</button>
 		</form>
+	</div>
+	<div id="footer">
+		<%@ include file="../commons/_footer.jsp"%>
 	</div>
 </body>
 </html>
