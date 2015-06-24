@@ -202,6 +202,10 @@
 			for(var i = 0; i < checkLength; i++) {
 				paramList.push(checkList[i].parentNode.parentNode.getAttribute('data-id'));
 			}
+			if(paramList.length === 0) {
+				alert('상품을 선택해주세요');
+				return;
+			}
 			ydbaobao.post({
 				path : "/orders/confirm",
 				params : {itemList : paramList}
