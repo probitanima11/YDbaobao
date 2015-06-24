@@ -29,7 +29,7 @@
 		width:50px;
 		height:50px;
 	}
-	.item-price {
+	.order-price {
 		font-weight:800;
 	}
 	tfoot {
@@ -76,8 +76,9 @@
 							<th style="width:60px;"><button id="select-all-btn">전체선택</button></th>
 							<th colspan="2">상품설명</th>
 							<th>사이즈</th>
+							<th>상품가격</th>
 							<th>수량</th>
-							<th>판매가</th>
+							<th>주문금액</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -89,8 +90,9 @@
 									<td class="item-image-container"><a href="/products/${item.product.productId}" style="text-decoration:none"><img class="item-image" src="/img/products/${item.product.productImage}"></a></td>
 									<td class="item-name-container"><a href="/products/${item.product.productId}" style="text-decoration:none"><span class="item-name">${item.product.productName}</span><span class="sold-out"> [품절]</span></a></td>
 									<td><span class="item-size">${item.size}</span></td>
+									<td><span class="item-price">${item.product.productPrice}</span></td>
 									<td><span class="item-quantity">${item.quantity}</span></td>
-									<td><span class="item-price">${item.product.productPrice * item.quantity}</span></td>
+									<td><span class="order-price">${item.product.productPrice * item.quantity}</span></td>
 								</tr>
 							</c:when>
 							<c:otherwise>
@@ -101,9 +103,10 @@
 										<td class="item-image-container"><a href="/products/${item.product.productId}" style="text-decoration:none"><img class="item-image" src="/img/products/${item.product.productImage}"></a></td>
 										<td class="item-name-container"><a href="/products/${item.product.productId}" style="text-decoration:none"><span class="item-name">${item.product.productName}</span></a></td>
 										<td><span class="item-size">${item.size}</span></td>
+										<td><span class="item-price">${item.product.productPrice}</span></td>
 										<td><input type="number" class ="item-quantity" name="quantity" value ="${item.quantity}"/>
 										<input type="submit" class="quantity-update-btn" value="변경"/></td>
-										<td><span class="item-price">${item.product.productPrice * item.quantity}</span></td>
+										<td><span class="order-price">${item.product.productPrice * item.quantity}</span></td>
 									</tr>
 								</form:form>
 							</c:otherwise>
@@ -112,7 +115,7 @@
 					</tbody>
 					<tfoot>
 						<tr>
-							<td colspan="6">
+							<td colspan="7">
 								<div style="float:left">
 								</div>
 								<div id="total-price" style="float:right; padding:15px; font-size:15px;">전체상품금액 :
@@ -121,7 +124,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td colspan="6">
+							<td colspan="7">
 								<div style="float:left">
 								</div>
 								<div id="selected-price" style="float:right; padding:15px; font-size:15px;">선택상품금액 :
@@ -156,7 +159,7 @@
 						method : 'delete',
 						url : '/carts/${sessionCustomer.sessionId}/items/' + tr.dataset.id,
 						success : function(req) {
-							document.querySelector('#total-price span').textContent -= document.querySelector('tr[data-id="'+ req.responseText + '"] .item-price').innerText;
+							document.querySelector('#total-price span').textContent -= document.querySelector('tr[data-id="'+ req.responseText + '"] .order-price').innerText;
 							document.querySelector('tr[data-id="'+ req.responseText + '"]').remove();
 							addItemsPrice();
 							calcSelectedPrice();
@@ -242,7 +245,7 @@
 	}
 
 	function addItemsPrice() {
-		var el = document.querySelectorAll('.item-price');
+		var el = document.querySelectorAll('.order-price');
 		var length = el.length;
 		var totalPrice = 0;
 		for(var i = 0; i < length; i++) {
@@ -253,7 +256,7 @@
 	}
 
 	function priceWithComma() {
-		var el = document.querySelectorAll('.item-price');
+		var el = document.querySelectorAll('.order-price');
 		var length = el.length;
 
 		for(var i = 0; i < length; i++) {
@@ -273,7 +276,7 @@
 		var paramList = [];
 		for(var i = 0; i < checkLength; i++) {
 			if(checkList[i].checked) {
-				totalPrice += checkList[i].parentNode.parentNode.querySelector('.item-price').innerText.replace(/,/g,"")*1;
+				totalPrice += checkList[i].parentNode.parentNode.querySelector('.order-price').innerText.replace(/,/g,"")*1;
 			}
 		}
 		document.querySelector('#selected-price span').textContent = parseInt(totalPrice).toLocaleString();
