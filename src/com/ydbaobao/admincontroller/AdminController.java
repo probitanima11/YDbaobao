@@ -1,5 +1,7 @@
 package com.ydbaobao.admincontroller;
 
+import java.util.stream.IntStream;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.support.CommonUtil;
 import com.ydbaobao.service.AdminConfigService;
 import com.ydbaobao.service.CustomerService;
 
@@ -43,8 +46,17 @@ public class AdminController {
 	public String checkForm(@RequestParam String adminPassword, HttpSession session, Model model) {
 		if (adminPassword.equals(adminConfigService.read().getAdminPassword())) {
 			session.setAttribute("sessionAdmin", adminPassword);
+			int page=1;
+			int customersPerPage = 10;
 			model.addAttribute("gradeId", "-1");
-			model.addAttribute("customers", customerService.readCustomers());
+			model.addAttribute("customers", customerService.readCustomers(page, customersPerPage));
+			int count = customerService.countCustomers();
+			int totalPage = CommonUtil.countTotalPage(count, customersPerPage);
+			model.addAttribute("prev", CommonUtil.prevBlock(page));
+			model.addAttribute("next", CommonUtil.nextBlock(page, page));
+			model.addAttribute("selectedIndex", page);
+			model.addAttribute("url", "/admin/customers?page=");
+			model.addAttribute("range", IntStream.range(CommonUtil.startPage(page), CommonUtil.endPage(page, totalPage)).toArray());
 			return "admin/customerManager";
 		}
 		return "admin/adminCheck";

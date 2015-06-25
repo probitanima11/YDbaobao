@@ -4,12 +4,31 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 
+import com.ydbaobao.dao.AdminConfigDao;
+
+@Component
 public class CommonUtil {
+	private static final Logger logger = LoggerFactory.getLogger(CommonUtil.class);
+	
 	public static int productsPerPage = 16;
 	public static int limitPage = 10;
+	
+	@Resource
+	private AdminConfigDao adminConfigDao;
+	
+	@PostConstruct
+	public void initProductsPerPage() {
+		productsPerPage = adminConfigDao.read().getAdminDisplayProducts();
+	}
 	
 	public static boolean isNumber(String str){
         boolean result = false; 

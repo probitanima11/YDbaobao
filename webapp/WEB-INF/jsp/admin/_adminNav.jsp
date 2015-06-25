@@ -7,7 +7,7 @@
 <div id="menu">
 	<div style="padding:15px 15px; color:#fff; background-color:#EA6576">관리자메뉴</div>
 	<ul>
-		<li><a href="/admin/customers"><span>회원관리</span></a></li>
+		<li><a href="/admin/customers?page=1"><span>회원관리</span></a></li>
 		<li><a href="/admin/products/regist"><span>상품등록</span></a></li>
 		<li><a href="/admin/products?page=1"><span>상품관리</span></a></li>
 		<li><a href="/admin/brands"><span>브랜드관리</span></a></li>

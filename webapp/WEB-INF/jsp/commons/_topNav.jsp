@@ -14,7 +14,7 @@
 					<li><a href="/orders"><span>주문내역</span></a></li>
 				</c:when>
 				<c:when test="${not empty sessionAdmin}">
-					<li class="logout"><a href="/admin/customers"><span style="color: #EA6576;">[관리자 페이지]</span></a></li>
+					<li class="logout"><a href="/admin/customers?page=1"><span style="color: #EA6576;">[관리자 페이지]</span></a></li>
 					<li class="logout"><a href="/admin/logout"><span style="color: #EA6576;">[관리자 로그아웃]</span></a></li>
 				</c:when>
 				<c:otherwise>

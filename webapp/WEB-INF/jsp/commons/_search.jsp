@@ -7,11 +7,14 @@
 			</a>
 			<form id="search-form">
 				<div id="search-bar">
-					<select id="select">
-						<option class="selected">상품명</option>
-						<option>브랜드명</option>
-					</select> 
-					<input id="search-terms" type="text" />
+					<div id="select-area" style="float:left;">
+						<select id="select" style="width:100px;">
+							<option class="selected" value="상품명">상품명</option>
+							<option value="브랜드명">브랜드명</option>
+						</select>
+						<i class="fa fa-angle-down" style="position:absolute; left:80px; top:12px"></i>
+					</div>
+					<input id="search-terms" type="text" style="float:right"/>
 				</div>
 				<button id="search-btn" class="btn" type="submit">검색</button>
 			</form>

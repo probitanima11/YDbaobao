@@ -75,7 +75,6 @@ public class OrderController {
 	 */
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Object> createOrder(@RequestParam int[] itemList, HttpSession session) throws IOException{
-		logger.debug("신규 주문 등록");
 		String customerId = ServletRequestUtil.getCustomerIdFromSession(session);
 		orderService.createOrder(customerId, itemList);
 		return JSONResponseUtil.getJSONResponse("", HttpStatus.OK);
@@ -105,12 +104,12 @@ public class OrderController {
 	 * @param orderStatus
 	 * @return
 	 */
-	@RequestMapping(value = "/{orderId}", method = RequestMethod.PUT)
-	public ResponseEntity<Object> updateOrder(@PathVariable int orderId, @RequestParam String orderStatus) {
+	@RequestMapping(value = "/cancel/{orderId}", method = RequestMethod.PUT)
+	public ResponseEntity<Object> updateOrder(@PathVariable int orderId) {
 		if (orderService.readOrder(orderId).getOrderStatus().equals('C')) {
 			return JSONResponseUtil.getJSONResponse("이미 취소된 주문입니다.", HttpStatus.OK);
 		}
-		orderService.updateOrder(orderId, orderStatus);
+		orderService.updateOrder(orderId, "C");
 		return JSONResponseUtil.getJSONResponse("주문상태변경완료", HttpStatus.OK);
 	}
 	
@@ -124,4 +123,14 @@ public class OrderController {
 		model.addAttribute("items", list);
 		return "orderConfirm";
 	}
-}
+	
+	@RequestMapping(value = "/receipt/{orderId}", method = RequestMethod.GET)
+	public String readReceipt(@PathVariable int orderId, HttpSession session, Model model) throws IOException {
+		String customerId = ServletRequestUtil.getCustomerIdFromSession(session);
+		model.addAttribute("order", orderService.readOrder(orderId));
+		model.addAttribute("categories", categoryService.readWithoutUnclassifiedCategory());
+		return "receipt";
+	}
+	
+	//TODO 상품화면에서 주문하기
+	}

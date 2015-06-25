@@ -12,7 +12,7 @@
 <title>카테고리 별 상품 보기</title>
 </head>
 <body>
-	<div id="header" style="width: 100%;">
+	<div id="header">
 		<!-- 상단 navigator -->
 		<%@ include file="./commons/_topNav.jsp"%>
 		<!-- 브랜드/제품 검색바 -->
