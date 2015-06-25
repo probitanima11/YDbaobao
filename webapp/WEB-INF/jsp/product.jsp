@@ -28,11 +28,9 @@
 
 #product-display {
 	position: relative;
-	width: 850px;
 	height: 300px;
-	padding : 20px;
+	padding: 20px;
 	margin-top: -50px;
-	margin-left: 40px;
 	margin-bottom: 50px;
 	outline: 1px solid #EA6576;
 }
