@@ -108,9 +108,6 @@ tr.border_top td {
 								<c:choose>
 									<c:when test="${order.orderStatus eq 'I'}">
 										<td rowspan="${fn:length(order.items)}" colspan="1">주문대기</td>
-										<td rowspan="${fn:length(order.items)}" colspan="1"><button data-id="${order.orderId}" class="order-cancel">취소</button>
-										<button class="">주문서</button>
-										</td>
 									</c:when>
 									<c:when test="${order.orderStatus eq 'S'}">
 										<td rowspan="${fn:length(order.items)}" colspan="1">주문승인</td>
@@ -125,6 +122,12 @@ tr.border_top td {
 										<td rowspan="${fn:length(order.items)}" colspan="1"></td>
 									</c:otherwise>
 								</c:choose>
+								<td rowspan="${fn:length(order.items)}" colspan="1">
+									<c:if test="${order.orderStatus eq 'I'}">
+										<button data-id="${order.orderId}" class="order-cancel">취소</button>
+									</c:if>
+									<button class="">주문서</button>
+								</td>
 								
 								<c:forEach var="i" begin="1" end="${fn:length(order.items)-1}">
 									<tr>
@@ -170,9 +173,8 @@ tr.border_top td {
 			method : 'put',
 			url : '/orders/cancel/' + orderId,
 			success : function(req) {
-				debugger;
 				document.querySelectorAll(".border_top[data-id='" + orderId + "'] > td")[6].innerText = "주문취소";
-				document.querySelectorAll(".border_top[data-id='" + orderId + "'] > td")[7].remove();
+				document.querySelectorAll(".border_top[data-id='" + orderId + "'] > td")[7].querySelector("button").remove();
 			}
 		});
 	}
