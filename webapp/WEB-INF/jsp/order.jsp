@@ -61,7 +61,7 @@ tr.border_top td {
 <title>YDbaobao:: 주문목록</title>
 </head>
 <body>
-	<div id="header" style="width: 100%;">
+	<div id="header">
 		<!-- 상단 navigator -->
 		<%@ include file="./commons/_topNav.jsp"%>
 		<!-- 브랜드/제품 검색바 -->
