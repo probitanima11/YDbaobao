@@ -9,6 +9,9 @@
 <link rel="stylesheet" href="/css/font-awesome.min.css">
 <script src="/js/ydbaobao.js"></script>
 <style>
+ #customer-table {
+ 	text-align:center;
+ }
  #customer-table .btn {
  	border:0;
  	border-bottom:2px solid black;
@@ -53,12 +56,12 @@
 			<table id="customer-table" style="width: 800px;">
 				<thead>
 					<tr>
-						<th width="115px">회원아이디</th>
-						<th width="115px">회원이름</th>
-						<th width="200px">이메일</th>
-						<th width="50px">등급</th>
-						<th width="200px">가입일</th>
-						<th width="120px">비고</th>
+						<th >회원아이디</th>
+						<th >회원이름</th>
+						<th >이메일</th>
+						<th >등급</th>
+						<th >가입일</th>
+						<th ></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -85,6 +88,7 @@
 							</td>
 							<td>${customer.customerCreateDate}</td>
 							<td>
+								<a href="/admin/payment/${customer.customerId}"><button class='btn btn-payment'><i class='fa fa-list'></i>  출납관리</button></a>
 								<a href="/admin/customers/${customer.customerId}"><button class="btn btn-warn"><i class="fa fa-info-circle"></i>  상세정보</button></a>
 								<a href="#"><button class="btn btn-err" onclick="deleteCustomer('${customer.customerId}')"><i class="fa fa-remove"></i>  삭제</button></a>
 							</td>	

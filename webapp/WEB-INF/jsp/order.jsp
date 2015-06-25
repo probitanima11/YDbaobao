@@ -81,7 +81,7 @@ tfoot tr {
 							<th>수량</th>
 							<th>주문금액</th>
 							<th>주문상태</th>
-							<th>관리</th>
+							<th style="width:100px">관리</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -92,16 +92,28 @@ tfoot tr {
 								<c:choose>
 									<c:when test="${order.orderStatus eq 'I'}">
 										<td colspan="1">주문대기</td>
-										<td colspan="1"><button class="order-cancel">취소</button></td>
+										<td colspan="1">
+											<button class="order-cancel">주문취소</button>
+											<button class="">주문서</button>
+										</td>
 									</c:when>
 									<c:when test="${order.orderStatus eq 'S'}">
 										<td colspan="1">주문승인</td>
+										<td colspan="1">
+											<button class="">주문서</button>
+										</td>
 									</c:when>
 									<c:when test="${order.orderStatus eq 'R'}">
 										<td colspan="1">주문반려</td>
+										<td colspan="1">
+											<button class="">주문서</button>
+										</td>
 									</c:when>
 									<c:when test="${order.orderStatus eq 'C'}">
 										<td colspan="1">주문취소</td>
+										<td colspan="1">
+											<button class="">주문서</button>
+										</td>
 									</c:when>
 									<c:otherwise>
 										<td colspan="1"></td>
