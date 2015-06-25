@@ -85,12 +85,12 @@ public class OrderController {
 	 * @param orderStatus
 	 * @return
 	 */
-	@RequestMapping(value = "/{orderId}", method = RequestMethod.PUT)
-	public ResponseEntity<Object> updateOrder(@PathVariable int orderId, @RequestParam String orderStatus) {
+	@RequestMapping(value = "/cancel/{orderId}", method = RequestMethod.PUT)
+	public ResponseEntity<Object> updateOrder(@PathVariable int orderId) {
 		if (orderService.readOrder(orderId).getOrderStatus().equals('C')) {
 			return JSONResponseUtil.getJSONResponse("이미 취소된 주문입니다.", HttpStatus.OK);
 		}
-		orderService.updateOrder(orderId, orderStatus);
+		orderService.updateOrder(orderId, "C");
 		return JSONResponseUtil.getJSONResponse("주문상태변경완료", HttpStatus.OK);
 	}
 	

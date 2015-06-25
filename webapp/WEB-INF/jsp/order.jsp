@@ -175,8 +175,7 @@ tr.border_top td {
 		}
 		ydbaobao.ajax({
 			method: "put",
-			param: "orderStatus="+"C",
-			url: "/admin/orders/"+orderId,
+			url: "/orders/cancel/"+orderId,
 			success : function(req) {
 				document.querySelectorAll(".border_top[data-id='" + orderId + "'] > td")[6].innerText = "주문취소";
 				document.querySelectorAll(".border_top[data-id='" + orderId + "'] > td")[7].querySelector("button").remove();
