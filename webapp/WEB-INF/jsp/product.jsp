@@ -45,9 +45,9 @@ h1 {
 
 #product-buy-container {
 	float:right;
-	margin-top: -25px; 
-	margin-right: 100px; 
-	width: 350px;
+	margin-top: -25px;
+	margin-right: 100px;
+	width: 356px;
 }
 
 #product-buy-container .product-price {
@@ -111,17 +111,25 @@ i {
 				<h1 class="product-name"
 					style="margin-top: 25px; margin-left: 15px;">${product.productName}</h1>
 				<div class="product-price">${product.productPrice}</div>
-				<div style="margin-top: 25px; margin-left: 15px;">
+				<div id="sizeBox" style="margin-top: 25px; margin-left: 15px;">
 					<h3>구매수량</h3>
-					<button onclick="qtyControl('minus')">
-						<i class='fa fa-minus'></i>
-					</button>
-					<ul id="quantity" style="display: inline-block; padding: 0px">
-					</ul>
-					<!-- <input class="qty-selector" value="1" style="width: 32px;" onkeypress="return isNumberKey(event);"> -->
-					<button onclick="qtyControl('plus')">
-						<i class='fa fa-plus'></i>
-					</button>
+					<table>
+						<td>
+							<ul id="quantity" style="display: inline-block; padding: 0px">
+							</ul>
+						</td>
+							<!-- <input class="qty-selector" value="1" style="width: 32px;" onkeypress="return isNumberKey(event);"> -->
+						<td>
+							<div id="btnBox">
+								<button id="plusBtn" class="plusMinus-btn" onclick="qtyControl('plus')">
+									<i class='fa fa-plus'></i>
+								</button>
+								<button class="plusMinus-btn" onclick="qtyControl('minus')">
+									<i class='fa fa-minus'></i>
+								</button>
+							</div>
+						</td>
+					</table>
 				</div>
 				<c:choose>
 					<c:when test="${product.isSoldout == 1}">
@@ -146,7 +154,7 @@ i {
 		var sizeArray = "${product.productSize}".split('|');
 		var productBuyContainer;
 		window.addEventListener('load', function() {
-			
+
 			for (var i = 0; i < sizeArray.length; i++) {
 				var li = ydbaobao.createElement({
 			        name: 'li',
@@ -157,7 +165,7 @@ i {
 			        },
 			        content: sizeArray[i]
 			    });
-				
+
 				var el = ydbaobao.createElement({
 			        name: 'input',
 			        attrs: {
@@ -166,16 +174,16 @@ i {
 			            'min'  : '1',
 			            'name' : sizeArray[i],
 			            'value': '1',
-			            'style': 'width: 32px; margin-left: 5px',
+			            'style': 'margin-left: 5px',
 			            'onkeypress': 'return isNumberKey(event);'
 			        },
 			        //content: sizeArray[i]
 			    });
 				li.appendChild(el);
-				
+
 				document.body.querySelector('#quantity').appendChild(li);
 			}
-			
+
 			document.querySelector('.addtocart').addEventListener('click', function(e) {
 				addToCart(e);
 			}, false);
@@ -219,11 +227,11 @@ i {
 						alert('로그인이 필요합니다.');
 					else
 						alert('장바구니에 담겼습니다.');
-						
+
 				}
 			});
 		}
-		
+
 		 function qtyControl(type) {
 			 var qtyArray = document.querySelectorAll(".qty-selector");
 			 switch (type) {
@@ -232,7 +240,7 @@ i {
 			 			qtyArray[i].value = qtyArray[i].value*1+1;
 			 		}
 			 		break;
-			 	case "minus": 
+			 	case "minus":
 			 		for(var i=0;i<qtyArray.length;i++){
 			 			qtyArray[i].value = qtyArray[i].value*1-1;
 				 		if (qtyArray[i].value*1 <= 0) qtyArray[i].value = 1;
@@ -245,6 +253,7 @@ i {
 		 	var el = document.querySelector('.product-price');
 		 	el.textContent = parseInt(el.textContent).toLocaleString();
 		 }
+
 	</script>
 	<script src="/js/ydbaobao.js"></script>
 </body>
