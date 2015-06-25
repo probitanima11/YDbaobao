@@ -8,6 +8,10 @@
 <link rel="stylesheet" type="text/css" href="/css/main.css">
 <link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css">
 <style>
+body {
+	background-color: #fff;
+}
+
 #order-section {
 	margin:25px 0px;
 }

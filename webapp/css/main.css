@@ -191,12 +191,11 @@ button.btn.addtocart {
 }
 
 #search-bar>input[type="text"] {
-	width: 305px;
+	width: 300px;
 	height: 29px;
 	outline: none;
 	border: none;
 	font-size: 17px;
-	margin-top: 3px;
 }
 
 #search-form select {
@@ -210,12 +209,12 @@ button.btn.addtocart {
 	padding: 6px;
 	margin: 3px 0px 0px 2px;
 	-webkit-appearance: none;
-	background: #c2c2c2;
+	/* background: #c2c2c2;
 	background-image: -webkit-linear-gradient(top, #CEE8FD, #CEF8FF);
 	background-image: -moz-linear-gradient(top, #CEE8FD, #CEF8FF);
 	background-image: -ms-linear-gradient(top, #CEE8FD, #CEF8FF);
 	background-image: -o-linear-gradient(top, #CEE8FD, #CEF8FF);
-	background-image: linear-gradient(to bottom, #CEE8FD, #CEF8FF);
+	background-image: linear-gradient(to bottom, #CEE8FD, #CEF8FF); */
 	vertical-align: top;
 	-moz-appearance: none;
 }
@@ -225,13 +224,13 @@ button.btn.addtocart {
 }
 
 #search-form select:hover {
-	color: white;
-	background: #3cb0fd;
+	//color: white;
+	/* background: #3cb0fd;
 	background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
 	background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
 	background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
 	background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
-	background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
+	background-image: linear-gradient(to bottom, #3cb0fd, #3498db); */
 }
 
 /* input type number spinner hide*/
@@ -284,6 +283,7 @@ input[type=number] {
 	padding: 10px 5px 10px 5px;
 	text-decoration: none;
 	transition-duration: .3s;
+	font-size:13px;
 }
 
 #horizontal-category-menu ul li a:hover, #horizontal-category-menu ul li a.active
@@ -366,7 +366,7 @@ input[type=number] {
 	background-color: #fff;
 }
 
-#item-container h2 {
+#item-container h2, #product-display h2 {
 	margin: 0;
   	display: table;
  	padding: 15px 35px;
@@ -449,6 +449,7 @@ form#customer {
 	margin: 0 auto;
 	display: table;
 	position: relative;
+	background-color:#fff;
 	top: 30px;
 	padding: 50px;
 	-webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, .4);

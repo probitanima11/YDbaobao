@@ -12,10 +12,12 @@
 
 #product-info-container {
 	position: relative;
-	height: 300px;
+	width:100%;
+	display:table;
+	margin: 25px 0;
 	padding: 25px 0;
-	margin-bottom: 100px;
-	/* outline: 1px solid #EA6576; */
+	background-color: #fff;
+	outline: 1px solid #bebebe;
 }
 
 #product-photo {
@@ -29,11 +31,10 @@
 
 #product-display {
 	position: relative;
-	height: 300px;
-	padding: 20px;
-	margin-top: -50px;
+	min-height: 300px;
+	background-color: #fff;
 	margin-bottom: 50px;
-	outline: 1px solid #EA6576;
+	outline: 1px solid #bebebe;
 }
 
 h1 {
@@ -44,7 +45,6 @@ h1 {
 
 #product-buy-container {
 	float:right;
-	margin-top: -25px;
 	margin-right: 100px;
 	width: 356px;
 }
@@ -55,6 +55,10 @@ h1 {
 	margin-left: 15px;
 	font-weight: 800;
 	color: #EA7565;
+}
+
+#sizeBox h3 {
+	margin:0;
 }
 
 .button-group {
@@ -143,7 +147,11 @@ i {
 				</c:choose>
 			</div>
 		</div>
-		<div id="product-display">${product.productDescription}</div>
+		<div id="product-display"> <h2>상품설명</h2>
+			<div id="product-description" style="padding:25px;">
+				${product.productDescription}
+			</div>
+		</div>
 	</div>
 	<div id="footer">
 		<%@ include file="./commons/_footer.jsp"%>

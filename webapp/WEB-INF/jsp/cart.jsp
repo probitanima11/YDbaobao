@@ -9,6 +9,10 @@
 <link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css">
 <title>YDbaobao:: 장바구니</title>
 <style>
+	body {
+		background-color: #fff;
+	}
+	
 	table#cart-list {
 		width:100%;
 		font-size:12px;
