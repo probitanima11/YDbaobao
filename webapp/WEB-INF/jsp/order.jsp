@@ -8,6 +8,10 @@
 <link rel="stylesheet" type="text/css" href="/css/main.css">
 <link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css">
 <style>
+body {
+	background-color: #fff;
+}
+
 #order-section {
 	margin:25px 0px;
 }
@@ -57,7 +61,7 @@ tr.border_top td {
 <title>YDbaobao:: 주문목록</title>
 </head>
 <body>
-	<div id="header" style="width: 100%;">
+	<div id="header">
 		<!-- 상단 navigator -->
 		<%@ include file="./commons/_topNav.jsp"%>
 		<!-- 브랜드/제품 검색바 -->
@@ -124,7 +128,7 @@ tr.border_top td {
 									<c:if test="${order.orderStatus eq 'I'}">
 										<button data-id="${order.orderId}" class="order-cancel">취소</button>
 									</c:if>
-									<button class="">주문서</button>
+									<button class="" onclick="getReceipt(${order.orderId})">주문서</button>
 								</td>
 								
 								<c:forEach var="i" begin="1" end="${fn:length(order.items)-1}">
@@ -171,13 +175,18 @@ tr.border_top td {
 		}
 		ydbaobao.ajax({
 			method: "put",
-			param: "orderStatus="+"S",
+			param: "orderStatus="+"C",
 			url: "/admin/orders/"+orderId,
 			success : function(req) {
 				document.querySelectorAll(".border_top[data-id='" + orderId + "'] > td")[6].innerText = "주문취소";
 				document.querySelectorAll(".border_top[data-id='" + orderId + "'] > td")[7].querySelector("button").remove();
 			}
 		});
+	}
+	
+	function getReceipt(orderId) {
+		var url = '/orders/receipt/' + orderId;
+		window.open(url, "_blank", "toolbar=yes, scrollbars=yes, resizable=yes, top=100, left=300, width=400, height=400");
 	}
 	</script>
 	<script src="/js/ydbaobao.js"></script>

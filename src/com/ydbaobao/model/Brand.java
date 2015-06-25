@@ -3,14 +3,29 @@ package com.ydbaobao.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+
 public class Brand {
 	private int brandId;
+	@NotNull
 	private String brandName;
 	private int brandCount;
+	@Min(0)
+	@Max(100)
 	private int discount_1;
+	@Min(0)
+	@Max(100)
 	private int discount_2;
+	@Min(0)
+	@Max(100)
 	private int discount_3;
+	@Min(0)
+	@Max(100)
 	private int discount_4;
+	@Min(0)
+	@Max(100)
 	private int discount_5;
 	private String brandSize;
 	

@@ -9,9 +9,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ydbaobao.dao.CustomerDao;
 import com.ydbaobao.dao.ItemDao;
 import com.ydbaobao.dao.OrderDao;
 import com.ydbaobao.dao.ProductDao;
+import com.ydbaobao.model.Customer;
 import com.ydbaobao.model.Item;
 import com.ydbaobao.model.Order;
 import com.ydbaobao.model.Product;
@@ -29,6 +31,8 @@ public class OrderService {
 	ProductDao productDao;
 	@Resource
 	ProductService productService;
+	@Resource
+	CustomerDao customerDao;
 	
 	/**
 	 * 주문 목록 리스트만 받아오기
@@ -100,6 +104,8 @@ public class OrderService {
 	 */
 	public Order readOrder(int orderId) {
 		Order order = orderDao.readOrder(orderId);
+		Customer customer = customerDao.readCustomerById(order.getCustomer().getCustomerId());
+		order.setCustomer(new Customer(customer.getCustomerId(), customer.getCustomerName(), customer.getCustomerGrade()));
 		List<Item> items = itemDao.readItemsByOrderId(orderId);
 		order.setItems(items);
 		return order;
