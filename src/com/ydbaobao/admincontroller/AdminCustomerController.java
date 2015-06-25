@@ -7,8 +7,6 @@ import java.util.stream.IntStream;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,14 +17,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.support.CommonUtil;
 import com.ydbaobao.model.Customer;
-import com.ydbaobao.model.Product;
 import com.ydbaobao.service.CustomerService;
 
 @Controller
 @RequestMapping("/admin/customers")
 public class AdminCustomerController {
-	private static final Logger logger = LoggerFactory.getLogger(AdminCustomerController.class);
-	
 	@Resource
 	private CustomerService customerService;
 	
