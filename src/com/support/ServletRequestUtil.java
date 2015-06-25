@@ -4,8 +4,8 @@ import java.io.IOException;
 
 import javax.servlet.http.HttpSession;
 
-import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.ydbaobao.model.SessionCustomer;
 

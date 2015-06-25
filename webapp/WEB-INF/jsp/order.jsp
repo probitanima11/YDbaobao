@@ -41,10 +41,6 @@ tbody td {
 	height: 50px;
 }
 
-.order-price {
-	font-weight: 800;
-}
-
 tfoot {
 	background-color: #f8f8f8;
 }
@@ -98,13 +94,15 @@ tr.border_top td {
 									<img class="item-image" src="/img/products/${order.items[0].product.productImage}">
 								</td>
 								<td>
-									<span class="item-name">상품명(${order.items[0].product.productName})</span>
-									<span class="item-size">사이즈(${order.items[0].size})</span>
-									<span class="item-price">가격(${order.items[0].product.productPrice})</span>
+									<span class="item-name"><b>${order.items[0].product.productName}</b></span>
+									<br />
+									<span class="item-size">사이즈 : ${order.items[0].size}</span>
+									<br />
+									<span class="item-price">가격 : ${order.items[0].product.productPrice}</span>
 								</td>
 								<td><span class="item-quantity">${order.items[0].quantity}</span></td>
 								<td><span class="order-price">${order.items[0].product.productPrice * order.items[0].quantity}</span></td>
-								<td rowspan="${fn:length(order.items)}">${order.realPrice}</td>
+								<td rowspan="${fn:length(order.items)}"><b>${order.realPrice}</b></td>
 								<c:choose>
 									<c:when test="${order.orderStatus eq 'I'}">
 										<td rowspan="${fn:length(order.items)}" colspan="1">주문대기</td>
@@ -135,9 +133,11 @@ tr.border_top td {
 											src="/img/products/${order.items[i].product.productImage}">
 										</td>
 										<td>
-											<span class="item-name">상품명(${order.items[i].product.productName})</span>
-											<span class="item-size">사이즈(${order.items[i].size})</span>
-											<span class="item-price">가격(${order.items[i].product.productPrice})</span>
+											<span class="item-name"><b>${order.items[i].product.productName}</b></span>
+											<br />
+											<span class="item-size">사이즈 : ${order.items[i].size}</span>
+											<br />
+											<span class="item-price">가격 : ${order.items[i].product.productPrice}</span>
 										</td>
 										<td><span class="item-quantity">${order.items[i].quantity}</span></td>
 										<td><span class="order-price">${order.items[i].product.productPrice * order.items[i].quantity}</span></td>
@@ -170,8 +170,9 @@ tr.border_top td {
 		    return;
 		}
 		ydbaobao.ajax({
-			method : 'put',
-			url : '/orders/cancel/' + orderId,
+			method: "put",
+			param: "orderStatus="+"S",
+			url: "/admin/orders/"+orderId,
 			success : function(req) {
 				document.querySelectorAll(".border_top[data-id='" + orderId + "'] > td")[6].innerText = "주문취소";
 				document.querySelectorAll(".border_top[data-id='" + orderId + "'] > td")[7].querySelector("button").remove();

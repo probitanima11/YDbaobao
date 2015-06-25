@@ -27,17 +27,23 @@ public class AdminOrderController {
 	@Resource
 	private PaymentService paymentService;
 
+	/**
+	 * 관리자 화면에서 주문 목록 리스트만 받아오기
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public String manageOrder(Model model) {
-		model.addAttribute("orders", orderService.readOrders());
+		model.addAttribute("orders", orderService.readOrdersListOnly());
 		return "admin/orderManager";
 	}
-	
-	@RequestMapping(value = "/{orderId}", method = RequestMethod.GET)
-	public ResponseEntity<Object> readOrder(@PathVariable int orderId) {
-		return JSONResponseUtil.getJSONResponse(orderService.readOrder(orderId), HttpStatus.OK);
-	}
 
+	/**
+	 * 관지자 화면에서 주문 내역에 대한 상태 변경(승인, 반려)
+	 * @param orderId
+	 * @param orderStatus
+	 * @return
+	 */
 	@RequestMapping(value = "/{orderId}", method = RequestMethod.PUT)
 	public ResponseEntity<Object> updateOrder(@PathVariable int orderId, @RequestParam String orderStatus) {
 		Order order = orderService.readOrder(orderId);
