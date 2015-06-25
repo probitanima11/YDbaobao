@@ -23,6 +23,7 @@ import com.support.ServletRequestUtil;
 import com.ydbaobao.dao.ItemDao;
 import com.ydbaobao.model.Item;
 import com.ydbaobao.model.Order;
+import com.ydbaobao.model.Payment;
 import com.ydbaobao.service.CategoryService;
 import com.ydbaobao.service.ItemService;
 import com.ydbaobao.service.OrderService;
@@ -94,7 +95,6 @@ public class OrderController {
 		logger.debug("상품화면에서 바로 주문하기");
 		String customerId = ServletRequestUtil.getCustomerIdFromSession(session);
 		int[] itemList = itemService.createItemsDirectly(customerId, size, quantity, productId);
-		orderService.createOrder(customerId, itemList);
 		return JSONResponseUtil.getJSONResponse(itemList, HttpStatus.OK);
 	}
 	
@@ -104,12 +104,13 @@ public class OrderController {
 	 * @param orderStatus
 	 * @return
 	 */
-	@RequestMapping(value = "/cancel/{orderId}", method = RequestMethod.PUT)
-	public ResponseEntity<Object> updateOrder(@PathVariable int orderId) {
-		if (orderService.readOrder(orderId).getOrderStatus().equals('C')) {
+	@RequestMapping(value = "/{orderId}", method = RequestMethod.PUT)
+	public ResponseEntity<Object> updateOrder(@PathVariable int orderId, @RequestParam String orderStatus) {
+		Order order = orderService.readOrder(orderId);
+		if (order.getOrderStatus().equals('C')) {
 			return JSONResponseUtil.getJSONResponse("이미 취소된 주문입니다.", HttpStatus.OK);
 		}
-		orderService.updateOrder(orderId, "C");
+		orderService.updateOrder(orderId, orderStatus);
 		return JSONResponseUtil.getJSONResponse("주문상태변경완료", HttpStatus.OK);
 	}
 	

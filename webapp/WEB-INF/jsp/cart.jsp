@@ -245,7 +245,7 @@
 			}
 		}
 	}
-
+/* 
 
 	function order(param) {
 		window.location.href = '/orders/?';
@@ -258,7 +258,7 @@
 				window.location.href = '/orders';
 			}
 		});
-	}
+	} */
 
 	function addItemsPrice() {
 		var el = document.querySelectorAll('.order-price');

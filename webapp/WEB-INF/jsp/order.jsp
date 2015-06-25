@@ -130,7 +130,6 @@ tr.border_top td {
 									</c:if>
 									<button class="" onclick="getReceipt(${order.orderId})">주문서</button>
 								</td>
-								
 								<c:forEach var="i" begin="1" end="${fn:length(order.items)-1}">
 									<tr>
 										<td class="item-image-container"><img class="item-image"
@@ -176,8 +175,8 @@ tr.border_top td {
 		ydbaobao.ajax({
 			method: "put",
 			param: "orderStatus=C",
-			url: "/admin/orders/"+orderId,
-			success : function(req) {
+			url: "/orders/"+orderId,
+			success: function(req){
 				document.querySelectorAll(".border_top[data-id='" + orderId + "'] > td")[6].innerText = "주문취소";
 				document.querySelectorAll(".border_top[data-id='" + orderId + "'] > td")[7].querySelector("button").remove();
 			}

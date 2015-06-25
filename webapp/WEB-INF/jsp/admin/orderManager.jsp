@@ -142,7 +142,7 @@
 			var orderId = e.target.parentNode.parentNode.getAttribute('data-id');
 			ydbaobao.ajax({
 				method: "put",
-				param: "orderStatus="+"S",
+				param: "orderStatus=S",
 				url: "/admin/orders/"+orderId,
 				success: function(req){
 					alert(req.responseText);
@@ -155,7 +155,7 @@
 			var orderId = e.target.parentNode.parentNode.getAttribute('data-id');
 			ydbaobao.ajax({
 				method: "put",
-				param: "orderStatus="+"R",
+				param: "orderStatus=R",
 				url: "/admin/orders/"+orderId,
 				success: function(req){
 					alert(req.responseText);
