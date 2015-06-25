@@ -43,36 +43,35 @@ img.snap{
 
  			<form id="imgForm" enctype="multipart/form-data" action="/admin/indexImages/" method="post">
 				<input type="file" id="imageFile"  name="imageFile" accept="image/x-png, image/gif, image/jpeg" style="display:none;" onchange="changeImage(this)"/>
-				<input type="hidden" id="imgIndex" name="imgIndex" value="${imgIndex}"/>
 			</form>
 			<table>
 				<tr>
-					<c:forEach  var="path" items="${imgPath}" varStatus="status" begin="0" end="3" step="1" >
+					<c:forEach  var="path" items="${indexImages}" varStatus="status" begin="0" end="3" step="1" >
 						<td>
-						<a href="#">
-							<c:if test="${path == ''}">
-								<i onclick="addClick(${status.index})" style="color: rgb(234, 101, 118); font-size: 100px; width: 100%; text-align: center;" class="fa fa-plus-circle"></i>
-							</c:if>
-							<c:if test="${path != ''}">
-								<img id="hoverImage${status.index}" class="hover" onclick="deleteClick(this)" onmouseout="mouseOut(${status.index})" src="/image/delete_hover.png">
-								<img class="snap" src="${path}" onmouseover="mouseOver(${status.index})">
-							</c:if>
-						</a>
+							<a href="#">
+								<c:if test="${path.indexImageName == null}">
+									<i onclick="addClick()" style="color: rgb(234, 101, 118); font-size: 100px; width: 100%; text-align: center;" class="fa fa-plus-circle"></i>
+								</c:if>
+								<c:if test="${path.indexImageName != null}">
+									<img id="hoverImage${status.index}" class="hover" onclick="deleteClick(this)" onmouseout="mouseOut(${status.index})" src="/image/delete_hover.png" data-id="${path.indexImageId}">
+									<img class="snap" src="/img/index/${path.indexImageName}" onmouseover="mouseOver(${status.index})">
+								</c:if>
+							</a>
 						</td>
 					</c:forEach>
 				</tr>
 				<tr>
-					<c:forEach  var="path" items="${imgPath}" varStatus="status" begin="4" end="7" step="1" >
+					<c:forEach  var="path" items="${indexImages}" varStatus="status" begin="4" end="7" step="1" >
 						<td>
-						<a href="#">
-							<c:if test="${path == ''}">
-								<i onclick="addClick(${status.index})" style="color: rgb(234, 101, 118); font-size: 100px; width: 100%; text-align: center;" class="fa fa-plus-circle"></i>
-							</c:if>
-							<c:if test="${path != ''}">
-								<img id="hoverImage${status.index}" class="hover" onclick="deleteClick(${status.index})" onmouseout="mouseOut(${status.index})" src="/image/delete_hover.png">
-								<img class="snap" src="${path}" onmouseover="mouseOver(${status.index})">
-							</c:if>
-						</a>
+							<a href="#">
+								<c:if test="${path.indexImageName == null}">
+									<i onclick="addClick()" style="color: rgb(234, 101, 118); font-size: 100px; width: 100%; text-align: center;" class="fa fa-plus-circle"></i>
+								</c:if>
+								<c:if test="${path.indexImageName != null}">
+									<img id="hoverImage${status.index}" class="hover" onclick="deleteClick(this)" onmouseout="mouseOut(${status.index})" src="/image/delete_hover.png" data-id="${path.indexImageId}">
+									<img class="snap" src="/img/index/${path.indexImageName}" onmouseover="mouseOver(${status.index})">
+								</c:if>
+							</a>
 						</td>
 					</c:forEach>
 				</tr>
@@ -80,29 +79,29 @@ img.snap{
 		</div>
 	</div>
 	<script>
-	function addClick(imgIndex) {
-		document.querySelector("#imgIndex").value = imgIndex;
+	function addClick() {
 		document.querySelector('#imageFile').click();
 	}
-	
+
 	function changeImage(input) {
 		var form = document.querySelector("#imgForm");
 		form.action = action="/admin/indexImages/";
 		form.submit();
 	}
-	
+
 	function mouseOver(imgIndex) {
 		document.querySelector("#hoverImage"+imgIndex).style.display = "block";
 	}
-	
+
 	function mouseOut(imgIndex) {
 		document.querySelector("#hoverImage"+imgIndex).style.display = "none";
 	}
-	
+
 	function deleteClick(el) {
-		/* var form = document.querySelector("#imgForm");
-		form.action = action="/admin/indexImages/"+imgIndex;
-		form.submit(); */
+		var indexImageId = el.dataset.id;
+		var form = document.querySelector("#imgForm");
+		form.action = action="/admin/indexImages/"+indexImageId;
+		form.submit();
 	}
 	</script>
 	<script src="/js/ydbaobao.js"></script>

@@ -8,24 +8,23 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ydbaobao.dao.AdminIndexImageDao;
+import com.ydbaobao.model.IndexImage;
 
 @Service
 @Transactional
 public class AdminIndexImageService {
-	
 	@Resource
 	private AdminIndexImageDao adminIndexImageDao;
 	
-	public List<String> read() {
-		return adminIndexImageDao.read();
+	public List<IndexImage> readIndexImages() {
+		return adminIndexImageDao.readIndexImages();
 	}
 	
-	public void create() {
-		adminIndexImageDao.create();
+	public void create(String fileName) {
+		adminIndexImageDao.create(fileName);
 	}
 	
-	public void delete() {
-		adminIndexImageDao.delete();
+	public void delete(int indexImageId) {
+		adminIndexImageDao.delete(indexImageId);
 	}
 }
-

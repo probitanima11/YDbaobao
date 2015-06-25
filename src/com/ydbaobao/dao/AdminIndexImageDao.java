@@ -9,6 +9,8 @@ import javax.sql.DataSource;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.stereotype.Repository;
 
+import com.ydbaobao.model.IndexImage;
+
 @Repository
 public class AdminIndexImageDao extends JdbcDaoSupport {
 
@@ -20,19 +22,20 @@ public class AdminIndexImageDao extends JdbcDaoSupport {
 		setDataSource(dataSource);
 	}
 
-	public List<String> read() {
-		String sql = "select * from ADMININDEXIMAGE";
-		return getJdbcTemplate().query(sql, (rs, rowNum) -> new String(rs.getString("indexImageName")));
+	public List<IndexImage> readIndexImages() {
+		String sql = "select * from INDEXIMAGES";
+		return getJdbcTemplate().query(
+				sql, (rs, rowNum) -> new IndexImage(rs.getInt("indexImageId")
+						, rs.getString("indexImageName")));
 	}
 
-	public void delete() {
-		// TODO Auto-generated method stub
-		
+	public void create(String fileName) {
+		String sql = "insert into INDEXIMAGES(indexImageName) values(?)";
+		getJdbcTemplate().update(sql, fileName);
 	}
 
-	public void create() {
-		// TODO Auto-generated method stub
-		
+	public void delete(int indexImageId) {
+		String sql = "delete from INDEXIMAGES where indexImageId = ?";
+		getJdbcTemplate().update(sql, indexImageId);
 	}
-
 }
