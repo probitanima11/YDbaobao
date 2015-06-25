@@ -124,7 +124,7 @@ tr.border_top td {
 									<c:if test="${order.orderStatus eq 'I'}">
 										<button data-id="${order.orderId}" class="order-cancel">취소</button>
 									</c:if>
-									<button class="">주문서</button>
+									<button class="" onclick="getReceipt(${order.orderId})">주문서</button>
 								</td>
 								
 								<c:forEach var="i" begin="1" end="${fn:length(order.items)-1}">
@@ -177,6 +177,11 @@ tr.border_top td {
 				document.querySelectorAll(".border_top[data-id='" + orderId + "'] > td")[7].querySelector("button").remove();
 			}
 		});
+	}
+	
+	function getReceipt(orderId) {
+		var url = '/orders/receipt/' + orderId;
+		window.open(url, "_blank", "toolbar=yes, scrollbars=yes, resizable=yes, top=100, left=300, width=400, height=400");
 	}
 	</script>
 	<script src="/js/ydbaobao.js"></script>
