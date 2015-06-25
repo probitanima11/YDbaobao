@@ -31,32 +31,25 @@ public class AdminCustomerController {
 	private CustomerService customerService;
 	
 	@RequestMapping(value = "", method = RequestMethod.GET)
-	public String manageMember(Model model) {
+	public String manageMember(Model model, @RequestParam int page) {
 		model.addAttribute("gradeId", "-1");
-		model.addAttribute("customers", customerService.readCustomers());
+		model.addAttribute("customers", customerService.readCustomers(page, 10));
+		int count = customerService.countCustomers();
+		int totalPage = CommonUtil.countTotalPage(count, CommonUtil.productsPerPage);
+		model.addAttribute("prev", CommonUtil.prevBlock(page));
+		model.addAttribute("next", CommonUtil.nextBlock(page, page));
+		model.addAttribute("selectedIndex", page);
+		model.addAttribute("url", "/admin/customers?page=");
+		model.addAttribute("range", IntStream.range(CommonUtil.startPage(page), CommonUtil.endPage(page, totalPage)).toArray());
 		return "admin/customerManager";
 	}
-	
-	@RequestMapping(value = "/grade", method = RequestMethod.GET)
-	public String gradeMember(Model model, @RequestParam int gradeId) {
-		if(gradeId==-1){
-			model.addAttribute("customers", customerService.readCustomers());
-		}
-		else {
-			model.addAttribute("customers", customerService.readCustomersByGrade(gradeId));
-		}
-		model.addAttribute("gradeId", gradeId);
-		return "admin/customerManager";
-	}
-	
 	
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
 	public String readByCustomerName(HttpSession session, Model model, @RequestParam String customerName, @RequestParam int page) {
 		String terms = customerService.preprocessingTerms(customerName);
-		model.addAttribute("product", new Product());
 		List<Customer> customers = customerService.readByCustomerName(terms, page, 10);
 		int count = customerService.countBySearchCustomerName(terms);
-		model.addAttribute("searchMessage", "고객명 \'"+customerName+"\'에 대한 검색 결과가 "+count+" 건 있습니다.");
+		model.addAttribute("searchMessage", "이름 \'"+terms+"\'에 대한 검색 결과가 "+count+" 건 있습니다.");
 		int totalPage = CommonUtil.countTotalPage(count, CommonUtil.productsPerPage);
 		model.addAttribute("prev", CommonUtil.prevBlock(page));
 		model.addAttribute("next", CommonUtil.nextBlock(page, page));
@@ -69,7 +62,16 @@ public class AdminCustomerController {
 	
 	@RequestMapping(value = "/search/{customerId}", method = RequestMethod.GET)
 	public String readCustomerById(Model model, @PathVariable String customerId) {
-		
+		String terms = customerService.preprocessingTerms(customerId);
+		int count = customerService.countBySearchCustomerId(terms);
+		int page=1;
+		model.addAttribute("searchMessage", "ID \'"+terms+"\'에 대한 검색 결과가 "+count+" 건 있습니다.");
+		int totalPage = CommonUtil.countTotalPage(count, CommonUtil.productsPerPage);
+		model.addAttribute("prev", CommonUtil.prevBlock(page));
+		model.addAttribute("next", CommonUtil.nextBlock(page, page));
+		model.addAttribute("selectedIndex", page);
+		model.addAttribute("url", "/admin/customers/search?customerName=" + terms + "&page=");
+		model.addAttribute("range", IntStream.range(CommonUtil.startPage(page), CommonUtil.endPage(page, totalPage)).toArray());
 		List<Customer> customers = new ArrayList<Customer>();
 		customers.add(customerService.readCustomerById(customerId));
 		model.addAttribute("customers", customers);

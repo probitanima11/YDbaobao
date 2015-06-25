@@ -43,8 +43,8 @@
 			<form id="search-form">
 				<div id="search-bar">
 					<select id="select">
-						<option class="selected">고객명</option>
-						<option>고객ID</option>
+						<option class="selected">ID</option>
+						<option>이름</option>
 					</select> 
 					<input id="search-terms" type="text" />
 				</div>
@@ -53,26 +53,11 @@
 					<div>${searchMessage}</div>
 				</c:if>
 			</form>
-
-				<label class="control-label">등급 선택 :</label>
-				<select class="grade-select" name="gradeId"">
-				<option value="-1" label="전체등급" selected="selected">${status.index}</option>
-					<c:forEach varStatus="status" begin="0" end="5" step="1">
-						<c:choose>
-							<c:when test="${status.index eq gradeId}">
-								<option value="${status.index}" label="${status.index}등급" selected="selected">${status.index}</option>
-							</c:when>
-							<c:otherwise>
-								<option value="${status.index}" label="${status.index}등급">${status.index}</option>
-							</c:otherwise>
-						</c:choose>
-					</c:forEach>
-				</select>
 			<table id="customer-table" style="width: 800px;">
 				<thead>
 					<tr>
-						<th >회원아이디</th>
-						<th >회원이름</th>
+						<th >ID</th>
+						<th >이름</th>
 						<th >이메일</th>
 						<th >등급</th>
 						<th >가입일</th>
@@ -146,21 +131,16 @@
 			});
 		}
 		
-		document.body.querySelector('.grade-select').addEventListener('change', function(e) {
-			window.location.href = '/admin/customers/grade?gradeId='+ e.target.value;
-		}, false);
-		
-		
 		document.querySelector("#search-form").addEventListener('submit', function(e) {
 			debugger;
 			e.preventDefault();
 			var selected = document.querySelector('.selected').value;
 			var terms = document.querySelector('#search-terms').value;
-			if(selected === '고객명') {
+			if(selected === '이름') {
 				debugger;
 				window.location.href = '/admin/customers/search?customerName=' + terms +'&page=1';
 			}
-			if(selected === '고객ID') {
+			if(selected === 'ID') {
 				debugger;
 				window.location.href = '/admin/customers/search/' + terms;
 			}

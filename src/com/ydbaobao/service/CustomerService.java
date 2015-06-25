@@ -44,6 +44,10 @@ public class CustomerService {
 	public List<Customer> readCustomers() {
 		return customerDao.readCustomers();
 	}
+	
+	public List<Customer> readCustomers(int page, int customersPerPage) {
+		return customerDao.readCustomers(page, customersPerPage);
+	}
 
 	public Customer readCustomerById(String customerId) {
 		return customerDao.readCustomerById(customerId);
@@ -67,10 +71,6 @@ public class CustomerService {
 		return customerDao.findCustomerByCustomerId(customerId);
 	}
 
-	public List<Customer> readCustomersByGrade(int selectedGrade) {
-		return customerDao.readCustomersByGrade(selectedGrade);
-	}
-
 	public String preprocessingTerms(String terms) {
 		Pattern pt = Pattern.compile("^\\s{1,}|\\s{1,}$");
 		Matcher m = pt.matcher(terms);
@@ -83,7 +83,15 @@ public class CustomerService {
 	}
 
 	public int countBySearchCustomerName(String termsForQuery) {
-		return customerDao.countBySearchProductName(termsForQuery);
+		return customerDao.countBySearchCustomerName(termsForQuery);
+	}
+
+	public int countCustomers() {
+		return customerDao.countCustomers();
+	}
+
+	public int countBySearchCustomerId(String terms) {
+		return customerDao.countBySearchCustomerId(terms);
 	}
 
 }
