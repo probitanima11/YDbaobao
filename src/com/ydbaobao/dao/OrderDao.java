@@ -61,7 +61,7 @@ public class OrderDao extends JdbcDaoSupport {
 				sql, (rs, rowNum) -> new Order(rs.getInt("orderId"), rs
 						.getString("orderStatus"), new Customer(rs
 								.getString("customerId")), rs.getInt("enuri"), rs
-								.getInt("realPrice"), rs.getString("orderUpdateDate"), rs.getString("orderAddress")),
+								.getInt("realPrice"), rs.getString("orderAddress"), rs.getString("orderUpdateDate")),
 								orderId);
 	}
 
