@@ -41,12 +41,8 @@ public class CustomerService {
 		customerDao.updateCustomer(customer);
 	}
 	
-	public List<Customer> readCustomers() {
-		return customerDao.readCustomers();
-	}
-	
 	public List<Customer> readCustomers(int page, int customersPerPage) {
-		return customerDao.readCustomers(page, customersPerPage);
+		return customerDao.readCustomers((page-1) * customersPerPage, customersPerPage);
 	}
 
 	public Customer readCustomerById(String customerId) {

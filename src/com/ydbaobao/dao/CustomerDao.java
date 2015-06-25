@@ -127,7 +127,7 @@ public class CustomerDao extends JdbcDaoSupport {
 	}
 
 	public List<Customer> readCustomers(int page, int customersPerPage) {
-		String sql ="select * from CUSTOMERS ORDER BY customerName LIMIT ?, ?";
+		String sql ="select * from CUSTOMERS ORDER BY customerCreateDate DESC LIMIT ?, ?";
 		return getJdbcTemplate().query(
 				sql, (rs, rowNum) -> new Customer(
 						rs.getString("customerId"),
