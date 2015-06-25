@@ -4,7 +4,6 @@ public class Item {
 	private int itemId;
 	private Customer customer;
 	private Product product;
-	private Order order;
 	private String size;
 	private int quantity;
 	
@@ -13,14 +12,13 @@ public class Item {
 	}
 	
 	public Item(int itemId) {
-		this(itemId, null, null, null, null, 0);
+		this(itemId, null, null, null, 0);
 	}
 
-	public Item(int itemId, Customer customer, Product product, Order order, String size, int quantity) {
+	public Item(int itemId, Customer customer, Product product, String size, int quantity) {
 		this.itemId = itemId;
 		this.customer = customer;
 		this.product = product;
-		this.order = order;
 		this.size = size;
 		this.quantity = quantity;
 	}
@@ -35,10 +33,6 @@ public class Item {
 
 	public Product getProduct() {
 		return product;
-	}
-
-	public Order getOrder() {
-		return order;
 	}
 
 	public String getSize() {
@@ -61,10 +55,6 @@ public class Item {
 		this.product = product;
 	}
 
-	public void setOrder(Order order) {
-		this.order = order;
-	}
-
 	public void setSize(String size) {
 		this.size = size;
 	}
@@ -77,9 +67,9 @@ public class Item {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((customer == null) ? 0 : customer.hashCode());
+		result = prime * result
+				+ ((customer == null) ? 0 : customer.hashCode());
 		result = prime * result + itemId;
-		result = prime * result + ((order == null) ? 0 : order.hashCode());
 		result = prime * result + ((product == null) ? 0 : product.hashCode());
 		result = prime * result + quantity;
 		result = prime * result + ((size == null) ? 0 : size.hashCode());
@@ -102,11 +92,6 @@ public class Item {
 			return false;
 		if (itemId != other.itemId)
 			return false;
-		if (order == null) {
-			if (other.order != null)
-				return false;
-		} else if (!order.equals(other.order))
-			return false;
 		if (product == null) {
 			if (other.product != null)
 				return false;
@@ -124,8 +109,8 @@ public class Item {
 
 	@Override
 	public String toString() {
-		return "Item [itemId=" + itemId + ", customer=" + customer + ", product=" + product + ", order=" + order
-				+ ", size=" + size + ", quantity=" + quantity + "]";
+		return "Item [itemId=" + itemId + ", customer=" + customer
+				+ ", product=" + product + ", size=" + size + ", quantity="
+				+ quantity + "]";
 	}
-	
 }

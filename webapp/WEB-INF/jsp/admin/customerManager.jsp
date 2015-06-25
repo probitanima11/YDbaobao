@@ -39,25 +39,25 @@
 		<%@ include file="./_adminNav.jsp" %>
 		<div id="content">
 			<h1>회원관리</h1>
-				<label class="control-label">등급 선택 :</label>
-				<select class="grade-select" name="gradeId"">
-				<option value="-1" label="전체등급" selected="selected">${status.index}</option>
-					<c:forEach varStatus="status" begin="0" end="5" step="1">
-						<c:choose>
-							<c:when test="${status.index eq gradeId}">
-								<option value="${status.index}" label="${status.index}등급" selected="selected">${status.index}</option>
-							</c:when>
-							<c:otherwise>
-								<option value="${status.index}" label="${status.index}등급">${status.index}</option>
-							</c:otherwise>
-						</c:choose>
-					</c:forEach>
-				</select>
+			
+			<form id="search-form">
+				<div id="search-bar">
+					<select id="select">
+						<option class="selected">ID</option>
+						<option>이름</option>
+					</select> 
+					<input id="search-terms" type="text" />
+				</div>
+				<button id="search-btn" class="btn" type="submit">검색</button>
+				<c:if test="${not empty searchMessage}">
+					<div>${searchMessage}</div>
+				</c:if>
+			</form>
 			<table id="customer-table" style="width: 800px;">
 				<thead>
 					<tr>
-						<th >회원아이디</th>
-						<th >회원이름</th>
+						<th >ID</th>
+						<th >이름</th>
 						<th >이메일</th>
 						<th >등급</th>
 						<th >가입일</th>
@@ -91,11 +91,12 @@
 								<a href="/admin/payment/${customer.customerId}"><button class='btn btn-payment'><i class='fa fa-list'></i>  출납관리</button></a>
 								<a href="/admin/customers/${customer.customerId}"><button class="btn btn-warn"><i class="fa fa-info-circle"></i>  상세정보</button></a>
 								<a href="#"><button class="btn btn-err" onclick="deleteCustomer('${customer.customerId}')"><i class="fa fa-remove"></i>  삭제</button></a>
-							</td>	
-						</tr>
+							</td>
+							</tr>
 					</c:forEach>
 				</tbody>
 			</table>
+			<%@ include file="../commons/_customerListBar.jsp" %>
 		</div>
 	</div>
 	<script>
@@ -130,9 +131,30 @@
 			});
 		}
 		
-		document.body.querySelector('.grade-select').addEventListener('change', function(e) {
-			window.location.href = '/admin/customers/grade?gradeId='+ e.target.value;
+		document.querySelector("#search-form").addEventListener('submit', function(e) {
+			debugger;
+			e.preventDefault();
+			var selected = document.querySelector('.selected').value;
+			var terms = document.querySelector('#search-terms').value;
+			if(selected === '이름') {
+				debugger;
+				window.location.href = '/admin/customers/search?customerName=' + terms +'&page=1';
+			}
+			if(selected === 'ID') {
+				debugger;
+				window.location.href = '/admin/customers/search/' + terms;
+			}
 		}, false);
+		
+		document.querySelector('#select').addEventListener('change', function(e) {
+			document.querySelector('.selected').classList.remove('selected');
+			for(var i = 0 ; i < e.target.options.length; i++) {
+				if(e.target.options[i].value === e.target.value) {
+					e.target.options[i].classList.add('selected');
+				}	
+			}
+		}, false);
+		
 		
 	</script>
 </body>
