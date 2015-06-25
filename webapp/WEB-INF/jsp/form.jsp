@@ -11,7 +11,7 @@
 <title>YDbaobao</title>
 </head>
 <body>
-	<div id="header" style="width: 100%;">
+	<div id="header">
 		<!-- 상단 navigator -->
 		<%@ include file="./commons/_topNav.jsp"%>
 	</div>

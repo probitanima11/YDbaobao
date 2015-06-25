@@ -9,6 +9,10 @@
 <link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css">
 <title>YDbaobao:: 장바구니</title>
 <style>
+	body {
+		background-color: #fff;
+	}
+	
 	table#cart-list {
 		width:100%;
 		font-size:12px;
@@ -54,7 +58,7 @@
 </style>
 </head>
 <body>
-	<div id="header" style="width: 100%;">
+	<div id="header">
 		<!-- 상단 navigator -->
 		<%@ include file="./commons/_topNav.jsp"%>
 		<!-- 브랜드/제품 검색바 -->
