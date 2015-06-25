@@ -48,6 +48,7 @@ public class AdminIndexController {
 		if(imageFile.getSize() > 512000) {
 			logger.debug("이미지 업로드 실패!, 용량이 500kb 초과되었습니다");
 			model.addAttribute("errorMessage", "용량이 500kb 초과되었습니다");
+			model.addAttribute("indexImages", getIndexImages());
 			return "/admin/indexManager";
 		}
 		// 파일 저장

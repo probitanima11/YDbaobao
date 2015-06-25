@@ -157,8 +157,9 @@ tfoot tr {
 		    return;
 		}
 		ydbaobao.ajax({
-			method : 'put',
-			url : '/orders/cancel/' + orderId,
+			method: "put",
+			param: "orderStatus="+"S",
+			url: "/admin/orders/"+orderId,
 			success : function(req) {
 				document.querySelectorAll(".order-head[data-id='" + orderId + "'] > td")[2].innerText = "주문취소";
 				document.querySelectorAll(".order-head[data-id='" + orderId + "'] > td")[3].remove();

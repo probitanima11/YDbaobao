@@ -38,7 +38,7 @@ public class ItemDao extends JdbcDaoSupport {
 							new Product(rs.getInt("productId"), rs.getString("productName"), rs.getInt("productPrice"), rs.getString("productImage"), rs.getString("productSize"), rs.getInt("isSoldout"),
 									new Brand(rs.getInt("brandId"), rs.getString("brandName"), rs.getInt("discount_1"), rs.getInt("discount_2"),
 											rs.getInt("discount_3"), rs.getInt("discount_4"), rs.getInt("discount_5"))),
-							new Order(rs.getInt("orderId")), rs.getString("size"), rs.getInt("quantity")), customerId);
+							rs.getString("size"), rs.getInt("quantity")), customerId);
 		} catch (EmptyResultDataAccessException e) {
 			return null;
 		}
@@ -60,7 +60,6 @@ public class ItemDao extends JdbcDaoSupport {
 		return getJdbcTemplate().queryForObject(sql, (rs, rowNum) -> new Item(
 				rs.getInt("itemId"), new Customer(rs.getString("customerId")),
 				new Product(rs.getInt("productId"),rs.getString("productName"), rs.getInt("productPrice"), rs.getString("productImage"), rs.getString("productSize"), rs.getInt("isSoldout"), new Brand(rs.getInt("brandId"))),
-				new Order(),
 				rs.getString("size"), rs.getInt("quantity")), itemId);
 	}
 
@@ -71,8 +70,7 @@ public class ItemDao extends JdbcDaoSupport {
 					sql,
 					(rs, rowNum) -> new Item(rs.getInt("itemId"), new Customer(rs.getString("customerId")),
 							new Product(rs.getInt("productId"), rs.getString("productName"), rs.getInt("productPrice"),
-									rs.getString("productImage"), rs.getString("productSize"), rs.getInt("isSoldout"), new Brand(rs.getInt("brandId"))),
-							new Order(rs.getInt("orderId")), rs.getString("size"), rs.getInt("quantity")), customerId);
+									rs.getString("productImage"), rs.getString("productSize"), rs.getInt("isSoldout"), new Brand(rs.getInt("brandId"))), rs.getString("size"), rs.getInt("quantity")), customerId);
 		} catch (EmptyResultDataAccessException e) {
 			return null;
 		}
@@ -97,8 +95,7 @@ public class ItemDao extends JdbcDaoSupport {
 				sql,
 				(rs, rownum) -> new Item(rs.getInt("itemId"), new Customer(rs.getString("customerId")), new Product(rs
 						.getInt("productId"), rs.getString("productName"), rs.getInt("productPrice"), rs
-						.getString("productImage"), rs.getString("productSize"), rs.getInt("isSoldout"), new Brand()), new Order(rs
-						.getInt("orderId")), rs.getString("size"), rs.getInt("quantity")), orderId);
+						.getString("productImage"), rs.getString("productSize"), rs.getInt("isSoldout"), new Brand(rs.getInt("brandId"))), rs.getString("size"), rs.getInt("quantity")), orderId);
 	}
 	
 	public boolean isItemByProductIdAndSize(int productId, String size) {
@@ -114,7 +111,6 @@ public class ItemDao extends JdbcDaoSupport {
 		return getJdbcTemplate().queryForObject(sql, (rs, rowNum) -> new Item(
 				rs.getInt("itemId"), new Customer(rs.getString("customerId")),
 				new Product(rs.getInt("productId")),
-				new Order(),
 				rs.getString("size"), rs.getInt("quantity")), productId, size);
 	}
 
