@@ -113,15 +113,15 @@
 	<script>
 		window.addEventListener('load', function(){
 			var i;
-			var infoBtns = document.querySelectorAll('.info');
+			var infoBtns = document.querySelectorAll('button.info');
 			for (i = 0; i < infoBtns.length; i++) {
 				infoBtns[i].addEventListener('click', showOrder, false);
 			}
-			var checkBtns = document.querySelectorAll('.success');
+			var checkBtns = document.querySelectorAll('button.success');
 			for (i = 0; i < checkBtns.length; i++) {
 				checkBtns[i].addEventListener('click', checkOrder, false);
 			}
-			var claimBtns = document.querySelectorAll('.claim');
+			var claimBtns = document.querySelectorAll('button.claim');
 			for (i = 0; i < claimBtns.length; i++) {
 				claimBtns[i].addEventListener('click', claimOrder, false);
 			}

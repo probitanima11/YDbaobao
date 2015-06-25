@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.WebRequest;
 
+import com.google.gson.Gson;
 import com.support.CommonUtil;
 import com.ydbaobao.exception.ExceptionForMessage;
 import com.ydbaobao.exception.JoinValidationException;
@@ -24,6 +25,7 @@ import com.ydbaobao.model.Brand;
 import com.ydbaobao.model.Customer;
 import com.ydbaobao.model.SessionCustomer;
 import com.ydbaobao.service.AdminConfigService;
+import com.ydbaobao.service.AdminIndexImageService;
 import com.ydbaobao.service.BrandService;
 import com.ydbaobao.service.CategoryService;
 import com.ydbaobao.service.CustomerService;
@@ -43,6 +45,8 @@ public class HomeController {
 	private ProductService productService;
 	@Resource
 	private AdminConfigService adminConfigService;
+	@Resource
+	private AdminIndexImageService adminIndexImageService;
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Model model, WebRequest req, HttpSession session) {
@@ -59,16 +63,7 @@ public class HomeController {
 		model.addAttribute("categories", categoryService.readWithoutUnclassifiedCategory());
 		model.addAttribute("brands", brandService.readBrands());
 		model.addAttribute("firstLetterList", new Brand().getFirstLetters());
-
-		StringBuilder imgPath = new StringBuilder();
-		for (int i = 0; i < 8; i++) {
-			String filePath = "index_0" + i + ".jpg";
-			File f = new File("/home/baobao/index/" + filePath);
-			if (f.isFile()) {
-				imgPath.append(",/img/index/" + filePath);
-			}
-		}
-		model.addAttribute("imgPath", imgPath);
+		model.addAttribute("indexImages", new Gson().toJson(adminIndexImageService.readIndexImages()));
 		model.addAttribute("isHome", "home");
 		return "index";
 	}

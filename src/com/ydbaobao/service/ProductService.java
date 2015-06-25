@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.support.ImageResizeUtil;
+import com.support.ImageFactoryUtil;
 import com.ydbaobao.dao.BrandDao;
 import com.ydbaobao.dao.CategoryDao;
 import com.ydbaobao.dao.CustomerDao;
@@ -121,7 +121,7 @@ public class ProductService {
 		String extension = imageSplitName[imageSplitName.length - 1];
 		String imageName = product.getProductId() + "." + extension;
 		try {
-			File imageFile = new File(ImageResizeUtil.savingPath + imageName);
+			File imageFile = new File(ImageFactoryUtil.savingPath + imageName);
 			productImage.transferTo(imageFile);
 			product.setProductImage(imageName);
 		} catch (IllegalStateException | IOException e) {

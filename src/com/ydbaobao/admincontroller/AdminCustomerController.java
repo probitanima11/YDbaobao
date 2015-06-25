@@ -25,7 +25,20 @@ public class AdminCustomerController {
 	
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public String manageMember(Model model) {
+		model.addAttribute("gradeId", "-1");
 		model.addAttribute("customers", customerService.readCustomers());
+		return "admin/customerManager";
+	}
+	
+	@RequestMapping(value = "/grade", method = RequestMethod.GET)
+	public String gradeMember(Model model, @RequestParam int gradeId) {
+		if(gradeId==-1){
+			model.addAttribute("customers", customerService.readCustomers());
+		}
+		else {
+			model.addAttribute("customers", customerService.readCustomersByGrade(gradeId));
+		}
+		model.addAttribute("gradeId", gradeId);
 		return "admin/customerManager";
 	}
 	
