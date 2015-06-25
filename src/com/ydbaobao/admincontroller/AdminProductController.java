@@ -134,7 +134,6 @@ public class AdminProductController {
 		int totalPage = CommonUtil.countTotalPage(count, CommonUtil.productsPerPage);
 		List<Category> categories = categoryService.read();
 		categories.add(0, new Category(-1, "전체보기", productService.count()));
-
 		model.addAttribute("prev", CommonUtil.prevBlock(page));
 		model.addAttribute("next", CommonUtil.nextBlock(page, page));
 		model.addAttribute("selectedIndex", page);

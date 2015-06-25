@@ -1,6 +1,8 @@
 package com.ydbaobao.service;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.annotation.Resource;
 
@@ -67,6 +69,21 @@ public class CustomerService {
 
 	public List<Customer> readCustomersByGrade(int selectedGrade) {
 		return customerDao.readCustomersByGrade(selectedGrade);
+	}
+
+	public String preprocessingTerms(String terms) {
+		Pattern pt = Pattern.compile("^\\s{1,}|\\s{1,}$");
+		Matcher m = pt.matcher(terms);
+		String query = m.replaceAll("").replaceAll(" ", "|");
+		return query;
+	}
+
+	public List<Customer> readByCustomerName(String termsForQuery, int page, int customersPerPage) {
+		return customerDao.readRange(termsForQuery, (page - 1) * customersPerPage, customersPerPage);
+	}
+
+	public int countBySearchCustomerName(String termsForQuery) {
+		return customerDao.countBySearchProductName(termsForQuery);
 	}
 
 }

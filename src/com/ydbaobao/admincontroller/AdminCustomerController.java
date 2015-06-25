@@ -1,5 +1,9 @@
 package com.ydbaobao.admincontroller;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.IntStream;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
@@ -13,6 +17,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.support.CommonUtil;
+import com.ydbaobao.model.Customer;
+import com.ydbaobao.model.Product;
 import com.ydbaobao.service.CustomerService;
 
 @Controller
@@ -41,6 +48,34 @@ public class AdminCustomerController {
 		model.addAttribute("gradeId", gradeId);
 		return "admin/customerManager";
 	}
+	
+	
+	@RequestMapping(value = "/search", method = RequestMethod.GET)
+	public String readByCustomerName(HttpSession session, Model model, @RequestParam String customerName, @RequestParam int page) {
+		String terms = customerService.preprocessingTerms(customerName);
+		model.addAttribute("product", new Product());
+		List<Customer> customers = customerService.readByCustomerName(terms, page, 10);
+		int count = customerService.countBySearchCustomerName(terms);
+		model.addAttribute("searchMessage", "고객명 \'"+customerName+"\'에 대한 검색 결과가 "+count+" 건 있습니다.");
+		int totalPage = CommonUtil.countTotalPage(count, CommonUtil.productsPerPage);
+		model.addAttribute("prev", CommonUtil.prevBlock(page));
+		model.addAttribute("next", CommonUtil.nextBlock(page, page));
+		model.addAttribute("selectedIndex", page);
+		model.addAttribute("url", "/admin/customers/search?customerName=" + terms + "&page=");
+		model.addAttribute("range", IntStream.range(CommonUtil.startPage(page), CommonUtil.endPage(page, totalPage)).toArray());
+		model.addAttribute("customers", customers);
+		return "admin/customerManager";
+	}
+	
+	@RequestMapping(value = "/search/{customerId}", method = RequestMethod.GET)
+	public String readCustomerById(Model model, @PathVariable String customerId) {
+		
+		List<Customer> customers = new ArrayList<Customer>();
+		customers.add(customerService.readCustomerById(customerId));
+		model.addAttribute("customers", customers);
+		return "admin/customerManager";
+	}
+	
 	
 	/**
 	 * 관리자 페이지에서 회원목록에서 회원상세보기 버튼 클릭시 동작

@@ -113,4 +113,29 @@ public class CustomerDao extends JdbcDaoSupport {
 			return null;
 		}
 	}
+	
+	/**
+	 * offset부터 customersPerPage만큼 상품 수를 불러온다
+	 * @param offset, customersPerPage
+	 * @param customersPerPage
+	 * @return CUSTOMERS table에서 offset에서부터 customersPerPage 만큼 가져온 Customers
+	 */
+	public List<Customer> readRange(String termsForQuery, int offset, int customersPerPage) {
+		String sql ="select * from CUSTOMERS where customerName=? ORDER BY customerName LIMIT ?, ?";
+		return getJdbcTemplate().query(
+				sql, (rs, rowNum) -> new Customer(
+						rs.getString("customerId"),
+						rs.getString("customerName"), 
+						rs.getString("customerPassword"),
+						rs.getString("gradeId"),
+						rs.getString("customerPhone"),
+						rs.getString("customerEmail"),
+						rs.getString("customerAddress"),
+						rs.getString("customerCreateDate")), termsForQuery, offset, customersPerPage);
+	}
+
+	public int countBySearchProductName(String termsForQuery) {
+		String sql = "select count(1) as count from CUSTOMERS where customerName REGEXP (?)";
+		return getJdbcTemplate().queryForObject(sql, Integer.class, termsForQuery);
+	}
 }
