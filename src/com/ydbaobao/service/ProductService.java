@@ -8,8 +8,6 @@ import java.util.regex.Pattern;
 
 import javax.annotation.Resource;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,8 +26,6 @@ import com.ydbaobao.model.SessionCustomer;
 @Service
 @Transactional
 public class ProductService {
-	private static final Logger logger = LoggerFactory.getLogger(ProductService.class);
-
 	@Resource
 	ProductDao productDao;
 	@Resource
