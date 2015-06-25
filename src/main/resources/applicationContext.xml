@@ -8,7 +8,7 @@
 
 	<tx:annotation-driven />
 
-	<context:component-scan base-package="com.ydbaobao.service, com.ydbaobao.dao" />
+	<context:component-scan base-package="com.ydbaobao.service, com.ydbaobao.dao, com.support" />
 
 	<context:property-placeholder location="classpath*:application-properties.xml" />
 
