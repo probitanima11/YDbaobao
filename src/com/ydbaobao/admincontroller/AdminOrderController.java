@@ -46,9 +46,11 @@ public class AdminOrderController {
 	 */
 	@RequestMapping(value = "/{orderId}", method = RequestMethod.PUT)
 	public ResponseEntity<Object> updateOrder(@PathVariable int orderId, @RequestParam String orderStatus) {
-		if (orderService.readOrder(orderId).getOrderStatus().equals('C')) {
+		Order order = orderService.readOrder(orderId);
+		if (order.getOrderStatus().equals('C')) {
 			return JSONResponseUtil.getJSONResponse("이미 취소된 주문입니다.", HttpStatus.OK);
 		}
+		if(orderStatus.equals("S")) paymentService.createPayment(new Payment(order.getCustomer(), "P", order.getRealPrice()));
 		orderService.updateOrder(orderId, orderStatus);
 		return JSONResponseUtil.getJSONResponse("주문상태변경완료", HttpStatus.OK);
 	}

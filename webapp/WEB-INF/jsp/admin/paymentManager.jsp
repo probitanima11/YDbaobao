@@ -163,6 +163,7 @@
 		function createNewPay() {
 			var date = document.querySelector("#paydate").value;
 			var amount = document.querySelector("#payamount").value;
+			amount = amount.replace(/,/g, "");
 			
 			ydbaobao.ajax({
 				method:"post",
@@ -173,7 +174,7 @@
 						alert('납입내역이 추가되었습니다.');
 						document.querySelector("#paydate").value = "";
 						document.querySelector("#payamount").value = "";
-						totalPay += amount;
+						totalPay = (totalPay*1) + amount*1;
 						totalRemain -= amount;
 						document.querySelector('#pay-summary').innerHTML = parseInt(totalPay).toLocaleString();
 						document.querySelector('#remain-summary').innerHTML = parseInt(totalRemain).toLocaleString();

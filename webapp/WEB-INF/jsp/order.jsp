@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -40,10 +41,6 @@ tbody td {
 	height: 50px;
 }
 
-.order-price {
-	font-weight: 800;
-}
-
 tfoot {
 	background-color: #f8f8f8;
 }
@@ -51,6 +48,11 @@ tfoot {
 tfoot tr {
 	padding: 10px;
 }
+
+tr.border_top td {
+  border-top:1pt solid #ccc;
+}
+
 </style>
 <title>YDbaobao:: 주문목록</title>
 </head>
@@ -74,63 +76,74 @@ tfoot tr {
 				<table id="order-list">
 					<thead>
 						<tr>
+							<th>주문번호</th>
 							<th></th>
 							<th>상품설명</th>
-							<th>사이즈</th>
-							<th>상품가격</th>
 							<th>수량</th>
-							<th>주문금액</th>
+							<th>상품금액</th>
+							<th>결재금액</th>
 							<th>주문상태</th>
 							<th style="width:100px">관리</th>
 						</tr>
 					</thead>
 					<tbody>
 						<c:forEach var="order" items="${orders}">
-							<tr class="order-head" data-id="${order.orderId}">
-								<td colspan="5">${order.orderDate}</td>
-								<td colspan="1">${order.realPrice}</td>
+							<tr class="border_top" data-id="${order.orderId}">
+								<td rowspan="${fn:length(order.items)}">${order.orderDate}-${order.orderId}</td>
+								<td class="item-image-container">
+									<img class="item-image" src="/img/products/${order.items[0].product.productImage}">
+								</td>
+								<td>
+									<span class="item-name"><b>${order.items[0].product.productName}</b></span>
+									<br />
+									<span class="item-size">사이즈 : ${order.items[0].size}</span>
+									<br />
+									<span class="item-price">가격 : ${order.items[0].product.productPrice}</span>
+								</td>
+								<td><span class="item-quantity">${order.items[0].quantity}</span></td>
+								<td><span class="order-price">${order.items[0].product.productPrice * order.items[0].quantity}</span></td>
+								<td rowspan="${fn:length(order.items)}"><b>${order.realPrice}</b></td>
 								<c:choose>
 									<c:when test="${order.orderStatus eq 'I'}">
-										<td colspan="1">주문대기</td>
-										<td colspan="1">
-											<button class="order-cancel">주문취소</button>
-											<button class="">주문서</button>
-										</td>
+										<td rowspan="${fn:length(order.items)}" colspan="1">주문대기</td>
 									</c:when>
 									<c:when test="${order.orderStatus eq 'S'}">
-										<td colspan="1">주문승인</td>
-										<td colspan="1">
-											<button class="">주문서</button>
-										</td>
+										<td rowspan="${fn:length(order.items)}" colspan="1">주문승인</td>
 									</c:when>
 									<c:when test="${order.orderStatus eq 'R'}">
-										<td colspan="1">주문반려</td>
-										<td colspan="1">
-											<button class="">주문서</button>
-										</td>
+										<td rowspan="${fn:length(order.items)}" colspan="1">주문반려</td>
 									</c:when>
 									<c:when test="${order.orderStatus eq 'C'}">
-										<td colspan="1">주문취소</td>
-										<td colspan="1">
-											<button class="">주문서</button>
-										</td>
+										<td rowspan="${fn:length(order.items)}" colspan="1">주문취소</td>
 									</c:when>
 									<c:otherwise>
-										<td colspan="1"></td>
+										<td rowspan="${fn:length(order.items)}" colspan="1"></td>
 									</c:otherwise>
 								</c:choose>
-							</tr>
-							<c:forEach var="item" items="${order.items}">
-								<tr data-id="${order.orderId}">
-									<td class="item-image-container"><img class="item-image"
-										src="/img/products/${item.product.productImage}"></td>
-									<td class="item-name-container"><span class="item-name">${item.product.productName}</span></td>
-									<td><span class="item-size">${item.size}</span></td>
-									<td><span class="item-price">${item.product.productPrice}</span></td>
-									<td><span class="item-quantity">${item.quantity}</span></td>
-									<td><span class="order-price">${item.product.productPrice * item.quantity}</span></td>
+								<td rowspan="${fn:length(order.items)}" colspan="1">
+									<c:if test="${order.orderStatus eq 'I'}">
+										<button data-id="${order.orderId}" class="order-cancel">취소</button>
+									</c:if>
+									<button class="">주문서</button>
+								</td>
+								
+								<c:forEach var="i" begin="1" end="${fn:length(order.items)-1}">
+									<tr>
+										<td class="item-image-container"><img class="item-image"
+											src="/img/products/${order.items[i].product.productImage}">
+										</td>
+										<td>
+											<span class="item-name"><b>${order.items[i].product.productName}</b></span>
+											<br />
+											<span class="item-size">사이즈 : ${order.items[i].size}</span>
+											<br />
+											<span class="item-price">가격 : ${order.items[i].product.productPrice}</span>
+										</td>
+										<td><span class="item-quantity">${order.items[i].quantity}</span></td>
+										<td><span class="order-price">${order.items[i].product.productPrice * order.items[i].quantity}</span></td>
+									</tr>
+								</c:forEach>
 								</tr>
-							</c:forEach>
 						</c:forEach>
 					</tbody>
 				</table>
@@ -146,7 +159,7 @@ tfoot tr {
 		var readyList = document.querySelectorAll('.order-cancel');
 		for(var i=0; i<readyList.length; i++) {
 			readyList[i].addEventListener('click', function(e) {
-				var orderId = e.target.parentNode.parentNode.getAttribute('data-id');
+				var orderId = e.target.getAttribute('data-id');
 				orderCancel(orderId);
 			});
 		}
@@ -161,8 +174,8 @@ tfoot tr {
 			param: "orderStatus="+"S",
 			url: "/admin/orders/"+orderId,
 			success : function(req) {
-				document.querySelectorAll(".order-head[data-id='" + orderId + "'] > td")[2].innerText = "주문취소";
-				document.querySelectorAll(".order-head[data-id='" + orderId + "'] > td")[3].remove();
+				document.querySelectorAll(".border_top[data-id='" + orderId + "'] > td")[6].innerText = "주문취소";
+				document.querySelectorAll(".border_top[data-id='" + orderId + "'] > td")[7].querySelector("button").remove();
 			}
 		});
 	}
