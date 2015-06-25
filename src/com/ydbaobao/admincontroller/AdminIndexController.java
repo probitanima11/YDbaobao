@@ -2,8 +2,9 @@ package com.ydbaobao.admincontroller;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
+
+import javax.annotation.Resource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,27 +16,24 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.support.ImageFactoryUtil;
+import com.ydbaobao.model.IndexImage;
+import com.ydbaobao.service.AdminIndexImageService;
+
 @Controller
 @RequestMapping("/admin/indexImages")
 public class AdminIndexController {
 	private static final Logger logger = LoggerFactory.getLogger(AdminIndexController.class);
+	@Resource
+	private AdminIndexImageService adminIndexImageService;
+	
 	/**
 	 * 첫화면 이미지 설정 관리 페이지 
 	 * 이미지 경로와 저장된 이미지 갯수를 돌려준다.
 	 */
 	@RequestMapping()
 	public String indexImage(Model model) {
-		List<String> imgPath = new ArrayList<String>();
-		for (int i = 0; i < 8; i++) {
-			String filePath = "index_0" + i + ".jpg";
-			File f = new File("/home/baobao/index/"+filePath);
-			if (f.isFile()) {
-				imgPath.add("/img/index/"+filePath);
-			} else {
-				imgPath.add("");
-			}
-		}
-		model.addAttribute("imgPath", imgPath);
+		model.addAttribute("indexImages", getIndexImages());
 		return "/admin/indexManager";
 	}
 	
@@ -46,47 +44,39 @@ public class AdminIndexController {
 	 * @throws IllegalStateException 
 	 */
 	@RequestMapping(method = RequestMethod.POST)
-	public String indexImageCreate(Model model, @RequestParam MultipartFile imageFile, @RequestParam int imgIndex) throws IllegalStateException, IOException {
-		String[] originName = imageFile.getOriginalFilename().split("\\.");
-		String imageType = originName[originName.length-1];
-		
-		String imgFilePath = "/home/baobao/index/index_0" + imgIndex + "." + imageType;
-		imageFile.transferTo(new File(imgFilePath));
-		List<String> imgPath = new ArrayList<String>();
-		for (int i = 0; i < 8; i++) {
-			String filePath = "index_0" + i + "." + imageType;
-			File f = new File("/home/baobao/index/"+filePath);
-			if (f.isFile()) {
-				imgPath.add("/img/index/"+filePath);
-			} else {
-				imgPath.add("");
-			}
+	public String indexImageCreate(Model model, @RequestParam MultipartFile imageFile) throws IllegalStateException, IOException {
+		if(imageFile.getSize() > 512000) {
+			logger.debug("이미지 업로드 실패!, 용량이 500kb 초과되었습니다");
+			model.addAttribute("errorMessage", "용량이 500kb 초과되었습니다");
+			return "/admin/indexManager";
 		}
-		model.addAttribute("imgPath", imgPath);
+		// 파일 저장
+		String imgFileName = ""+System.currentTimeMillis();
+		String imgFilePath = ImageFactoryUtil.realIndexPath + imgFileName;
+		imageFile.transferTo(new File(imgFilePath));
+		
+		// 디비 저장
+		adminIndexImageService.create(imgFileName);
+		model.addAttribute("indexImages", getIndexImages());
 		return "/admin/indexManager";
 	}
-	
+
 	/**
 	 * 첫화면 이미지 설정 관리 페이지 
 	 * 이미지 삭제.
 	 * @throws IOException 
 	 * @throws IllegalStateException 
 	 */
-	@RequestMapping(value = "/{imgIndex}", method = RequestMethod.POST)
-	public String indexImageDelete(Model model, @PathVariable int imgIndex) throws IllegalStateException, IOException {
-		new File("/home/baobao/index/index_0" + imgIndex + ".jpg").delete();
-		
-		List<String> imgPath = new ArrayList<String>();
-		for (int i = 0; i < 8; i++) {
-			String filePath = "index_0" + i + ".jpg";
-			File f = new File("/home/baobao/index/"+filePath);
-			if (f.isFile()) {
-				imgPath.add("/img/index/"+filePath);
-			} else {
-				imgPath.add("");
-			}
-		}
-		model.addAttribute("imgPath", imgPath);
+	@RequestMapping(value = "/{indexImageId}", method = RequestMethod.POST)
+	public String indexImageDelete(Model model, @PathVariable int indexImageId) throws IllegalStateException, IOException {
+		adminIndexImageService.delete(indexImageId);
+		model.addAttribute("indexImages", getIndexImages());
 		return "/admin/indexManager";
+	}
+
+	private List<IndexImage> getIndexImages() {
+		List<IndexImage> indexImages = adminIndexImageService.readIndexImages();
+		indexImages.add(new IndexImage());
+		return indexImages;
 	}
 }
