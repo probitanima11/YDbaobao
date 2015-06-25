@@ -33,6 +33,7 @@
 			<%@ include file="./commons/_brand.jsp" %>
 
 			<div id="item-container" class="wrap content">
+				<h2>최근 등록된 상품</h2>
 				<%@ include file="./commons/_productsBox.jsp" %>
 
 				<%@ include file="./commons/_productListBar.jsp" %>

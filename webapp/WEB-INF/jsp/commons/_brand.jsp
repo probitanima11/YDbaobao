@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <div id="brand-selector" class="wrap content"
-	style="outline: 1px solid #EA6576;">
+	style="outline:; background-color:#e9eaed;">
 	<div id="brand-initial-tab">
 		<label>브랜드 선택</label>
 		<ul>
