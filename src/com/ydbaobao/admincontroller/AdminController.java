@@ -47,10 +47,11 @@ public class AdminController {
 		if (adminPassword.equals(adminConfigService.read().getAdminPassword())) {
 			session.setAttribute("sessionAdmin", adminPassword);
 			int page=1;
+			int customersPerPage = 10;
 			model.addAttribute("gradeId", "-1");
-			model.addAttribute("customers", customerService.readCustomers(page, 10));
+			model.addAttribute("customers", customerService.readCustomers(page, customersPerPage));
 			int count = customerService.countCustomers();
-			int totalPage = CommonUtil.countTotalPage(count, CommonUtil.productsPerPage);
+			int totalPage = CommonUtil.countTotalPage(count, customersPerPage);
 			model.addAttribute("prev", CommonUtil.prevBlock(page));
 			model.addAttribute("next", CommonUtil.nextBlock(page, page));
 			model.addAttribute("selectedIndex", page);

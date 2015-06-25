@@ -32,10 +32,11 @@ public class AdminCustomerController {
 	
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public String manageMember(Model model, @RequestParam int page) {
+		int customersPerPage = 10;
 		model.addAttribute("gradeId", "-1");
-		model.addAttribute("customers", customerService.readCustomers(page, 10));
+		model.addAttribute("customers", customerService.readCustomers(page, customersPerPage));
 		int count = customerService.countCustomers();
-		int totalPage = CommonUtil.countTotalPage(count, CommonUtil.productsPerPage);
+		int totalPage = CommonUtil.countTotalPage(count, customersPerPage);
 		model.addAttribute("prev", CommonUtil.prevBlock(page));
 		model.addAttribute("next", CommonUtil.nextBlock(page, page));
 		model.addAttribute("selectedIndex", page);
@@ -47,10 +48,11 @@ public class AdminCustomerController {
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
 	public String readByCustomerName(HttpSession session, Model model, @RequestParam String customerName, @RequestParam int page) {
 		String terms = customerService.preprocessingTerms(customerName);
-		List<Customer> customers = customerService.readByCustomerName(terms, page, 10);
+		int customersPerPage = 10;
+		List<Customer> customers = customerService.readByCustomerName(terms, page, customersPerPage);
 		int count = customerService.countBySearchCustomerName(terms);
 		model.addAttribute("searchMessage", "이름 \'"+terms+"\'에 대한 검색 결과가 "+count+" 건 있습니다.");
-		int totalPage = CommonUtil.countTotalPage(count, CommonUtil.productsPerPage);
+		int totalPage = CommonUtil.countTotalPage(count, customersPerPage);
 		model.addAttribute("prev", CommonUtil.prevBlock(page));
 		model.addAttribute("next", CommonUtil.nextBlock(page, page));
 		model.addAttribute("selectedIndex", page);
@@ -65,8 +67,9 @@ public class AdminCustomerController {
 		String terms = customerService.preprocessingTerms(customerId);
 		int count = customerService.countBySearchCustomerId(terms);
 		int page=1;
+		int customersPerPage = 10;
 		model.addAttribute("searchMessage", "ID \'"+terms+"\'에 대한 검색 결과가 "+count+" 건 있습니다.");
-		int totalPage = CommonUtil.countTotalPage(count, CommonUtil.productsPerPage);
+		int totalPage = CommonUtil.countTotalPage(count, customersPerPage);
 		model.addAttribute("prev", CommonUtil.prevBlock(page));
 		model.addAttribute("next", CommonUtil.nextBlock(page, page));
 		model.addAttribute("selectedIndex", page);
