@@ -17,7 +17,7 @@
 	</div>
 
 	<div id="main-container">
-		<div id="first-section" class="wrap content" style="height: 500px;">
+		<div id="first-section" class="wrap content" style="height: 635px;">
 			<div class="joinForm">
 				<c:set var="actionUrl" value="/join" />
 				<c:if test="${isUpdate}">
@@ -79,7 +79,9 @@
 			</div>
 		</div>
 	</div>
-	
+	<div id="footer">
+		<%@ include file="./commons/_footer.jsp"%>
+	</div>
 	<script>
 	window.addEventListener('load', function() {
 		//회원가입 유효성 이벤트 등록

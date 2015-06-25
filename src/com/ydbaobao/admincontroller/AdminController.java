@@ -3,6 +3,8 @@ package com.ydbaobao.admincontroller;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +17,7 @@ import com.ydbaobao.service.CustomerService;
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
+	private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
 	@Resource
 	private AdminConfigService adminConfigService; 
 	@Resource
@@ -40,6 +43,7 @@ public class AdminController {
 	public String checkForm(@RequestParam String adminPassword, HttpSession session, Model model) {
 		if (adminPassword.equals(adminConfigService.read().getAdminPassword())) {
 			session.setAttribute("sessionAdmin", adminPassword);
+			model.addAttribute("gradeId", "-1");
 			model.addAttribute("customers", customerService.readCustomers());
 			return "admin/customerManager";
 		}

@@ -22,9 +22,11 @@
 	</div>
 	<div id="main-container">
 		<div id="first-section" class="wrap content" style="position:relative; padding:25px 0;">
-			<div id="showcase">
-				<img id="indexImage">
-			</div>
+			<c:if test="${not empty isHome}">
+				<div id="showcase">
+					<img id="indexImage">
+				</div>
+			</c:if>
 		</div>
 		<div id="second-section" class="wrap content">
 			<!-- 브랜드 탭(A~Z) 메뉴 -->
@@ -41,17 +43,17 @@
 		<%@ include file="./commons/_footer.jsp"%>
 	</div>
 	<script>
-		var imgPaths = "${imgPath}".substring(1).split(",");
-		var imgPathsLength = imgPaths.length;
+		var indexImages = ${indexImages};
+		var imgPathsLength = indexImages.length;
 		var imgIndex = 0;
+		var imgEl;
  		window.addEventListener("load", function() {
-			var imgEl = document.querySelector("#indexImage");
- 			if(imgPaths[0].length === 0) {
+			imgEl = document.querySelector("#indexImage");
+ 			if(imgPathsLength === 0) {
  				imgEl.remove();
  				return;
  			}
- 			imgEl.src = imgPaths[imgIndex];
- 			
+ 			imgEl.src = "/img/index/"+indexImages[imgIndex].indexImageName;
 			setInterval(function(){
 				addIndex();
 				fadeOut(imgEl);
@@ -64,7 +66,7 @@
  			else
  				imgIndex++;
  		}
-
+ 		
 		function fadeIn(id) {
 			var level = 0;
 			var inTimer = null;
@@ -86,15 +88,14 @@
 			var outTimer = null;
 			outTimer = setInterval( function(){ level = fadeOutAction(id, level, outTimer); }, 50 );
 		}
-
+		
 		function fadeOutAction(id, level, outTimer) {
 			level = level - 0.1;
 			changeOpacity(id, level);
 			if(level < 0) 
 			{
 				clearInterval(outTimer);
-				var imgEl = document.querySelector("#indexImage");
-				imgEl.src = imgPaths[imgIndex];
+				imgEl.src = "/img/index/"+indexImages[imgIndex].indexImageName;
 				fadeIn(imgEl);
 			}
 			return level;

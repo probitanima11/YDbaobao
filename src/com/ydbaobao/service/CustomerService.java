@@ -64,4 +64,9 @@ public class CustomerService {
 	public Customer readCustomer(String customerId) {
 		return customerDao.findCustomerByCustomerId(customerId);
 	}
+
+	public List<Customer> readCustomersByGrade(int selectedGrade) {
+		return customerDao.readCustomersByGrade(selectedGrade);
+	}
+
 }

@@ -87,7 +87,7 @@ tr.border_top td {
 							<th>상품금액</th>
 							<th>결재금액</th>
 							<th>주문상태</th>
-							<th>관리</th>
+							<th style="width:100px">관리</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -108,7 +108,9 @@ tr.border_top td {
 								<c:choose>
 									<c:when test="${order.orderStatus eq 'I'}">
 										<td rowspan="${fn:length(order.items)}" colspan="1">주문대기</td>
-										<td rowspan="${fn:length(order.items)}" colspan="1"><button data-id="${order.orderId}" class="order-cancel">취소</button></td>
+										<td rowspan="${fn:length(order.items)}" colspan="1"><button data-id="${order.orderId}" class="order-cancel">취소</button>
+										<button class="">주문서</button>
+										</td>
 									</c:when>
 									<c:when test="${order.orderStatus eq 'S'}">
 										<td rowspan="${fn:length(order.items)}" colspan="1">주문승인</td>
