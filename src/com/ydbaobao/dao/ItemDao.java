@@ -1,5 +1,9 @@
 package com.ydbaobao.dao;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -7,13 +11,15 @@ import javax.annotation.Resource;
 import javax.sql.DataSource;
 
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import com.ydbaobao.model.Brand;
 import com.ydbaobao.model.Customer;
 import com.ydbaobao.model.Item;
-import com.ydbaobao.model.Order;
 import com.ydbaobao.model.Product;
 
 @Repository
@@ -48,6 +54,22 @@ public class ItemDao extends JdbcDaoSupport {
 	public void deleteCartList(int itemId) {
 		String sql = "delete from ITEMS where itemId = ?";
 		getJdbcTemplate().update(sql, itemId);
+	}
+	
+	public int createItemDirectly(String customerId, int productId, String size, int quantity) {
+		KeyHolder keyHolder = new GeneratedKeyHolder();
+		String sql = "insert into ITEMS (customerId, productId, size, quantity) values(?, ?, ?, ?)";
+		getJdbcTemplate().update(new PreparedStatementCreator() {
+			public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+				PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+				ps.setString(1, customerId);
+				ps.setInt(2, productId);
+				ps.setString(3, size);
+				ps.setInt(4, quantity);
+				return ps;
+			}
+		}, keyHolder);
+		return keyHolder.getKey().intValue();
 	}
 
 	public void createItem(String customerId, int productId, String size, int quantity) {

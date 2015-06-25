@@ -50,6 +50,22 @@ public class ItemService {
 			}
 		}
 	}
+	
+	public int[] createItemsDirectly(String customerId, String size, String quantity, int productId) {
+		String[] sizeArray = size.split("-");
+		String[] quantityArray = quantity.split("-");
+		int[] itemList = new int[quantityArray.length];
+		for(int i=0; i< quantityArray.length; i++){
+			if(quantityArray[i].equals("0")){
+				continue;
+			}
+			if(sizeArray.length == 0) {
+				sizeArray[i] = "-";
+			}
+			itemList[i] = itemDao.createItemDirectly(customerId, productId, sizeArray[i], Integer.parseInt(quantityArray[i]));
+		}
+		return itemList;
+	}
 
 	public List<Item> readOrderedItems(String customerId) {
 		return itemDao.readOrderedItems(customerId);

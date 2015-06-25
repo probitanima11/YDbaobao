@@ -22,6 +22,7 @@ import com.support.JSONResponseUtil;
 import com.support.ServletRequestUtil;
 import com.ydbaobao.dao.ItemDao;
 import com.ydbaobao.model.Item;
+import com.ydbaobao.model.Order;
 import com.ydbaobao.service.CategoryService;
 import com.ydbaobao.service.ItemService;
 import com.ydbaobao.service.OrderService;
@@ -66,7 +67,7 @@ public class OrderController {
 	}
 
 	/**
-	 * 장바구니에서 선택 된 아이템을 주문서 생성
+	 * 장바구니에서 선택 된 아이템을 주문 생성
 	 * @param itemList
 	 * @param session
 	 * @return
@@ -78,6 +79,24 @@ public class OrderController {
 		String customerId = ServletRequestUtil.getCustomerIdFromSession(session);
 		orderService.createOrder(customerId, itemList);
 		return JSONResponseUtil.getJSONResponse("", HttpStatus.OK);
+	}
+	
+	/**
+	 * 상품화면에서 바로 주문 생성
+	 * @param session
+	 * @param productId
+	 * @param size
+	 * @param quantity
+	 * @return
+	 * @throws IOException
+	 */
+	@RequestMapping(value="/direct", method = RequestMethod.POST)
+	public ResponseEntity<Object> createOrderDirectly(HttpSession session,  @RequestParam int productId, @RequestParam String size, @RequestParam String quantity) throws IOException{
+		logger.debug("상품화면에서 바로 주문하기");
+		String customerId = ServletRequestUtil.getCustomerIdFromSession(session);
+		int[] itemList = itemService.createItemsDirectly(customerId, size, quantity, productId);
+		orderService.createOrder(customerId, itemList);
+		return JSONResponseUtil.getJSONResponse(itemList, HttpStatus.OK);
 	}
 	
 	/**
@@ -97,6 +116,7 @@ public class OrderController {
 	
 	@RequestMapping(value = "/confirm", method = RequestMethod.POST)
 	public String orderConfirm(@RequestParam int[] itemList, Model model) {
+		logger.debug("itemList: {}", itemList);
 		List<Item> list = new ArrayList<Item>();
 		for (int itemId : itemList) {
 			list.add(orderService.readItemByItemId(itemId));
@@ -104,6 +124,4 @@ public class OrderController {
 		model.addAttribute("items", list);
 		return "orderConfirm";
 	}
-	
-	//TODO 상품화면에서 주문하기
 }

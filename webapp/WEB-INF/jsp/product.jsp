@@ -73,6 +73,10 @@ h1 {
 	background-color: #c8c8c8;
 }
 
+.btn.buyitnow {
+	background-color: #EA6576;
+}
+
 #product-display img {
 	width: 100%;
 }
@@ -133,10 +137,12 @@ i {
 					<c:when test="${product.isSoldout == 1}">
 						<div class="isSoldout">품 절</div>
 						<button class="btn addtocart disabled" disabled>장바구니</button>
+						<button class="btn buyitnow disabled" disabled>바로주문</button>
 					</c:when>
 					<c:otherwise>
 						<div class="button-group">
 							<button class="btn addtocart">장바구니</button>
+							<button class="btn buyitnow">바로주문</button>
 						</div>
 					</c:otherwise>
 				</c:choose>
@@ -185,6 +191,10 @@ i {
 			document.querySelector('.addtocart').addEventListener('click', function(e) {
 				addToCart(e);
 			}, false);
+			
+			document.querySelector('.buyitnow').addEventListener('click', function(e) {
+				buyitnow(e);
+			}, false);
 
 			productBuyContainer = document.querySelector("#product-buy-container");
 			document.addEventListener('scroll', function(e){
@@ -229,28 +239,56 @@ i {
 				}
 			});
 		}
+		
+		function buyitnow(e) {
+			var el = document.querySelectorAll(".qty-selector");
+			var size = "";
+			var quantity = "";
+			for(var i=0;i<el.length;i++){
+				size += el[i].name + "-";
+				quantity += el[i].value + "-";
+			}
+			
+			var param = 'productId=' + productId + '&size=' + size + '&quantity=' + quantity;
+			ydbaobao.ajax({
+				method : 'post',
+				url : '/orders/direct/',
+				param : param,
+				success : function(req) {
+					if(req.responseText === "fail")
+						alert('로그인이 필요합니다.');
+					else {
+						alert('주문요청이 완료되었습니다.');
+						ydbaobao.post({
+							path : "/orders/confirm",
+							params : {itemList : JSON.parse(req.responseText)}
+						});
+					}
+				}
+			});
+		}
 
-		 function qtyControl(type) {
-			 var qtyArray = document.querySelectorAll(".qty-selector");
-			 switch (type) {
-			 	case "plus":
-			 		for(var i=0;i<qtyArray.length;i++){
-			 			qtyArray[i].value = qtyArray[i].value*1+1;
-			 		}
-			 		break;
-			 	case "minus":
-			 		for(var i=0;i<qtyArray.length;i++){
-			 			qtyArray[i].value = qtyArray[i].value*1-1;
-				 		if (qtyArray[i].value*1 <= 0) qtyArray[i].value = 1;
-			 		}
-			 		break;
-			 }
-		 }
+		function qtyControl(type) {
+			var qtyArray = document.querySelectorAll(".qty-selector");
+			switch (type) {
+				case "plus":
+					for(var i=0;i<qtyArray.length;i++){
+						qtyArray[i].value = qtyArray[i].value*1+1;
+					}
+					break;
+				case "minus":
+					for(var i=0;i<qtyArray.length;i++){
+						qtyArray[i].value = qtyArray[i].value*1-1;
+						if (qtyArray[i].value*1 <= 0) qtyArray[i].value = 1;
+					}
+					break;
+			}
+		}
 
-		 function priceWithComma() {
-		 	var el = document.querySelector('.product-price');
-		 	el.textContent = parseInt(el.textContent).toLocaleString();
-		 }
+		function priceWithComma() {
+			var el = document.querySelector('.product-price');
+			el.textContent = parseInt(el.textContent).toLocaleString();
+		}
 
 	</script>
 	<script src="/js/ydbaobao.js"></script>

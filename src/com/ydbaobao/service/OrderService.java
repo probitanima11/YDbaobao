@@ -112,4 +112,7 @@ public class OrderService {
 		return item;
 	}
 
+	public void createOrderDirectly() {
+	}
+
 }
