@@ -1,10 +1,6 @@
 package com.ydbaobao.service;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -38,35 +34,74 @@ public class OrderService {
 	@Resource
 	CustomerDao customerDao;
 	
-	public List<Order> readOrders() {
+	/**
+	 * 주문 목록 리스트만 받아오기
+	 * @return
+	 */
+	//TODO 기간별로 받아오게 변경 요망
+	public List<Order> readOrdersListOnly() {
 		return orderDao.readOrders();
 	}
 	
+	/**
+	 * 주문서 생성
+	 * @param customerId
+	 * @param itemList
+	 */
+	public void createOrder(String customerId, int[] itemList) {
+		int totalPrice = 0;
+		for(int i=0; i<itemList.length; i++) {
+			Item item = itemDao.readItemByItemId(itemList[i]);
+			Product product = productDao.read(item.getProduct().getProductId());
+			int price = productService.readByDiscount(product, item.getCustomer()).getProductPrice();
+			totalPrice += price * item.getQuantity();
+		}
+		int orderId = orderDao.createOrder(customerId, totalPrice);
+		itemDao.orderItems(orderId, itemList);
+	}
+	
+	/**
+	 * 주문서 상태 변경(승인, 반려, 취소)
+	 * @param customerId
+	 * @param itemList
+	 */
+	public void updateOrder(int orderId, String orderStatus) {
+		logger.debug("orderId: {}, orderStatus: {}", orderId, orderStatus);
+		orderDao.updateOrder(orderId, orderStatus);
+	}
+	
+	/**
+	 * 고객의 주문 내역 받아오기
+	 * @param customerId
+	 * @return
+	 */
+	//TODO 기간별로 받아오게 변경 요망
 	public List<Order> readOrdersByCustomerId(String customerId) {
 		List<Order> orders = orderDao.readOrdersByCustomerId(customerId);
-		List<Item> items = itemDao.readOrderedItems(customerId);
+		setItems(orders);
+		return orders;
+	}
+
+	private void setItems(List<Order> orders) {
+		for(Order order : orders) {
+			List<Item> items = itemDao.readItemsByOrderId(order.getOrderId());
+			setDiscountedPrice(items);
+			order.setItems(itemDao.readItemsByOrderId(order.getOrderId()));
+		}
+	}
+
+	private void setDiscountedPrice(List<Item> items) {
 		for (Item item : items) {
 			Product product = item.getProduct();
 			product.setProductPrice(productService.readByDiscount(product, item.getCustomer()).getProductPrice());
 		}
-		return repackOrders(orders, items);
-	}
-	
-	private List<Order> repackOrders(List<Order> orders, List<Item> items) {
-		Map<String,Order> mapOrders = new HashMap<String,Order>();
-		for (Order order : orders) {
-			mapOrders.put(""+order.getOrderId(),order);
-		}
-		
-		for (Item item : items) {
-			mapOrders.get(""+item.getOrder().getOrderId()).addItem(item);
-		}
-		
-		List<Order> list = new ArrayList<Order>(mapOrders.values());
-		Collections.reverse(list);
-		return list;
 	}
 
+	/**
+	 * 주문 내역 상세보기
+	 * @param orderId
+	 * @return
+	 */
 	public Order readOrder(int orderId) {
 		Order order = orderDao.readOrder(orderId);
 		Customer customer = customerDao.readCustomerById(order.getCustomer().getCustomerId());
@@ -83,20 +118,4 @@ public class OrderService {
 		return item;
 	}
 
-	public void createOrder(String customerId, int[] itemList) {
-		int totalPrice = 0;
-		for(int i=0; i<itemList.length; i++) {
-			Item item = itemDao.readItemByItemId(itemList[i]);
-			Product product = productDao.read(item.getProduct().getProductId());
-			int price = productService.readByDiscount(product, item.getCustomer()).getProductPrice();
-			totalPrice += price * item.getQuantity();
-		}
-		int orderId = orderDao.createOrder(customerId, totalPrice);
-		itemDao.orderItems(orderId, itemList);
-	}
-
-	public void updateOrder(int orderId, String orderStatus) {
-		logger.debug("orderId: {}, orderStatus: {}", orderId, orderStatus);
-		orderDao.updateOrder(orderId, orderStatus);
-	}
 }

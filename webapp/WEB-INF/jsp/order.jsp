@@ -170,8 +170,9 @@ tr.border_top td {
 		    return;
 		}
 		ydbaobao.ajax({
-			method : 'put',
-			url : '/orders/cancel/' + orderId,
+			method: "put",
+			param: "orderStatus="+"C",
+			url: "/admin/orders/"+orderId,
 			success : function(req) {
 				document.querySelectorAll(".border_top[data-id='" + orderId + "'] > td")[6].innerText = "주문취소";
 				document.querySelectorAll(".border_top[data-id='" + orderId + "'] > td")[7].querySelector("button").remove();

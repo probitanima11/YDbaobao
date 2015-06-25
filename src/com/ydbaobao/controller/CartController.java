@@ -1,7 +1,6 @@
 package com.ydbaobao.controller;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
@@ -19,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.support.JSONResponseUtil;
 import com.support.ServletRequestUtil;
-import com.ydbaobao.model.Item;
 import com.ydbaobao.service.CategoryService;
 import com.ydbaobao.service.ItemService;
 

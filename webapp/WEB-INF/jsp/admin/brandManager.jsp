@@ -27,6 +27,10 @@
 #brand-table .brand_sizes input{
 	width:100px;
 }
+
+.discount_table input[type="number"] {
+  width: 23px;
+}
 </style>
 </head>
 <body>
@@ -54,18 +58,18 @@
 						<td><input class="brandName" type="text" value="${brand.brandName}"
 							data-id="${brand.brandId}"></td>
 						<td class='discount_table'>
-							1등급:<input type="text" value="${brand.discount_1}">
-							2등급:<input type="text" value="${brand.discount_2}">
-							3등급:<input type="text" value="${brand.discount_3}">
-							4등급:<input type="text" value="${brand.discount_4}">
-							5등급:<input type="text" value="${brand.discount_5}">
+							1등급:<input min="0" max="100" type="number" value="${brand.discount_1}">
+							2등급:<input min="0" max="100" type="number" value="${brand.discount_2}">
+							3등급:<input min="0" max="100" type="number" value="${brand.discount_3}">
+							4등급:<input min="0" max="100" type="number" value="${brand.discount_4}">
+							5등급:<input min="0" max="100" type="number" value="${brand.discount_5}">
 						</td>
 						<td class='brand_sizes'>
 							<input type="text" value="${brand.brandSize}">
 						</td>
 						<td class='brand_count'>
 							${brand.brandCount}
-						</td>	
+						</td>
 						<td>
 							<button class="update-brand-btn">수정</button>
 							<button class="delete-brand-btn">삭제</button>
@@ -76,11 +80,11 @@
 					<td></td>
 					<td><input class="brandName" id="new-brandName" type="text"></td>
 					<td class='discount_table'>
-						1등급:<input type="text" value="0"> 
-						2등급:<input type="text" value="0"> 
-						3등급:<input type="text" value="0"> 
-						4등급:<input type="text" value="0"> 
-						5등급:<input type="text" value="0">
+						1등급:<input min="0" max="100" type="number" value="0">
+						2등급:<input min="0" max="100" type="number" value="0">
+						3등급:<input min="0" max="100" type="number" value="0">
+						4등급:<input min="0" max="100" type="number" value="0">
+						5등급:<input min="0" max="100" type="number" value="0">
 					</td>
 					<td class='brand_sizes'><input type="text"
 						value="${brand.brandSize}"></td>
@@ -171,7 +175,6 @@
 		}
 
 		function createBrand() {
-			debugger;
 			var brandName = document.querySelector('#new-brandName').value;
 			var discountTable = document.querySelectorAll('#new-brand .discount_table input');
 			var value = 0;
@@ -190,10 +193,10 @@
 				}
 				param += "&discount_"+(i+1)+"="+value;
 			}
-			
+
 			var brandSize = document.querySelector("#new-brand .brand_sizes input").value;
 			param += "&brandSize="+brandSize;
-			
+
 			ydbaobao.ajax({
 				method : 'post',
 				url : '/admin/brands/',
@@ -229,7 +232,7 @@
 				row.insertCell(1).innerHTML = '<td><input class="brandName" type="text" value="' + json[i].brandName + '" data-id="' + json[i].brandId + '"></td>';
 				cell = row.insertCell(2);
 				cell.className = 'discount_table';
-				cell.innerHTML = '<td>1등급:<input type="text" value="' + json[i].discount_1 + '">2등급:<input type="text" value="' + json[i].discount_2 + '">3등급:<input type="text" value="' + json[i].discount_3 + '">4등급:<input type="text" value="' + json[i].discount_4 + '">5등급:<input type="text" value="' + json[i].discount_5 + '"></td>';
+				cell.innerHTML = '<td>1등급:<input type="number" min="0" max="100" value="' + json[i].discount_1 + '">2등급:<input type="number" min="0" max="100" value="' + json[i].discount_2 + '">3등급:<input type="number" min="0" max="100" value="' + json[i].discount_3 + '">4등급:<input type="number" min="0" max="100" value="' + json[i].discount_4 + '">5등급:<input type="number" min="0" max="100" value="' + json[i].discount_5 + '"></td>';
 				cell = row.insertCell(3);
 				cell.className = 'brand_sizes';
 				cell.innerHTML = '<td class="brand_sizes"><input type="text" value="' + json[i].brandSize + '"></td>';
