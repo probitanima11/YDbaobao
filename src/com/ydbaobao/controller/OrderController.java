@@ -22,6 +22,7 @@ import com.support.JSONResponseUtil;
 import com.support.ServletRequestUtil;
 import com.ydbaobao.dao.ItemDao;
 import com.ydbaobao.model.Item;
+import com.ydbaobao.model.Order;
 import com.ydbaobao.service.CategoryService;
 import com.ydbaobao.service.ItemService;
 import com.ydbaobao.service.OrderService;
@@ -86,5 +87,13 @@ public class OrderController {
 	public ResponseEntity<Object> createOrder(@PathVariable int orderId){
 		orderService.updateOrder(orderId, "C");
 		return JSONResponseUtil.getJSONResponse("", HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/receipt/{orderId}", method = RequestMethod.GET)
+	public String readReceipt(@PathVariable int orderId, HttpSession session, Model model) throws IOException {
+		String customerId = ServletRequestUtil.getCustomerIdFromSession(session);
+		model.addAttribute("order", orderService.readOrder(orderId));
+		model.addAttribute("categories", categoryService.readWithoutUnclassifiedCategory());
+		return "receipt";
 	}
 }
