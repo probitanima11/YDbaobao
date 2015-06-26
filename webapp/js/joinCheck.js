@@ -102,10 +102,11 @@ joinCheck.checkJoinFieldsStatus = function() {
 	var subitBtn = document.querySelector("#join-submit");
 	var errorMessageFiles = document.querySelectorAll(".errorMessage");
 	var lengthOfFields = errorMessageFiles.length;
+	var password = document.querySelector('#join-userPassword');
+	var rePassword = document.querySelector('#join-userRePassword');
 	for(var i=0; i<lengthOfFields; i++) {
 		if(errorMessageFiles[i].style.cssText.indexOf("block") !== -1) {
 			subitBtn.disabled = true;
-			subitBtn.style.backgroundColor="rgba(194, 194, 194, 0.4)";
 			return;
 		}
 	}
