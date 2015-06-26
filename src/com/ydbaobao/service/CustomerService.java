@@ -90,4 +90,10 @@ public class CustomerService {
 		return customerDao.countBySearchCustomerId(terms);
 	}
 
+	public List<Customer> readBySerchCustomerId(String termsForQuery, int page, int customersPerPage) {
+		return customerDao.readBySerchCustomerId(termsForQuery, (page - 1) * customersPerPage, customersPerPage);
+	}
+
+
+
 }

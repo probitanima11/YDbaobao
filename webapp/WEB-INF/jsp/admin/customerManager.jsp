@@ -132,7 +132,6 @@
 		}
 		
 		document.querySelector("#search-form").addEventListener('submit', function(e) {
-			debugger;
 			e.preventDefault();
 			var selected = document.querySelector('.selected').value;
 			var terms = document.querySelector('#search-terms').value;
@@ -140,12 +139,10 @@
 				return;
 			}
 			if(selected === '이름') {
-				debugger;
 				window.location.href = '/admin/customers/search?customerName=' + terms +'&page=1';
 			}
 			if(selected === 'ID') {
-				debugger;
-				window.location.href = '/admin/customers/search/' + terms;
+				window.location.href = '/admin/customers/search/' + terms + '?page=1';
 			}
 		}, false);
 		

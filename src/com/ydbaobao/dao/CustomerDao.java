@@ -103,7 +103,7 @@ public class CustomerDao extends JdbcDaoSupport {
 	 * @return CUSTOMERS table에서 offset에서부터 customersPerPage 만큼 가져온 Customers
 	 */
 	public List<Customer> readRange(String termsForQuery, int page, int customersPerPage) {
-		String sql ="select * from CUSTOMERS where customerName=? ORDER BY customerName LIMIT ?, ?";
+		String sql ="select * from CUSTOMERS where customerName REGEXP (?) ORDER BY customerName LIMIT ?, ?";
 		return getJdbcTemplate().query(
 				sql, (rs, rowNum) -> new Customer(
 						rs.getString("customerId"),
@@ -143,5 +143,19 @@ public class CustomerDao extends JdbcDaoSupport {
 	public int countBySearchCustomerId(String terms) {
 		String sql = "select count(1) as count from CUSTOMERS where customerId REGEXP (?)";
 		return getJdbcTemplate().queryForObject(sql, Integer.class, terms);
+	}
+
+	public List<Customer> readBySerchCustomerId(String termsForQuery, int page, int customersPerPage) {
+		String sql ="select * from CUSTOMERS where customerId REGEXP (?)  ORDER BY customerCreateDate DESC LIMIT ?, ?";
+		return getJdbcTemplate().query(
+				sql, (rs, rowNum) -> new Customer(
+						rs.getString("customerId"),
+						rs.getString("customerName"), 
+						rs.getString("customerPassword"),
+						rs.getString("gradeId"),
+						rs.getString("customerPhone"),
+						rs.getString("customerEmail"),
+						rs.getString("customerAddress"),
+						rs.getString("customerCreateDate")), termsForQuery, page, customersPerPage);
 	}
 }
