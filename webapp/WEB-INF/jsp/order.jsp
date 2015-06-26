@@ -76,6 +76,12 @@ tr.border_top td {
 			<div id="progress-info">
 				<div class="on"><i class='fa fa-archive'></i>  주문내역</div>
 			</div>
+			<div style="text-align: center;">
+				<input type="date" id="fromDate" value="${fromDate}">
+				<span>~</span>
+				<input type="date" id="toDate" value="${toDate}">
+				<input type="button" id="reloadList" value="조회">
+			</div>
 			<div id="order-section">
 				<table id="order-list">
 					<thead>
@@ -130,7 +136,6 @@ tr.border_top td {
 									</c:if>
 									<button class="" onclick="getReceipt(${order.orderId})">주문서</button>
 								</td>
-								
 								<c:forEach var="i" begin="1" end="${fn:length(order.items)-1}">
 									<tr>
 										<td class="item-image-container"><img class="item-image"
@@ -167,6 +172,9 @@ tr.border_top td {
 				orderCancel(orderId);
 			});
 		}
+		document.querySelector("#reloadList").addEventListener('click', function(){
+			window.location.href="/orders/reload?fromDate="+fromDate.value+"&toDate="+toDate.value;
+		}, false);
 	}, false);
 	
 	function orderCancel(orderId) {
@@ -175,8 +183,9 @@ tr.border_top td {
 		}
 		ydbaobao.ajax({
 			method: "put",
-			url: "/orders/cancel/"+orderId,
-			success : function(req) {
+			param: "orderStatus=C",
+			url: "/orders/"+orderId,
+			success: function(req){
 				document.querySelectorAll(".border_top[data-id='" + orderId + "'] > td")[6].innerText = "주문취소";
 				document.querySelectorAll(".border_top[data-id='" + orderId + "'] > td")[7].querySelector("button").remove();
 			}

@@ -210,6 +210,9 @@
 
 		function searchBrand() {
 			var searchValue = document.querySelector('#search-brand').value;
+			if(searchValue===""){
+				return;
+			}
 			ydbaobao.ajax({
 				method : 'get',
 				url : '/admin/brands/find?searchValue=' + searchValue,

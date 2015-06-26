@@ -132,6 +132,7 @@ input.qty-selector {
 button.plusMinus-btn {
 	width: 50px;
 	height: 20px;
+	cursor: pointer;
 }
 
 div#btnBox {

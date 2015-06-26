@@ -38,7 +38,7 @@
 	<div id="container">
 		<%@ include file="./_adminNav.jsp" %>
 		<div id="content">
-			<h1>회원관리</h1>
+			<h1>회원 관리</h1>
 			
 			<form id="search-form">
 				<div id="search-bar">
@@ -61,7 +61,7 @@
 						<th >이메일</th>
 						<th >등급</th>
 						<th >가입일</th>
-						<th ></th>
+						<th >비고</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -132,17 +132,17 @@
 		}
 		
 		document.querySelector("#search-form").addEventListener('submit', function(e) {
-			debugger;
 			e.preventDefault();
 			var selected = document.querySelector('.selected').value;
 			var terms = document.querySelector('#search-terms').value;
+			if(terms===""){
+				return;
+			}
 			if(selected === '이름') {
-				debugger;
 				window.location.href = '/admin/customers/search?customerName=' + terms +'&page=1';
 			}
 			if(selected === 'ID') {
-				debugger;
-				window.location.href = '/admin/customers/search/' + terms;
+				window.location.href = '/admin/customers/search/' + terms + '?page=1';
 			}
 		}, false);
 		

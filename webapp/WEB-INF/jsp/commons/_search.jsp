@@ -1,9 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <div id="brand-search-container">
 	<div id="brand-search-bar" class="wrap content">
 		<div id="search-bar-container">
-			<a href="/"> <img width="120" height="80" src="/image/logo_1.png" style="margin-left: 50px;"/>
+			<a href="/"> <img width="180" height="55" src="/image/logo_5.png" style="margin-right: 90px; margin-left: 60px; margin-top: 10px;"/>
 			</a>
 			<form id="search-form">
 				<div id="search-bar">
@@ -36,6 +35,9 @@
 			e.preventDefault();
 			var selected = document.querySelector('.selected').value;
 			var terms = document.querySelector('#search-terms').value;
+			if(terms===""){
+				return;
+			}
 			if(selected === '상품명') {
 				window.location.href = '/search/products?terms=' + terms + '&page=1';
 			}
