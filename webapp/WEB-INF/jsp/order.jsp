@@ -76,10 +76,12 @@ tr.border_top td {
 			<div id="progress-info">
 				<div class="on"><i class='fa fa-archive'></i>  주문내역</div>
 			</div>
-			<div>
-				<input type="date" id="toDate" value="${toDate}">
-				<span>~</span>
+			<div style="text-align: center;">
+				<span>기간검색: </span>
 				<input type="date" id="fromDate" value="${fromDate}">
+				<span>~</span>
+				<input type="date" id="toDate" value="${toDate}">
+				<input type="button" id="reloadList" value="조회">
 			</div>
 			<div id="order-section">
 				<table id="order-list">
@@ -171,6 +173,9 @@ tr.border_top td {
 				orderCancel(orderId);
 			});
 		}
+		document.querySelector("#reloadList").addEventListener('click', function(){
+			window.location.href="/orders/reload?fromDate="+fromDate.value+"&toDate="+toDate.value;
+		}, false);
 	}, false);
 	
 	function orderCancel(orderId) {
