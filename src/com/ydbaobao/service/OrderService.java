@@ -76,8 +76,8 @@ public class OrderService {
 	 * @return
 	 */
 	//TODO 기간별로 받아오게 변경 요망
-	public List<Order> readOrdersByCustomerId(String customerId) {
-		List<Order> orders = orderDao.readOrdersByCustomerId(customerId);
+	public List<Order> readOrdersByCustomerId(String customerId, String fromDate, String toDate) {
+		List<Order> orders = orderDao.readOrdersByCustomerId(customerId, fromDate, toDate);
 		setItems(orders);
 		return orders;
 	}
