@@ -36,6 +36,9 @@
 			e.preventDefault();
 			var selected = document.querySelector('.selected').value;
 			var terms = document.querySelector('#search-terms').value;
+			if(terms===""){
+				return;
+			}
 			if(selected === '상품명') {
 				window.location.href = '/search/products?terms=' + terms + '&page=1';
 			}

@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+[보그 우양산] VOGUE 밤에부엉이 3단 자동 우양산<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
@@ -210,6 +210,9 @@
 
 		function searchBrand() {
 			var searchValue = document.querySelector('#search-brand').value;
+			if(searchValue===""){
+				return;
+			}
 			ydbaobao.ajax({
 				method : 'get',
 				url : '/admin/brands/find?searchValue=' + searchValue,
