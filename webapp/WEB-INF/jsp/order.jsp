@@ -76,6 +76,11 @@ tr.border_top td {
 			<div id="progress-info">
 				<div class="on"><i class='fa fa-archive'></i>  주문내역</div>
 			</div>
+			<div>
+				<input type="date" id="toDate" value="${toDate}">
+				<span>~</span>
+				<input type="date" id="fromDate" value="${fromDate}">
+			</div>
 			<div id="order-section">
 				<table id="order-list">
 					<thead>

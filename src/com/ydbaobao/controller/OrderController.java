@@ -1,7 +1,10 @@
 package com.ydbaobao.controller;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -23,7 +26,6 @@ import com.support.ServletRequestUtil;
 import com.ydbaobao.dao.ItemDao;
 import com.ydbaobao.model.Item;
 import com.ydbaobao.model.Order;
-import com.ydbaobao.model.Payment;
 import com.ydbaobao.service.CategoryService;
 import com.ydbaobao.service.ItemService;
 import com.ydbaobao.service.OrderService;
@@ -54,6 +56,12 @@ public class OrderController {
 		String customerId = ServletRequestUtil.getCustomerIdFromSession(session);
 		model.addAttribute("orders", orderService.readOrdersByCustomerId(customerId));
 		model.addAttribute("categories", categoryService.readWithoutUnclassifiedCategory());
+		
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		Calendar cal = new GregorianCalendar();
+		model.addAttribute("fromDate",  format.format(cal.getTime()));
+	    cal.add(Calendar.DATE, -7);
+		model.addAttribute("toDate", format.format(cal.getTime()));
 		return "order";
 	}
 	
@@ -127,11 +135,8 @@ public class OrderController {
 	
 	@RequestMapping(value = "/receipt/{orderId}", method = RequestMethod.GET)
 	public String readReceipt(@PathVariable int orderId, HttpSession session, Model model) throws IOException {
-		String customerId = ServletRequestUtil.getCustomerIdFromSession(session);
 		model.addAttribute("order", orderService.readOrder(orderId));
 		model.addAttribute("categories", categoryService.readWithoutUnclassifiedCategory());
 		return "receipt";
 	}
-	
-	//TODO 상품화면에서 주문하기
-	}
+}
