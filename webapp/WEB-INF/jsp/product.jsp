@@ -151,9 +151,7 @@ h1 {
 			</div>
 		</div>
 		<div id="product-display"> <h2>상품설명</h2>
-			<div id="product-description" style="padding:25px;">
-				${product.productDescription}
-			</div>
+			<pre id="product-description" style="padding:25px;">${product.productDescription}</pre>
 		</div>
 	</div>
 	<div id="footer">
@@ -220,8 +218,9 @@ h1 {
 
 			 // 가격에 comma 추가(5000 -> 5,000)
 			 priceWithComma();
+			
 		}, false);
-
+		
 		function addToCart(e) {
 			var el = document.querySelectorAll(".qty-selector");
 			var size = "";
