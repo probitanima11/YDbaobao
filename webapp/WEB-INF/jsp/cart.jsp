@@ -90,7 +90,7 @@
 						<c:choose>
 							<c:when test="${item.product.isSoldout eq 1}">
 								<tr data-id="${item.itemId}">
-									<td><input type="checkbox" class="soldout-item-check" onclick=""></td>
+									<td><input type="checkbox" class="soldout-item-check" disabled></td>
 									<td class="item-image-container"><a href="/products/${item.product.productId}" style="text-decoration:none"><img class="item-image" src="/img/products/${item.product.productImage}"></a></td>
 									<td class="item-name-container"><a href="/products/${item.product.productId}" style="text-decoration:none"><span class="item-name">${item.product.productName}</span><span class="sold-out"> [품절]</span></a></td>
 									<td><span class="item-size">${item.size}</span></td>

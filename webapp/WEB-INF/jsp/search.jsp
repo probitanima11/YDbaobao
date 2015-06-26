@@ -7,7 +7,8 @@
 <link href="http://fonts.googleapis.com/css?family=Lobster"
 	rel="stylesheet" type="text/css" />
 <link rel="stylesheet" href="/css/main.css" />
-<title>검색 결과 보기</title>
+<link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css" />
+<title>${terms} 검색결과</title>
 </head>
 <body>
 
