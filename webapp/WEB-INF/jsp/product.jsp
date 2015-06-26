@@ -93,9 +93,6 @@ h1 {
 	padding:10px;
 }
 
-i {
-	cursor: pointer;
-}
 </style>
 </head>
 <body>

@@ -54,14 +54,34 @@ public class OrderController {
 	@RequestMapping()
 	public String readOrders(HttpSession session, Model model) throws IOException {
 		String customerId = ServletRequestUtil.getCustomerIdFromSession(session);
-		model.addAttribute("orders", orderService.readOrdersByCustomerId(customerId));
-		model.addAttribute("categories", categoryService.readWithoutUnclassifiedCategory());
-		
+
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		Calendar cal = new GregorianCalendar();
-		model.addAttribute("fromDate",  format.format(cal.getTime()));
-	    cal.add(Calendar.DATE, -7);
-		model.addAttribute("toDate", format.format(cal.getTime()));
+		String toDate = format.format(cal.getTime());
+		cal.add(Calendar.DATE, -7);
+		String fromDate = format.format(cal.getTime());
+		
+		model.addAttribute("orders", orderService.readOrdersByCustomerId(customerId, fromDate, toDate));
+		model.addAttribute("categories", categoryService.readWithoutUnclassifiedCategory());
+		model.addAttribute("fromDate", fromDate);
+		model.addAttribute("toDate", toDate);
+		return "order";
+	}
+	
+	/**
+	 * 주문 내역 조회
+	 * @param session
+	 * @param model
+	 * @return
+	 * @throws IOException
+	 */
+	@RequestMapping(value="/reload")
+	public String reloadOrders(HttpSession session, Model model, @RequestParam String fromDate, @RequestParam String toDate) throws IOException {
+		String customerId = ServletRequestUtil.getCustomerIdFromSession(session);
+		model.addAttribute("orders", orderService.readOrdersByCustomerId(customerId, fromDate, toDate));
+		model.addAttribute("categories", categoryService.readWithoutUnclassifiedCategory());
+		model.addAttribute("fromDate", fromDate);
+		model.addAttribute("toDate", toDate);
 		return "order";
 	}
 	
