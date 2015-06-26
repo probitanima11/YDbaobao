@@ -77,7 +77,6 @@ tr.border_top td {
 				<div class="on"><i class='fa fa-archive'></i>  주문내역</div>
 			</div>
 			<div style="text-align: center;">
-				<span>기간검색: </span>
 				<input type="date" id="fromDate" value="${fromDate}">
 				<span>~</span>
 				<input type="date" id="toDate" value="${toDate}">
