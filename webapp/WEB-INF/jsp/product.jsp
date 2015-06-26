@@ -76,10 +76,12 @@ h1 {
 
 .btn.disabled {
 	background-color: #c8c8c8;
+	float: right;
 }
 
 .btn.buyitnow {
 	background-color: #EA6576;
+	float: right;
 }
 
 #product-display img {
