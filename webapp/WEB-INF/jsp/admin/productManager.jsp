@@ -162,6 +162,10 @@ td.tdhead {
 				e.preventDefault();
 				var selected = document.querySelector('.selected').value;
 				var terms = document.querySelector('#search-terms').value;
+				if(terms===""){
+					return;
+				}
+				
 				if(selected === '상품명') {
 					window.location.href = '/admin/products/search?productName=' + terms +'&page=1';
 				}
