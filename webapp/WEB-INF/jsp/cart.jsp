@@ -268,7 +268,7 @@
 
 	function totalPriceWithComma() {
 		 	var el = document.querySelector('#total-price span');
-		 	el.textContent = parseInt(el.textContent.replace(",", "")).toLocaleString();
+		 	el.textContent = parseInt(el.textContent.replace(/,/g, "")).toLocaleString();
 	}
 
 	function calcSelectedPrice() {
