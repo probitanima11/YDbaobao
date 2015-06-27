@@ -140,4 +140,9 @@ public class ItemDao extends JdbcDaoSupport {
 		String sql = "update ITEMS set quantity = ? where itemId = ?";
 		return getJdbcTemplate().update(sql, quantity, itemId);
 	}
+
+	public void updateStatus(int itemId) {
+		String sql = "update ITEMS set itemStatus = 'ordered' where itemId = ?";
+		getJdbcTemplate().update(sql, itemId);
+	}
 }

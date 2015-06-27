@@ -170,4 +170,11 @@ public class OrderController {
 		model.addAttribute("items", list);
 		return "orderConfirm";
 	}
+	
+	@RequestMapping(method = RequestMethod.POST)
+	public ResponseEntity<Object> createOrder(@RequestParam int[] itemList, HttpSession session) throws IOException{
+		String customerId = ServletRequestUtil.getCustomerIdFromSession(session);
+		orderService.createOrder(customerId, itemList);
+		return JSONResponseUtil.getJSONResponse("", HttpStatus.OK);
+	}
 }
