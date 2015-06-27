@@ -61,50 +61,21 @@
 			<h1>주문 관리</h1>
 			<table>
 				<tr>
-					<th>주문번호</th>
-					<th>주문일자</th>
+					<th>상품번호</th>
+					<th>상품명</th>
 					<th>주문자</th>
-					<th>금액</th>
+					<th>주문수량</th>
+					<th>보낼수량</th>
 					<th>상태</th>
-					<th></th>
 				</tr>
 				<c:forEach var="order" items="${orders}">
-					<tr class="order-head" data-id="${order.orderId}">
-						<td>${order.orderId}</td>
-						<td>${order.orderDate}</td>
+					<tr class="order-head" data-id="${order.itemId}">
+						<td>${order.product.productId}</td>
+						<td>${order.product.productName}</td>
 						<td>${order.customer.customerId}</td>
-						<td>${order.realPrice}</td>
-						<c:choose>
-							<c:when test="${order.orderStatus eq 'I'}">
-								<td colspan="1" class="waiting">주문대기</td>
-								<td>
-									<button class='info' ><i class='fa fa-navicon'></i>  주문서보기</button>
-									<button class='success' ><i class='fa fa-check'></i>  주문승인</button>
-									<button class='claim' ><i class='fa fa-close'></i>  주문반려</button>
-								</td>
-							</c:when>
-							<c:when test="${order.orderStatus eq 'S'}">
-								<td colspan="1" class="success">주문승인</td>
-								<td>
-									<button class='info'><i class='fa fa-navicon'></i>  주문서보기</button>
-								</td>
-							</c:when>
-							<c:when test="${order.orderStatus eq 'R'}">
-								<td colspan="1" class='claim'>주문반려</td>
-								<td>
-									<button class='info'><i class='fa fa-navicon'></i>  주문서보기</button>
-								</td>
-							</c:when>
-							<c:when test="${order.orderStatus eq 'C'}">
-								<td colspan="1" class='cancel'>주문취소</td>
-								<td>
-									<button class='info'><i class='fa fa-navicon'></i>  주문서보기</button>
-								</td>
-							</c:when>
-							<c:otherwise>
-								<td colspan="1"></td>
-							</c:otherwise>
-						</c:choose>
+						<td>${order.quantity}</td>
+						<td><input type="text" /></td>
+						<td><input type="button" value="보내기"></td>
 					</tr>
 				</c:forEach>
 			</table>

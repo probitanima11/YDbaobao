@@ -4,63 +4,79 @@ public class Item {
 	private int itemId;
 	private Customer customer;
 	private Product product;
-	private String size;
-	private int quantity;
+	private String itemSize;
+	private int itemQuantity;
+	private String itemStatus;
+	/**
+	 * 카트 : "I"
+	 * 주문 : "S"
+	 * 취소 : "C"
+	 * 반려 : "R"
+	 */
 	
 	public Item() {
 		
 	}
 	
 	public Item(int itemId) {
-		this(itemId, null, null, null, 0);
+		this(itemId, null, null, null, 0, "");
 	}
 
-	public Item(int itemId, Customer customer, Product product, String size, int quantity) {
+	public Item(int itemId, Customer customer, Product product, String itemSize, int itemQuantity, String itemStatus) {
 		this.itemId = itemId;
 		this.customer = customer;
 		this.product = product;
-		this.size = size;
-		this.quantity = quantity;
+		this.itemSize = itemSize;
+		this.itemQuantity = itemQuantity;
+		this.itemStatus = itemStatus;
 	}
 
 	public int getItemId() {
 		return itemId;
 	}
 
-	public Customer getCustomer() {
-		return customer;
-	}
-
-	public Product getProduct() {
-		return product;
-	}
-
-	public String getSize() {
-		return size;
-	}
-
-	public int getQuantity() {
-		return quantity;
-	}
-
 	public void setItemId(int itemId) {
 		this.itemId = itemId;
+	}
+
+	public Customer getCustomer() {
+		return customer;
 	}
 
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
 	}
 
+	public Product getProduct() {
+		return product;
+	}
+
 	public void setProduct(Product product) {
 		this.product = product;
 	}
 
-	public void setSize(String size) {
-		this.size = size;
+	public String getItemSize() {
+		return itemSize;
 	}
 
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
+	public void setItemSize(String itemSize) {
+		this.itemSize = itemSize;
+	}
+
+	public int getItemQuantity() {
+		return itemQuantity;
+	}
+
+	public void setItemQuantity(int itemQuantity) {
+		this.itemQuantity = itemQuantity;
+	}
+
+	public String getItemStatus() {
+		return itemStatus;
+	}
+
+	public void setItemStatus(String itemStatus) {
+		this.itemStatus = itemStatus;
 	}
 
 	@Override
@@ -70,9 +86,12 @@ public class Item {
 		result = prime * result
 				+ ((customer == null) ? 0 : customer.hashCode());
 		result = prime * result + itemId;
+		result = prime * result + itemQuantity;
+		result = prime * result
+				+ ((itemSize == null) ? 0 : itemSize.hashCode());
+		result = prime * result
+				+ ((itemStatus == null) ? 0 : itemStatus.hashCode());
 		result = prime * result + ((product == null) ? 0 : product.hashCode());
-		result = prime * result + quantity;
-		result = prime * result + ((size == null) ? 0 : size.hashCode());
 		return result;
 	}
 
@@ -92,17 +111,22 @@ public class Item {
 			return false;
 		if (itemId != other.itemId)
 			return false;
+		if (itemQuantity != other.itemQuantity)
+			return false;
+		if (itemSize == null) {
+			if (other.itemSize != null)
+				return false;
+		} else if (!itemSize.equals(other.itemSize))
+			return false;
+		if (itemStatus == null) {
+			if (other.itemStatus != null)
+				return false;
+		} else if (!itemStatus.equals(other.itemStatus))
+			return false;
 		if (product == null) {
 			if (other.product != null)
 				return false;
 		} else if (!product.equals(other.product))
-			return false;
-		if (quantity != other.quantity)
-			return false;
-		if (size == null) {
-			if (other.size != null)
-				return false;
-		} else if (!size.equals(other.size))
 			return false;
 		return true;
 	}
@@ -110,7 +134,8 @@ public class Item {
 	@Override
 	public String toString() {
 		return "Item [itemId=" + itemId + ", customer=" + customer
-				+ ", product=" + product + ", size=" + size + ", quantity="
-				+ quantity + "]";
+				+ ", product=" + product + ", itemSize=" + itemSize
+				+ ", itemQuantity=" + itemQuantity + ", itemStatus="
+				+ itemStatus + "]";
 	}
 }

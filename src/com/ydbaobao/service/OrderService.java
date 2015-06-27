@@ -34,30 +34,44 @@ public class OrderService {
 	@Resource
 	CustomerDao customerDao;
 	
-	/**
-	 * 주문 목록 리스트만 받아오기
-	 * @return
-	 */
-	//TODO 기간별로 받아오게 변경 요망
-	public List<Order> readOrdersListOnly() {
-		return orderDao.readOrders();
+//	/**
+//	 * 주문 목록 리스트만 받아오기
+//	 * @return
+//	 */
+//	//TODO 기간별로 받아오게 변경 요망
+//	public List<Order> readOrdersListOnly() {
+//		return orderDao.readOrders();
+//	}
+	
+	public List<Item> readOrderedItems() {
+		return itemDao.readOrderedItems();
 	}
 	
+//	/**
+//	 * 주문서 생성
+//	 * @param customerId
+//	 * @param itemList
+//	 */
+//	public void createOrder(String customerId, int[] itemList) {
+//		int totalPrice = 0;
+//		for(int i=0; i<itemList.length; i++) {
+//			Item item = itemDao.readItemByItemId(itemList[i]);
+//			Product product = productDao.read(item.getProduct().getProductId());
+//			int price = productService.readByDiscount(product, item.getCustomer()).getProductPrice();
+//			totalPrice += price * item.getQuantity();
+//		}
+//		int orderId = orderDao.createOrder(customerId, totalPrice);
+//		itemDao.orderItems(orderId, itemList);
+//	}
 	/**
 	 * 주문서 생성
 	 * @param customerId
 	 * @param itemList
 	 */
 	public void createOrder(String customerId, int[] itemList) {
-		int totalPrice = 0;
-		for(int i=0; i<itemList.length; i++) {
-			Item item = itemDao.readItemByItemId(itemList[i]);
-			Product product = productDao.read(item.getProduct().getProductId());
-			int price = productService.readByDiscount(product, item.getCustomer()).getProductPrice();
-			totalPrice += price * item.getQuantity();
+		for (int item : itemList) {
+			itemDao.updateStatus(item, "S");
 		}
-		int orderId = orderDao.createOrder(customerId, totalPrice);
-		itemDao.orderItems(orderId, itemList);
 	}
 	
 	/**

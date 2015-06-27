@@ -218,4 +218,9 @@ public class ProductDao extends JdbcDaoSupport {
 		String sql = "update PRODUCTS set categoryId = 0 where categoryId = ?";
 		getJdbcTemplate().update(sql, categoryId);
 	}
+
+	public int countProductByBrandIdAndCategoryId(int categoryId, int brandId) {
+		String sql = "select count(1) as count from PRODUCTS WHERE categoryId=? and brandId=?";
+		return getJdbcTemplate().queryForObject(sql, Integer.class, categoryId, brandId);
+	}
 }

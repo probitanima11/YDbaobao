@@ -8,14 +8,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ydbaobao.dao.BrandDao;
+import com.ydbaobao.dao.ProductDao;
 import com.ydbaobao.model.Brand;
 
 @Service
 @Transactional
 public class BrandService {
-
 	@Resource
 	private BrandDao brandDao;
+	@Resource
+	private ProductDao productDao;
 
 	public Brand readBrandByBrandId(int brandId) {
 		return brandDao.readBrandByBrandId(brandId);
@@ -25,7 +27,15 @@ public class BrandService {
 	}
 	
 	public List<Brand> readBrandsByCategoryId(int categoryId) {
-		return brandDao.readBrandsByCategoryId(categoryId);
+		List<Brand> brands = brandDao.readBrandsByCategoryId(categoryId);
+		// 브랜드별 상품 개수 다시 계산.
+		int count=0;
+		for(Brand brand:brands){
+			count = productDao.countProductByBrandIdAndCategoryId(categoryId, brand.getBrandId());
+			brand.setBrandCount(count);			
+		}
+		
+		return brands;
 	}
 	
 	public List<Brand> findBrands(String searchValue) {

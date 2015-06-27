@@ -35,7 +35,7 @@ public class ItemDao extends JdbcDaoSupport {
 	// int brandId, String brandName, int discount_1, int discount_2, int
 	// discount_3, int discount_4, int discount_5
 	public List<Item> readCartItems(String customerId) {
-		String sql = "select * from ITEMS A, PRODUCTS B, CUSTOMERS as C, BRANDS as D where A.customerId= ? and A.orderId is NULL AND A.productId = B.productId AND A.customerId = C.customerId AND B.brandId = D.brandId order by A.productId";
+		String sql = "select * from ITEMS A, PRODUCTS B, CUSTOMERS as C, BRANDS as D where A.itemStatus is NULL AND A.customerId= ? AND A.productId = B.productId AND A.customerId = C.customerId AND B.brandId = D.brandId order by A.productId";
 		try {
 			return getJdbcTemplate().query(
 					sql,
@@ -44,7 +44,7 @@ public class ItemDao extends JdbcDaoSupport {
 							new Product(rs.getInt("productId"), rs.getString("productName"), rs.getInt("productPrice"), rs.getString("productImage"), rs.getString("productSize"), rs.getInt("isSoldout"),
 									new Brand(rs.getInt("brandId"), rs.getString("brandName"), rs.getInt("discount_1"), rs.getInt("discount_2"),
 											rs.getInt("discount_3"), rs.getInt("discount_4"), rs.getInt("discount_5"))),
-							rs.getString("size"), rs.getInt("quantity")), customerId);
+							rs.getString("size"), rs.getInt("quantity"), rs.getString("itemStatus")), customerId);
 		} catch (EmptyResultDataAccessException e) {
 			return null;
 		}
@@ -73,7 +73,7 @@ public class ItemDao extends JdbcDaoSupport {
 	}
 
 	public void createItem(String customerId, int productId, String size, int quantity) {
-		String sql = "insert into ITEMS (customerId, productId, size, quantity) values(?, ?, ?, ?)";
+		String sql = "insert into ITEMS (customerId, productId, size, quantity, itemStatus) values(?, ?, ?, ?, 'I')";
 		getJdbcTemplate().update(sql, customerId, productId, size, quantity);
 	}
 
@@ -82,7 +82,7 @@ public class ItemDao extends JdbcDaoSupport {
 		return getJdbcTemplate().queryForObject(sql, (rs, rowNum) -> new Item(
 				rs.getInt("itemId"), new Customer(rs.getString("customerId")),
 				new Product(rs.getInt("productId"),rs.getString("productName"), rs.getInt("productPrice"), rs.getString("productImage"), rs.getString("productSize"), rs.getInt("isSoldout"), new Brand(rs.getInt("brandId"))),
-				rs.getString("size"), rs.getInt("quantity")), itemId);
+				rs.getString("size"), rs.getInt("quantity"), rs.getString("itemStatus")), itemId);
 	}
 
 	public List<Item> readOrderedItems(String customerId) {
@@ -92,7 +92,7 @@ public class ItemDao extends JdbcDaoSupport {
 					sql,
 					(rs, rowNum) -> new Item(rs.getInt("itemId"), new Customer(rs.getString("customerId")),
 							new Product(rs.getInt("productId"), rs.getString("productName"), rs.getInt("productPrice"),
-									rs.getString("productImage"), rs.getString("productSize"), rs.getInt("isSoldout"), new Brand(rs.getInt("brandId"))), rs.getString("size"), rs.getInt("quantity")), customerId);
+									rs.getString("productImage"), rs.getString("productSize"), rs.getInt("isSoldout"), new Brand(rs.getInt("brandId"))), rs.getString("size"), rs.getInt("quantity"), rs.getString("itemStatus")), customerId);
 		} catch (EmptyResultDataAccessException e) {
 			return null;
 		}
@@ -117,27 +117,51 @@ public class ItemDao extends JdbcDaoSupport {
 				sql,
 				(rs, rownum) -> new Item(rs.getInt("itemId"), new Customer(rs.getString("customerId")), new Product(rs
 						.getInt("productId"), rs.getString("productName"), rs.getInt("productPrice"), rs
-						.getString("productImage"), rs.getString("productSize"), rs.getInt("isSoldout"), new Brand(rs.getInt("brandId"))), rs.getString("size"), rs.getInt("quantity")), orderId);
+						.getString("productImage"), rs.getString("productSize"), rs.getInt("isSoldout"), new Brand(rs.getInt("brandId"))), rs.getString("size"), rs.getInt("quantity"), rs.getString("itemStatus")), orderId);
 	}
 	
-	public boolean isItemByProductIdAndSize(int productId, String size) {
-		String sql = "select count(1) from ITEMS where productId = ? and size = ? and orderId is NULL";
-		if(getJdbcTemplate().queryForObject(sql, Integer.class, productId, size) >0){
+	public boolean isItemByProductIdAndSize(int productId, String size, String customerId) {
+		String sql = "select count(1) from ITEMS where productId = ? and size = ? and customerId = ? and itemStatus = ?";
+		if(getJdbcTemplate().queryForObject(sql, Integer.class, productId, size, customerId, "I") >0){
 			return true;
 		}
 		return false;
 	}
 	
-	public Item readItemByProductIdAndSize(int productId, String size) {
-		String sql = "select * from ITEMS where productId = ? and size = ? and orderId is NULL";
-		return getJdbcTemplate().queryForObject(sql, (rs, rowNum) -> new Item(
-				rs.getInt("itemId"), new Customer(rs.getString("customerId")),
-				new Product(rs.getInt("productId")),
-				rs.getString("size"), rs.getInt("quantity")), productId, size);
+	public Item readItemByProductIdAndSize(int productId, String size, String customerId) {
+		String sql = "select * from ITEMS where productId = ? and size = ? and customerId = ? and itemStatus = ?";
+		try {
+			return getJdbcTemplate().queryForObject(sql, (rs, rowNum) -> new Item(
+					rs.getInt("itemId"), new Customer(rs.getString("customerId")),
+					new Product(rs.getInt("productId")),
+					rs.getString("size"), rs.getInt("quantity"), rs.getString("itemStatus")), productId, size, customerId, "I");
+		} catch (EmptyResultDataAccessException e) {
+			return null;
+		}
 	}
 
 	public int updateItem(int itemId, int quantity) {
 		String sql = "update ITEMS set quantity = ? where itemId = ?";
 		return getJdbcTemplate().update(sql, quantity, itemId);
+	}
+
+	public void updateStatus(int itemId, String itemStatus) {
+		String sql = "update ITEMS set itemStatus = ? where itemId = ?";
+		getJdbcTemplate().update(sql, itemStatus, itemId);
+	}
+
+	public List<Item> readOrderedItems() {
+		String sql = "select * from ITEMS A, PRODUCTS B where A.productId = B.productId and itemStatus = 'ordered'";
+		try {
+			return getJdbcTemplate().query(
+					sql,
+					(rs, rowNum) -> new Item(rs.getInt("itemId"), 
+							new Customer(rs.getString("customerId")),
+							new Product(rs.getInt("productId"), rs.getString("productName"), rs.getInt("productPrice"),
+									rs.getString("productImage"), rs.getString("productSize"), rs.getInt("isSoldout"), 
+									new Brand(rs.getInt("brandId"))), rs.getString("size"), rs.getInt("quantity"), rs.getString("itemStatus")));
+		} catch (EmptyResultDataAccessException e) {
+			return null;
+		}
 	}
 }
