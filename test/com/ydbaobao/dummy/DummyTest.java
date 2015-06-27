@@ -19,7 +19,6 @@ import com.ydbaobao.service.BrandService;
 import com.ydbaobao.service.CategoryService;
 import com.ydbaobao.service.CustomerService;
 import com.ydbaobao.service.ItemService;
-import com.ydbaobao.service.OrderService;
 import com.ydbaobao.service.ProductService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -37,8 +36,6 @@ public class DummyTest {
 	private CustomerService customerService;
 	@Resource
 	private ItemService itemService;
-	@Resource
-	private OrderService orderService;
 	@Resource
 	private ProductService productService;
 	

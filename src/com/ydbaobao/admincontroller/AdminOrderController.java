@@ -2,6 +2,8 @@ package com.ydbaobao.admincontroller;
 
 import javax.annotation.Resource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -12,20 +14,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.support.JSONResponseUtil;
-import com.ydbaobao.model.Order;
-import com.ydbaobao.model.Payment;
-import com.ydbaobao.service.OrderService;
-import com.ydbaobao.service.PaymentService;
+import com.ydbaobao.service.ItemService;
 
 @Controller
 @RequestMapping("/admin/orders")
 public class AdminOrderController {
+	private static final Logger logger = LoggerFactory.getLogger(AdminOrderController.class);
 	
 	@Resource
-	private OrderService orderService;
-	
-	@Resource
-	private PaymentService paymentService;
+	private ItemService itemService;
 
 	/**
 	 * 관리자 화면에서 주문 목록 리스트만 받아오기
@@ -34,7 +31,7 @@ public class AdminOrderController {
 	 */
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public String manageOrder(Model model) {
-		model.addAttribute("orders", orderService.readOrderedItems());
+		model.addAttribute("orders", itemService.readOrderedItems());
 		return "admin/orderManager";
 	}
 
@@ -44,14 +41,17 @@ public class AdminOrderController {
 	 * @param orderStatus
 	 * @return
 	 */
-	@RequestMapping(value = "/{orderId}", method = RequestMethod.PUT)
-	public ResponseEntity<Object> updateOrder(@PathVariable int orderId, @RequestParam String orderStatus) {
-		Order order = orderService.readOrder(orderId);
-		if (order.getOrderStatus().equals('C')) {
-			return JSONResponseUtil.getJSONResponse("이미 취소된 주문입니다.", HttpStatus.OK);
-		}
-		if(orderStatus.equals("S")) paymentService.createPayment(new Payment(order.getCustomer(), "P", order.getRealPrice()));
-		orderService.updateOrder(orderId, orderStatus);
-		return JSONResponseUtil.getJSONResponse("주문상태변경완료", HttpStatus.OK);
+	@RequestMapping(value = "/accept/{itemId}", method = RequestMethod.POST)
+	public ResponseEntity<Object> acceptOrder(@PathVariable int itemId, @RequestParam int quantity) {
+		if(!itemService.acceptOrder(itemId, quantity))
+			return JSONResponseUtil.getJSONResponse("유효하지 않은 주문입니다.", HttpStatus.OK);
+		return JSONResponseUtil.getJSONResponse("주문승인", HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/reject/{itemId}", method = RequestMethod.POST)
+	public ResponseEntity<Object> rejectOrder(@PathVariable int itemId) {
+		if(!itemService.rejectOrder(itemId))
+			return JSONResponseUtil.getJSONResponse("유효하지 않은 주문입니다.", HttpStatus.OK);
+		return JSONResponseUtil.getJSONResponse("주문반려", HttpStatus.OK);
 	}
 }
