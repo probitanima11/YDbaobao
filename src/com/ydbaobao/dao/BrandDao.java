@@ -36,7 +36,7 @@ public class BrandDao extends JdbcDaoSupport {
 	}
 	
 	public List<Brand> readBrandsByCategoryId(int categoryId) {
-		String sql = "select b.* from brands as b, products as p where p.categoryId = ? and p.brandId = b.brandId order by brandName";
+		String sql = "select distinct b.* from brands as b, products as p where p.categoryId = ? and p.brandId = b.brandId order by brandName";
 		return getJdbcTemplate().query(
 				sql, (rs, rowNum) -> new Brand(rs.getInt("brandId"), rs.getString("brandName"), rs.getInt("brandCount"), rs.getInt("discount_1"), rs.getInt("discount_2"), rs.getInt("discount_3"), rs.getInt("discount_4"), rs.getInt("discount_5"), rs.getString("brandSize")), categoryId);
 	}

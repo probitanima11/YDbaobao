@@ -75,11 +75,9 @@ public class ProductController {
 		model.addAttribute("prev", CommonUtil.prevBlock(page));
 		model.addAttribute("next", CommonUtil.nextBlock(page, totalPage));
 		model.addAttribute("selectedIndex", page);
-		model.addAttribute("range", IntStream.range(CommonUtil.startPage(page), CommonUtil.endPage(page, totalPage))
-				.toArray());
+		model.addAttribute("range", IntStream.range(CommonUtil.startPage(page), CommonUtil.endPage(page, totalPage)).toArray());
 		model.addAttribute("url", "/categories/" + categoryId + "/products?page=");
-		model.addAttribute("products", productService.readListByCategoryId(categoryId, page, adminConfigService.read()
-				.getAdminDisplayProducts(), (SessionCustomer) session.getAttribute("sessionCustomer")));
+		model.addAttribute("products", productService.readListByCategoryId(categoryId, page, adminConfigService.read().getAdminDisplayProducts(), (SessionCustomer) session.getAttribute("sessionCustomer")));
 		model.addAttribute("brands", brandService.readBrandsByCategoryId(categoryId));
 		model.addAttribute("category", category);
 		model.addAttribute("categories", categoryService.readWithoutUnclassifiedCategory());
