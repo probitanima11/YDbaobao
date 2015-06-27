@@ -71,7 +71,6 @@ public class ProductController {
 	public String load(Model model, HttpSession session, @RequestParam("page") int page, @PathVariable int categoryId) {
 		Category category = categoryService.readByCategoryId(categoryId);
 		int totalPage = CommonUtil.countTotalPage(category.getCategoryCount(), CommonUtil.productsPerPage);
-
 		model.addAttribute("prev", CommonUtil.prevBlock(page));
 		model.addAttribute("next", CommonUtil.nextBlock(page, totalPage));
 		model.addAttribute("selectedIndex", page);
