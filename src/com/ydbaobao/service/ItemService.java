@@ -29,25 +29,31 @@ public class ItemService {
 	public void createItems(String customerId, String size, String quantity, int productId) {
 		String[] sizeArray = size.split("-");
 		String[] quantityArray = quantity.split("-");
+		
+		// 사이즈가 구분이 없을 경우
+		if(sizeArray.length == 0) {
+			if(itemDao.isItemByProductIdAndSize(productId, "-", customerId)){
+				itemDao.updateItem(itemDao.readItemByProductIdAndSize(productId, "-", customerId).getItemId(), Integer.parseInt(quantityArray[0]));
+			}
+			else{
+				itemDao.createItem(customerId, productId, "-", Integer.parseInt(quantityArray[0]));
+			}
+			return;
+		}
+		
+		// 사이즈 구분이 있는 경우
 		for(int i=0; i< quantityArray.length; i++){
+			// 해당 사이즈가 0개일 경우 넘어가기
 			if(quantityArray[i].equals("0")){
 				continue;
 			}
-			if(sizeArray.length == 0) {
-				if(itemDao.isItemByProductIdAndSize(productId, "-")){
-					itemDao.updateItem(itemDao.readItemByProductIdAndSize(productId, "-").getItemId(), Integer.parseInt(quantityArray[i]));
-				}
-				else{
-					itemDao.createItem(customerId, productId, "-", Integer.parseInt(quantityArray[i]));
-				}
-				return;
-			}
-			if(itemDao.isItemByProductIdAndSize(productId, sizeArray[i])){
-				itemDao.updateItem(itemDao.readItemByProductIdAndSize(productId, sizeArray[i]).getItemId(), Integer.parseInt(quantityArray[i]));
+			if(itemDao.isItemByProductIdAndSize(productId, sizeArray[i], customerId)){
+				itemDao.updateItem(itemDao.readItemByProductIdAndSize(productId, sizeArray[i], customerId).getItemId(), Integer.parseInt(quantityArray[i]));
 			}
 			else{
 				itemDao.createItem(customerId, productId, sizeArray[i], Integer.parseInt(quantityArray[i]));
 			}
+			
 		}
 	}
 	

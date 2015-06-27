@@ -170,13 +170,11 @@ public class OrderController {
 		model.addAttribute("items", list);
 		return "orderConfirm";
 	}
-	
+
 	/**
-	 * 상품화면에서 바로 주문 생성
+	 * 장바구니에서 선택 된 아이템을 주문 생성
+	 * @param itemList
 	 * @param session
-	 * @param productId
-	 * @param size
-	 * @param quantity
 	 * @return
 	 * @throws IOException
 	 */
@@ -186,4 +184,21 @@ public class OrderController {
 		orderService.createOrder(customerId, itemList);
 		return JSONResponseUtil.getJSONResponse("", HttpStatus.OK);
 	}
+	
+//	/**
+//	 * 상품화면에서 바로 주문 생성
+//	 * @param session
+//	 * @param productId
+//	 * @param size
+//	 * @param quantity
+//	 * @return
+//	 * @throws IOException
+//	 */
+//	@RequestMapping(value="/direct", method = RequestMethod.POST)
+//	public ResponseEntity<Object> createOrderDirectly(HttpSession session,  @RequestParam int productId, @RequestParam String size, @RequestParam String quantity) throws IOException{
+//		logger.debug("상품화면에서 바로 주문하기");
+//		String customerId = ServletRequestUtil.getCustomerIdFromSession(session);
+//		int[] itemList = itemService.createItemsDirectly(customerId, size, quantity, productId);
+//		return JSONResponseUtil.getJSONResponse(itemList, HttpStatus.OK);
+//	}
 }
