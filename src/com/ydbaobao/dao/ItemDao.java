@@ -145,4 +145,19 @@ public class ItemDao extends JdbcDaoSupport {
 		String sql = "update ITEMS set itemStatus = 'ordered' where itemId = ?";
 		getJdbcTemplate().update(sql, itemId);
 	}
+
+	public List<Item> readOrderedItems() {
+		String sql = "select * from ITEMS A, PRODUCTS B where A.productId = B.productId and itemStatus = 'ordered'";
+		try {
+			return getJdbcTemplate().query(
+					sql,
+					(rs, rowNum) -> new Item(rs.getInt("itemId"), 
+							new Customer(rs.getString("customerId")),
+							new Product(rs.getInt("productId"), rs.getString("productName"), rs.getInt("productPrice"),
+									rs.getString("productImage"), rs.getString("productSize"), rs.getInt("isSoldout"), 
+									new Brand(rs.getInt("brandId"))), rs.getString("size"), rs.getInt("quantity")));
+		} catch (EmptyResultDataAccessException e) {
+			return null;
+		}
+	}
 }

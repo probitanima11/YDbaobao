@@ -34,13 +34,17 @@ public class OrderService {
 	@Resource
 	CustomerDao customerDao;
 	
-	/**
-	 * 주문 목록 리스트만 받아오기
-	 * @return
-	 */
-	//TODO 기간별로 받아오게 변경 요망
-	public List<Order> readOrdersListOnly() {
-		return orderDao.readOrders();
+//	/**
+//	 * 주문 목록 리스트만 받아오기
+//	 * @return
+//	 */
+//	//TODO 기간별로 받아오게 변경 요망
+//	public List<Order> readOrdersListOnly() {
+//		return orderDao.readOrders();
+//	}
+	
+	public List<Item> readOrderedItems() {
+		return itemDao.readOrderedItems();
 	}
 	
 //	/**
