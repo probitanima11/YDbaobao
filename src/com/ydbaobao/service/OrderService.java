@@ -69,8 +69,8 @@ public class OrderService {
 	 * @param itemList
 	 */
 	public void createOrder(String customerId, int[] itemList) {
-		for (int i = 0; i < itemList.length; i++) {
-			itemDao.updateStatus(itemList[i]);
+		for (int item : itemList) {
+			itemDao.updateStatus(item, "S");
 		}
 	}
 	
