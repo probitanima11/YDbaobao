@@ -171,6 +171,15 @@ public class OrderController {
 		return "orderConfirm";
 	}
 	
+	/**
+	 * 상품화면에서 바로 주문 생성
+	 * @param session
+	 * @param productId
+	 * @param size
+	 * @param quantity
+	 * @return
+	 * @throws IOException
+	 */
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Object> createOrder(@RequestParam int[] itemList, HttpSession session) throws IOException{
 		String customerId = ServletRequestUtil.getCustomerIdFromSession(session);

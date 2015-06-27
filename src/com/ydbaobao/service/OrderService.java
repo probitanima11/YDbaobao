@@ -63,9 +63,12 @@ public class OrderService {
 //		int orderId = orderDao.createOrder(customerId, totalPrice);
 //		itemDao.orderItems(orderId, itemList);
 //	}
-	
+	/**
+	 * 주문서 생성
+	 * @param customerId
+	 * @param itemList
+	 */
 	public void createOrder(String customerId, int[] itemList) {
-		int totalPrice = 0;
 		for (int i = 0; i < itemList.length; i++) {
 			itemDao.updateStatus(itemList[i]);
 		}

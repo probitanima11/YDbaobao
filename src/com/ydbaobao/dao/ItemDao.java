@@ -44,7 +44,7 @@ public class ItemDao extends JdbcDaoSupport {
 							new Product(rs.getInt("productId"), rs.getString("productName"), rs.getInt("productPrice"), rs.getString("productImage"), rs.getString("productSize"), rs.getInt("isSoldout"),
 									new Brand(rs.getInt("brandId"), rs.getString("brandName"), rs.getInt("discount_1"), rs.getInt("discount_2"),
 											rs.getInt("discount_3"), rs.getInt("discount_4"), rs.getInt("discount_5"))),
-							rs.getString("size"), rs.getInt("quantity")), customerId);
+							rs.getString("size"), rs.getInt("quantity"), rs.getString("itemStatus")), customerId);
 		} catch (EmptyResultDataAccessException e) {
 			return null;
 		}
@@ -82,7 +82,7 @@ public class ItemDao extends JdbcDaoSupport {
 		return getJdbcTemplate().queryForObject(sql, (rs, rowNum) -> new Item(
 				rs.getInt("itemId"), new Customer(rs.getString("customerId")),
 				new Product(rs.getInt("productId"),rs.getString("productName"), rs.getInt("productPrice"), rs.getString("productImage"), rs.getString("productSize"), rs.getInt("isSoldout"), new Brand(rs.getInt("brandId"))),
-				rs.getString("size"), rs.getInt("quantity")), itemId);
+				rs.getString("size"), rs.getInt("quantity"), rs.getString("itemStatus")), itemId);
 	}
 
 	public List<Item> readOrderedItems(String customerId) {
@@ -92,7 +92,7 @@ public class ItemDao extends JdbcDaoSupport {
 					sql,
 					(rs, rowNum) -> new Item(rs.getInt("itemId"), new Customer(rs.getString("customerId")),
 							new Product(rs.getInt("productId"), rs.getString("productName"), rs.getInt("productPrice"),
-									rs.getString("productImage"), rs.getString("productSize"), rs.getInt("isSoldout"), new Brand(rs.getInt("brandId"))), rs.getString("size"), rs.getInt("quantity")), customerId);
+									rs.getString("productImage"), rs.getString("productSize"), rs.getInt("isSoldout"), new Brand(rs.getInt("brandId"))), rs.getString("size"), rs.getInt("quantity"), rs.getString("itemStatus")), customerId);
 		} catch (EmptyResultDataAccessException e) {
 			return null;
 		}
@@ -117,7 +117,7 @@ public class ItemDao extends JdbcDaoSupport {
 				sql,
 				(rs, rownum) -> new Item(rs.getInt("itemId"), new Customer(rs.getString("customerId")), new Product(rs
 						.getInt("productId"), rs.getString("productName"), rs.getInt("productPrice"), rs
-						.getString("productImage"), rs.getString("productSize"), rs.getInt("isSoldout"), new Brand(rs.getInt("brandId"))), rs.getString("size"), rs.getInt("quantity")), orderId);
+						.getString("productImage"), rs.getString("productSize"), rs.getInt("isSoldout"), new Brand(rs.getInt("brandId"))), rs.getString("size"), rs.getInt("quantity"), rs.getString("itemStatus")), orderId);
 	}
 	
 	public boolean isItemByProductIdAndSize(int productId, String size) {
@@ -133,7 +133,7 @@ public class ItemDao extends JdbcDaoSupport {
 		return getJdbcTemplate().queryForObject(sql, (rs, rowNum) -> new Item(
 				rs.getInt("itemId"), new Customer(rs.getString("customerId")),
 				new Product(rs.getInt("productId")),
-				rs.getString("size"), rs.getInt("quantity")), productId, size);
+				rs.getString("size"), rs.getInt("quantity"), rs.getString("itemStatus")), productId, size);
 	}
 
 	public int updateItem(int itemId, int quantity) {
@@ -155,7 +155,7 @@ public class ItemDao extends JdbcDaoSupport {
 							new Customer(rs.getString("customerId")),
 							new Product(rs.getInt("productId"), rs.getString("productName"), rs.getInt("productPrice"),
 									rs.getString("productImage"), rs.getString("productSize"), rs.getInt("isSoldout"), 
-									new Brand(rs.getInt("brandId"))), rs.getString("size"), rs.getInt("quantity")));
+									new Brand(rs.getInt("brandId"))), rs.getString("size"), rs.getInt("quantity"), rs.getString("itemStatus")));
 		} catch (EmptyResultDataAccessException e) {
 			return null;
 		}
