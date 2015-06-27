@@ -39,8 +39,9 @@ public class CartController {
 	 * @return
 	 * @throws IOException
 	 */
-	@RequestMapping(value = "/{customerId}", method = RequestMethod.POST)
-	public ResponseEntity<Object> createItem(@PathVariable String customerId, @RequestParam int productId, @RequestParam String size, @RequestParam String quantity) throws IOException {
+	@RequestMapping(method = RequestMethod.POST)
+	public ResponseEntity<Object> createItem(HttpSession session, @RequestParam int productId, @RequestParam String size, @RequestParam String quantity) throws IOException {
+		String customerId = ServletRequestUtil.getCustomerIdFromSession(session);
 		itemService.createItems(customerId, size, quantity, productId);
 		return JSONResponseUtil.getJSONResponse("success", HttpStatus.OK);
 	}
@@ -55,7 +56,7 @@ public class CartController {
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public String cartForm(Model model, HttpSession session) throws IOException {
 		String customerId = ServletRequestUtil.getCustomerIdFromSession(session);
-		model.addAttribute("items", itemService.readCartItems(customerId));
+		model.addAttribute("items", itemService.readCartItems(customerId, "I"));
 		model.addAttribute("categories", categoryService.readWithoutUnclassifiedCategory());
 		return "cart";
 	}
@@ -67,9 +68,9 @@ public class CartController {
 	 * @return
 	 * @throws IOException
 	 */
-	@RequestMapping(value = "", method = RequestMethod.POST)
+	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public String cartUpdate(@RequestParam int quantity, @RequestParam int itemId, Model model, HttpSession session) throws IOException {
-		itemService.updateQuantity(itemId, quantity);
+		itemService.updateItemQuantity(itemId, quantity);
 		return cartForm(model, session);
 	}
 	/**

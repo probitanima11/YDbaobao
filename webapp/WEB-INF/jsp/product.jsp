@@ -235,7 +235,7 @@ h1 {
 			ydbaobao.ajax({
 				/* TODO productId, size, quantity 전달. */
 				method : 'post',
-				url : '/carts/${customer.sessionId}',
+				url : '/carts/',
 				param : param,
 				success : function(req) {
 					if(req.responseText === "fail")

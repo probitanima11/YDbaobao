@@ -25,11 +25,11 @@
 		color: #62C15B;
 	}
 	
-	.claim, .cancel {
+	.reject, .cancel {
 		color: #F15F5F;
 	}
 	
-	button.info, button.success, button.claim {
+	button.info, button.success, button.reject {
 		border: 0;
 		padding: 5px;
 		color: #fff;
@@ -45,7 +45,7 @@
 		border-bottom:2px solid #086701;
 	}
 	
-	button.claim {
+	button.reject {
 		background-color: #F15F5F;
 		border-bottom:2px solid #840000;
 	}
@@ -74,8 +74,9 @@
 						<td>${order.product.productName}</td>
 						<td>${order.customer.customerId}</td>
 						<td>${order.quantity}</td>
-						<td><input type="text" /></td>
-						<td><input type="button" value="보내기"></td>
+						<td><input type="text" data-id="${order.itemId}"/></td>
+						<td><input type="button" class="success" value="보내기">
+						<input type="button" class="reject" value="반려"></td>
 					</tr>
 				</c:forEach>
 			</table>
@@ -84,20 +85,20 @@
 	<script>
 		window.addEventListener('load', function(){
 			var i;
-			var infoBtns = document.querySelectorAll('button.info');
+/* 			var infoBtns = document.querySelectorAll('button.info');
 			for (i = 0; i < infoBtns.length; i++) {
 				infoBtns[i].addEventListener('click', showOrder, false);
-			}
-			var checkBtns = document.querySelectorAll('button.success');
+			} */
+			var checkBtns = document.querySelectorAll('.success');
 			for (i = 0; i < checkBtns.length; i++) {
 				checkBtns[i].addEventListener('click', checkOrder, false);
 			}
-			var claimBtns = document.querySelectorAll('button.claim');
-			for (i = 0; i < claimBtns.length; i++) {
-				claimBtns[i].addEventListener('click', claimOrder, false);
+			var rejectBtns = document.querySelectorAll('.reject');
+			for (i = 0; i < rejectBtns.length; i++) {
+				rejectBtns[i].addEventListener('click', rejectOrder, false);
 			}
 		}, false);
-		
+/* 		
 		function showOrder(e) {
 			var orderId = e.target.parentNode.parentNode.getAttribute('data-id');
 			ydbaobao.ajax({
@@ -108,13 +109,14 @@
 				}
 			});
 		}
-		
+		 */
 		function checkOrder(e) {
-			var orderId = e.target.parentNode.parentNode.getAttribute('data-id');
+			var itemId = e.target.parentNode.parentNode.getAttribute('data-id');
+			var quantity = document.querySelector('input[data-id="'+ itemId + '"]').value;
 			ydbaobao.ajax({
-				method: "put",
-				param: "orderStatus=S",
-				url: "/admin/orders/"+orderId,
+				method: "post",
+				param: "quantity="+quantity,
+				url: "/admin/orders/accept/"+itemId,
 				success: function(req){
 					alert(req.responseText);
 					window.location.href="/admin/orders";
@@ -122,12 +124,11 @@
 			});
 		}
 		
-		function claimOrder(e) {
-			var orderId = e.target.parentNode.parentNode.getAttribute('data-id');
+		function rejectOrder(e) {
+			var itemId = e.target.parentNode.parentNode.getAttribute('data-id');
 			ydbaobao.ajax({
-				method: "put",
-				param: "orderStatus=R",
-				url: "/admin/orders/"+orderId,
+				method: "post",
+				url: "/admin/orders/reject/"+itemId,
 				success: function(req){
 					alert(req.responseText);
 					window.location.href="/admin/orders";
