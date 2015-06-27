@@ -33,10 +33,10 @@ import com.ydbaobao.service.OrderService;
 @Controller
 @RequestMapping("/orders")
 public class OrderController {
-//	private static final Logger logger = LoggerFactory.getLogger(OrderController.class);
-//	
-//	@Resource
-//	private OrderService orderService;
+	private static final Logger logger = LoggerFactory.getLogger(OrderController.class);
+	
+	@Resource
+	private OrderService orderService;
 //	@Resource
 //	private ItemService itemService;
 //	@Resource
@@ -159,4 +159,15 @@ public class OrderController {
 //		model.addAttribute("categories", categoryService.readWithoutUnclassifiedCategory());
 //		return "receipt";
 //	}
+	
+	@RequestMapping(value = "/confirm", method = RequestMethod.POST)
+	public String orderConfirm(@RequestParam int[] itemList, Model model) {
+		logger.debug("itemList: {}", itemList);
+		List<Item> list = new ArrayList<Item>();
+		for (int itemId : itemList) {
+			list.add(orderService.readItemByItemId(itemId));
+		}
+		model.addAttribute("items", list);
+		return "orderConfirm";
+	}
 }
