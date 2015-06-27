@@ -35,7 +35,7 @@ public class ItemDao extends JdbcDaoSupport {
 	// int brandId, String brandName, int discount_1, int discount_2, int
 	// discount_3, int discount_4, int discount_5
 	public List<Item> readCartItems(String customerId) {
-		String sql = "select * from ITEMS A, PRODUCTS B, CUSTOMERS as C, BRANDS as D where A.customerId= ? AND A.productId = B.productId AND A.customerId = C.customerId AND B.brandId = D.brandId order by A.productId";
+		String sql = "select * from ITEMS A, PRODUCTS B, CUSTOMERS as C, BRANDS as D where A.itemStatus is NULL AND A.customerId= ? AND A.productId = B.productId AND A.customerId = C.customerId AND B.brandId = D.brandId order by A.productId";
 		try {
 			return getJdbcTemplate().query(
 					sql,
