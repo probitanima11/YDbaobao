@@ -25,7 +25,6 @@
 				</c:if>
 
 				<form:form modelAttribute="customer" method="post" action="${actionUrl}">
-
 					<c:set var="pageName" value="회원가입" />
 					<c:if test="${isUpdate}">
 						<c:set var="pageName" value="개인정보수정" />
@@ -47,11 +46,11 @@
 					<form:input path="customerName" />
 					<br />
 					<label for="customerPassword">비밀번호</label>
-					<form:password id="join-userPassword" path="customerPassword" />
+					<input id="join-userPassword" type="password" name="customerPassword" required/>
 					<span id="join-userPassword-message" class="errorMessage"></span>
 					<br />
 					<label for="customerAgainPassword">비밀번호확인</label>
-					<input id="join-userRePassword" type="password" name="customerAgainPassword" />
+					<input id="join-userRePassword" type="password" name="customerAgainPassword" required/>
 					<span id="join-userRePassword-message" class="errorMessage"></span>
 					<br />
 					<label for="customerPhone">전화번호</label>
@@ -64,6 +63,7 @@
 					<label for="customerAddress">주소</label>
 					<form:input path="customerAddress" />
 					<br />
+					<label style="width:initial" class="passwordError"></label>
 					<c:if test="${not empty message}">
 						<label style="width:initial" class="error">${message}</label>
 						<br />
@@ -74,7 +74,7 @@
 							<br />
 						</c:forEach>
 					</c:if>
-					<button id="join-submit" type="submit">확인</button>
+					<button id="join-submit" >확인</button>
 				</form:form>
 			</div>
 		</div>
@@ -88,7 +88,25 @@
 		setEventListener();
 	}, false);
 	
+	document.querySelector('#join-submit').addEventListener('click', function(e){
+		var password = document.querySelector('#join-userPassword');
+		var rePassword = document.querySelector('#join-userRePassword');
+		debugger;
+		if(password.value==="" || password.value===""){
+			return;
+		}
+/* 		else if(password.value !== rePassword.value){
+			document.querySelector('.passwordError').innerText="비밀번호가 일치하지 않습니다.";
+			return;
+		} */
+		else {
+			e.target.parentNode.submit();
+		}
+		
+	}, false);
+	
 	var setEventListener = function() {
+		debugger;
 		// Email //
 		//TOTO 유효성체크항목 추후 협의.
 		//joinCheck.setEmailValidation("join-userEmail", "join-userEmail-message");
