@@ -106,7 +106,6 @@
 	}, false);
 	
 	var setEventListener = function() {
-		debugger;
 		// Email //
 		//TOTO 유효성체크항목 추후 협의.
 		//joinCheck.setEmailValidation("join-userEmail", "join-userEmail-message");
