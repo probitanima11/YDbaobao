@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.sun.media.jfxmedia.logging.Logger;
 import com.ydbaobao.dao.ItemDao;
 import com.ydbaobao.dao.ProductDao;
 import com.ydbaobao.model.Item;
@@ -27,39 +28,49 @@ public class ItemService {
 	private ProductService productService;
 	
 	/**
-	 * 아이템 생성(장바구니에 등록)
+	 * 아이템 생성(장바구니에 등록/주문)
 	 * @param customerId
 	 * @param size
 	 * @param quantity
 	 * @param productId
+	 * @param itemStatus
 	 */
-	public void createItems(String customerId, String size, String quantity, int productId) {
+	public void createItems(String customerId, String size, String quantity, int productId, String itemStatus) {
 		String[] sizeArray = size.split("-");
-		String[] quantityArray = quantity.split("-");
+		String[] quantityArray = quantity.split("-");	
 		
 		// 사이즈가 구분이 없을 경우
-		if(sizeArray.length == 0) {
-			if(itemDao.isItemByProductIdAndSize(productId, "-", customerId)){
-				itemDao.updateItemQuantity(itemDao.readItemByProductIdAndSize(productId, "-", customerId).getItemId(), Integer.parseInt(quantityArray[0]));
+		if (sizeArray.length == 0) {
+			if(itemDao.readItemByProductIdAndSize(productId, size, customerId, itemStatus) != null) {
+				itemDao.updateItemQuantity(itemDao.readItemByProductIdAndSize(productId, "-", customerId, itemStatus).getItemId(), Integer.parseInt(quantityArray[0]));
 			}
 			else{
-				itemDao.createItem(customerId, productId, "-", Integer.parseInt(quantityArray[0]));
+				itemDao.createItem(customerId, productId, "-", Integer.parseInt(quantityArray[0]), itemStatus);
 			}
-			return;
 		}
 		
 		// 사이즈 구분이 있는 경우
 		for(int i=0; i< quantityArray.length; i++){
-			// 해당 사이즈가 0개일 경우 넘어가기
+			// 해당 사이즈가 0개일 경우 넘어가
 			if(quantityArray[i].equals("0")){
 				continue;
 			}
-			if(itemDao.isItemByProductIdAndSize(productId, sizeArray[i], customerId)){
-				itemDao.updateItemQuantity(itemDao.readItemByProductIdAndSize(productId, sizeArray[i], customerId).getItemId(), Integer.parseInt(quantityArray[i]));
+			if(itemDao.readItemByProductIdAndSize(productId, sizeArray[i], customerId, itemStatus) != null){
+				itemDao.updateItemQuantity(itemDao.readItemByProductIdAndSize(productId, sizeArray[i], customerId, itemStatus).getItemId(), Integer.parseInt(quantityArray[i]));
 			}
 			else{
-				itemDao.createItem(customerId, productId, sizeArray[i], Integer.parseInt(quantityArray[i]));
+				itemDao.createItem(customerId, productId, sizeArray[i], Integer.parseInt(quantityArray[i]), itemStatus);
 			}
+		}
+		
+		if (itemStatus.equals("S")) {
+			Item item = itemDao.readItemByProductIdAndSize(productId, size, customerId, "I");
+			if (item != null) {
+				itemDao.deleteItem(item.getItemId());	
+			}
+			item = itemDao.readItemByProductIdAndSize(productId, size, customerId, "S");
+			int price = productService.readByDiscount(item.getProduct(), item.getCustomer()).getProductPrice();
+			itemDao.updateItemPrice(item.getItemId(), item.getQuantity()*price);
 		}
 	}
 	
@@ -88,17 +99,15 @@ public class ItemService {
 	}
 	
 	/**
-	 * 아이템 상태 변경(요청) 및 아이템 가격 픽스
+	 * 아이템 주문 및 아이템 가격 결정
 	 * @param customerId
 	 * @param itemList
 	 */
 	public void requestItems(String customerId, int[] itemList) {
 		for (int itemId : itemList) {
-			itemDao.updateItemStatus(itemId, "S");
 			Item item = itemDao.readItem(itemId);
-			Product product = productDao.read(item.getProduct().getProductId());
-			int price = productService.readByDiscount(product, item.getCustomer()).getProductPrice();	
-			itemDao.updateItemPrice(itemId, price);
+			itemDao.deleteItem(itemId);
+			this.createItems(customerId, item.getSize(), Integer.toString(item.getQuantity()), item.getProduct().getProductId(), "S");
 		}
 	}
 	
@@ -127,7 +136,7 @@ public class ItemService {
 		if(!itemDao.readItem(itemId).getCustomer().getCustomerId().equals(customerId)){
 			//TODO 아이템 고객아이디와 삭제하려는 고객아이디가 다를경우 예외처리.
 		}
-		itemDao.deleteCartList(itemId);
+		itemDao.deleteItem(itemId);
 	}
 
 	public void updateItemQuantity(int itemId, int quantity) {
@@ -136,10 +145,14 @@ public class ItemService {
 
 	public boolean acceptOrder(int itemId, int quantity) {
 		Item item = itemDao.readItemByStatus(itemId, "S");
-		if(item == null)
+		if (item == null)
 			return false;
-		paymentService.createPayment(new Payment(item.getCustomer(), "P", item.getPrice() * quantity));
-		itemDao.updateItemQuantity(itemId, item.getQuantity()-quantity);
+		if (item.getQuantity() < quantity)
+			quantity = item.getQuantity();
+		int price = productService.readByDiscount(item.getProduct(), item.getCustomer()).getProductPrice();
+		paymentService.createPayment(new Payment(item.getCustomer(), "P", price * quantity));
+		itemDao.updateItemQuantity(itemId, -quantity);
+		itemDao.updateItemPrice(item.getItemId(), item.getQuantity()*price);
 		return true;
 	}
 

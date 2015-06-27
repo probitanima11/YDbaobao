@@ -109,7 +109,7 @@
 										<td><span class="item-size">${item.size}</span></td>
 										<td><span class="item-price">${item.product.productPrice}</span></td>
 										<td><input type="number" class ="item-quantity" name="quantity" value ="${item.quantity}"/>
-										<input type="submit" class="quantity-update-btn" value="변경"/></td>
+										<button class="quantity-update-btn">변경</button></td>
 										<td><span class="order-price">${item.product.productPrice * item.quantity}</span></td>
 									</tr>
 								</form:form>
@@ -215,7 +215,7 @@
 				params : {itemList : paramList}
 			});
 		}, false);
-
+		
 		addItemsPrice();
 
 		priceWithComma();

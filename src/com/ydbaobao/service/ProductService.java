@@ -59,6 +59,7 @@ public class ProductService {
 	}
 	
 	public Product readByDiscount(Product product, Customer customer) {
+		product = productDao.read(product.getProductId());
 		if (null == customer) {
 			return product;
 		}

@@ -60,7 +60,7 @@ public class ItemDao extends JdbcDaoSupport {
 		}
 	}
 
-	public void deleteCartList(int itemId) {
+	public void deleteItem(int itemId) {
 		String sql = "delete from ITEMS where itemId = ?";
 		getJdbcTemplate().update(sql, itemId);
 	}
@@ -81,9 +81,9 @@ public class ItemDao extends JdbcDaoSupport {
 		return keyHolder.getKey().intValue();
 	}
 
-	public void createItem(String customerId, int productId, String size, int quantity) {
-		String sql = "insert into ITEMS (customerId, productId, size, quantity, itemStatus) values(?, ?, ?, ?, 'I')";
-		getJdbcTemplate().update(sql, customerId, productId, size, quantity);
+	public void createItem(String customerId, int productId, String size, int quantity, String itemStatus) {
+		String sql = "insert into ITEMS (customerId, productId, size, quantity, itemStatus, price) values(?, ?, ?, ?, ?, 0)";
+		getJdbcTemplate().update(sql, customerId, productId, size, quantity, itemStatus);
 	}
 	
 	public Item readItem(int itemId) {
@@ -118,13 +118,13 @@ public class ItemDao extends JdbcDaoSupport {
 		return false;
 	}
 	
-	public Item readItemByProductIdAndSize(int productId, String size, String customerId) {
+	public Item readItemByProductIdAndSize(int productId, String size, String customerId, String itemStatus) {
 		String sql = "select * from ITEMS where productId = ? and size = ? and customerId = ? and itemStatus = ?";
 		try {
 			return getJdbcTemplate().queryForObject(sql, (rs, rowNum) -> new Item(
 					rs.getInt("itemId"), new Customer(rs.getString("customerId")),
 					new Product(rs.getInt("productId")),
-					rs.getString("size"), rs.getInt("quantity"), rs.getString("itemStatus"), rs.getInt("price")), productId, size, customerId, "I");
+					rs.getString("size"), rs.getInt("quantity"), rs.getString("itemStatus"), rs.getInt("price")), productId, size, customerId, itemStatus);
 		} catch (EmptyResultDataAccessException e) {
 			return null;
 		}
@@ -136,7 +136,7 @@ public class ItemDao extends JdbcDaoSupport {
 	}
 
 	public void updateItemQuantity(int itemId, int quantity) {
-		String sql = "update ITEMS set quantity = ? where itemId = ?";
+		String sql = "update ITEMS set quantity = quantity + ? where itemId = ?";
 		getJdbcTemplate().update(sql, quantity, itemId);
 	}
 

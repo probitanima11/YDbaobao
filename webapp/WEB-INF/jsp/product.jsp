@@ -266,10 +266,7 @@ h1 {
 						alert('로그인이 필요합니다.');
 					else {
 						alert('주문요청이 완료되었습니다.');
-						ydbaobao.post({
-							path : "/orders/confirm",
-							params : {itemList : JSON.parse(req.responseText)}
-						});
+						window.location.href="/orders";
 					}
 				}
 			});

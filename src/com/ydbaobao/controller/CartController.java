@@ -42,7 +42,7 @@ public class CartController {
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Object> createItem(HttpSession session, @RequestParam int productId, @RequestParam String size, @RequestParam String quantity) throws IOException {
 		String customerId = ServletRequestUtil.getCustomerIdFromSession(session);
-		itemService.createItems(customerId, size, quantity, productId);
+		itemService.createItems(customerId, size, quantity, productId, "I");
 		return JSONResponseUtil.getJSONResponse("success", HttpStatus.OK);
 	}
 	

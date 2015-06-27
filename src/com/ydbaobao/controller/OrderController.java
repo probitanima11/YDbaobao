@@ -59,8 +59,8 @@ public class OrderController {
 	public ResponseEntity<Object> createOrderDirectly(HttpSession session,  @RequestParam int productId, @RequestParam String size, @RequestParam String quantity) throws IOException{
 		logger.debug("상품화면에서 바로 주문하기");
 		String customerId = ServletRequestUtil.getCustomerIdFromSession(session);
-		int[] itemList = itemService.createItemsDirectly(customerId, size, quantity, productId);
-		return JSONResponseUtil.getJSONResponse(itemList, HttpStatus.OK);
+		itemService.createItems(customerId, size, quantity, productId, "S");
+		return JSONResponseUtil.getJSONResponse("success", HttpStatus.OK);
 	}
 	
 	/**
