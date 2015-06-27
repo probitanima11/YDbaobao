@@ -51,7 +51,6 @@ public class HomeController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Model model, WebRequest req, HttpSession session) {
 		int totalPage = CommonUtil.countTotalPage(productService.count(), CommonUtil.productsPerPage);
-
 		model.addAttribute("prev", CommonUtil.prevBlock(1));
 		model.addAttribute("next", CommonUtil.nextBlock(1, totalPage));
 		model.addAttribute("selectedIndex", 1);
