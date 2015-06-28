@@ -31,7 +31,7 @@ public class AdminOrderController {
 	 */
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public String manageOrder(Model model) {
-		model.addAttribute("orders", itemService.readOrderedItems());
+		model.addAttribute("items", itemService.readOrderedItems());
 		return "admin/orderManager";
 	}
 

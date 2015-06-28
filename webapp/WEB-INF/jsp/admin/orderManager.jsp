@@ -8,9 +8,28 @@
 <link rel="stylesheet" href="/css/admin.css">
 <link rel="stylesheet" href="/css/font-awesome.min.css">
 <style>
-	table {
-		text-align:center;
+	table#cart-list {
+		width:100%;
 		font-size:12px;
+		border:1px solid #ccc;
+		border-spacing:0;
+	}
+	table#cart-list th{
+		padding:5px;
+		/* background-color:#f8f8f8; */
+	}
+	tbody td{
+		padding:10px 0;
+	}
+	.item-name-container {
+		text-align:left;
+	}
+	.item-image {
+		width:50px;
+		height:50px;
+	}
+	.order-price {
+		font-weight:800;
 	}
 	
 	th {
@@ -57,38 +76,43 @@
 	</div>
 	<div id="container">
 		<%@ include file="./_adminNav.jsp"%>
-		<div id="content">
+		<div id="cart-section" >
 			<h1>주문 관리</h1>
-			<table>
-				<tr>
-					<th>상품번호</th>
-					<th>상품명</th>
-					<th>주문자</th>
-					<th>주문수량</th>
-					<th>보낼수량</th>
-					<th>상태</th>
-				</tr>
-				<c:forEach var="order" items="${orders}">
-					<tr class="order-head" data-id="${order.itemId}">
-						<td>${order.product.productId}</td>
-						<td>${order.product.productName}</td>
-						<td>${order.customer.customerId}</td>
-						<td>${order.quantity}</td>
-						<td><input type="text" data-id="${order.itemId}"/></td>
-						<td><input type="button" class="success" value="보내기">
-						<input type="button" class="reject" value="반려"></td>
-					</tr>
-				</c:forEach>
-			</table>
+			<div style=" float: right; width: 800px; overflow: scroll; height: 400px; margin-right: 20px;">
+				<table id="cart-list" style="text-align: center;">
+					<thead>
+						<tr>
+							<th>주문자</th>
+							<th colspan="2">상품설명</th>
+							<th>사이즈</th>
+							<th>상품가격</th>
+							<th>수량</th>
+							<th>주문금액</th>
+							<th>상태</th>
+						</tr>
+					</thead>
+					<tbody>
+					<c:forEach var="item" items="${items}">
+						<tr data-id="${item.itemId}">
+							<td><span class="item-customer">${item.customer.customerId}</span></td>
+							<td class="item-image-container"><a href="/products/${item.product.productId}" style="text-decoration:none"><img class="item-image" src="/img/products/${item.product.productImage}"></a></td>
+							<td class="item-name-container"><a href="/products/${item.product.productId}" style="text-decoration:none"><span class="item-name">${item.product.productName}</span></a></td>
+							<td><span class="item-size">${item.size}</span></td>
+							<td><span class="item-price">${item.product.productPrice}</span></td>
+							<td><span class="item-quantity">${item.quantity}</span></td>
+							<td><span class="order-price">${item.product.productPrice * item.quantity}</span></td>
+							<td><input type="button" class="success" value="보내기">
+							<input type="button" class="reject" value="반려"></td>
+						</tr>
+					</c:forEach>
+					</tbody>
+				</table>
+			</div>
 		</div>
 	</div>
 	<script>
 		window.addEventListener('load', function(){
 			var i;
-/* 			var infoBtns = document.querySelectorAll('button.info');
-			for (i = 0; i < infoBtns.length; i++) {
-				infoBtns[i].addEventListener('click', showOrder, false);
-			} */
 			var checkBtns = document.querySelectorAll('.success');
 			for (i = 0; i < checkBtns.length; i++) {
 				checkBtns[i].addEventListener('click', checkOrder, false);
@@ -98,18 +122,7 @@
 				rejectBtns[i].addEventListener('click', rejectOrder, false);
 			}
 		}, false);
-/* 		
-		function showOrder(e) {
-			var orderId = e.target.parentNode.parentNode.getAttribute('data-id');
-			ydbaobao.ajax({
-				method: "get",
-				url: "/admin/orders/"+orderId,
-				success: function(req){
-					console.log(req.responseText);
-				}
-			});
-		}
-		 */
+
 		function checkOrder(e) {
 			var itemId = e.target.parentNode.parentNode.getAttribute('data-id');
 			var quantity = document.querySelector('input[data-id="'+ itemId + '"]').value;
