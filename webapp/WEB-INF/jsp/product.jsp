@@ -74,13 +74,13 @@ h1 {
 	margin-right: 10px;
 }
 
-.btn.disabled {
-	background-color: #c8c8c8;
+.btn.buyitnow {
+	background-color: #EA6576;
 	float: right;
 }
 
-.btn.buyitnow {
-	background-color: #EA6576;
+.btn.disabled {
+	background-color: #c8c8c8;
 	float: right;
 }
 
