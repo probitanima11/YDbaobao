@@ -117,9 +117,10 @@ public class ItemService {
 		return item;
 	}
 	
-	public void deleteCartList(String customerId, int itemId) {
+	public void deleteItem(String customerId, int itemId) {
 		if(!itemDao.readItem(itemId).getCustomer().getCustomerId().equals(customerId)){
 			//TODO 아이템 고객아이디와 삭제하려는 고객아이디가 다를경우 예외처리.
+			//ControllerExceptionHandler 을 이용하여 return status로 보내줘서 처리하면 좋을 듯
 			return;
 		}
 		itemDao.deleteItem(itemId);
@@ -127,7 +128,8 @@ public class ItemService {
 
 	public void updateItemQuantity(int itemId, int quantity, String customerId) {
 		if(!itemDao.readItem(itemId).getCustomer().getCustomerId().equals(customerId)){
-			//TODO 아이템 고객아이디와 삭제하려는 고객아이디가 다를경우 예외처리.
+			//TODO 아이템 고객아이디와 수정하려는 고객아이디가 다를경우 예외처리.
+			//ControllerExceptionHandler 을 이용하여 return status로 보내줘서 처리하면 좋을 듯
 			return;
 		}
 		itemDao.updateItemQuantity(itemId, quantity);
@@ -135,14 +137,16 @@ public class ItemService {
 
 	public boolean acceptOrder(int itemId, int quantity) {
 		Item item = itemDao.readItemByStatus(itemId, "S");
-		if (item == null)
+		if (item == null || item.getQuantity() < quantity)
 			return false;
-		if (item.getQuantity() < quantity)
-			quantity = item.getQuantity();
 		int price = productService.readByDiscount(item.getProduct().getProductId(), item.getCustomer()).getProductPrice();
 		paymentService.createPayment(new Payment(item.getCustomer(), "P", price * quantity));
 		itemDao.addItemQuantity(itemId, -quantity);
-		itemDao.updateItemPrice(item.getItemId(), item.getQuantity()*price);
+		if(item.getQuantity()-quantity == 0) {
+			itemDao.deleteItem(itemId);
+			return true;
+		}
+		itemDao.updateItemPrice(item.getItemId(), (item.getQuantity()-quantity) * price);
 		return true;
 	}
 

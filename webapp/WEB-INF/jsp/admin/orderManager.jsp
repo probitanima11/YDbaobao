@@ -99,8 +99,8 @@
 							<td class="item-name-container"><a href="/products/${item.product.productId}" style="text-decoration:none"><span class="item-name">${item.product.productName}</span></a></td>
 							<td><span class="item-size">${item.size}</span></td>
 							<td><span class="item-price">${item.product.productPrice}</span></td>
-							<td><span class="item-quantity">${item.quantity}</span></td>
-							<td><span class="order-price">${item.product.productPrice * item.quantity}</span></td>
+							<td><input type="number" class ="item-quantity" name="quantity" value ="${item.quantity}"/>
+							<td><span class="order-price">${item.price}</span></td>
 							<td><input type="button" class="success" value="보내기">
 							<input type="button" class="reject" value="반려"></td>
 						</tr>
@@ -125,7 +125,7 @@
 
 		function checkOrder(e) {
 			var itemId = e.target.parentNode.parentNode.getAttribute('data-id');
-			var quantity = document.querySelector('input[data-id="'+ itemId + '"]').value;
+			var quantity = e.target.parentElement.parentElement.querySelector(".item-quantity").value;
 			ydbaobao.ajax({
 				method: "post",
 				param: "quantity="+quantity,

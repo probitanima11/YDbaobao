@@ -67,7 +67,7 @@ public class ItemDao extends JdbcDaoSupport {
 	
 	public int createItem(String customerId, int productId, String size, int quantity, String itemStatus) {
 		KeyHolder keyHolder = new GeneratedKeyHolder();
-		String sql = "insert into ITEMS (customerId, productId, size, quantity, itemStatus) values(?, ?, ?, ?, ?)";
+		String sql = "insert into ITEMS (customerId, productId, size, quantity, itemStatus, price) values(?, ?, ?, ?, ?, 0)";
 		getJdbcTemplate().update(new PreparedStatementCreator() {
 			public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
 				PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
