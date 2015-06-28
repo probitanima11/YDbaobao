@@ -58,8 +58,8 @@ public class ProductService {
 		return product.discount(brand.getDiscountRate(grade));
 	}
 	
-	public Product readByDiscount(Product product, Customer customer) {
-		product = productDao.read(product.getProductId());
+	public Product readByDiscount(int productId, Customer customer) {
+		Product product = productDao.read(productId);
 		if (null == customer) {
 			return product;
 		}

@@ -47,7 +47,7 @@ public class OrderController {
 	}
 	
 	/**
-	 * 상품화면에서 주문요청 페이지호출을 위한 상품목록 조회
+	 * 상품화면에서 주문요청
 	 * @param session
 	 * @param productId
 	 * @param size
@@ -56,7 +56,7 @@ public class OrderController {
 	 * @throws IOException
 	 */
 	@RequestMapping(value="/direct", method = RequestMethod.POST)
-	public ResponseEntity<Object> createOrderDirectly(HttpSession session,  @RequestParam int productId, @RequestParam String size, @RequestParam String quantity) throws IOException{
+	public ResponseEntity<Object> createOrderDirectly(HttpSession session,  @RequestParam int productId, @RequestParam List<String> size, @RequestParam List<Integer> quantity) throws IOException{
 		logger.debug("상품화면에서 바로 주문하기");
 		String customerId = ServletRequestUtil.getCustomerIdFromSession(session);
 		itemService.createItems(customerId, size, quantity, productId, "S");

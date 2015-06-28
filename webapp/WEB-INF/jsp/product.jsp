@@ -225,11 +225,11 @@ h1 {
 		
 		function addToCart(e) {
 			var el = document.querySelectorAll(".qty-selector");
-			var size = "";
-			var quantity = "";
+			var size = new Array();
+			var quantity = new Array();
 			for(var i=0;i<el.length;i++){
-				size += el[i].name + "-";
-				quantity += el[i].value + "-";
+				size.push(el[i].name);
+				quantity.push(el[i].value);
 			}
 			var param = 'productId=' + productId + '&size=' + size + '&quantity=' + quantity;
 			ydbaobao.ajax({
@@ -249,13 +249,12 @@ h1 {
 		
 		function buyitnow(e) {
 			var el = document.querySelectorAll(".qty-selector");
-			var size = "";
-			var quantity = "";
+			var size = new Array();
+			var quantity = new Array();
 			for(var i=0;i<el.length;i++){
-				size += el[i].name + "-";
-				quantity += el[i].value + "-";
+				size.push(el[i].name);
+				quantity.push(el[i].value);
 			}
-			
 			var param = 'productId=' + productId + '&size=' + size + '&quantity=' + quantity;
 			ydbaobao.ajax({
 				method : 'post',
@@ -266,7 +265,7 @@ h1 {
 						alert('로그인이 필요합니다.');
 					else {
 						alert('주문요청이 완료되었습니다.');
-						window.location.href="/orders";
+						window.location.href="/";
 					}
 				}
 			});

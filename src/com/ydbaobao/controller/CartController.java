@@ -1,6 +1,7 @@
 package com.ydbaobao.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
@@ -40,11 +41,17 @@ public class CartController {
 	 * @throws IOException
 	 */
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Object> createItem(HttpSession session, @RequestParam int productId, @RequestParam String size, @RequestParam String quantity) throws IOException {
+	public ResponseEntity<Object> createItem(HttpSession session, @RequestParam int productId, @RequestParam List<String> size, @RequestParam List<Integer> quantity) throws IOException {
 		String customerId = ServletRequestUtil.getCustomerIdFromSession(session);
 		itemService.createItems(customerId, size, quantity, productId, "I");
 		return JSONResponseUtil.getJSONResponse("success", HttpStatus.OK);
 	}
+//	@RequestMapping(method = RequestMethod.POST)
+//	public ResponseEntity<Object> createItem(HttpSession session, @RequestParam int productId, @RequestParam String size, @RequestParam String quantity) throws IOException {
+//		String customerId = ServletRequestUtil.getCustomerIdFromSession(session);
+//		itemService.createItems(customerId, size, quantity, productId, "I");
+//		return JSONResponseUtil.getJSONResponse("success", HttpStatus.OK);
+//	}
 	
 	/**
 	 * 카트 페이지 호출 

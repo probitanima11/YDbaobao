@@ -65,9 +65,9 @@ public class ItemDao extends JdbcDaoSupport {
 		getJdbcTemplate().update(sql, itemId);
 	}
 	
-	public int createItemDirectly(String customerId, int productId, String size, int quantity) {
+	public int createItem(String customerId, int productId, String size, int quantity, String itemStatus) {
 		KeyHolder keyHolder = new GeneratedKeyHolder();
-		String sql = "insert into ITEMS (customerId, productId, size, quantity, itemStatus) values(?, ?, ?, ?, 'S')";
+		String sql = "insert into ITEMS (customerId, productId, size, quantity, itemStatus) values(?, ?, ?, ?, ?)";
 		getJdbcTemplate().update(new PreparedStatementCreator() {
 			public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
 				PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -75,15 +75,11 @@ public class ItemDao extends JdbcDaoSupport {
 				ps.setInt(2, productId);
 				ps.setString(3, size);
 				ps.setInt(4, quantity);
+				ps.setString(5, itemStatus);
 				return ps;
 			}
 		}, keyHolder);
 		return keyHolder.getKey().intValue();
-	}
-
-	public void createItem(String customerId, int productId, String size, int quantity, String itemStatus) {
-		String sql = "insert into ITEMS (customerId, productId, size, quantity, itemStatus, price) values(?, ?, ?, ?, ?, 0)";
-		getJdbcTemplate().update(sql, customerId, productId, size, quantity, itemStatus);
 	}
 	
 	public Item readItem(int itemId) {
@@ -110,15 +106,7 @@ public class ItemDao extends JdbcDaoSupport {
 		}
 	}
 	
-	public boolean isItemByProductIdAndSize(int productId, String size, String customerId) {
-		String sql = "select count(1) from ITEMS where productId = ? and size = ? and customerId = ? and itemStatus = ?";
-		if(getJdbcTemplate().queryForObject(sql, Integer.class, productId, size, customerId, "I") >0){
-			return true;
-		}
-		return false;
-	}
-	
-	public Item readItemByProductIdAndSize(int productId, String size, String customerId, String itemStatus) {
+	public Item readItemByProductIdAndSizeAndItemStatus(int productId, String size, String customerId, String itemStatus) {
 		String sql = "select * from ITEMS where productId = ? and size = ? and customerId = ? and itemStatus = ?";
 		try {
 			return getJdbcTemplate().queryForObject(sql, (rs, rowNum) -> new Item(
@@ -135,7 +123,7 @@ public class ItemDao extends JdbcDaoSupport {
 		getJdbcTemplate().update(sql, price, itemId);
 	}
 
-	public void updateItemQuantity(int itemId, int quantity) {
+	public void addItemQuantity(int itemId, int quantity) {
 		String sql = "update ITEMS set quantity = quantity + ? where itemId = ?";
 		getJdbcTemplate().update(sql, quantity, itemId);
 	}
