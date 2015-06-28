@@ -120,12 +120,17 @@ public class ItemService {
 	public void deleteCartList(String customerId, int itemId) {
 		if(!itemDao.readItem(itemId).getCustomer().getCustomerId().equals(customerId)){
 			//TODO 아이템 고객아이디와 삭제하려는 고객아이디가 다를경우 예외처리.
+			return;
 		}
 		itemDao.deleteItem(itemId);
 	}
 
-	public void updateItemQuantity(int itemId, int quantity) {
-		itemDao.addItemQuantity(itemId, quantity);
+	public void updateItemQuantity(int itemId, int quantity, String customerId) {
+		if(!itemDao.readItem(itemId).getCustomer().getCustomerId().equals(customerId)){
+			//TODO 아이템 고객아이디와 삭제하려는 고객아이디가 다를경우 예외처리.
+			return;
+		}
+		itemDao.updateItemQuantity(itemId, quantity);
 	}
 
 	public boolean acceptOrder(int itemId, int quantity) {

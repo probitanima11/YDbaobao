@@ -127,6 +127,11 @@ public class ItemDao extends JdbcDaoSupport {
 		String sql = "update ITEMS set quantity = quantity + ? where itemId = ?";
 		getJdbcTemplate().update(sql, quantity, itemId);
 	}
+	
+	public void updateItemQuantity(int itemId, int quantity) {
+		String sql = "update ITEMS set quantity = ? where itemId = ?";
+		getJdbcTemplate().update(sql, quantity, itemId);
+	}
 
 	public void updateItemStatus(int itemId, String itemStatus) {
 		String sql = "update ITEMS set itemStatus = ? where itemId = ?";

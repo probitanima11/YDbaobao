@@ -44,14 +44,9 @@ public class CartController {
 	public ResponseEntity<Object> createItem(HttpSession session, @RequestParam int productId, @RequestParam List<String> size, @RequestParam List<Integer> quantity) throws IOException {
 		String customerId = ServletRequestUtil.getCustomerIdFromSession(session);
 		itemService.createItems(customerId, size, quantity, productId, "I");
+		logger.debug("카트에 상품 추가");
 		return JSONResponseUtil.getJSONResponse("success", HttpStatus.OK);
 	}
-//	@RequestMapping(method = RequestMethod.POST)
-//	public ResponseEntity<Object> createItem(HttpSession session, @RequestParam int productId, @RequestParam String size, @RequestParam String quantity) throws IOException {
-//		String customerId = ServletRequestUtil.getCustomerIdFromSession(session);
-//		itemService.createItems(customerId, size, quantity, productId, "I");
-//		return JSONResponseUtil.getJSONResponse("success", HttpStatus.OK);
-//	}
 	
 	/**
 	 * 카트 페이지 호출 
@@ -75,11 +70,13 @@ public class CartController {
 	 * @return
 	 * @throws IOException
 	 */
-	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	public String cartUpdate(@RequestParam int quantity, @RequestParam int itemId, Model model, HttpSession session) throws IOException {
-		itemService.updateItemQuantity(itemId, quantity);
-		return cartForm(model, session);
+	@RequestMapping(value="/{itemId}", method = RequestMethod.PUT)
+	public ResponseEntity<Object> cartUpdate(@RequestParam int quantity, @PathVariable int itemId, Model model, HttpSession session) throws IOException {
+		String customerId = ServletRequestUtil.getCustomerIdFromSession(session); 
+		itemService.updateItemQuantity(itemId, quantity, customerId);
+		return JSONResponseUtil.getJSONResponse("", HttpStatus.OK);
 	}
+	
 	/**
 	 * 카트에 아이템 삭제
 	 * @param customerId
@@ -87,8 +84,9 @@ public class CartController {
 	 * @return
 	 * @throws IOException
 	 */
-	@RequestMapping(value = "/{customerId}/items/{itemId}", method = RequestMethod.DELETE)
-	public ResponseEntity<Object> deleteFromCart(@PathVariable String customerId, @PathVariable int itemId) throws IOException {
+	@RequestMapping(value = "/{itemId}", method = RequestMethod.DELETE)
+	public ResponseEntity<Object> deleteFromCart(@PathVariable int itemId, HttpSession session) throws IOException {
+		String customerId = ServletRequestUtil.getCustomerIdFromSession(session); 
 		itemService.deleteCartList(customerId, itemId);
 		return JSONResponseUtil.getJSONResponse("" + itemId, HttpStatus.OK);
 	}

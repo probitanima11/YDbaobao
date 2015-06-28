@@ -100,19 +100,16 @@
 								</tr>
 							</c:when>
 							<c:otherwise>
-								<form:form class="item-form" action="/carts" method="POST" id="item_${item.itemId}">
-									<input type="hidden" name="itemId" value="${item.itemId}" />
-									<tr data-id="${item.itemId}">
-										<td><input class="item-check" type="checkbox" onclick="calcSelectedPrice()"></td>
-										<td class="item-image-container"><a href="/products/${item.product.productId}" style="text-decoration:none"><img class="item-image" src="/img/products/${item.product.productImage}"></a></td>
-										<td class="item-name-container"><a href="/products/${item.product.productId}" style="text-decoration:none"><span class="item-name">${item.product.productName}</span></a></td>
-										<td><span class="item-size">${item.size}</span></td>
-										<td><span class="item-price">${item.product.productPrice}</span></td>
-										<td><input type="number" class ="item-quantity" name="quantity" value ="${item.quantity}"/>
-										<button class="quantity-update-btn">변경</button></td>
-										<td><span class="order-price">${item.product.productPrice * item.quantity}</span></td>
-									</tr>
-								</form:form>
+								<tr data-id="${item.itemId}">
+									<td><input class="item-check" type="checkbox" onclick="calcSelectedPrice()"></td>
+									<td class="item-image-container"><a href="/products/${item.product.productId}" style="text-decoration:none"><img class="item-image" src="/img/products/${item.product.productImage}"></a></td>
+									<td class="item-name-container"><a href="/products/${item.product.productId}" style="text-decoration:none"><span class="item-name">${item.product.productName}</span></a></td>
+									<td><span class="item-size">${item.size}</span></td>
+									<td><span class="item-price">${item.product.productPrice}</span></td>
+									<td><input type="number" class ="item-quantity" name="quantity" value ="${item.quantity}"/>
+									<button class="quantity-update-btn">변경</button></td>
+									<td><span class="order-price">${item.product.productPrice * item.quantity}</span></td>
+								</tr>
 							</c:otherwise>
 						</c:choose>
 					</c:forEach>
@@ -153,8 +150,23 @@
 
 	<script>
 	window.addEventListener('load', function() {
+		var quantity_update_element = document.querySelectorAll('.quantity-update-btn');
+		for(var i=0; i<quantity_update_element.length; i++) {
+			quantity_update_element[i].addEventListener('click', function(e) {
+				var quantity = e.target.parentNode.querySelector(".item-quantity").value;
+				var itemId = e.target.parentNode.parentNode.dataset.id;
+				ydbaobao.ajax({
+					method : 'put',
+					url : '/carts/'+itemId,
+					param : 'quantity='+quantity,
+					success : function(req) {
+						alert('수량이 수정되었습니다.');
+					}
+				});
+			});
+		}
+			
 		document.querySelector('#selection-delete-btn').addEventListener('click', function() {
-			debugger;
 			deleteCheckedItems(".item-check");
 			deleteCheckedItems(".soldout-item-check");
 		});
@@ -234,7 +246,7 @@
 				var tr = checkedItems[i].parentElement.parentElement;
 				ydbaobao.ajax({
 					method : 'delete',
-					url : '/carts/${sessionCustomer.sessionId}/items/' + tr.dataset.id,
+					url : '/carts/' + tr.dataset.id,
 					success : function(req) {
 						document.querySelector('#total-price span').textContent -= document.querySelector('tr[data-id="'+ req.responseText + '"] .order-price').innerText;
 						document.querySelector('tr[data-id="'+ req.responseText + '"]').remove();
