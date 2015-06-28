@@ -76,9 +76,9 @@
 	</div>
 	<div id="container">
 		<%@ include file="./_adminNav.jsp"%>
-		<div id="cart-section" >
+		<div id="content" >
 			<h1>주문 관리</h1>
-			<div style=" float: right; width: 800px; overflow: scroll; height: 400px; margin-right: 20px;">
+			<div style="width: 800px; overflow: scroll; height: 400px; margin-right: 20px;">
 				<table id="cart-list" style="text-align: center;">
 					<thead>
 						<tr>
