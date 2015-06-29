@@ -76,12 +76,6 @@ tr.border_top td {
 			<div id="progress-info">
 				<div class="on"><i class='fa fa-archive'></i>  주문내역</div>
 			</div>
-			<div style="text-align: center;">
-				<input type="date" id="fromDate" value="${fromDate}">
-				<span>~</span>
-				<input type="date" id="toDate" value="${toDate}">
-				<input type="button" id="reloadList" value="조회">
-			</div>
 			<div id="order-section">
 				<table id="order-list">
 					<thead>
@@ -89,69 +83,27 @@ tr.border_top td {
 							<th>주문번호</th>
 							<th></th>
 							<th>상품설명</th>
-							<th>수량</th>
+							<th>받아야 할 수량</th>
 							<th>상품금액</th>
-							<th>결재금액</th>
-							<th>주문상태</th>
 							<th style="width:100px">관리</th>
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach var="order" items="${orders}">
-							<tr class="border_top" data-id="${order.orderId}">
-								<td rowspan="${fn:length(order.items)}">${order.orderDate}-${order.orderId}</td>
+						<c:forEach var="item" items="${items}">
+							<tr class="border_top" data-id="${item.itemId}">
+								<td rowspan="">${item.itemId}</td>
 								<td class="item-image-container">
-									<img class="item-image" src="/img/products/${order.items[0].product.productImage}">
+									<img class="item-image" src="/img/products/${item.product.productImage}">
 								</td>
 								<td>
-									<span class="item-name"><b>${order.items[0].product.productName}</b></span>
+									<span class="item-name"><b>${item.product.productName}</b></span>
 									<br />
-									<span class="item-size">사이즈 : ${order.items[0].size}</span>
+									<span class="item-size">사이즈 : ${item.size}</span>
 									<br />
-									<span class="item-price">가격 : ${order.items[0].product.productPrice}</span>
+									<span class="item-price">가격 : ${item.product.productPrice}</span>
 								</td>
-								<td><span class="item-quantity">${order.items[0].quantity}</span></td>
-								<td><span class="order-price">${order.items[0].product.productPrice * order.items[0].quantity}</span></td>
-								<td rowspan="${fn:length(order.items)}"><b>${order.realPrice}</b></td>
-								<c:choose>
-									<c:when test="${order.orderStatus eq 'I'}">
-										<td rowspan="${fn:length(order.items)}" colspan="1">주문대기</td>
-									</c:when>
-									<c:when test="${order.orderStatus eq 'S'}">
-										<td rowspan="${fn:length(order.items)}" colspan="1">주문승인</td>
-									</c:when>
-									<c:when test="${order.orderStatus eq 'R'}">
-										<td rowspan="${fn:length(order.items)}" colspan="1">주문반려</td>
-									</c:when>
-									<c:when test="${order.orderStatus eq 'C'}">
-										<td rowspan="${fn:length(order.items)}" colspan="1">주문취소</td>
-									</c:when>
-									<c:otherwise>
-										<td rowspan="${fn:length(order.items)}" colspan="1"></td>
-									</c:otherwise>
-								</c:choose>
-								<td rowspan="${fn:length(order.items)}" colspan="1">
-									<c:if test="${order.orderStatus eq 'I'}">
-										<button data-id="${order.orderId}" class="order-cancel">취소</button>
-									</c:if>
-									<button class="" onclick="getReceipt(${order.orderId})">주문서</button>
-								</td>
-								<c:forEach var="i" begin="1" end="${fn:length(order.items)-1}">
-									<tr>
-										<td class="item-image-container"><img class="item-image"
-											src="/img/products/${order.items[i].product.productImage}">
-										</td>
-										<td>
-											<span class="item-name"><b>${order.items[i].product.productName}</b></span>
-											<br />
-											<span class="item-size">사이즈 : ${order.items[i].size}</span>
-											<br />
-											<span class="item-price">가격 : ${order.items[i].product.productPrice}</span>
-										</td>
-										<td><span class="item-quantity">${order.items[i].quantity}</span></td>
-										<td><span class="order-price">${order.items[i].product.productPrice * order.items[i].quantity}</span></td>
-									</tr>
-								</c:forEach>
+								<td><span class="item-quantity">${item.quantity}</span></td>
+								<td><span class="order-price">${item.product.productPrice * item.quantity}</span></td>
 								</tr>
 						</c:forEach>
 					</tbody>
@@ -164,38 +116,38 @@ tr.border_top td {
 	</div>
 
 	<script>
-	window.addEventListener('load', function() {
-		var readyList = document.querySelectorAll('.order-cancel');
-		for(var i=0; i<readyList.length; i++) {
-			readyList[i].addEventListener('click', function(e) {
-				var orderId = e.target.getAttribute('data-id');
-				orderCancel(orderId);
-			});
-		}
-		document.querySelector("#reloadList").addEventListener('click', function(){
-			window.location.href="/orders/reload?fromDate="+fromDate.value+"&toDate="+toDate.value;
-		}, false);
-	}, false);
+	// window.addEventListener('load', function() {
+	// 	var readyList = document.querySelectorAll('.order-cancel');
+	// 	for(var i=0; i<readyList.length; i++) {
+	// 		readyList[i].addEventListener('click', function(e) {
+	// 			var orderId = e.target.getAttribute('data-id');
+	// 			orderCancel(orderId);
+	// 		});
+	// 	}
+	// 	document.querySelector("#reloadList").addEventListener('click', function(){
+	// 		window.location.href="/orders/reload?fromDate="+fromDate.value+"&toDate="+toDate.value;
+	// 	}, false);
+	// }, false);
 	
-	function orderCancel(orderId) {
-		if (confirm("정말 주문취소 하시겠습니까??") == false){
-		    return;
-		}
-		ydbaobao.ajax({
-			method: "put",
-			param: "orderStatus=C",
-			url: "/orders/"+orderId,
-			success: function(req){
-				document.querySelectorAll(".border_top[data-id='" + orderId + "'] > td")[6].innerText = "주문취소";
-				document.querySelectorAll(".border_top[data-id='" + orderId + "'] > td")[7].querySelector("button").remove();
-			}
-		});
-	}
+	// function orderCancel(orderId) {
+	// 	if (confirm("정말 주문취소 하시겠습니까??") == false){
+	// 	    return;
+	// 	}
+	// 	ydbaobao.ajax({
+	// 		method: "put",
+	// 		param: "orderStatus=C",
+	// 		url: "/orders/"+orderId,
+	// 		success: function(req){
+	// 			document.querySelectorAll(".border_top[data-id='" + orderId + "'] > td")[6].innerText = "주문취소";
+	// 			document.querySelectorAll(".border_top[data-id='" + orderId + "'] > td")[7].querySelector("button").remove();
+	// 		}
+	// 	});
+	// }
 	
-	function getReceipt(orderId) {
-		var url = '/orders/receipt/' + orderId;
-		window.open(url, "_blank", "toolbar=yes, scrollbars=yes, resizable=yes, top=100, left=300, width=400, height=400");
-	}
+	// function getReceipt(orderId) {
+	// 	var url = '/orders/receipt/' + orderId;
+	// 	window.open(url, "_blank", "toolbar=yes, scrollbars=yes, resizable=yes, top=100, left=300, width=400, height=400");
+	// }
 	</script>
 	<script src="/js/ydbaobao.js"></script>
 </body>

@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.support.JSONResponseUtil;
 import com.support.ServletRequestUtil;
 import com.ydbaobao.model.Item;
+import com.ydbaobao.service.CategoryService;
 import com.ydbaobao.service.ItemService;
 
 @Controller
@@ -29,6 +30,21 @@ public class OrderController {
 
 	@Resource
 	private ItemService itemService;
+	@Resource
+	private CategoryService categoryService;
+	
+	/**
+	 * 주문내역 페이지 호출하기
+	 * @param session
+	 * @throws IOException
+	 */
+	@RequestMapping(value="", method = RequestMethod.GET)
+	public String readOrder(HttpSession session, Model model) throws IOException {
+		String customerId = ServletRequestUtil.getCustomerIdFromSession(session);
+		model.addAttribute("categories", categoryService.readWithoutUnclassifiedCategory());
+		model.addAttribute("items", itemService.readOrderedItemsByCustomerId(customerId));
+		return "order";
+	}
 	
 	/**
 	 * 장바구니에서 주문요청 페이지호출

@@ -157,4 +157,8 @@ public class ItemService {
 		itemDao.updateItemStatus(itemId, "R");
 		return true;
 	}
+
+	public List<Item> readOrderedItemsByCustomerId(String customerId) {
+		return itemDao.readOrderedItemsByCustomerId(customerId);
+	}
 }
