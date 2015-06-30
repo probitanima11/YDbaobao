@@ -34,6 +34,12 @@ public class AdminOrderController {
 		model.addAttribute("items", itemService.readOrderedItems());
 		return "admin/orderManager";
 	}
+	
+	@RequestMapping(value = "/{customerId}", method = RequestMethod.GET)
+	public String manageCustomerOrder(@PathVariable String customerId, Model model) {
+		model.addAttribute("items", itemService.readOrderedItemsByCustomerId(customerId));
+		return "admin/orderManager";
+	}
 
 	/**
 	 * 관지자 화면에서 주문 내역에 대한 상태 변경(승인, 반려)

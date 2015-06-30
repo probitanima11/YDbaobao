@@ -86,6 +86,7 @@
 							<th colspan="2">상품설명</th>
 							<th>사이즈</th>
 							<th>상품가격</th>
+							<th  style="width:40px;">요청수량</th>
 							<th>수량</th>
 							<th>주문금액</th>
 							<th>상태</th>
@@ -99,10 +100,11 @@
 							<td class="item-name-container"><a href="/products/${item.product.productId}" style="text-decoration:none"><span class="item-name">${item.product.productName}</span></a></td>
 							<td><span class="item-size">${item.size}</span></td>
 							<td><span class="item-price">${item.product.productPrice}</span></td>
-							<td><input type="number" class ="item-quantity" name="quantity" value ="${item.quantity}"/>
+							<td><span>${item.quantity}</span></td>
+							<td><input style="width:40px;" type="number" class ="item-quantity" name="quantity" value ="${item.quantity}"/>
 							<td><span class="order-price">${item.price}</span></td>
 							<td><input type="button" class="success" value="보내기">
-							<input type="button" class="reject" value="반려"></td>
+							<input type="button" class="reject" value="삭제"></td>
 						</tr>
 					</c:forEach>
 					</tbody>
