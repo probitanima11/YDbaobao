@@ -141,7 +141,7 @@ public class ItemDao extends JdbcDaoSupport {
 	public List<Item> readOrderedItemsByCustomerId(String customerId) {
 		String sql = "select * from ITEMS A, PRODUCTS B where A.customerId = ? "
 				+ "AND A.productId = B.productId "
-				+ "AND A.itemStatus = 'ordered'";
+				+ "AND A.itemStatus = 'S'";
 		return getJdbcTemplate().query(sql, (rs, rowNum) ->  new Item(
 				rs.getInt("itemId"), 
 				new Customer(rs.getString("customerId")),
