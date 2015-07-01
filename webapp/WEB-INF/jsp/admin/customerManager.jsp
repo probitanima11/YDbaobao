@@ -29,6 +29,14 @@
  	background-color:#F15F5F;
  	border-bottom:2px solid #850000;
  }
+ 
+ #customer-table .btn.btn-payment{
+ 	background-color:#47C83E;
+ }
+ 
+ #customer-table .btn.btn-order {
+ 	background-color:#4374D9;
+ }
 </style>
 </head>
 <body>
@@ -61,7 +69,7 @@
 						<th >이메일</th>
 						<th >등급</th>
 						<th >가입일</th>
-						<th >비고</th>
+						<th ></th>
 					</tr>
 				</thead>
 				<tbody>

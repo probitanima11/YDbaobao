@@ -43,7 +43,8 @@
 	<div id="footer">
 		<%@ include file="./commons/_footer.jsp"%>
 	</div>
-	<script>
+	<c:if test="${not empty indexImages}">
+		<script>
 		var indexImages = ${indexImages};
 		var imgPathsLength = indexImages.length;
 		var imgIndex = 0;
@@ -109,7 +110,8 @@
 			obj.style.MsFilter = "'progid:DXImageTransform.Microsoft.Alpha(Opacity=" + (level * 100) + ")'";
 			obj.style.filter = "alpha(opacity=" + (level * 100) + ");"; 
 		}
-	</script>
+		</script>
+	</c:if>
 	<script src="/js/ydbaobao.js"></script>
 </body>
 </html>

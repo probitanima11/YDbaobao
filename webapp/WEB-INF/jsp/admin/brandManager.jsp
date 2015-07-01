@@ -45,7 +45,7 @@
 			<button class="search-brand-btn">검색</button>
 			<table id="brand-table" style="width: 780px;">
 				<tr>
-					<th style="width:50px">구분</th>
+					<th style="width:30px">#</th>
 					<th style="width:150px">브랜드명</th>
 					<th style="width:320px">할인율</th>
 					<th style="width:100px">사이즈</th>
