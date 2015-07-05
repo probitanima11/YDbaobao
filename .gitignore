@@ -7,10 +7,6 @@
 
 /target
 
-webapp/image/index/*
-
-webapp/image/products/*
-
 .project
 
 .classpath
