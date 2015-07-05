@@ -91,7 +91,6 @@
 	document.querySelector('#join-submit').addEventListener('click', function(e){
 		var password = document.querySelector('#join-userPassword');
 		var rePassword = document.querySelector('#join-userRePassword');
-		debugger;
 		if(password.value==="" || password.value===""){
 			return;
 		}
