@@ -19,7 +19,7 @@
 		<form id="customer" method="post" action="/admin/check">
 			<h1>관리자 로그인</h1>
 			<label for="adminPassword">비밀번호</label> <input
-				type="password" name="adminPassword" value="1111" /><br />
+				type="password" name="adminPassword"/><br />
 			<button type="submit">확인</button>
 		</form>
 	</div>
