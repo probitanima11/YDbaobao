@@ -7,9 +7,9 @@
 
 /target
 
-/image/index/*
+webapp/image/index/
 
-/image/products/*
+webapp/image/products/
 
 .project
 
