@@ -6,7 +6,7 @@
 		<li class="item">
 			<div align="center">
 				<a href="/products/${product.productId}"> 
-					<img src="/img/products/${product.productImage}" />
+					<img src="/image/products/${product.productImage}" />
 					<div class="item-info">
 						<div class="item-desc">
 							<c:out value="${product.brand.brandName}" />

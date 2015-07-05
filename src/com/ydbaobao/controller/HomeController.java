@@ -88,7 +88,7 @@ public class HomeController {
 			String filePath = "index_0" + i + ".jpg";
 			File f = new File("/home/baobao/index/" + filePath);
 			if (f.isFile()) {
-				imgPath.append(",/img/index/" + filePath);
+				imgPath.append(",/image/index/" + filePath);
 			}
 		}
 		model.addAttribute("imgPath", imgPath);

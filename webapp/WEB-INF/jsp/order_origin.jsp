@@ -101,7 +101,7 @@ tr.border_top td {
 							<tr class="border_top" data-id="${order.orderId}">
 								<td rowspan="${fn:length(order.items)}">${order.orderDate}-${order.orderId}</td>
 								<td class="item-image-container">
-									<img class="item-image" src="/img/products/${order.items[0].product.productImage}">
+									<img class="item-image" src="/image/products/${order.items[0].product.productImage}">
 								</td>
 								<td>
 									<span class="item-name"><b>${order.items[0].product.productName}</b></span>
@@ -139,7 +139,7 @@ tr.border_top td {
 								<c:forEach var="i" begin="1" end="${fn:length(order.items)-1}">
 									<tr>
 										<td class="item-image-container"><img class="item-image"
-											src="/img/products/${order.items[i].product.productImage}">
+											src="/image/products/${order.items[i].product.productImage}">
 										</td>
 										<td>
 											<span class="item-name"><b>${order.items[i].product.productName}</b></span>

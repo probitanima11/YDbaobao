@@ -111,7 +111,7 @@ h1 {
 	<div id="product-container" class="content wrap" style="position: relative;">
 		<div id="product-info-container">
 			<div align = center id="product-photo">
-				<img src="/img/products/${product.productImage}">
+				<img src="/image/products/${product.productImage}">
 			</div>
 			<div id="product-buy-container">
 				<h1 class="product-name"

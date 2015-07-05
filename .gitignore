@@ -7,6 +7,10 @@
 
 /target
 
+/image/index/*
+
+/image/products/*
+
 .project
 
 .classpath

@@ -78,7 +78,7 @@
 					<tbody>
 					<c:forEach var="item" items="${items}">
 						<tr data-id="${item.itemId}">
-							<td class="item-image-container"><img class="item-image" src="/img/products/${item.product.productImage}"></td>
+							<td class="item-image-container"><img class="item-image" src="/image/products/${item.product.productImage}"></td>
 							<td class="item-name-container"><span class="item-name">${item.product.productName}</span></td>
 							<td><span class="item-size">${item.size}</span></td>
 							<td><span class="item-price">${item.product.productPrice}</span></td>

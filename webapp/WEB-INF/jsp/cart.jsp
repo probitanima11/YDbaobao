@@ -91,7 +91,7 @@
 							<c:when test="${item.product.isSoldout eq 1}">
 								<tr data-id="${item.itemId}">
 									<td><input type="checkbox" class="soldout-item-check" disabled></td>
-									<td class="item-image-container"><a href="/products/${item.product.productId}" style="text-decoration:none"><img class="item-image" src="/img/products/${item.product.productImage}"></a></td>
+									<td class="item-image-container"><a href="/products/${item.product.productId}" style="text-decoration:none"><img class="item-image" src="/image/products/${item.product.productImage}"></a></td>
 									<td class="item-name-container"><a href="/products/${item.product.productId}" style="text-decoration:none"><span class="item-name">${item.product.productName}</span><span class="sold-out"> [품절]</span></a></td>
 									<td><span class="item-size">${item.size}</span></td>
 									<td><span class="item-price">${item.product.productPrice}</span></td>
@@ -102,7 +102,7 @@
 							<c:otherwise>
 								<tr data-id="${item.itemId}">
 									<td><input class="item-check" type="checkbox" onclick="calcSelectedPrice()"></td>
-									<td class="item-image-container"><a href="/products/${item.product.productId}" style="text-decoration:none"><img class="item-image" src="/img/products/${item.product.productImage}"></a></td>
+									<td class="item-image-container"><a href="/products/${item.product.productId}" style="text-decoration:none"><img class="item-image" src="/image/products/${item.product.productImage}"></a></td>
 									<td class="item-name-container"><a href="/products/${item.product.productId}" style="text-decoration:none"><span class="item-name">${item.product.productName}</span></a></td>
 									<td><span class="item-size">${item.size}</span></td>
 									<td><span class="item-price">${item.product.productPrice}</span></td>

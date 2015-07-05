@@ -93,7 +93,7 @@ tr.border_top td {
 							<tr class="border_top" data-id="${item.itemId}">
 								<td rowspan="">${item.itemId}</td>
 								<td class="item-image-container">
-									<img class="item-image" src="/img/products/${item.product.productImage}">
+									<img class="item-image" src="/image/products/${item.product.productImage}">
 								</td>
 								<td>
 									<span class="item-name"><b>${item.product.productName}</b></span>

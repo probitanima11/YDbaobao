@@ -55,7 +55,7 @@
  				imgEl.remove();
  				return;
  			}
- 			imgEl.src = "/img/index/"+indexImages[imgIndex].indexImageName;
+ 			imgEl.src = "/image/index/"+indexImages[imgIndex].indexImageName;
 			setInterval(function(){
 				addIndex();
 				fadeOut(imgEl);
@@ -97,7 +97,7 @@
 			if(level < 0) 
 			{
 				clearInterval(outTimer);
-				imgEl.src = "/img/index/"+indexImages[imgIndex].indexImageName;
+				imgEl.src = "/image/index/"+indexImages[imgIndex].indexImageName;
 				fadeIn(imgEl);
 			}
 			return level;

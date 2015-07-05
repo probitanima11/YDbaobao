@@ -54,7 +54,7 @@ img.snap{
 								</c:if>
 								<c:if test="${path.indexImageName != null}">
 									<img id="hoverImage${status.index}" class="hover" onclick="deleteClick(this)" onmouseout="mouseOut(${status.index})" src="/image/delete_hover.png" data-id="${path.indexImageId}">
-									<img class="snap" src="/img/index/${path.indexImageName}" onmouseover="mouseOver(${status.index})">
+									<img class="snap" src="/image/index/${path.indexImageName}" onmouseover="mouseOver(${status.index})">
 								</c:if>
 							</a>
 						</td>
@@ -69,7 +69,7 @@ img.snap{
 								</c:if>
 								<c:if test="${path.indexImageName != null}">
 									<img id="hoverImage${status.index}" class="hover" onclick="deleteClick(this)" onmouseout="mouseOut(${status.index})" src="/image/delete_hover.png" data-id="${path.indexImageId}">
-									<img class="snap" src="/img/index/${path.indexImageName}" onmouseover="mouseOver(${status.index})">
+									<img class="snap" src="/image/index/${path.indexImageName}" onmouseover="mouseOver(${status.index})">
 								</c:if>
 							</a>
 						</td>

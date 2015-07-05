@@ -71,7 +71,7 @@ td.tdhead {
 				<tr>
 					<td rowspan="4">${product.productId}
 					<form:input path="productId" type="hidden" value="${product.productId}"/></td>
-					<td rowspan="4"><img class="productImg" src="/img/products/${product.productImage}" width="150">
+					<td rowspan="4"><img class="productImg" src="/image/products/${product.productImage}" width="150">
 					<form:input path="productImage" type="hidden" value="${product.productImage}"/></td>
 					<td class='tdhead'>카테고리 :</td>
 					<td>

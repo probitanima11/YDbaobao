@@ -7,6 +7,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -113,12 +115,13 @@ public class ProductService {
 		return false;
 	}
 
-	public String uploadImage(Product product, MultipartFile productImage) {
+	public String uploadImage(Product product, MultipartFile productImage, HttpServletRequest request) {
 		String[] imageSplitName = productImage.getOriginalFilename().split("\\.");
 		String extension = imageSplitName[imageSplitName.length - 1];
 		String imageName = product.getProductId() + "." + extension;
 		try {
-			File imageFile = new File(ImageFactoryUtil.savingPath + imageName);
+			String contextRoot = new HttpServletRequestWrapper(request).getRealPath("/");
+			File imageFile = new File(contextRoot+ImageFactoryUtil.savingPath + imageName);
 			productImage.transferTo(imageFile);
 			product.setProductImage(imageName);
 		} catch (IllegalStateException | IOException e) {

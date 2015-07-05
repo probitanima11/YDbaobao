@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -153,11 +154,11 @@ public class AdminProductController {
 	 * 상품 이미지 등록(상품 등록)
 	 */
 	@RequestMapping(value="", method=RequestMethod.POST)
-	public String imageUpload(Model model, Product product, @RequestParam("imageFile") MultipartFile... imageFile) {
+	public String imageUpload(Model model, Product product, HttpServletRequest request, @RequestParam("imageFile") MultipartFile... imageFile) {
 		for(MultipartFile file:imageFile) {
 			int productId = productService.create(product.getBrand().getBrandId());
 			product.setProductId(productId);
-			String imageName = productService.uploadImage(product, file);
+			String imageName = productService.uploadImage(product, file, request);
 			productService.updateProductImage(product, imageName);
 		}
 		model.addAttribute("brandList", brandService.readBrands());

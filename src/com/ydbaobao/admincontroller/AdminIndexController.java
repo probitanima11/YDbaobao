@@ -5,9 +5,12 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -44,7 +47,7 @@ public class AdminIndexController {
 	 * @throws IllegalStateException 
 	 */
 	@RequestMapping(method = RequestMethod.POST)
-	public String indexImageCreate(Model model, @RequestParam MultipartFile imageFile) throws IllegalStateException, IOException {
+	public String indexImageCreate(Model model, @RequestParam MultipartFile imageFile, HttpServletRequest request) throws IllegalStateException, IOException {
 		if(imageFile.getSize() > 512000) {
 			logger.debug("이미지 업로드 실패!, 용량이 500kb 초과되었습니다");
 			model.addAttribute("errorMessage", "용량이 500kb 초과되었습니다");
@@ -53,8 +56,11 @@ public class AdminIndexController {
 		}
 		// 파일 저장
 		String imgFileName = ""+System.currentTimeMillis();
-		String imgFilePath = ImageFactoryUtil.realIndexPath + imgFileName;
+		String contextRoot = new HttpServletRequestWrapper(request).getRealPath("/");
+		String imgFilePath = contextRoot+ImageFactoryUtil.realIndexPath + imgFileName;
+		logger.debug("before transfer");
 		imageFile.transferTo(new File(imgFilePath));
+		logger.debug(imgFilePath);
 		
 		// 디비 저장
 		adminIndexImageService.create(imgFileName);
