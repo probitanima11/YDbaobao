@@ -7,9 +7,9 @@
 
 /target
 
-webapp/image/index/
+webapp/image/index/*
 
-webapp/image/products/
+webapp/image/products/*
 
 .project
 
@@ -21,8 +21,8 @@ webapp/image/products/
 
 /bin
 
-.DS_store
+*.DS_store
 
-.idea
+*.idea
 
 webapp/WEB-INF/classes/*
