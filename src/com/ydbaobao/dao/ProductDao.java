@@ -160,7 +160,7 @@ public class ProductDao extends JdbcDaoSupport {
 	 * @return brandId가 일치하는 상품들 중 offset부터 productsPerPage 만큼 가져온 Products
 	 */
 	public List<Product> readListByBrandId(int brandId, int offset, int productsPerPage) {
-		String sql = "select * from PRODUCTS, BRANDS where B.brandId = A.brandId and A.brandId=? ORDER BY productId DESC limit ?, ?";
+		String sql = "select * from PRODUCTS as A, BRANDS as B where B.brandId = A.brandId and A.brandId=? ORDER BY productId DESC limit ?, ?";
 		return getJdbcTemplate().query(
 				sql, (rs, rowNum) -> new Product(
 						rs.getInt("productId"), rs.getString("productName"),
