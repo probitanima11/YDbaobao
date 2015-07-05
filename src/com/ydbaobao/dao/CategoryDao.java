@@ -59,12 +59,12 @@ public class CategoryDao extends JdbcDaoSupport {
 	}
 	
 	public int increaseCount(long categoryId) {
-		String sql = "update category set categoryCount = categoryCount+1 where categoryId = ?";
+		String sql = "update CATEGORY set categoryCount = categoryCount+1 where categoryId = ?";
 		return getJdbcTemplate().update(sql, categoryId);
 	}
 	
 	public int decreaseCount(long categoryId) {
-		String sql = "update category set categoryCount = categoryCount-1 where categoryId = ?";
+		String sql = "update CATEGORY set categoryCount = categoryCount-1 where categoryId = ?";
 		return getJdbcTemplate().update(sql, categoryId);
 	}
 

@@ -69,7 +69,7 @@ public class ProductDao extends JdbcDaoSupport {
 	}
 
 	public List<Product> readListByCategoryId(int categoryId, int offset, int productsPerPage) {
-		String sql = "select * from PRODUCTS, brands where products.brandId = brands.brandId and categoryId=? ORDER BY productId desc limit ?, ?";
+		String sql = "select * from PRODUCTS A, BRANDS B where A.brandId = B.brandId and categoryId=? ORDER BY productId desc limit ?, ?";
 		return getJdbcTemplate().query(
 				sql, (rs, rowNum) -> new Product(
 						rs.getInt("productId"), rs.getString("productName"),
@@ -81,7 +81,7 @@ public class ProductDao extends JdbcDaoSupport {
 	}
 	
 	public List<Product> readByProductName(String param, int offset, int productsPerPage) {
-		String sql = "select * from products, brands WHERE products.brandId = brands.brandId and productName REGEXP (?) order by productId desc limit ?, ?";
+		String sql = "select * from PRODUCTS A, BRANDS B WHERE A.brandId = B.brandId and productName REGEXP (?) order by productId desc limit ?, ?";
 		return getJdbcTemplate().query(
 				sql, (rs, rowNum) -> new Product(
 						rs.getInt("productId"), rs.getString("productName"),
@@ -93,7 +93,7 @@ public class ProductDao extends JdbcDaoSupport {
 	}
 	
 	public List<Product> readByBrandName(String param, int offset, int productsPerPage) {
-		String sql = "select * from products, brands WHERE products.brandId = brands.brandId and brandName REGEXP (?) order by productId desc limit ?, ?";
+		String sql = "select * from PRODUCTS A, BRANDS B WHERE A.brandId = B.brandId and brandName REGEXP (?) order by productId desc limit ?, ?";
 		return getJdbcTemplate().query(
 				sql, (rs, rowNum) -> new Product(
 						rs.getInt("productId"), rs.getString("productName"),
@@ -110,12 +110,12 @@ public class ProductDao extends JdbcDaoSupport {
 	}
 
 	public int countBySearchProductName(String param) {
-		String sql = "select count(1) as count from products WHERE productName REGEXP (?)";
+		String sql = "select count(1) as count from PRODUCTS WHERE productName REGEXP (?)";
 		return getJdbcTemplate().queryForObject(sql, Integer.class, param);
 	}
 	
 	public int countBySearchBrandName(String param) {
-		String sql = "select count(1) as count from products, brands WHERE products.brandId = brands.brandId and brandName REGEXP (?)";
+		String sql = "select count(1) as count from PRODUCTS, BRANDS WHERE products.brandId = brands.brandId and brandName REGEXP (?)";
 		return getJdbcTemplate().queryForObject(sql, Integer.class, param);
 	}
 	
@@ -126,7 +126,7 @@ public class ProductDao extends JdbcDaoSupport {
 	 * @return PRODUCTS table에서 offset에서부터 productsPerPage 만큼 가져온 Products
 	 */
 	public List<Product> readRange(int offset, int productsPerPage) {
-		String sql ="select * from PRODUCTS, brands where brands.brandId = PRODUCTS.brandId ORDER BY productId desc LIMIT ?, ?";
+		String sql ="select * from PRODUCTS A, BRANDS B where B.brandId = A.brandId ORDER BY productId desc LIMIT ?, ?";
 		return getJdbcTemplate().query(
 				sql, (rs, rowNum) -> new Product(
 						rs.getInt("productId"), rs.getString("productName"),
@@ -143,7 +143,7 @@ public class ProductDao extends JdbcDaoSupport {
 	 * @return categoryId가 일치하는 상품들 중 offset부터 productsPerPage 만큼 가져온 Products
 	 */
 	public List<Product> readListByCategoryId(int categoryId) {
-		String sql = "select * from PRODUCTS, brands where products.brandId = brands.brandId and categoryId=? ORDER BY productId desc";
+		String sql = "select * from PRODUCTS A, BRANDS B where A.brandId = B.brandId and categoryId=? ORDER BY productId desc";
 		return getJdbcTemplate().query(
 				sql, (rs, rowNum) -> new Product(
 						rs.getInt("productId"), rs.getString("productName"),
@@ -160,7 +160,7 @@ public class ProductDao extends JdbcDaoSupport {
 	 * @return brandId가 일치하는 상품들 중 offset부터 productsPerPage 만큼 가져온 Products
 	 */
 	public List<Product> readListByBrandId(int brandId, int offset, int productsPerPage) {
-		String sql = "select * from PRODUCTS, BRANDS where BRANDS.brandId = PRODUCTS.brandId and PRODUCTS.brandId=? ORDER BY productId DESC limit ?, ?";
+		String sql = "select * from PRODUCTS, BRANDS where B.brandId = A.brandId and A.brandId=? ORDER BY productId DESC limit ?, ?";
 		return getJdbcTemplate().query(
 				sql, (rs, rowNum) -> new Product(
 						rs.getInt("productId"), rs.getString("productName"),

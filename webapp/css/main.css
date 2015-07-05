@@ -3,6 +3,7 @@ html, body {
 	padding: 0;
 	color: #454545;
 	background-color:#f0f0f0;
+	height:100%;
 }
 
 #header {
@@ -30,6 +31,9 @@ html, body {
 .contents-nav li>a {
 	text-decoration: none;
 	color: #454545;
+}
+
+#main-container {
 }
 
 .btn {
@@ -257,6 +261,7 @@ input[type=number] {
 
 #showcase img {
 	height: 100%;
+	width: 100%;
 }
 
 /* horizontalCategory.jsp */
@@ -502,6 +507,7 @@ form#customer {
 
 #footer {
 	position: relative;
+	width:100%;
 	margin-top:25px;
 	min-height: 50px;
 	padding: 10px;
