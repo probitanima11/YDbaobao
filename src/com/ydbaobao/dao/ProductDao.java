@@ -115,7 +115,7 @@ public class ProductDao extends JdbcDaoSupport {
 	}
 	
 	public int countBySearchBrandName(String param) {
-		String sql = "select count(1) as count from PRODUCTS, BRANDS WHERE products.brandId = brands.brandId and brandName REGEXP (?)";
+		String sql = "select count(1) as count from PRODUCTS as P, BRANDS as B WHERE P.brandId = B.brandId and brandName REGEXP (?)";
 		return getJdbcTemplate().queryForObject(sql, Integer.class, param);
 	}
 	
