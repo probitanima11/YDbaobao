@@ -6,6 +6,10 @@ html, body {
 	height:100%;
 }
 
+img {
+	border:0;
+}
+
 #header {
 	width: 100%;
 	background-color: #fff;
@@ -447,7 +451,7 @@ input[type=number] {
 	text-align: right;
 }
 
-/* 로그인/회원가입 폼 */
+/* 濡쒓렇�씤/�쉶�썝媛��엯 �뤌 */
 .loginBox {
 	display: block;
 	height: 500px;
@@ -511,7 +515,7 @@ form#customer {
 	width:100%;
 	margin-top:25px;
 	min-height: 50px;
-	padding: 10px;
+	padding: 10px 0;
 	background-color: #888;
 	color: #fff;
 	font-weight:100;

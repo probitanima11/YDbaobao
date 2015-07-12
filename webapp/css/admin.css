@@ -7,6 +7,10 @@ html, body {
 	color: #454545;
 }
 
+img {
+	border:0;
+}
+
 button {
 	cursor: pointer;
 }
@@ -31,6 +35,7 @@ input[type='submit'] {
 	width: 150px;
 	border-right: 1px solid #ccc;
 	border-bottom: 1px solid #ccc;
+	font-size:13px;
 	z-index: 9;
 }
 

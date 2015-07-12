@@ -1,10 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<div id="util-container"
-	style="width: 100%; border-bottom: 1px solid #ccc;">
+<div id="util-container" style="width: 100%; border-bottom: 1px solid #ccc;">
 	<div id="util-bar" class="wrap content" style="height: 35px;">
-		<li class="home"><a href="/"><i class="fa fa-home"></i></a></li>
+		<div class="home"><a href="/"><i class="fa fa-home"></i></a></div>
 		<ul id="util">
 			<c:choose>
 				<c:when test="${not empty sessionCustomer}">
