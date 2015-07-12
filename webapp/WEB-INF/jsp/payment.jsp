@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
@@ -12,7 +11,7 @@ html, body {
 	background-color: #fff;
 }
 
-#order-section {
+#payment-section {
 	margin:25px 0px;
 }
 
@@ -20,14 +19,14 @@ html, body {
 	background-color: lightgray;
 }
 
-table#order-list {
+table{
 	width: 100%;
 	font-size: 12px;
 	border: 1px solid #ccc;
 	border-spacing: 0;
 }
 
-table#order-list th {
+table th {
 	padding: 5px;
 	background-color: #f8f8f8;
 }
@@ -58,7 +57,7 @@ tr.border_top td {
 }
 
 </style>
-<title>YDbaobao:: 출납관리</title>
+<title>YDbaobao:: 결제관리</title>
 </head>
 <body>
     <div id="main-container">
@@ -74,29 +73,131 @@ tr.border_top td {
 		</div>
 		<div id="first-section" class="wrap content">
 			<div id="progress-info">
-				<div class="on"><i class='fa fa-archive'></i>  납부할 금액</div>
+				<div class="on"><i class='fa fa-calculator'></i>  결제 관리</div>
 			</div>
-			<div id="order-section">
-				<table id="order-list">
-					<thead>
-						<tr>
-							<th>상품설명</th>
-							<th>납입 금액</th>
-							<th>지불한 금액</th>
-							<th>남은 금액</th>
-						</tr>
-					</thead>
-					<tbody>
-						
-					</tbody>
+			<div id="payment-section">
+				<table id="summary-table" style="width:800px; text-align:center; margin:0 auto;">
+					<tr>
+						<th>총 구매금액</th>
+						<th>총 납입금액</th>
+						<th>총 반품금액</th>
+						<th>잔액</th>
+					</tr>
+					<tr>
+						<td id="purchase-summary"></td>
+						<td id="pay-summary"></td>
+						<td id="recall-summary"></td>
+						<td id="remain-summary"></td>
+					</tr>
 				</table>
+				<div style="display:table; margin:0 auto;">
+					<table id="purchase-table" style="float:left; width: 250px; margin-top:25px;">
+						<tbody>
+							<tr>
+								<th colspan='3'>구매내역</th>
+							</tr>
+							<tr>
+								<th>발생일</th>
+								<th>금액</th>
+								<th>주문서</th>
+							</tr>
+							<tr>
+							</tr>
+						</tbody>
+					</table>
+				
+					<table id="pay-table" style="float:left; margin-left:10px; width: 270px; margin-top:25px;">
+						<tbody>
+							<tr>
+								<th colspan='3'>납입내역</th>
+							</tr>
+							<tr>
+								<th>발생일</th>
+								<th>금액</th>
+							</tr>
+							<tr>
+							</tr>
+						</tbody>
+					</table>
+				
+					<table id="recall-table" style="float:left; margin-left:10px; width: 250px; margin-top:25px;">
+						<tbody>
+							<tr>
+								<th colspan='3'>반품내역</th>
+							</tr>
+							<tr>
+								<th>발생일</th>
+								<th>금액</th>
+								<th>품목</th>
+							</tr>
+							<tr>
+							</tr>
+						</tbody>
+					</table>
+				</div>
 			</div>
 		</div>
 	</div>
 	<div id="footer">
 		<%@ include file="./commons/_footer.jsp"%>
 	</div>
-
+	<script>
+		var payments;
+		var totalPurchase = 0;
+		var totalRecall = 0;
+		var totalPay = 0;
+		var totalRemain = 0;
+		window.addEventListener('load', function(){
+			ydbaobao.ajax({
+				method:"get",
+				url:"/payments/read",
+				success:function(req){
+					payments = JSON.parse(req.responseText);
+					refreshPayments();
+				}
+			});
+		}, false);
+		
+		function refreshPayments(){
+			var i;
+			var paymentsLength = payments.length;
+			var payment;
+			var table;
+			var lastTd;
+			for (i = 0; i < paymentsLength; i++) {
+				payment = payments[i];
+				switch (payment.paymentType) {
+					case "P": table = document.querySelector('#purchase-table tbody');
+								totalPurchase += payment.amount;
+								lastTd = "<td><button><i class='fa fa-navicon'></i>  주문서보기</button></td>";
+								break;
+					case "I": table = document.querySelector('#pay-table tbody');
+								totalPay += payment.amount;
+								lastTd = "<td><button>수정</button>  <button>삭제</button></td>"
+								break;
+					case "C": table = document.querySelector('#recall-table tbody');
+								totalRecall += payment.amount;
+								break;
+				}
+				if (payment.paymentType !== "I") {
+					table.appendChild(ydbaobao.createElement({
+						name:"tr",
+						content:"<td>"+payment.paymentDate.split(" ")[0]+"</td><td>"+ parseInt(payment.amount).toLocaleString()+"</td>"+lastTd
+					}));
+				} else {
+					table.appendChild(ydbaobao.createElement({
+						name:"tr",
+						content:"<td><input type='text' value='"+payment.paymentDate.split(" ")[0]+"'></td><td><input type='text' value='"+ parseInt(payment.amount).toLocaleString()+"'></td>"+lastTd
+					}));
+				}
+			}
+			totalRemain = totalPurchase - (totalPay + totalRecall);
+			document.querySelector('#purchase-summary').innerHTML =  parseInt(totalPurchase).toLocaleString();
+			document.querySelector('#pay-summary').innerHTML = parseInt(totalPay).toLocaleString();
+			document.querySelector('#recall-summary').innerHTML = parseInt(totalRecall).toLocaleString();
+			document.querySelector('#remain-summary').innerHTML = parseInt(totalRemain).toLocaleString();
+		}
+	</script>
 	<script src="/js/ydbaobao.js"></script>
 </body>
 </html>
