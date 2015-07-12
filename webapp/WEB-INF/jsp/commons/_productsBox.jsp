@@ -37,6 +37,6 @@
 	var length = el.length;
 
 	for(var i = 0; i < length; i++) {
-		el[i].textContent = parseInt(el[i].textContent).toLocaleString();
+		el[i].textContent = parseInt(el[i].textContent).toLocaleString().split(".")[0];
 	}
 </script>

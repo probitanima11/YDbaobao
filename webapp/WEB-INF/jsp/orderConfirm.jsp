@@ -154,7 +154,7 @@
 			totalPrice += parseInt(el[i].textContent.replace(",", ""));
 		}
 
-		document.querySelector('#total-price span').textContent = totalPrice.toLocaleString();
+		document.querySelector('#total-price span').textContent = totalPrice.toLocaleString().split(".")[0];
 	}
 	
 	function priceWithComma() {
@@ -162,13 +162,13 @@
 		var length = el.length;
 
 		for(var i = 0; i < length; i++) {
-			el[i].textContent = parseInt(el[i].textContent).toLocaleString();
+			el[i].textContent = parseInt(el[i].textContent).toLocaleString().split(".")[0];
 		}
 	}
 
 	function totalPriceWithComma() {
 		 	var el = document.querySelector('#total-price span');
-		 	el.textContent = parseInt(el.textContent.replace(",", "")).toLocaleString();
+		 	el.textContent = parseInt(el.textContent.replace(",", "")).toLocaleString().split(".")[0];
 	}
 	</script>
 	<script src="/js/ydbaobao.js"></script>

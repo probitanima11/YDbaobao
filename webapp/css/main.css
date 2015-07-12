@@ -220,16 +220,10 @@ button.btn.addtocart {
 	color: black;
 	background-color: white;
 	border: none;
-	border-radius: 5px;
+	border-right:1px solid #EA6576;
 	padding: 6px;
 	margin: 3px 0px 0px 2px;
 	-webkit-appearance: none;
-	/* background: #c2c2c2;
-	background-image: -webkit-linear-gradient(top, #CEE8FD, #CEF8FF);
-	background-image: -moz-linear-gradient(top, #CEE8FD, #CEF8FF);
-	background-image: -ms-linear-gradient(top, #CEE8FD, #CEF8FF);
-	background-image: -o-linear-gradient(top, #CEE8FD, #CEF8FF);
-	background-image: linear-gradient(to bottom, #CEE8FD, #CEF8FF); */
 	vertical-align: top;
 	-moz-appearance: none;
 }

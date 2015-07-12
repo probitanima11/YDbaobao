@@ -281,7 +281,7 @@ h1 {
 
 		function priceWithComma() {
 			var el = document.querySelector('.product-price');
-			el.textContent = parseInt(el.textContent).toLocaleString();
+			el.textContent = parseInt(el.textContent).toLocaleString().split(".")[0];
 		}
 
 	</script>

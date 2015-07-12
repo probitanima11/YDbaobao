@@ -144,20 +144,20 @@
 				if (payment.paymentType !== "I") {
 					table.appendChild(ydbaobao.createElement({
 						name:"tr",
-						content:"<td>"+payment.paymentDate.split(" ")[0]+"</td><td>"+ parseInt(payment.amount).toLocaleString()+"</td>"+lastTd
+						content:"<td>"+payment.paymentDate.split(" ")[0]+"</td><td>"+ parseInt(payment.amount).toLocaleString().split(".")[0]+"</td>"+lastTd
 					}));
 				} else {
 					table.appendChild(ydbaobao.createElement({
 						name:"tr",
-						content:"<td><input type='text' value='"+payment.paymentDate.split(" ")[0]+"'></td><td><input type='text' value='"+ parseInt(payment.amount).toLocaleString()+"'></td>"+lastTd
+						content:"<td><input type='text' value='"+payment.paymentDate.split(" ")[0]+"'></td><td><input type='text' value='"+ parseInt(payment.amount).toLocaleString().split(".")[0]+"'></td>"+lastTd
 					}));
 				}
 			}
 			totalRemain = totalPurchase - (totalPay + totalRecall);
-			document.querySelector('#purchase-summary').innerHTML =  parseInt(totalPurchase).toLocaleString();
-			document.querySelector('#pay-summary').innerHTML = parseInt(totalPay).toLocaleString();
-			document.querySelector('#recall-summary').innerHTML = parseInt(totalRecall).toLocaleString();
-			document.querySelector('#remain-summary').innerHTML = parseInt(totalRemain).toLocaleString();
+			document.querySelector('#purchase-summary').innerHTML =  parseInt(totalPurchase).toLocaleString().split(".")[0];
+			document.querySelector('#pay-summary').innerHTML = parseInt(totalPay).toLocaleString().split(".")[0];
+			document.querySelector('#recall-summary').innerHTML = parseInt(totalRecall).toLocaleString().split(".")[0];
+			document.querySelector('#remain-summary').innerHTML = parseInt(totalRemain).toLocaleString().split(".")[0];
 		}
 		
 		function createNewPay() {
@@ -176,11 +176,11 @@
 						document.querySelector("#payamount").value = "";
 						totalPay = (totalPay*1) + amount*1;
 						totalRemain -= amount;
-						document.querySelector('#pay-summary').innerHTML = parseInt(totalPay).toLocaleString();
-						document.querySelector('#remain-summary').innerHTML = parseInt(totalRemain).toLocaleString();
+						document.querySelector('#pay-summary').innerHTML = parseInt(totalPay).toLocaleString().split(".")[0];
+						document.querySelector('#remain-summary').innerHTML = parseInt(totalRemain).toLocaleString().split(".")[0];
 						document.querySelector('#pay-table tbody').appendChild(ydbaobao.createElement({
 							name:"tr",
-							content:"<td><input type='text' value='"+date+"'></td><td><input type='text' value='"+parseInt(amount).toLocaleString()+"'></td><td><button>수정</button>  <button>삭제</button></td>"
+							content:"<td><input type='text' value='"+date+"'></td><td><input type='text' value='"+parseInt(amount).toLocaleString().split(".")[0]+"'></td><td><button>수정</button>  <button>삭제</button></td>"
 						}));
 						
 					} else {

@@ -11,7 +11,6 @@
 							<option class="selected" value="상품명">상품명</option>
 							<option value="브랜드명">브랜드명</option>
 						</select>
-						<i class="fa fa-angle-down" style="position:absolute; left:80px; top:12px"></i>
 					</div>
 					<input id="search-terms" type="text" style="float:right"/>
 				</div>
