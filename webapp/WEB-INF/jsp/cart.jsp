@@ -9,7 +9,7 @@
 <link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css">
 <title>YDbaobao:: 장바구니</title>
 <style>
-	body {
+	html,body {
 		background-color: #fff;
 	}
 	
@@ -58,17 +58,17 @@
 </style>
 </head>
 <body>
-	<div id="header">
-		<!-- 상단 navigator -->
-		<%@ include file="./commons/_topNav.jsp"%>
-		<!-- 브랜드/제품 검색바 -->
-		<%@ include file="./commons/_search.jsp"%>
-	</div>
-	<div>
-		<!-- 수평 카테고리 메뉴 -->
-		<%@ include file="./commons/_horizontalCategory.jsp"%>
-	</div>
 	<div id="main-container">
+		<div id="header">
+			<!-- 상단 navigator -->
+			<%@ include file="./commons/_topNav.jsp"%>
+			<!-- 브랜드/제품 검색바 -->
+			<%@ include file="./commons/_search.jsp"%>
+		</div>
+		<div>
+			<!-- 수평 카테고리 메뉴 -->
+			<%@ include file="./commons/_horizontalCategory.jsp"%>
+		</div>
 		<div id="first-section" class="wrap content" style="padding:25px 0;">
 			<div id="progress-info">
 				<div class="on"><i class='fa fa-shopping-cart'></i>  장바구니</div>
@@ -143,7 +143,6 @@
 			</div>
 		</div>
 	</div>
-
 	<div id="footer">
 		<%@ include file="./commons/_footer.jsp"%>
 	</div>

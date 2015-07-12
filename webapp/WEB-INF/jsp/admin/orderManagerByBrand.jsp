@@ -64,6 +64,13 @@
 		background-color: #F15F5F;
 		border-bottom:2px solid #840000;
 	}
+	
+	.brandHeader {
+		background-color:#c8c8c8;
+		font-size:20px;
+		font-weight:500;
+		border-top:2px solid #ccc;
+	}
 </style>
 </head>
 <body>
@@ -73,37 +80,36 @@
 	<div id="container">
 		<%@ include file="./_adminNav.jsp"%>
 		<div id="content" >
-			<h1>회원 주문 관리</h1>
+			<h1>브랜드별 주문 관리</h1>
 			<div style="width: 800px;margin-right: 20px;">
-				<table id="cart-list" style="text-align: center;">
-					<thead>
+				<table id="cart-list" style="text-align: center; padding-top:0px;">
+					<tbody>
+					<c:forEach var="brandPack" items="${brandPacks}">
+						<tr><td colspan="9" class="brandHeader"><span>${brandPack.brandName}</span></td></tr>
 						<tr>
-							<th>브랜드</th>
 							<th>주문자</th>
 							<th colspan="2">상품설명</th>
 							<th style="width:35px">사이즈</th>
 							<th>원가</th>
-							<th  style="width:40px;">주문수량</th>
+							<th style="width:45px;">주문수량</th>
 							<th>승인수량</th>
 							<th>주문금액</th>
 							<th>상태</th>
 						</tr>
-					</thead>
-					<tbody>
-					<c:forEach var="item" items="${items}">
-						<tr data-id="${item.itemId}">
-							<td><span>${item.product.brand.brandName}</span></td>
-							<td><span class="item-customer">${item.customer.customerId}</span></td>
-							<td class="item-image-container"><a href="/products/${item.product.productId}" style="text-decoration:none"><img class="item-image" src="/image/products/${item.product.productImage}"></a></td>
-							<td class="item-name-container"><a href="/products/${item.product.productId}" style="text-decoration:none"><span class="item-name">${item.product.productName}</span></a></td>
-							<td><span class="item-size">${item.size}</span></td>
-							<td><span class="item-price">${item.product.productPrice}</span></td>
-							<td><span>${item.quantity}</span></td>
-							<td><input style="width:40px;" type="number" class ="item-quantity" name="quantity" value ="${item.quantity}"/>
-							<td><span class="order-price">${item.price}</span></td>
-							<td><input type="button" class="success" value="보내기">
-							<input type="button" class="reject" value="삭제"></td>
-						</tr>
+						<c:forEach var="item" items="${brandPack.items}">
+							<tr data-id="${item.itemId}">
+								<td><span class="item-customer">${item.customer.customerId}</span></td>
+								<td class="item-image-container"><a href="/products/${item.product.productId}" style="text-decoration:none"><img class="item-image" src="/image/products/${item.product.productImage}"></a></td>
+								<td class="item-name-container"><a href="/products/${item.product.productId}" style="text-decoration:none"><span class="item-name">${item.product.productName}</span></a></td>
+								<td><span class="item-size">${item.size}</span></td>
+								<td><span class="item-price">${item.product.productPrice}</span></td>
+								<td><span>${item.quantity}</span></td>
+								<td><input style="width:40px;" type="number" class ="item-quantity" name="quantity" value ="${item.quantity}"/>
+								<td><span class="order-price">${item.price}</span></td>
+								<td><input type="button" class="success" value="보내기">
+								<input type="button" class="reject" value="삭제"></td>
+							</tr>
+						</c:forEach>
 					</c:forEach>
 					</tbody>
 				</table>

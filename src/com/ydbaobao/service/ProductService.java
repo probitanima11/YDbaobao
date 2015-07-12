@@ -36,6 +36,8 @@ public class ProductService {
 	CategoryDao categoryDao;
 	@Resource
 	CustomerDao customerDao;
+	@Resource
+	ItemService itemService;
 
 	public int create(int brandId) {
 		Brand brand = brandDao.readBrandByBrandId(brandId);
@@ -108,6 +110,9 @@ public class ProductService {
 		}
 		if (null == product.getProductImage()) {
 			product.setProductImage(oldStatus.getProductImage());
+		}
+		if (product.getProductPrice() != oldStatus.getProductPrice()) {
+			itemService.updateItemPriceByProductId(product.getProductId());
 		}
 		if (productDao.update(product) == 1) {
 			return true;

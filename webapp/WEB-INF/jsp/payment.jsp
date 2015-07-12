@@ -8,7 +8,7 @@
 <link rel="stylesheet" type="text/css" href="/css/main.css">
 <link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css">
 <style>
-body {
+html, body {
 	background-color: #fff;
 }
 
@@ -61,17 +61,17 @@ tr.border_top td {
 <title>YDbaobao:: 출납관리</title>
 </head>
 <body>
-	<div id="header">
-		<!-- 상단 navigator -->
-		<%@ include file="./commons/_topNav.jsp"%>
-		<!-- 브랜드/제품 검색바 -->
-		<%@ include file="./commons/_search.jsp"%>
-	</div>
-	<div>
-		<!-- 수평 카테고리 메뉴 -->
-		<%@ include file="./commons/_horizontalCategory.jsp"%>
-	</div>
-	<div id="main-container">
+    <div id="main-container">
+		<div id="header">
+			<!-- 상단 navigator -->
+			<%@ include file="./commons/_topNav.jsp"%>
+			<!-- 브랜드/제품 검색바 -->
+			<%@ include file="./commons/_search.jsp"%>
+		</div>
+		<div>
+			<!-- 수평 카테고리 메뉴 -->
+			<%@ include file="./commons/_horizontalCategory.jsp"%>
+		</div>
 		<div id="first-section" class="wrap content">
 			<div id="progress-info">
 				<div class="on"><i class='fa fa-archive'></i>  납부할 금액</div>

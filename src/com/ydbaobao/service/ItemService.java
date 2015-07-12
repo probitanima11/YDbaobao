@@ -1,5 +1,7 @@
 package com.ydbaobao.service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -96,6 +98,13 @@ public class ItemService {
 		itemDao.updateItemPrice(item.getItemId(), item.getQuantity() * price);
 	}
 	
+	public void updateItemPriceByProductId(int productId) {
+		List<Item> items = itemDao.readItemsByProductId(productId);
+		for (Item item : items) {
+			updateItemPrice(item.getItemId());
+		}
+	}
+	
 	public List<Item> readCartItems(String customerId, String itemStatus) {
 		List<Item> items = itemDao.readCartItems(customerId, itemStatus);
 		for (Item item : items) {
@@ -108,6 +117,10 @@ public class ItemService {
 	
 	public List<Item> readOrderedItems() {
 		return itemDao.readOrderedItems();
+	}
+	
+	public List<BrandPack> readOrderedItemsOrderBy() {
+		return packageByBrand(itemDao.readOrderedItemsOrderBy("BrandId"));
 	}
 	
 	public Item readItemByItemId(int itemId) {
@@ -160,5 +173,45 @@ public class ItemService {
 
 	public List<Item> readOrderedItemsByCustomerId(String customerId) {
 		return itemDao.readOrderedItemsByCustomerId(customerId);
+	}
+	
+	public List<BrandPack> packageByBrand(List<Item> items){
+		List<BrandPack> brandPacks = new ArrayList<BrandPack>();
+		HashMap<String, Integer> mapper = new HashMap<String, Integer>();
+		String prevBrandName = "";
+		int i = 0;
+		for (Item item : items) {
+			String currBrandName = item.getProduct().getBrand().getBrandName();
+			if (!prevBrandName.equals(currBrandName)) {
+				brandPacks.add(new BrandPack(currBrandName));
+				mapper.put(currBrandName, i); i++;
+			}
+			brandPacks.get(mapper.get(currBrandName)).addItem(item);
+			prevBrandName = currBrandName;
+			
+		}
+		return brandPacks;
+	}
+	
+	public class BrandPack {
+		private String brandName;
+		private List<Item> items;
+
+		public BrandPack(String brandName) {
+			this.brandName = brandName;
+			this.items = new ArrayList<Item>();
+		}
+		
+		public String getBrandName() {
+			return brandName;
+		}
+		
+		public List<Item> getItems() {
+			return items;
+		}
+		
+		public void addItem(Item item) {
+			items.add(item);
+		}
 	}
 }

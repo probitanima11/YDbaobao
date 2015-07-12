@@ -31,8 +31,8 @@ public class AdminOrderController {
 	 */
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public String manageOrder(Model model) {
-		model.addAttribute("items", itemService.readOrderedItems());
-		return "admin/orderManager";
+		model.addAttribute("brandPacks", itemService.readOrderedItemsOrderBy());
+		return "admin/orderManagerByBrand";
 	}
 	
 	@RequestMapping(value = "/{customerId}", method = RequestMethod.GET)

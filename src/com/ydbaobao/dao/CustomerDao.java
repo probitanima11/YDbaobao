@@ -87,10 +87,9 @@ public class CustomerDao extends JdbcDaoSupport {
 				), customerId);
 	}
 
+	//유저 계정 비활성화
 	public void deleteCustomer(String customerId) {
-		String sql = "delete from CUSTOMERS where customerId = ?";
-		getJdbcTemplate().update(sql, customerId);
-		sql = "delete from ORDERS where customerId = ?";
+		String sql = "update CUSTOMERS set gradeId = 0, customerPhone='', customerEmail='', customerAddress='' where customerId = ?";
 		getJdbcTemplate().update(sql, customerId);
 		sql = "delete from ITEMS where customerId = ?";
 		getJdbcTemplate().update(sql, customerId);

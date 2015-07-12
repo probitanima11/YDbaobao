@@ -34,6 +34,8 @@ html, body {
 }
 
 #main-container {
+	position:relative;
+	min-height:100%;
 }
 
 .btn {

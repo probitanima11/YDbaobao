@@ -8,7 +8,7 @@
 <link rel="stylesheet" type="text/css" href="/css/main.css">
 <link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css">
 <style>
-body {
+html,body {
 	background-color: #fff;
 }
 
@@ -61,17 +61,17 @@ tr.border_top td {
 <title>YDbaobao:: 주문목록</title>
 </head>
 <body>
-	<div id="header">
-		<!-- 상단 navigator -->
-		<%@ include file="./commons/_topNav.jsp"%>
-		<!-- 브랜드/제품 검색바 -->
-		<%@ include file="./commons/_search.jsp"%>
-	</div>
-	<div>
-		<!-- 수평 카테고리 메뉴 -->
-		<%@ include file="./commons/_horizontalCategory.jsp"%>
-	</div>
 	<div id="main-container">
+		<div id="header">
+			<!-- 상단 navigator -->
+			<%@ include file="./commons/_topNav.jsp"%>
+			<!-- 브랜드/제품 검색바 -->
+			<%@ include file="./commons/_search.jsp"%>
+		</div>
+		<div>
+			<!-- 수평 카테고리 메뉴 -->
+			<%@ include file="./commons/_horizontalCategory.jsp"%>
+		</div>
 		<div id="first-section" class="wrap content">
 			<div id="progress-info">
 				<div class="on"><i class='fa fa-archive'></i>  주문내역</div>
@@ -114,41 +114,6 @@ tr.border_top td {
 	<div id="footer">
 		<%@ include file="./commons/_footer.jsp"%>
 	</div>
-
-	<script>
-	// window.addEventListener('load', function() {
-	// 	var readyList = document.querySelectorAll('.order-cancel');
-	// 	for(var i=0; i<readyList.length; i++) {
-	// 		readyList[i].addEventListener('click', function(e) {
-	// 			var orderId = e.target.getAttribute('data-id');
-	// 			orderCancel(orderId);
-	// 		});
-	// 	}
-	// 	document.querySelector("#reloadList").addEventListener('click', function(){
-	// 		window.location.href="/orders/reload?fromDate="+fromDate.value+"&toDate="+toDate.value;
-	// 	}, false);
-	// }, false);
-	
-	// function orderCancel(orderId) {
-	// 	if (confirm("정말 주문취소 하시겠습니까??") == false){
-	// 	    return;
-	// 	}
-	// 	ydbaobao.ajax({
-	// 		method: "put",
-	// 		param: "orderStatus=C",
-	// 		url: "/orders/"+orderId,
-	// 		success: function(req){
-	// 			document.querySelectorAll(".border_top[data-id='" + orderId + "'] > td")[6].innerText = "주문취소";
-	// 			document.querySelectorAll(".border_top[data-id='" + orderId + "'] > td")[7].querySelector("button").remove();
-	// 		}
-	// 	});
-	// }
-	
-	// function getReceipt(orderId) {
-	// 	var url = '/orders/receipt/' + orderId;
-	// 	window.open(url, "_blank", "toolbar=yes, scrollbars=yes, resizable=yes, top=100, left=300, width=400, height=400");
-	// }
-	</script>
 	<script src="/js/ydbaobao.js"></script>
 </body>
 </html>

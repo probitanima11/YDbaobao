@@ -202,15 +202,6 @@ h1 {
 				buyitnow(e);
 			}, false);
 
-			productBuyContainer = document.querySelector("#product-buy-container");
-			document.addEventListener('scroll', function(e){
-				if (window.scrollY > 150) {
-					productBuyContainer.style.top = (window.scrollY - 150)+"px";
-				} else {
-					productBuyContainer.style.top = "0px";
-				}
-			},false);
-
 			 var image = document.querySelector("#product-photo img");
 			 if (image.naturalWidth > image.naturalHeight) {
 				 document.querySelector("#product-photo img").style.width = "100%";

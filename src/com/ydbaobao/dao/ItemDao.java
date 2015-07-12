@@ -150,6 +150,37 @@ public class ItemDao extends JdbcDaoSupport {
 						rs.getString("productSize"), rs.getInt("isSoldout"), 
 				new Brand(rs.getInt("brandId"))), rs.getString("size"), 
 				rs.getInt("quantity"), rs.getString("itemStatus"), 
-				rs.getInt("price")), customerId) ;
+				rs.getInt("price")), customerId);
+	}
+	
+	public List<Item> readItemsByProductId(int productId) {
+		String sql  = "select * from ITEMS A, PRODUCTS B where A.productId = ? AND A.productId = B.productId";
+		return getJdbcTemplate().query(sql, (rs, rowNum) -> new Item(
+				rs.getInt("itemId"), 
+				new Customer(rs.getString("customerId")),
+				new Product(rs.getInt("productId"),rs.getString("productName"), 
+						rs.getInt("productPrice"), rs.getString("productImage"), 
+						rs.getString("productSize"), rs.getInt("isSoldout"), 
+				new Brand(rs.getInt("brandId"))), rs.getString("size"), 
+				rs.getInt("quantity"), rs.getString("itemStatus"), 
+				rs.getInt("price")), productId);
+	}
+
+	public List<Item> readOrderedItemsOrderBy(String arg) {
+		String sql = "select * from ITEMS A, PRODUCTS B, BRANDS C where A.itemStatus = 'S' AND A.productId = B.productId AND B.brandId = C.brandId";
+		if (arg.equals("customerId")) {
+			sql += " ORDER BY A.customerId desc";
+		} else { //Default
+			sql  += " ORDER BY B.brandId desc";
+		}
+		return getJdbcTemplate().query(sql, (rs, rowNum) -> new Item(
+				rs.getInt("itemId"), 
+				new Customer(rs.getString("customerId")),
+				new Product(rs.getInt("productId"),rs.getString("productName"), 
+						rs.getInt("productPrice"), rs.getString("productImage"), 
+						rs.getString("productSize"), rs.getInt("isSoldout"), 
+				new Brand(rs.getInt("brandId"), rs.getString("brandName"))), rs.getString("size"), 
+				rs.getInt("quantity"), rs.getString("itemStatus"), 
+				rs.getInt("price")));
 	}
 }
