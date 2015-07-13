@@ -24,7 +24,7 @@
 		<div id="first-section" class="wrap content" style="position:relative; padding:25px 0;">
 			<c:if test="${not empty isHome}">
 				<div id="showcase">
-					<img id="indexImage">
+					<img id="indexImage" style="height:100%;">
 				</div>
 			</c:if>
 		</div>
@@ -98,11 +98,6 @@
 			{
 				clearInterval(outTimer);
 				imgEl.src = "/image/index/"+indexImages[imgIndex].indexImageName;
-				if(imgEl.naturalWidth > image.naturalHeight) {
-					imgEl.style.width = "100%";
-				} else {
-					imgEl.style.height = "100%";
-				}
 				fadeIn(imgEl);
 			}
 			return level;

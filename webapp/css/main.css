@@ -219,27 +219,19 @@ button.btn.addtocart {
 	font-size: 15px;
 	color: black;
 	background-color: white;
-	border: none;
-	border-right:1px solid #EA6576;
+	border: 0;
+	border-right: 1px solid #EA6576;
+	border-radius: 0;
 	padding: 6px;
 	margin: 3px 0px 0px 2px;
 	-webkit-appearance: none;
 	vertical-align: top;
 	-moz-appearance: none;
+	cursor:pointer;
 }
 
 #search-form select:focus {
 	outline: none;
-}
-
-#search-form select:hover {
-	//color: white;
-	/* background: #3cb0fd;
-	background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
-	background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
-	background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
-	background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
-	background-image: linear-gradient(to bottom, #3cb0fd, #3498db); */
 }
 
 /* input type number spinner hide*/
@@ -259,13 +251,7 @@ input[type=number] {
 	position: relative;
 	width: 100%;
 	height: 500px;
-	display: table;
 	text-align: center;
-}
-
-#showcase img {
-	height: 100%;
-	width: 100%;
 }
 
 /* horizontalCategory.jsp */

@@ -11,7 +11,7 @@
 					<li><a href="/customers/updateForm"><span>개인정보수정</span></a></li>
 					<li><a href="/carts"><span>장바구니</span></a></li>
 					<li><a href="/orders"><span>주문내역</span></a></li>
-					<li><a href="/payments"><span>결제관리</span></a></li>
+					<li><a href="/payments"><span>결제조회</span></a></li>
 				</c:when>
 				<c:when test="${not empty sessionAdmin}">
 					<li class="logout"><a href="/admin/customers?page=1"><span style="color: #EA6576;">[관리자 페이지]</span></a></li>

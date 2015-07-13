@@ -143,6 +143,9 @@ h1 {
 						<button class="btn addtocart disabled" disabled>장바구니</button>
 						<button class="btn buyitnow disabled" disabled>바로주문</button>
 					</c:when>
+					<c:when test="${not empty sessionAdmin}">
+						<div class="isSoldout">관리자모드</div>
+					</c:when>
 					<c:otherwise>
 						<div class="button-group">
 							<button class="btn addtocart">장바구니</button>

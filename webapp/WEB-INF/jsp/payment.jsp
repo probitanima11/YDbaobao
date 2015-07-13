@@ -57,7 +57,7 @@ tr.border_top td {
 }
 
 </style>
-<title>YDbaobao:: 결제관리</title>
+<title>YDbaobao:: 결제조회</title>
 </head>
 <body>
     <div id="main-container">
