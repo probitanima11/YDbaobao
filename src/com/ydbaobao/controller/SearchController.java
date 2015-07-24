@@ -1,7 +1,6 @@
 package com.ydbaobao.controller;
 
 import java.util.List;
-import java.util.stream.IntStream;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
@@ -46,8 +45,7 @@ public class SearchController {
 		model.addAttribute("prev", CommonUtil.prevBlock(page));
 		model.addAttribute("next", CommonUtil.nextBlock(page, totalPage));
 		model.addAttribute("selectedIndex", page);
-		model.addAttribute("range", IntStream.range(CommonUtil.startPage(page), CommonUtil.endPage(page, totalPage))
-				.toArray());
+		model.addAttribute("range", CommonUtil.range(CommonUtil.startPage(page), CommonUtil.endPage(page, totalPage)).toArray());
 		model.addAttribute("url", "/search/brands?terms=" + terms + "&page=");
 		model.addAttribute("categories", categoryService.read());
 		model.addAttribute("products", products);
@@ -75,8 +73,7 @@ public class SearchController {
 		model.addAttribute("prev", CommonUtil.prevBlock(page));
 		model.addAttribute("next", CommonUtil.nextBlock(page, totalPage));
 		model.addAttribute("selectedIndex", page);
-		model.addAttribute("range", IntStream.range(CommonUtil.startPage(page), CommonUtil.endPage(page, totalPage))
-				.toArray());
+		model.addAttribute("range", CommonUtil.range(CommonUtil.startPage(page), CommonUtil.endPage(page, totalPage)).toArray());
 		model.addAttribute("url", "/search/products?terms=" + terms + "&page=");
 		model.addAttribute("categories", categoryService.readWithoutUnclassifiedCategory());
 		model.addAttribute("products", products);

@@ -2,6 +2,7 @@ package com.ydbaobao.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
@@ -12,6 +13,7 @@ import javax.sql.DataSource;
 
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
@@ -34,14 +36,20 @@ public class ItemDao extends JdbcDaoSupport {
 
 	public List<Item> readCartItems(String customerId, String itemStatus) {
 		String sql = "select * from ITEMS A, PRODUCTS B, CUSTOMERS as C, BRANDS as D where A.itemStatus = ? AND A.customerId= ? AND A.productId = B.productId AND A.customerId = C.customerId AND B.brandId = D.brandId order by A.productId";
+		RowMapper<Item> rm = new RowMapper<Item>() {
+			@Override
+			public Item mapRow(ResultSet rs, int rowNum) throws SQLException {
+				return new Item(rs.getInt("itemId"),
+						new Customer(rs.getString("customerId"), rs.getString("customerName"), rs.getString("gradeId")),
+						new Product(rs.getInt("productId"), rs.getString("productName"), rs.getInt("productPrice"), rs.getString("productImage"), rs.getString("productSize"), rs.getInt("isSoldout"),
+								new Brand(rs.getInt("brandId"), rs.getString("brandName"), rs.getInt("discount_1"), rs.getInt("discount_2"),
+										rs.getInt("discount_3"), rs.getInt("discount_4"), rs.getInt("discount_5"))),
+						rs.getString("size"), rs.getInt("quantity"), rs.getString("itemStatus"), rs.getInt("price"));
+			}
+		};
 		try {
 			return getJdbcTemplate().query(
-					sql, (rs, rowNum) -> new Item(rs.getInt("itemId"),
-							new Customer(rs.getString("customerId"), rs.getString("customerName"), rs.getString("gradeId")),
-							new Product(rs.getInt("productId"), rs.getString("productName"), rs.getInt("productPrice"), rs.getString("productImage"), rs.getString("productSize"), rs.getInt("isSoldout"),
-									new Brand(rs.getInt("brandId"), rs.getString("brandName"), rs.getInt("discount_1"), rs.getInt("discount_2"),
-											rs.getInt("discount_3"), rs.getInt("discount_4"), rs.getInt("discount_5"))),
-							rs.getString("size"), rs.getInt("quantity"), rs.getString("itemStatus"), rs.getInt("price")), itemStatus, customerId);
+					sql, rm, itemStatus, customerId);
 		} catch (EmptyResultDataAccessException e) {
 			return null;
 		}
@@ -49,12 +57,17 @@ public class ItemDao extends JdbcDaoSupport {
 	
 	public List<Item> readOrderedItems() {
 		String sql = "select * from ITEMS A, PRODUCTS B where A.itemStatus = 'S' AND A.quantity != 0 AND A.productId = B.productId order by A.itemId";
+		RowMapper<Item> rm = new RowMapper<Item>() {
+			@Override
+			public Item mapRow(ResultSet rs, int rowNum) throws SQLException {
+				return new Item(
+						rs.getInt("itemId"), new Customer(rs.getString("customerId")),
+						new Product(rs.getInt("productId"),rs.getString("productName"), rs.getInt("productPrice"), rs.getString("productImage"), rs.getString("productSize"), rs.getInt("isSoldout"), new Brand(rs.getInt("brandId"))),
+						rs.getString("size"), rs.getInt("quantity"), rs.getString("itemStatus"), rs.getInt("price"));
+			}
+		};
 		try {
-			return getJdbcTemplate().query(
-					sql,
-					(rs, rowNum) -> new Item(rs.getInt("itemId"), new Customer(rs.getString("customerId")),
-							new Product(rs.getInt("productId"), rs.getString("productName"), rs.getInt("productPrice"),
-									rs.getString("productImage"), rs.getString("productSize"), rs.getInt("isSoldout"), new Brand(rs.getInt("brandId"))), rs.getString("size"), rs.getInt("quantity"), rs.getString("itemStatus"), rs.getInt("price")));
+			return getJdbcTemplate().query(sql, rm);
 		} catch (EmptyResultDataAccessException e) {
 			return null;
 		}
@@ -65,9 +78,9 @@ public class ItemDao extends JdbcDaoSupport {
 		getJdbcTemplate().update(sql, itemId);
 	}
 	
-	public int createItem(String customerId, int productId, String size, int quantity, String itemStatus) {
+	public int createItem(final String customerId, final int productId, final String size, final int quantity, final String itemStatus) {
 		KeyHolder keyHolder = new GeneratedKeyHolder();
-		String sql = "insert into ITEMS (customerId, productId, size, quantity, itemStatus, price) values(?, ?, ?, ?, ?, 0)";
+		final String sql = "insert into ITEMS (customerId, productId, size, quantity, itemStatus, price) values(?, ?, ?, ?, ?, 0)";
 		getJdbcTemplate().update(new PreparedStatementCreator() {
 			public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
 				PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -84,11 +97,17 @@ public class ItemDao extends JdbcDaoSupport {
 	
 	public Item readItem(int itemId) {
 		String sql = "select * from ITEMS A, PRODUCTS B where A.itemId=? AND A.productId = B.productId";
+		RowMapper<Item> rm = new RowMapper<Item>() {
+			@Override
+			public Item mapRow(ResultSet rs, int rowNum) throws SQLException {
+				return new Item(
+						rs.getInt("itemId"), new Customer(rs.getString("customerId")),
+						new Product(rs.getInt("productId"),rs.getString("productName"), rs.getInt("productPrice"), rs.getString("productImage"), rs.getString("productSize"), rs.getInt("isSoldout"), new Brand(rs.getInt("brandId"))),
+						rs.getString("size"), rs.getInt("quantity"), rs.getString("itemStatus"), rs.getInt("price"));
+			}
+		};
 		try {
-			return getJdbcTemplate().queryForObject(sql, (rs, rowNum) -> new Item(
-					rs.getInt("itemId"), new Customer(rs.getString("customerId")),
-					new Product(rs.getInt("productId"),rs.getString("productName"), rs.getInt("productPrice"), rs.getString("productImage"), rs.getString("productSize"), rs.getInt("isSoldout"), new Brand(rs.getInt("brandId"))),
-					rs.getString("size"), rs.getInt("quantity"), rs.getString("itemStatus"), rs.getInt("price")), itemId);
+			return getJdbcTemplate().queryForObject(sql, rm, itemId);
 		} catch (EmptyResultDataAccessException e) {
 			return null;
 		}
@@ -96,11 +115,17 @@ public class ItemDao extends JdbcDaoSupport {
 
 	public Item readItemByStatus(int itemId, String itemStatus) {
 		String sql = "select * from ITEMS A, PRODUCTS B where A.itemId=? AND A.productId = B.productId AND A.itemStatus = ?";
+		RowMapper<Item> rm = new RowMapper<Item>() {
+			@Override
+			public Item mapRow(ResultSet rs, int rowNum) throws SQLException {
+				return new Item(
+						rs.getInt("itemId"), new Customer(rs.getString("customerId")),
+						new Product(rs.getInt("productId"),rs.getString("productName"), rs.getInt("productPrice"), rs.getString("productImage"), rs.getString("productSize"), rs.getInt("isSoldout"), new Brand(rs.getInt("brandId"))),
+						rs.getString("size"), rs.getInt("quantity"), rs.getString("itemStatus"), rs.getInt("price"));
+			}
+		};
 		try {
-			return getJdbcTemplate().queryForObject(sql, (rs, rowNum) -> new Item(
-					rs.getInt("itemId"), new Customer(rs.getString("customerId")),
-					new Product(rs.getInt("productId"),rs.getString("productName"), rs.getInt("productPrice"), rs.getString("productImage"), rs.getString("productSize"), rs.getInt("isSoldout"), new Brand(rs.getInt("brandId"))),
-					rs.getString("size"), rs.getInt("quantity"), rs.getString("itemStatus"), rs.getInt("price")), itemId, itemStatus);
+			return getJdbcTemplate().queryForObject(sql, rm, itemId, itemStatus);
 		} catch (EmptyResultDataAccessException e) {
 			return null;
 		}
@@ -108,11 +133,17 @@ public class ItemDao extends JdbcDaoSupport {
 	
 	public Item readItemByProductIdAndSizeAndItemStatus(int productId, String size, String customerId, String itemStatus) {
 		String sql = "select * from ITEMS where productId = ? and size = ? and customerId = ? and itemStatus = ?";
+		RowMapper<Item> rm = new RowMapper<Item>() {
+			@Override
+			public Item mapRow(ResultSet rs, int rowNum) throws SQLException {
+				return new Item(
+						rs.getInt("itemId"), new Customer(rs.getString("customerId")),
+						new Product(rs.getInt("productId")),
+						rs.getString("size"), rs.getInt("quantity"), rs.getString("itemStatus"), rs.getInt("price"));
+			}
+		};
 		try {
-			return getJdbcTemplate().queryForObject(sql, (rs, rowNum) -> new Item(
-					rs.getInt("itemId"), new Customer(rs.getString("customerId")),
-					new Product(rs.getInt("productId")),
-					rs.getString("size"), rs.getInt("quantity"), rs.getString("itemStatus"), rs.getInt("price")), productId, size, customerId, itemStatus);
+			return getJdbcTemplate().queryForObject(sql, rm, productId, size, customerId, itemStatus);
 		} catch (EmptyResultDataAccessException e) {
 			return null;
 		}
@@ -142,28 +173,41 @@ public class ItemDao extends JdbcDaoSupport {
 		String sql = "select * from ITEMS A, PRODUCTS B where A.customerId = ? "
 				+ "AND A.productId = B.productId "
 				+ "AND A.itemStatus = 'S'";
-		return getJdbcTemplate().query(sql, (rs, rowNum) ->  new Item(
-				rs.getInt("itemId"), 
-				new Customer(rs.getString("customerId")),
-				new Product(rs.getInt("productId"),rs.getString("productName"), 
-						rs.getInt("productPrice"), rs.getString("productImage"), 
-						rs.getString("productSize"), rs.getInt("isSoldout"), 
-				new Brand(rs.getInt("brandId"))), rs.getString("size"), 
-				rs.getInt("quantity"), rs.getString("itemStatus"), 
-				rs.getInt("price")), customerId);
+		
+		RowMapper<Item> rm = new RowMapper<Item>() {
+			@Override
+			public Item mapRow(ResultSet rs, int rowNum) throws SQLException {
+				return new Item(
+						rs.getInt("itemId"), 
+						new Customer(rs.getString("customerId")),
+						new Product(rs.getInt("productId"),rs.getString("productName"), 
+								rs.getInt("productPrice"), rs.getString("productImage"), 
+								rs.getString("productSize"), rs.getInt("isSoldout"), 
+						new Brand(rs.getInt("brandId"))), rs.getString("size"), 
+						rs.getInt("quantity"), rs.getString("itemStatus"), 
+						rs.getInt("price"));
+			}
+		};
+		return getJdbcTemplate().query(sql, rm, customerId);
 	}
 	
 	public List<Item> readItemsByProductId(int productId) {
 		String sql  = "select * from ITEMS A, PRODUCTS B where A.productId = ? AND A.productId = B.productId";
-		return getJdbcTemplate().query(sql, (rs, rowNum) -> new Item(
-				rs.getInt("itemId"), 
-				new Customer(rs.getString("customerId")),
-				new Product(rs.getInt("productId"),rs.getString("productName"), 
-						rs.getInt("productPrice"), rs.getString("productImage"), 
-						rs.getString("productSize"), rs.getInt("isSoldout"), 
-				new Brand(rs.getInt("brandId"))), rs.getString("size"), 
-				rs.getInt("quantity"), rs.getString("itemStatus"), 
-				rs.getInt("price")), productId);
+		RowMapper<Item> rm = new RowMapper<Item>() {
+			@Override
+			public Item mapRow(ResultSet rs, int rowNum) throws SQLException {
+				return new Item(
+						rs.getInt("itemId"), 
+						new Customer(rs.getString("customerId")),
+						new Product(rs.getInt("productId"),rs.getString("productName"), 
+								rs.getInt("productPrice"), rs.getString("productImage"), 
+								rs.getString("productSize"), rs.getInt("isSoldout"), 
+						new Brand(rs.getInt("brandId"))), rs.getString("size"), 
+						rs.getInt("quantity"), rs.getString("itemStatus"), 
+						rs.getInt("price"));
+			}
+		};
+		return getJdbcTemplate().query(sql, rm, productId);
 	}
 
 	public List<Item> readOrderedItemsOrderBy(String arg) {
@@ -173,14 +217,20 @@ public class ItemDao extends JdbcDaoSupport {
 		} else { //Default
 			sql  += " ORDER BY B.brandId desc";
 		}
-		return getJdbcTemplate().query(sql, (rs, rowNum) -> new Item(
-				rs.getInt("itemId"), 
-				new Customer(rs.getString("customerId")),
-				new Product(rs.getInt("productId"),rs.getString("productName"), 
-						rs.getInt("productPrice"), rs.getString("productImage"), 
-						rs.getString("productSize"), rs.getInt("isSoldout"), 
-				new Brand(rs.getInt("brandId"), rs.getString("brandName"))), rs.getString("size"), 
-				rs.getInt("quantity"), rs.getString("itemStatus"), 
-				rs.getInt("price")));
+		RowMapper<Item> rm = new RowMapper<Item>() {
+			@Override
+			public Item mapRow(ResultSet rs, int rowNum) throws SQLException {
+				return new Item(
+						rs.getInt("itemId"), 
+						new Customer(rs.getString("customerId")),
+						new Product(rs.getInt("productId"),rs.getString("productName"), 
+								rs.getInt("productPrice"), rs.getString("productImage"), 
+								rs.getString("productSize"), rs.getInt("isSoldout"), 
+						new Brand(rs.getInt("brandId"))), rs.getString("size"), 
+						rs.getInt("quantity"), rs.getString("itemStatus"), 
+						rs.getInt("price"));
+			}
+		};
+		return getJdbcTemplate().query(sql, rm);
 	}
 }

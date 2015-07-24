@@ -2,6 +2,7 @@ package com.ydbaobao.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
@@ -12,6 +13,7 @@ import javax.sql.DataSource;
 
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
@@ -31,25 +33,40 @@ public class BrandDao extends JdbcDaoSupport {
 
 	public List<Brand> readBrands() {
 		String sql = "select * from BRANDS order by brandName";
-		return getJdbcTemplate().query(
-				sql, (rs, rowNum) -> new Brand(rs.getInt("brandId"), rs.getString("brandName"), rs.getInt("brandCount"), rs.getInt("discount_1"), rs.getInt("discount_2"), rs.getInt("discount_3"), rs.getInt("discount_4"), rs.getInt("discount_5"), rs.getString("brandSize")));
+		RowMapper<Brand> rm = new RowMapper<Brand>() {
+			@Override
+			public Brand mapRow(ResultSet rs, int rowNum) throws SQLException {
+				return new Brand(rs.getInt("brandId"), rs.getString("brandName"), rs.getInt("brandCount"), rs.getInt("discount_1"), rs.getInt("discount_2"), rs.getInt("discount_3"), rs.getInt("discount_4"), rs.getInt("discount_5"), rs.getString("brandSize"));
+			}
+		};
+		return getJdbcTemplate().query(sql, rm);
 	}
 	
 	public List<Brand> readBrandsByCategoryId(int categoryId) {
 		String sql = "select distinct b.* from BRANDS as b, PRODUCTS as p where p.categoryId = ? and p.brandId = b.brandId order by brandName";
-		return getJdbcTemplate().query(
-				sql, (rs, rowNum) -> new Brand(rs.getInt("brandId"), rs.getString("brandName"), rs.getInt("brandCount"), rs.getInt("discount_1"), rs.getInt("discount_2"), rs.getInt("discount_3"), rs.getInt("discount_4"), rs.getInt("discount_5"), rs.getString("brandSize")), categoryId);
+		RowMapper<Brand> rm = new RowMapper<Brand>() {
+			@Override
+			public Brand mapRow(ResultSet rs, int rowNum) throws SQLException {
+				return new Brand(rs.getInt("brandId"), rs.getString("brandName"), rs.getInt("brandCount"), rs.getInt("discount_1"), rs.getInt("discount_2"), rs.getInt("discount_3"), rs.getInt("discount_4"), rs.getInt("discount_5"), rs.getString("brandSize"));
+			}
+		};
+		return getJdbcTemplate().query(sql, rm, categoryId);
 	}
 	
 	public List<Brand> findBrands(String searchValue) {
 		String sql = "select * from BRANDS where brandName like \"%" + searchValue + "%\"";
-		return getJdbcTemplate().query(
-				sql, (rs, rowNum) -> new Brand(rs.getInt("brandId"), rs.getString("brandName"), rs.getInt("brandCount"), rs.getInt("discount_1"), rs.getInt("discount_2"), rs.getInt("discount_3"), rs.getInt("discount_4"), rs.getInt("discount_5"), rs.getString("brandSize")));
+		RowMapper<Brand> rm = new RowMapper<Brand>() {
+			@Override
+			public Brand mapRow(ResultSet rs, int rowNum) throws SQLException {
+				return new Brand(rs.getInt("brandId"), rs.getString("brandName"), rs.getInt("brandCount"), rs.getInt("discount_1"), rs.getInt("discount_2"), rs.getInt("discount_3"), rs.getInt("discount_4"), rs.getInt("discount_5"), rs.getString("brandSize"));
+			}
+		};
+		return getJdbcTemplate().query(sql, rm);
 	}
 
-	public int createBrand(Brand brand) {
+	public int createBrand(final Brand brand) {
 		KeyHolder keyHolder = new GeneratedKeyHolder();
-		String sql = "insert into BRANDS(brandName, discount_1, discount_2, discount_3, discount_4, discount_5, brandSize) values(?, ?, ?, ?, ?, ?, ?)";
+		final String sql = "insert into BRANDS(brandName, discount_1, discount_2, discount_3, discount_4, discount_5, brandSize) values(?, ?, ?, ?, ?, ?, ?)";
 		getJdbcTemplate().update(new PreparedStatementCreator() {
 			public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
 				PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -68,10 +85,14 @@ public class BrandDao extends JdbcDaoSupport {
 
 	public Brand readBrandByBrandName(String brandName) {
 		String sql = "select * from BRANDS where brandName=?";
+		RowMapper<Brand> rm = new RowMapper<Brand>() {
+			@Override
+			public Brand mapRow(ResultSet rs, int rowNum) throws SQLException {
+				return new Brand(rs.getInt("brandId"), rs.getString("brandName"), rs.getInt("brandCount"), rs.getInt("discount_1"), rs.getInt("discount_2"), rs.getInt("discount_3"), rs.getInt("discount_4"), rs.getInt("discount_5"), rs.getString("brandSize"));
+			}
+		};
 		try {
-			return getJdbcTemplate().queryForObject(sql, (rs, rowNum) -> new Brand(
-					rs.getInt("brandId"), 
-					rs.getString("brandName"), rs.getInt("brandCount"), rs.getInt("discount_1"), rs.getInt("discount_2"), rs.getInt("discount_3"), rs.getInt("discount_4"), rs.getInt("discount_5"), rs.getString("brandSize")), brandName);
+			return getJdbcTemplate().queryForObject(sql, rm, brandName);
 		} catch (EmptyResultDataAccessException e) {
 			return null;
 		}
@@ -89,10 +110,14 @@ public class BrandDao extends JdbcDaoSupport {
 	
 	public Brand readBrandByBrandId(int brandId) {
 		String sql = "select * from BRANDS where brandId=?";
+		RowMapper<Brand> rm = new RowMapper<Brand>() {
+			@Override
+			public Brand mapRow(ResultSet rs, int rowNum) throws SQLException {
+				return new Brand(rs.getInt("brandId"), rs.getString("brandName"), rs.getInt("brandCount"), rs.getInt("discount_1"), rs.getInt("discount_2"), rs.getInt("discount_3"), rs.getInt("discount_4"), rs.getInt("discount_5"), rs.getString("brandSize"));
+			}
+		};
 		try {
-			return getJdbcTemplate().queryForObject(sql, (rs, rowNum) -> new Brand(
-					rs.getInt("brandId"), 
-					rs.getString("brandName"), rs.getInt("brandCount"), rs.getInt("discount_1"), rs.getInt("discount_2"), rs.getInt("discount_3"), rs.getInt("discount_4"), rs.getInt("discount_5"), rs.getString("brandSize")), brandId);
+			return getJdbcTemplate().queryForObject(sql, rm, brandId);
 		} catch (EmptyResultDataAccessException e) {
 			return null;
 		}
@@ -100,10 +125,14 @@ public class BrandDao extends JdbcDaoSupport {
 	
 	public Brand readBrandByProductId(int productId) {
 		String sql = "select * from BRANDS where productId=?";
+		RowMapper<Brand> rm = new RowMapper<Brand>() {
+			@Override
+			public Brand mapRow(ResultSet rs, int rowNum) throws SQLException {
+				return new Brand(rs.getInt("brandId"), rs.getString("brandName"), rs.getInt("brandCount"), rs.getInt("discount_1"), rs.getInt("discount_2"), rs.getInt("discount_3"), rs.getInt("discount_4"), rs.getInt("discount_5"), rs.getString("brandSize"));
+			}
+		};
 		try {
-			return getJdbcTemplate().queryForObject(sql, (rs, rowNum) -> new Brand(
-					rs.getInt("brandId"), 
-					rs.getString("brandName"), rs.getInt("brandCount"), rs.getInt("discount_1"), rs.getInt("discount_2"), rs.getInt("discount_3"), rs.getInt("discount_4"), rs.getInt("discount_5"), rs.getString("brandSize")), productId);
+			return getJdbcTemplate().queryForObject(sql, rm, productId);
 		} catch (EmptyResultDataAccessException e) {
 			return null;
 		}
@@ -111,9 +140,13 @@ public class BrandDao extends JdbcDaoSupport {
 
 	public List<Brand> search(String firstLetter) {
 		String sql = "select * from BRANDS where brandName like \"" + firstLetter + "%\" order by brandName";
-		return getJdbcTemplate().query(sql, (rs, rowNum) -> new Brand(
-				rs.getInt("brandId"), 
-				rs.getString("brandName"), rs.getInt("brandCount"), rs.getInt("discount_1"), rs.getInt("discount_2"), rs.getInt("discount_3"), rs.getInt("discount_4"), rs.getInt("discount_5"), rs.getString("brandSize")));
+		RowMapper<Brand> rm = new RowMapper<Brand>() {
+			@Override
+			public Brand mapRow(ResultSet rs, int rowNum) throws SQLException {
+				return new Brand(rs.getInt("brandId"), rs.getString("brandName"), rs.getInt("brandCount"), rs.getInt("discount_1"), rs.getInt("discount_2"), rs.getInt("discount_3"), rs.getInt("discount_4"), rs.getInt("discount_5"), rs.getString("brandSize"));
+			}
+		};
+		return getJdbcTemplate().query(sql, rm);
 	}
 	
 	public int increaseCount(long brandId) {

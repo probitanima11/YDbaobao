@@ -5,8 +5,8 @@
 	
 	<!-- Database -->
 	<entry key="database.driverClassName">com.mysql.jdbc.Driver</entry>
-	<entry key="database.url">jdbc:mysql://localhost:3306/YDBAOBAO</entry>
+	<entry key="database.url">jdbc:mysql://localhost:3306/ydbaobao</entry>
 	<entry key="database.username">ydbaobao</entry>
-	<entry key="database.password">ydbaobao</entry>
+	<entry key="database.password">tjffuddl89</entry>
 
 </properties>

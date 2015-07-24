@@ -1,9 +1,13 @@
 package com.ydbaobao.dao;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.sql.DataSource;
 
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.stereotype.Repository;
 
@@ -22,11 +26,15 @@ public class AdminConfigDao extends JdbcDaoSupport {
 
 	public AdminConfig read() {
 		String sql = "select * from ADMINCONFIG limit 1";
-		return getJdbcTemplate().queryForObject(
-				sql,
-				(rs, rowNum) -> new AdminConfig(rs.getInt("adminConfigId"),
+		RowMapper<AdminConfig> rm = new RowMapper<AdminConfig>() {
+			@Override
+			public AdminConfig mapRow(ResultSet rs, int rowNum) throws SQLException {
+				return new AdminConfig(rs.getInt("adminConfigId"),
 						rs.getInt("adminDisplayProducts"),
-						rs.getString("adminPassword")));
+						rs.getString("adminPassword"));
+			}
+		};
+		return getJdbcTemplate().queryForObject(sql, rm);
 	}
 
 	public void update(AdminConfig adminConfig) {

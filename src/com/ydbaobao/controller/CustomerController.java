@@ -1,7 +1,6 @@
 package com.ydbaobao.controller;
 
 import java.io.IOException;
-import java.util.stream.IntStream;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
@@ -78,7 +77,7 @@ public class CustomerController {
 		model.addAttribute("prev", CommonUtil.prevBlock(1));
 		model.addAttribute("next", CommonUtil.nextBlock(1, totalPage));
 		model.addAttribute("selectedIndex", 1);
-		model.addAttribute("range", IntStream.range(CommonUtil.startPage(1), CommonUtil.endPage(1, totalPage))
+		model.addAttribute("range", CommonUtil.range(CommonUtil.startPage(1), CommonUtil.endPage(1, totalPage))
 				.toArray());
 		model.addAttribute("url", "/index?page=");
 		model.addAttribute("products", productService.readRange(1, adminConfigService.read().getAdminDisplayProducts(),

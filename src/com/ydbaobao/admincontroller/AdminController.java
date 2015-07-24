@@ -1,7 +1,5 @@
 package com.ydbaobao.admincontroller;
 
-import java.util.stream.IntStream;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
@@ -56,7 +54,7 @@ public class AdminController {
 			model.addAttribute("next", CommonUtil.nextBlock(page, page));
 			model.addAttribute("selectedIndex", page);
 			model.addAttribute("url", "/admin/customers?page=");
-			model.addAttribute("range", IntStream.range(CommonUtil.startPage(page), CommonUtil.endPage(page, totalPage)).toArray());
+			model.addAttribute("range", CommonUtil.range(CommonUtil.startPage(page), CommonUtil.endPage(page, totalPage)).toArray());
 			return "admin/customerManager";
 		}
 		return "admin/adminCheck";

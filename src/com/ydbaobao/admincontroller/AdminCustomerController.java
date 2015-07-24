@@ -1,7 +1,6 @@
 package com.ydbaobao.admincontroller;
 
 import java.util.List;
-import java.util.stream.IntStream;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
@@ -35,7 +34,7 @@ public class AdminCustomerController {
 		model.addAttribute("next", CommonUtil.nextBlock(page, page));
 		model.addAttribute("selectedIndex", page);
 		model.addAttribute("url", "/admin/customers?page=");
-		model.addAttribute("range", IntStream.range(CommonUtil.startPage(page), CommonUtil.endPage(page, totalPage)).toArray());
+		model.addAttribute("range", CommonUtil.range(CommonUtil.startPage(page), CommonUtil.endPage(page, totalPage)).toArray());
 		return "admin/customerManager";
 	}
 	
@@ -51,7 +50,7 @@ public class AdminCustomerController {
 		model.addAttribute("next", CommonUtil.nextBlock(page, page));
 		model.addAttribute("selectedIndex", page);
 		model.addAttribute("url", "/admin/customers/search?customerName=" + terms + "&page=");
-		model.addAttribute("range", IntStream.range(CommonUtil.startPage(page), CommonUtil.endPage(page, totalPage)).toArray());
+		model.addAttribute("range", CommonUtil.range(CommonUtil.startPage(page), CommonUtil.endPage(page, totalPage)).toArray());
 		model.addAttribute("customers", customers);
 		return "admin/customerManager";
 	}
@@ -68,7 +67,7 @@ public class AdminCustomerController {
 		model.addAttribute("next", CommonUtil.nextBlock(page, page));
 		model.addAttribute("selectedIndex", page);
 		model.addAttribute("url", "/admin/customers/search/" + terms + "?page=");
-		model.addAttribute("range", IntStream.range(CommonUtil.startPage(page), CommonUtil.endPage(page, totalPage)).toArray());
+		model.addAttribute("range", CommonUtil.range(CommonUtil.startPage(page), CommonUtil.endPage(page, totalPage)).toArray());
 		model.addAttribute("customers", customers);
 		return "admin/customerManager";
 	}

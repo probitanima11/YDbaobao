@@ -1,11 +1,14 @@
 package com.ydbaobao.dao;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.sql.DataSource;
 
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.stereotype.Repository;
 
@@ -24,9 +27,13 @@ public class AdminIndexImageDao extends JdbcDaoSupport {
 
 	public List<IndexImage> readIndexImages() {
 		String sql = "select * from INDEXIMAGES";
-		return getJdbcTemplate().query(
-				sql, (rs, rowNum) -> new IndexImage(rs.getInt("indexImageId")
-						, rs.getString("indexImageName")));
+		RowMapper<IndexImage> rm = new RowMapper<IndexImage>() {
+			@Override
+			public IndexImage mapRow(ResultSet rs, int rowNum) throws SQLException {
+				return new IndexImage(rs.getInt("indexImageId"), rs.getString("indexImageName"));
+			}
+		};
+		return getJdbcTemplate().query(sql, rm);
 	}
 
 	public void create(String fileName) {

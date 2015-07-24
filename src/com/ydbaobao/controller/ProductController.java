@@ -1,7 +1,6 @@
 package com.ydbaobao.controller;
 
 import java.util.List;
-import java.util.stream.IntStream;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
@@ -50,7 +49,7 @@ public class ProductController {
 		model.addAttribute("prev", CommonUtil.prevBlock(page));
 		model.addAttribute("next", CommonUtil.nextBlock(page, totalPage));
 		model.addAttribute("selectedIndex", page);
-		model.addAttribute("range", IntStream.range(CommonUtil.startPage(page), CommonUtil.endPage(page, totalPage))
+		model.addAttribute("range", CommonUtil.range(CommonUtil.startPage(page), CommonUtil.endPage(page, totalPage))
 				.toArray());
 		model.addAttribute("url", "/products?page=");
 		model.addAttribute("products", productService.readRange(page, adminConfigService.read()
@@ -74,7 +73,7 @@ public class ProductController {
 		model.addAttribute("prev", CommonUtil.prevBlock(page));
 		model.addAttribute("next", CommonUtil.nextBlock(page, totalPage));
 		model.addAttribute("selectedIndex", page);
-		model.addAttribute("range", IntStream.range(CommonUtil.startPage(page), CommonUtil.endPage(page, totalPage)).toArray());
+		model.addAttribute("range", CommonUtil.range(CommonUtil.startPage(page), CommonUtil.endPage(page, totalPage)).toArray());
 		model.addAttribute("url", "/categories/" + categoryId + "/products?page=");
 		model.addAttribute("products", productService.readListByCategoryId(categoryId, page, adminConfigService.read().getAdminDisplayProducts(), (SessionCustomer) session.getAttribute("sessionCustomer")));
 		model.addAttribute("brands", brandService.readBrandsByCategoryId(categoryId));
@@ -100,7 +99,7 @@ public class ProductController {
 		model.addAttribute("prev", CommonUtil.prevBlock(page));
 		model.addAttribute("next", CommonUtil.nextBlock(page, totalPage));
 		model.addAttribute("selectedIndex", page);
-		model.addAttribute("range", IntStream.range(CommonUtil.startPage(page), CommonUtil.endPage(page, totalPage))
+		model.addAttribute("range", CommonUtil.range(CommonUtil.startPage(page), CommonUtil.endPage(page, totalPage))
 				.toArray());
 		model.addAttribute("url", "/categories/" + categoryId + "/brands/" + brandId + "/products?page=");
 		model.addAttribute("products", products);

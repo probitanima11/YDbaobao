@@ -2,6 +2,7 @@ package com.ydbaobao.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -10,11 +11,13 @@ import javax.annotation.Resource;
 import javax.sql.DataSource;
 
 import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
+import com.support.CommonUtil;
 import com.ydbaobao.model.Brand;
 import com.ydbaobao.model.Category;
 import com.ydbaobao.model.Product;
@@ -30,8 +33,8 @@ public class ProductDao extends JdbcDaoSupport {
 		setDataSource(dataSource);
 	}
 	
-	public int create(Product product) {
-		String sql = "insert into PRODUCTS values(default, ?, ?, ?, default, ?, default, default, default, ?, default)";
+	public int create(final Product product) {
+		final String sql = "insert into PRODUCTS values(default, ?, ?, ?, default, ?, default, ?, ?, ?, default)";
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		getJdbcTemplate().update(new PreparedStatementCreator() {
 			public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
@@ -40,7 +43,9 @@ public class ProductDao extends JdbcDaoSupport {
 				ps.setObject(2, product.getCategory().getCategoryId());
 				ps.setObject(3, product.getBrand().getBrandId());
 				ps.setString(4, product.getProductImage());
-				ps.setString(5, product.getProductSize());
+				ps.setString(5, CommonUtil.getDatetime());
+				ps.setString(6, CommonUtil.getDatetime());
+				ps.setString(7, product.getProductSize());
 				return ps;
 			}
 		}, keyHolder);
@@ -49,13 +54,20 @@ public class ProductDao extends JdbcDaoSupport {
 	
 	public Product read(int productId) {
 		String sql = "select * from PRODUCTS where productId = ?";
-		return getJdbcTemplate().queryForObject(sql, (rs, rowNum) -> new Product(
+		RowMapper<Product> rm = new RowMapper<Product>() {
+			@Override
+			public Product mapRow(ResultSet rs, int rowNum) throws SQLException {
+				return new Product(
 						rs.getInt("productId"), rs.getString("productName"),
 						new Category(rs.getInt("categoryId"), null, 0),
 						new Brand(rs.getInt("brandId"), null, 0, 0, 0, 0, 0, 0, ""),
 						rs.getInt("productPrice"), rs.getString("productImage"),
 						rs.getString("productDescription"), rs.getLong("productCreateDate"),
-						rs.getLong("productUpdateDate"), rs.getString("productSize"), rs.getInt("isSoldout")), productId);
+						rs.getLong("productUpdateDate"), rs.getString("productSize"), rs.getInt("isSoldout"));
+			}
+			
+		};
+		return getJdbcTemplate().queryForObject(sql, rm, productId);
 	}
 	
 	public int updateProductImage(int productId, String imageName) {
@@ -64,44 +76,61 @@ public class ProductDao extends JdbcDaoSupport {
 	}
 
 	public int update(Product product) {
-		String sql = "update PRODUCTS set productName = ?, categoryId = ?, brandId = ?, productPrice=?, productDescription=?, productUpdateDate=default, productSize=?, productImage=?, isSoldout = ? where productId = ?";
-		return getJdbcTemplate().update(sql, product.getProductName(), product.getCategory().getCategoryId(), product.getBrand().getBrandId(), product.getProductPrice(), product.getProductDescription(), product.getProductSize(), product.getProductImage(), product.getIsSoldout(), product.getProductId());
+		String sql = "update PRODUCTS set productName = ?, categoryId = ?, brandId = ?, productPrice=?, productDescription=?, productUpdateDate=?, productSize=?, productImage=?, isSoldout = ? where productId = ?";
+		return getJdbcTemplate().update(sql, product.getProductName(), product.getCategory().getCategoryId(), product.getBrand().getBrandId(), product.getProductPrice(), product.getProductDescription(), CommonUtil.getDatetime(), product.getProductSize(), product.getProductImage(), product.getIsSoldout(), product.getProductId());
 	}
 
 	public List<Product> readListByCategoryId(int categoryId, int offset, int productsPerPage) {
 		String sql = "select * from PRODUCTS A, BRANDS B where A.brandId = B.brandId and categoryId=? ORDER BY productId desc limit ?, ?";
-		return getJdbcTemplate().query(
-				sql, (rs, rowNum) -> new Product(
+		RowMapper<Product> rm = new RowMapper<Product>() {
+			@Override
+			public Product mapRow(ResultSet rs, int rowNum) throws SQLException {
+				return new Product(
 						rs.getInt("productId"), rs.getString("productName"),
 						new Category(rs.getInt("categoryId"), null, 0),
 						new Brand(rs.getInt("brandId"), rs.getString("brandName"), rs.getInt("brandCount"), rs.getInt("discount_1"), rs.getInt("discount_2"), rs.getInt("discount_3"), rs.getInt("discount_4"), rs.getInt("discount_5"), rs.getString("brandSize")),
 						rs.getInt("productPrice"), rs.getString("productImage"),
 						rs.getString("productDescription"), rs.getLong("productCreateDate"),
-						rs.getLong("productUpdateDate"), rs.getString("productSize"), rs.getInt("isSoldout")), categoryId, offset, productsPerPage);
+						rs.getLong("productUpdateDate"), rs.getString("productSize"), rs.getInt("isSoldout"));
+			}
+		};
+		return getJdbcTemplate().query(sql, rm, categoryId, offset, productsPerPage);
 	}
 	
 	public List<Product> readByProductName(String param, int offset, int productsPerPage) {
 		String sql = "select * from PRODUCTS A, BRANDS B WHERE A.brandId = B.brandId and productName REGEXP (?) order by productId desc limit ?, ?";
-		return getJdbcTemplate().query(
-				sql, (rs, rowNum) -> new Product(
+		RowMapper<Product> rm = new RowMapper<Product>() {
+			@Override
+			public Product mapRow(ResultSet rs, int rowNum) throws SQLException {
+				return new Product(
 						rs.getInt("productId"), rs.getString("productName"),
 						new Category(rs.getInt("categoryId"), null, 0),
 						new Brand(rs.getInt("brandId"), rs.getString("brandName"), rs.getInt("brandCount"), rs.getInt("discount_1"), rs.getInt("discount_2"), rs.getInt("discount_3"), rs.getInt("discount_4"), rs.getInt("discount_5"), rs.getString("brandSize")),
 						rs.getInt("productPrice"), rs.getString("productImage"),
 						rs.getString("productDescription"), rs.getLong("productCreateDate"),
-						rs.getLong("productUpdateDate"), rs.getString("productSize"), rs.getInt("isSoldout")), param, offset, productsPerPage);
+						rs.getLong("productUpdateDate"), rs.getString("productSize"), rs.getInt("isSoldout"));
+			}
+		};
+		return getJdbcTemplate().query(sql, rm, param, offset, productsPerPage);
 	}
 	
 	public List<Product> readByBrandName(String param, int offset, int productsPerPage) {
 		String sql = "select * from PRODUCTS A, BRANDS B WHERE A.brandId = B.brandId and brandName REGEXP (?) order by productId desc limit ?, ?";
-		return getJdbcTemplate().query(
-				sql, (rs, rowNum) -> new Product(
+		RowMapper<Product> rm = new RowMapper<Product>() {
+			@Override
+			public Product mapRow(ResultSet rs, int rowNum) throws SQLException {
+				return new Product(
 						rs.getInt("productId"), rs.getString("productName"),
 						new Category(rs.getInt("categoryId"), null, 0),
 						new Brand(rs.getInt("brandId"), rs.getString("brandName"), rs.getInt("brandCount"), rs.getInt("discount_1"), rs.getInt("discount_2"), rs.getInt("discount_3"), rs.getInt("discount_4"), rs.getInt("discount_5"), rs.getString("brandSize")),
 						rs.getInt("productPrice"), rs.getString("productImage"),
 						rs.getString("productDescription"), rs.getLong("productCreateDate"),
-						rs.getLong("productUpdateDate"), rs.getString("productSize"), rs.getInt("isSoldout")), param, offset, productsPerPage);
+						rs.getLong("productUpdateDate"), rs.getString("productSize"), rs.getInt("isSoldout"));
+			}
+		};
+		
+		return getJdbcTemplate().query(
+				sql, rm, param, offset, productsPerPage);
 	}
 
 	public int count() {
@@ -127,14 +156,19 @@ public class ProductDao extends JdbcDaoSupport {
 	 */
 	public List<Product> readRange(int offset, int productsPerPage) {
 		String sql ="select * from PRODUCTS A, BRANDS B where B.brandId = A.brandId ORDER BY productId desc LIMIT ?, ?";
-		return getJdbcTemplate().query(
-				sql, (rs, rowNum) -> new Product(
+		RowMapper<Product> rm = new RowMapper<Product>() {
+			@Override
+			public Product mapRow(ResultSet rs, int rowNum) throws SQLException {
+				return new Product(
 						rs.getInt("productId"), rs.getString("productName"),
 						new Category(rs.getInt("categoryId"), null, 0),
 						new Brand(rs.getInt("brandId"), rs.getString("brandName"), rs.getInt("brandCount"), rs.getInt("discount_1"), rs.getInt("discount_2"), rs.getInt("discount_3"), rs.getInt("discount_4"), rs.getInt("discount_5"), rs.getString("brandSize")),
 						rs.getInt("productPrice"), rs.getString("productImage"),
 						rs.getString("productDescription"), rs.getLong("productCreateDate"),
-						rs.getLong("productUpdateDate"), rs.getString("productSize"), rs.getInt("isSoldout")), offset, productsPerPage);
+						rs.getLong("productUpdateDate"), rs.getString("productSize"), rs.getInt("isSoldout"));
+			}
+		};
+		return getJdbcTemplate().query(sql, rm, offset, productsPerPage);
 	}
 
 	/**
@@ -144,14 +178,20 @@ public class ProductDao extends JdbcDaoSupport {
 	 */
 	public List<Product> readListByCategoryId(int categoryId) {
 		String sql = "select * from PRODUCTS A, BRANDS B where A.brandId = B.brandId and categoryId=? ORDER BY productId desc";
-		return getJdbcTemplate().query(
-				sql, (rs, rowNum) -> new Product(
+		RowMapper<Product> rm = new RowMapper<Product>() {
+			@Override
+			public Product mapRow(ResultSet rs, int rowNum) throws SQLException {
+				return new Product(
 						rs.getInt("productId"), rs.getString("productName"),
 						new Category(rs.getInt("categoryId"), null, 0),
 						new Brand(rs.getInt("brandId"), rs.getString("brandName"), rs.getInt("brandCount"), rs.getInt("discount_1"), rs.getInt("discount_2"), rs.getInt("discount_3"), rs.getInt("discount_4"), rs.getInt("discount_5"), rs.getString("brandSize")),
 						rs.getInt("productPrice"), rs.getString("productImage"),
 						rs.getString("productDescription"), rs.getLong("productCreateDate"),
-						rs.getLong("productUpdateDate"), rs.getString("productSize"), rs.getInt("isSoldout")), categoryId);
+						rs.getLong("productUpdateDate"), rs.getString("productSize"), rs.getInt("isSoldout"));
+			}
+		};
+		return getJdbcTemplate().query(
+				sql, rm, categoryId);
 	}
 	
 	/**
@@ -161,14 +201,20 @@ public class ProductDao extends JdbcDaoSupport {
 	 */
 	public List<Product> readListByBrandId(int brandId, int offset, int productsPerPage) {
 		String sql = "select * from PRODUCTS as A, BRANDS as B where B.brandId = A.brandId and A.brandId=? ORDER BY productId DESC limit ?, ?";
-		return getJdbcTemplate().query(
-				sql, (rs, rowNum) -> new Product(
+		RowMapper<Product> rm = new RowMapper<Product>() {
+			@Override
+			public Product mapRow(ResultSet rs, int rowNum) throws SQLException {
+				return new Product(
 						rs.getInt("productId"), rs.getString("productName"),
 						new Category(rs.getInt("categoryId"), null, 0),
 						new Brand(rs.getInt("brandId"), rs.getString("brandName"), rs.getInt("brandCount"), rs.getInt("discount_1"), rs.getInt("discount_2"), rs.getInt("discount_3"), rs.getInt("discount_4"), rs.getInt("discount_5"), rs.getString("brandSize")),
 						rs.getInt("productPrice"), rs.getString("productImage"),
 						rs.getString("productDescription"), rs.getLong("productCreateDate"),
-						rs.getLong("productUpdateDate"), rs.getString("productSize"), rs.getInt("isSoldout")), brandId, offset, productsPerPage);
+						rs.getLong("productUpdateDate"), rs.getString("productSize"), rs.getInt("isSoldout"));
+			}
+		};
+		return getJdbcTemplate().query(
+				sql, rm, brandId, offset, productsPerPage);
 	}
 
 	/**
@@ -178,25 +224,34 @@ public class ProductDao extends JdbcDaoSupport {
 	 */
 	public List<Product> readByCategoryIdAndBrandId(int categoryId, int brandId, int offset, int productsPerPage) {
 		String sql = "select * from PRODUCTS where categoryId = ? and brandId = ? ORDER BY productId DESC limit ?, ?";
-		return getJdbcTemplate().query(sql, (rs, rowNum) -> new Product(
-				rs.getInt("productId"), rs.getString("productName"),
-				new Category(rs.getInt("categoryId"), null, 0), 
-				new Brand(rs.getInt("brandId"), null, 0, 0, 0, 0, 0, 0, ""), 
-				rs.getInt("productPrice"), rs.getString("productImage"), rs.getString("productDescription"),
-				rs.getLong("productCreateDate"), rs.getLong("productUpdateDate"), rs.getString("productSize"), rs.getInt("isSoldout")),
-				categoryId, brandId, offset, productsPerPage);
+		RowMapper<Product> rm = new RowMapper<Product>() {
+			@Override
+			public Product mapRow(ResultSet rs, int rowNum) throws SQLException {
+				return new Product(
+						rs.getInt("productId"), rs.getString("productName"),
+						new Category(rs.getInt("categoryId"), null, 0), 
+						new Brand(rs.getInt("brandId"), null, 0, 0, 0, 0, 0, 0, ""), 
+						rs.getInt("productPrice"), rs.getString("productImage"), rs.getString("productDescription"),
+						rs.getLong("productCreateDate"), rs.getLong("productUpdateDate"), rs.getString("productSize"), rs.getInt("isSoldout"));
+			}
+		};
+		return getJdbcTemplate().query(sql, rm, categoryId, brandId, offset, productsPerPage);
 	}
 	
 	public List<Product> readProductsList(int offset, int productsPerPage) {
 		String sql = "select * from PRODUCTS ORDER BY productId DESC limit ?, ?";
-		return getJdbcTemplate()
-				.query(sql,
-						(rs, rowNum) -> new Product(rs.getInt("productId"), rs.getString("productName"), 
-								new Category(rs.getInt("categoryId"), null, 0), 
-								new Brand(rs.getInt("brandId"), null, 0, 0, 0, 0, 0, 0, ""), 
-								rs.getInt("productPrice"), rs.getString("productImage"), 
-								rs.getString("productDescription"), rs.getLong("productCreateDate"), 
-								rs.getLong("productUpdateDate"), rs.getString("productSize"), rs.getInt("isSoldout")), offset, productsPerPage);
+		RowMapper<Product> rm = new RowMapper<Product>() {
+			@Override
+			public Product mapRow(ResultSet rs, int rowNum) throws SQLException {
+				return new Product(
+						rs.getInt("productId"), rs.getString("productName"),
+						new Category(rs.getInt("categoryId"), null, 0), 
+						new Brand(rs.getInt("brandId"), null, 0, 0, 0, 0, 0, 0, ""), 
+						rs.getInt("productPrice"), rs.getString("productImage"), rs.getString("productDescription"),
+						rs.getLong("productCreateDate"), rs.getLong("productUpdateDate"), rs.getString("productSize"), rs.getInt("isSoldout"));
+			}
+		};
+		return getJdbcTemplate().query(sql, rm, offset, productsPerPage);
 	}
 	
 	public int deleteAll() {

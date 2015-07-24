@@ -1,6 +1,8 @@
 package com.support;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -142,5 +144,20 @@ public class CommonUtil {
 			return 1;
 		}
 		return (block - 2) * limitPage + 1;
+	}
+	
+	public static ArrayList<Integer> range(int startIdx, int endIdx) {
+		ArrayList<Integer> intArray = new ArrayList<Integer>();
+		int i;
+		for(i = startIdx; i < endIdx; i++) {
+			intArray.add(i);
+		}
+		return intArray;
+	}
+	
+	public static String getDatetime() {
+		Date today = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		return sdf.format(today);
 	}
 }

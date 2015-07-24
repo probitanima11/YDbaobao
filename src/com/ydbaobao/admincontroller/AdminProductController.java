@@ -2,7 +2,6 @@ package com.ydbaobao.admincontroller;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.IntStream;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -69,7 +68,7 @@ public class AdminProductController {
 		model.addAttribute("prev", CommonUtil.prevBlock(page));
 		model.addAttribute("next", CommonUtil.nextBlock(page, totalPage));
 		model.addAttribute("selectedIndex", page);
-		model.addAttribute("range", IntStream.range(CommonUtil.startPage(page), CommonUtil.endPage(page, totalPage)).toArray());
+		model.addAttribute("range", CommonUtil.range(CommonUtil.startPage(page), CommonUtil.endPage(page, totalPage)).toArray());
 		model.addAttribute("url", "/admin/products?page=");
 		model.addAttribute("product", new Product());
 		model.addAttribute("products", productService.readProductsForAdmin(page, adminConfigService.read().getAdminDisplayProducts()));
@@ -98,7 +97,7 @@ public class AdminProductController {
 		model.addAttribute("prev", CommonUtil.prevBlock(page));
 		model.addAttribute("next", CommonUtil.nextBlock(page, totalPage));
 		model.addAttribute("selectedIndex", page);
-		model.addAttribute("range", IntStream.range(CommonUtil.startPage(page), CommonUtil.endPage(page, totalPage)).toArray());
+		model.addAttribute("range", CommonUtil.range(CommonUtil.startPage(page), CommonUtil.endPage(page, totalPage)).toArray());
 		model.addAttribute("url", "/admin/products/category?categoryId=" + categoryId + "&page=");
 	
 		model.addAttribute("products", products);
@@ -121,7 +120,7 @@ public class AdminProductController {
 		model.addAttribute("next", CommonUtil.nextBlock(page, page));
 		model.addAttribute("selectedIndex", page);
 		model.addAttribute("url", "/admin/products/" + productId + "?page=");
-		model.addAttribute("range", IntStream.range(CommonUtil.startPage(page), CommonUtil.endPage(page, page)).toArray());
+		model.addAttribute("range", CommonUtil.range(CommonUtil.startPage(page), CommonUtil.endPage(page, page)).toArray());
 	
 		model.addAttribute("products", products);
 		model.addAttribute("brands", brandService.readBrands());
@@ -143,7 +142,7 @@ public class AdminProductController {
 		model.addAttribute("next", CommonUtil.nextBlock(page, page));
 		model.addAttribute("selectedIndex", page);
 		model.addAttribute("url", "/admin/products/search?productName=" + terms + "&page=");
-		model.addAttribute("range", IntStream.range(CommonUtil.startPage(page), CommonUtil.endPage(page, totalPage)).toArray());
+		model.addAttribute("range", CommonUtil.range(CommonUtil.startPage(page), CommonUtil.endPage(page, totalPage)).toArray());
 		model.addAttribute("products", products);
 		model.addAttribute("brands", brandService.readBrands());
 		model.addAttribute("categories", categories);

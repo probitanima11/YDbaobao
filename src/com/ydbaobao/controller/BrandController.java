@@ -1,7 +1,5 @@
 package com.ydbaobao.controller;
 
-import java.util.stream.IntStream;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
@@ -54,7 +52,7 @@ public class BrandController {
 		model.addAttribute("prev", CommonUtil.prevBlock(page));
 		model.addAttribute("next", CommonUtil.nextBlock(page, totalPage));
 		model.addAttribute("selectedIndex", page);
-		model.addAttribute("range", IntStream.range(CommonUtil.startPage(page), CommonUtil.endPage(page, totalPage)).toArray());
+		model.addAttribute("range", CommonUtil.range(CommonUtil.startPage(page), CommonUtil.endPage(page, totalPage)).toArray());
 		model.addAttribute("url", "/brands/" + brandId + "/products/?page=");
 		model.addAttribute("products", productService.readListByBrandId(brandId, page, CommonUtil.productsPerPage, (SessionCustomer) session.getAttribute("sessionCustomer")));
 		model.addAttribute("brands", brandService.readBrands());

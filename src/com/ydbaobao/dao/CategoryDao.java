@@ -1,11 +1,14 @@
 package com.ydbaobao.dao;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.sql.DataSource;
 
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.stereotype.Repository;
 
@@ -23,16 +26,28 @@ public class CategoryDao extends JdbcDaoSupport {
 
 	public List<Category> read() {
 		String sql = "select * from CATEGORY";
-		return getJdbcTemplate().query(sql, (rs, rowNum) -> new Category(
-				rs.getInt("categoryId"),
-				rs.getString("categoryName"), rs.getInt("categoryCount")));
+		RowMapper<Category> rm = new RowMapper<Category>() {
+			@Override
+			public Category mapRow(ResultSet rs, int rowNum) throws SQLException {
+				return new Category(
+						rs.getInt("categoryId"),
+						rs.getString("categoryName"), rs.getInt("categoryCount"));
+			}
+		};
+		return getJdbcTemplate().query(sql, rm);
 	}
 
 	public List<Category> readWithoutUnclassifiedCategory() {
 		String sql = "select * from CATEGORY where categoryId not in('0')";
-		return getJdbcTemplate().query(sql, (rs, rowNum) -> new Category(
-				rs.getInt("categoryId"),
-				rs.getString("categoryName"), rs.getInt("categoryCount")));
+		RowMapper<Category> rm = new RowMapper<Category>() {
+			@Override
+			public Category mapRow(ResultSet rs, int rowNum) throws SQLException {
+				return new Category(
+						rs.getInt("categoryId"),
+						rs.getString("categoryName"), rs.getInt("categoryCount"));
+			}
+		};
+		return getJdbcTemplate().query(sql, rm);
 	}
 	
 	
@@ -53,9 +68,15 @@ public class CategoryDao extends JdbcDaoSupport {
 	
 	public Category readByCategoryId(int categoryId) {
 		String sql = "select * from CATEGORY where categoryId = ?";
-		return getJdbcTemplate().queryForObject(sql, (rs, rowNum) -> new Category(
-				rs.getInt("categoryId"),
-				rs.getString("categoryName"), rs.getInt("categoryCount")), categoryId);
+		RowMapper<Category> rm = new RowMapper<Category>() {
+			@Override
+			public Category mapRow(ResultSet rs, int rowNum) throws SQLException {
+				return new Category(
+						rs.getInt("categoryId"),
+						rs.getString("categoryName"), rs.getInt("categoryCount"));
+			}
+		};
+		return getJdbcTemplate().queryForObject(sql, rm, categoryId);
 	}
 	
 	public int increaseCount(long categoryId) {
