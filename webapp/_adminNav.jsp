@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:if test="${empty sessionAdmin}">
-	<c:redirect url="/admin/check" />
+	<c:redirect url="admin/check" />
 </c:if>
 <div id="menu">
 	<div style="padding:15px 15px; color:#fff; background-color:#EA6576">관리자메뉴</div>

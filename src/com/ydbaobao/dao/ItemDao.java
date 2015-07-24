@@ -226,7 +226,7 @@ public class ItemDao extends JdbcDaoSupport {
 						new Product(rs.getInt("productId"),rs.getString("productName"), 
 								rs.getInt("productPrice"), rs.getString("productImage"), 
 								rs.getString("productSize"), rs.getInt("isSoldout"), 
-						new Brand(rs.getInt("brandId"))), rs.getString("size"), 
+						new Brand(rs.getInt("brandId"), rs.getString("brandName"))), rs.getString("size"), 
 						rs.getInt("quantity"), rs.getString("itemStatus"), 
 						rs.getInt("price"));
 			}

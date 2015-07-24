@@ -29,15 +29,16 @@ public class AdminController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public String home(HttpSession session) {
+		logger.debug("관리자 페이지 접근");
 		if (session.getAttribute("sessionAdmin") == null) {
-			return "admin/adminCheck";
+			return "adminCheck";
 		}
-		return "admin/admin";
+		return "adminIndex";
 	}
 
 	@RequestMapping(value = "/check", method = RequestMethod.GET)
 	public String check() {
-		return "admin/adminCheck";
+		return "adminCheck";
 	}
 
 	@RequestMapping(value = "/check", method = RequestMethod.POST)
@@ -55,15 +56,15 @@ public class AdminController {
 			model.addAttribute("selectedIndex", page);
 			model.addAttribute("url", "/admin/customers?page=");
 			model.addAttribute("range", CommonUtil.range(CommonUtil.startPage(page), CommonUtil.endPage(page, totalPage)).toArray());
-			return "admin/customerManager";
+			return "customerManager";
 		}
-		return "admin/adminCheck";
+		return "adminCheck";
 	}
 
-	@RequestMapping("/logout")
+	@RequestMapping("/adminLogout")
 	public String logout(HttpSession session) {
 		if (null == session.getAttribute("sessionAdmin")) {
-			return "admin/adminCheck";
+			return "adminCheck";
 		}
 		session.removeAttribute("sessionAdmin");
 		return "redirect:/";

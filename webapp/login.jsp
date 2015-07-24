@@ -7,9 +7,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="stylesheet" type="text/css" href="/css/main.css" />
 <link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css" />
-<title>YDbaobao</title>
+<title>Yuandamaoyi:: Welcome</title>
 </head>
 <body>
+	<c:if test="${not empty sessionCustomer}">
+		<c:redirect url="indexmain" />
+	</c:if>
 	<div id="header">
 		<!-- 상단 navigator -->
 		<%@ include file="./commons/_topNav.jsp"%>

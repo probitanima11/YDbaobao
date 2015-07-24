@@ -35,7 +35,7 @@ public class AdminCustomerController {
 		model.addAttribute("selectedIndex", page);
 		model.addAttribute("url", "/admin/customers?page=");
 		model.addAttribute("range", CommonUtil.range(CommonUtil.startPage(page), CommonUtil.endPage(page, totalPage)).toArray());
-		return "admin/customerManager";
+		return "customerManager";
 	}
 	
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
@@ -52,7 +52,7 @@ public class AdminCustomerController {
 		model.addAttribute("url", "/admin/customers/search?customerName=" + terms + "&page=");
 		model.addAttribute("range", CommonUtil.range(CommonUtil.startPage(page), CommonUtil.endPage(page, totalPage)).toArray());
 		model.addAttribute("customers", customers);
-		return "admin/customerManager";
+		return "customerManager";
 	}
 	
 	@RequestMapping(value = "/search/{customerId}", method = RequestMethod.GET)
@@ -69,7 +69,7 @@ public class AdminCustomerController {
 		model.addAttribute("url", "/admin/customers/search/" + terms + "?page=");
 		model.addAttribute("range", CommonUtil.range(CommonUtil.startPage(page), CommonUtil.endPage(page, totalPage)).toArray());
 		model.addAttribute("customers", customers);
-		return "admin/customerManager";
+		return "customerManager";
 	}
 	
 	
@@ -81,7 +81,7 @@ public class AdminCustomerController {
 	@RequestMapping(value = "/{customerId}", method = RequestMethod.GET)
 	public String showDetailMember(Model model, @PathVariable String customerId) {
 		model.addAttribute("customer", customerService.readCustomerById(customerId));
-		return "admin/customerDetail";
+		return "customerDetail";
 	}
 	
 	/**

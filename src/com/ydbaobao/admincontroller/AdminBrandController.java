@@ -42,7 +42,7 @@ public class AdminBrandController {
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public String read(Model model) {
 		model.addAttribute("brands", brandService.readBrands());
-		return "admin/brandManager";
+		return "brandManager";
 	}
 
 	@RequestMapping("/find")

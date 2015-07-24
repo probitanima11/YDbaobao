@@ -51,7 +51,7 @@ public class AdminProductController {
 	public String registProducts(Model model) {
 		model.addAttribute("product", new Product());
 		model.addAttribute("brandList", brandService.readBrands());
-		return "admin/productRegistration";
+		return "productRegistration";
 	}
 	
 	/**
@@ -75,7 +75,7 @@ public class AdminProductController {
 		model.addAttribute("brands", brandService.readBrands());
 		model.addAttribute("selectedCategoryId", selectedCategoryId);
 		model.addAttribute("categories", categories);
-		return "admin/productManager";
+		return "productManager";
 	}
 	
 	@RequestMapping(value = "/category", method = RequestMethod.GET)
@@ -104,7 +104,7 @@ public class AdminProductController {
 		model.addAttribute("brands", brandService.readBrands());
 		model.addAttribute("selectedCategoryId", categoryId);
 		model.addAttribute("categories", categories);
-		return "admin/productManager";
+		return "productManager";
 	}
 	
 	@RequestMapping(value = "/{productId}", method = RequestMethod.GET)
@@ -125,7 +125,7 @@ public class AdminProductController {
 		model.addAttribute("products", products);
 		model.addAttribute("brands", brandService.readBrands());
 		model.addAttribute("categories", categories);
-		return "admin/productManager";
+		return "productManager";
 	}
 	
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
@@ -146,7 +146,7 @@ public class AdminProductController {
 		model.addAttribute("products", products);
 		model.addAttribute("brands", brandService.readBrands());
 		model.addAttribute("categories", categories);
-		return "admin/productManager";
+		return "productManager";
 	}
 	
 	/**
@@ -161,7 +161,7 @@ public class AdminProductController {
 			productService.updateProductImage(product, imageName);
 		}
 		model.addAttribute("brandList", brandService.readBrands());
-		return "admin/productRegistration";
+		return "productRegistration";
 	}
 	
 	/**

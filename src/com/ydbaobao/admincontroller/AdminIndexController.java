@@ -37,7 +37,7 @@ public class AdminIndexController {
 	@RequestMapping()
 	public String indexImage(Model model) {
 		model.addAttribute("indexImages", getIndexImages());
-		return "/admin/indexManager";
+		return "indexManager";
 	}
 	
 	/**
@@ -52,7 +52,7 @@ public class AdminIndexController {
 			logger.debug("이미지 업로드 실패!, 용량이 500kb 초과되었습니다");
 			model.addAttribute("errorMessage", "용량이 500kb 초과되었습니다");
 			model.addAttribute("indexImages", getIndexImages());
-			return "/admin/indexManager";
+			return "indexManager";
 		}
 		// 파일 저장
 		String imgFileName = ""+System.currentTimeMillis();
@@ -65,7 +65,7 @@ public class AdminIndexController {
 		// 디비 저장
 		adminIndexImageService.create(imgFileName);
 		model.addAttribute("indexImages", getIndexImages());
-		return "/admin/indexManager";
+		return "indexManager";
 	}
 
 	/**
@@ -78,7 +78,7 @@ public class AdminIndexController {
 	public String indexImageDelete(Model model, @PathVariable int indexImageId) throws IllegalStateException, IOException {
 		adminIndexImageService.delete(indexImageId);
 		model.addAttribute("indexImages", getIndexImages());
-		return "/admin/indexManager";
+		return "indexManager";
 	}
 
 	private List<IndexImage> getIndexImages() {

@@ -27,7 +27,7 @@ public class AdminPaymentController {
 	@RequestMapping(value = "/{customerId}", method = RequestMethod.GET)
 	public String manageOrder(@PathVariable String customerId, Model model) {
 		model.addAttribute("payments", paymentService.readPaymentsByCustomerId(customerId));
-		return "admin/paymentManager";
+		return "paymentManager";
 	}
 	
 	@RequestMapping(value = "/read/{customerId}", method = RequestMethod.GET)

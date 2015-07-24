@@ -32,13 +32,13 @@ public class AdminOrderController {
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public String manageOrder(Model model) {
 		model.addAttribute("brandPacks", itemService.readOrderedItemsOrderBy());
-		return "admin/orderManagerByBrand";
+		return "orderManagerByBrand";
 	}
 	
 	@RequestMapping(value = "/{customerId}", method = RequestMethod.GET)
 	public String manageCustomerOrder(@PathVariable String customerId, Model model) {
 		model.addAttribute("items", itemService.readOrderedItemsByCustomerId(customerId));
-		return "admin/orderManager";
+		return "orderManager";
 	}
 
 	/**

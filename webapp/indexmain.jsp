@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Welcome YDbaobao!</title>
+<title>Yuandamaoyi:: Welcome</title>
 <meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="/css/main.css" />
 <link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css" />

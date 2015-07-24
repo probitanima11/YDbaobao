@@ -7,7 +7,7 @@
 		<ul id="util">
 			<c:choose>
 				<c:when test="${not empty sessionCustomer}">
-					<li><a href="/logout"><span>로그아웃</span></a></li>
+					<li><a href="/shop/logout"><span>로그아웃</span></a></li>
 					<li><a href="/customers/updateForm"><span>개인정보수정</span></a></li>
 					<li><a href="/carts"><span>장바구니</span></a></li>
 					<li><a href="/orders"><span>주문내역</span></a></li>
@@ -15,7 +15,7 @@
 				</c:when>
 				<c:when test="${not empty sessionAdmin}">
 					<li class="logout"><a href="/admin/customers?page=1"><span style="color: #EA6576;">[관리자 페이지]</span></a></li>
-					<li class="logout"><a href="/admin/logout"><span style="color: #EA6576;">[관리자 로그아웃]</span></a></li>
+					<li class="logout"><a href="/admin/adminLogout"><span style="color: #EA6576;">[관리자 로그아웃]</span></a></li>
 				</c:when>
 				<c:otherwise>
 					<li><a href="/loginForm"><span>로그인</span></a></li>

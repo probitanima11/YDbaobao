@@ -47,8 +47,9 @@ public class HomeController {
 	@Resource
 	private AdminIndexImageService adminIndexImageService;
 
-	@RequestMapping(value = "/", method = RequestMethod.GET)
+	@RequestMapping(value="/shop", method = RequestMethod.GET)
 	public String home(Model model, WebRequest req, HttpSession session) {
+		logger.debug("첫페이지 접근");
 		int totalPage = CommonUtil.countTotalPage(productService.count(), CommonUtil.productsPerPage);
 		model.addAttribute("prev", CommonUtil.prevBlock(1));
 		model.addAttribute("next", CommonUtil.nextBlock(1, totalPage));
@@ -63,7 +64,7 @@ public class HomeController {
 		model.addAttribute("firstLetterList", new Brand().getFirstLetters());
 		model.addAttribute("indexImages", new Gson().toJson(adminIndexImageService.readIndexImages()));
 		model.addAttribute("isHome", "home");
-		return "index";
+		return "indexmain";
 	}
 
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
@@ -90,11 +91,12 @@ public class HomeController {
 			}
 		}
 		model.addAttribute("imgPath", imgPath);
-		return "index";
+		return "indexmain";
 	}
 
 	@RequestMapping(value = "/loginForm", method = RequestMethod.GET)
 	public String loginView(Model model) {
+		logger.debug("로그인페이지 접근");
 		model.addAttribute("customer", new Customer());
 		model.addAttribute("categories", categoryService.readWithoutUnclassifiedCategory());
 		return "login";
@@ -105,7 +107,7 @@ public class HomeController {
 			Model model) throws ExceptionForMessage {
 		SessionCustomer sessionCustomer = (customerService.login(customerId, customerPassword)).createSessionCustomer();
 		session.setAttribute("sessionCustomer", sessionCustomer);
-		return "redirect:/";
+		return "redirect:/shop";
 	}
 
 	@RequestMapping(value = "/joinForm", method = RequestMethod.GET)
@@ -127,12 +129,12 @@ public class HomeController {
 			return "form";
 		}
 		customerService.join(customer);
-		return "redirect:/";
+		return "redirect:/shop";
 	}
 
-	@RequestMapping("/logout")
+	@RequestMapping("/shop/logout")
 	protected String logout(HttpSession session) {
 		session.invalidate();
-		return "redirect:/";
+		return "redirect:/shop";
 	}
 }

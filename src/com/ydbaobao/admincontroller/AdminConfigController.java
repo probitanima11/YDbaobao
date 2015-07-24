@@ -24,7 +24,7 @@ public class AdminConfigController {
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public String read(Model model) {
 		model.addAttribute("adminConfig", adminConfigService.read());
-		return "admin/config";
+		return "config";
 	}
 	@RequestMapping(value = "", method = {RequestMethod.POST})
 	public String update(Model model, AdminConfig adminConfig) {
