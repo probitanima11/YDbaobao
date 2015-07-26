@@ -173,7 +173,7 @@ tr.border_top td {
 			});
 		}
 		document.querySelector("#reloadList").addEventListener('click', function(){
-			window.location.href="/orders/reload?fromDate="+fromDate.value+"&toDate="+toDate.value;
+			window.location.href="/shop/orders/reload?fromDate="+fromDate.value+"&toDate="+toDate.value;
 		}, false);
 	}, false);
 	
@@ -184,7 +184,7 @@ tr.border_top td {
 		ydbaobao.ajax({
 			method: "put",
 			param: "orderStatus=C",
-			url: "/orders/"+orderId,
+			url: "/shop/orders/"+orderId,
 			success: function(req){
 				document.querySelectorAll(".border_top[data-id='" + orderId + "'] > td")[6].innerText = "주문취소";
 				document.querySelectorAll(".border_top[data-id='" + orderId + "'] > td")[7].querySelector("button").remove();
@@ -193,7 +193,7 @@ tr.border_top td {
 	}
 	
 	function getReceipt(orderId) {
-		var url = '/orders/receipt/' + orderId;
+		var url = '/shop/orders/receipt/' + orderId;
 		window.open(url, "_blank", "toolbar=yes, scrollbars=yes, resizable=yes, top=100, left=300, width=400, height=400");
 	}
 	</script>

@@ -150,7 +150,7 @@ tr.border_top td {
 		window.addEventListener('load', function(){
 			ydbaobao.ajax({
 				method:"get",
-				url:"/payments/read",
+				url:"/shop/payments/read",
 				success:function(req){
 					payments = JSON.parse(req.responseText);
 					refreshPayments();

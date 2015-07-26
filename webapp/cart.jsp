@@ -91,8 +91,8 @@
 							<c:when test="${item.product.isSoldout eq 1}">
 								<tr data-id="${item.itemId}">
 									<td><input type="checkbox" class="soldout-item-check" disabled></td>
-									<td class="item-image-container"><a href="/products/${item.product.productId}" style="text-decoration:none"><img class="item-image" src="/image/products/${item.product.productImage}"></a></td>
-									<td class="item-name-container"><a href="/products/${item.product.productId}" style="text-decoration:none"><span class="item-name">${item.product.productName}</span><span class="sold-out"> [품절]</span></a></td>
+									<td class="item-image-container"><a href="/shop/products/${item.product.productId}" style="text-decoration:none"><img class="item-image" src="/image/products/${item.product.productImage}"></a></td>
+									<td class="item-name-container"><a href="/shop/products/${item.product.productId}" style="text-decoration:none"><span class="item-name">${item.product.productName}</span><span class="sold-out"> [품절]</span></a></td>
 									<td><span class="item-size">${item.size}</span></td>
 									<td><span class="item-price">${item.product.productPrice}</span></td>
 									<td><span class="item-quantity">${item.quantity}</span></td>
@@ -102,8 +102,8 @@
 							<c:otherwise>
 								<tr data-id="${item.itemId}">
 									<td><input class="item-check" type="checkbox" onclick="calcSelectedPrice()"></td>
-									<td class="item-image-container"><a href="/products/${item.product.productId}" style="text-decoration:none"><img class="item-image" src="/image/products/${item.product.productImage}"></a></td>
-									<td class="item-name-container"><a href="/products/${item.product.productId}" style="text-decoration:none"><span class="item-name">${item.product.productName}</span></a></td>
+									<td class="item-image-container"><a href="/shop/products/${item.product.productId}" style="text-decoration:none"><img class="item-image" src="/image/products/${item.product.productImage}"></a></td>
+									<td class="item-name-container"><a href="/shop/products/${item.product.productId}" style="text-decoration:none"><span class="item-name">${item.product.productName}</span></a></td>
 									<td><span class="item-size">${item.size}</span></td>
 									<td><span class="item-price">${item.product.productPrice}</span></td>
 									<td><input type="number" class ="item-quantity" name="quantity" value ="${item.quantity}"/>
@@ -156,7 +156,7 @@
 				var itemId = e.target.parentNode.parentNode.dataset.id;
 				ydbaobao.ajax({
 					method : 'put',
-					url : '/carts/'+itemId,
+					url : '/shop/carts/'+itemId,
 					param : 'quantity='+quantity,
 					success : function(req) {
 						alert('수량이 수정되었습니다.');
@@ -205,7 +205,7 @@
 				return;
 			}
 			ydbaobao.post({
-				path : "/orders/confirm",
+				path : "/shop/orders/confirm",
 				params : {itemList : paramList}
 			});
 		}, false);
@@ -222,7 +222,7 @@
 				return;
 			}
 			ydbaobao.post({
-				path : "/orders/confirm",
+				path : "/shop/orders/confirm",
 				params : {itemList : paramList}
 			});
 		}, false);
@@ -245,7 +245,7 @@
 				var tr = checkedItems[i].parentElement.parentElement;
 				ydbaobao.ajax({
 					method : 'delete',
-					url : '/carts/' + tr.dataset.id,
+					url : '/shop/carts/' + tr.dataset.id,
 					success : function(req) {
 						document.querySelector('#total-price span').textContent -= document.querySelector('tr[data-id="'+ req.responseText + '"] .order-price').innerText;
 						document.querySelector('tr[data-id="'+ req.responseText + '"]').remove();

@@ -31,7 +31,6 @@
 		<div id="second-section" class="wrap content">
 			<!-- 브랜드 탭(A~Z) 메뉴 -->
 			<%@ include file="./commons/_brand.jsp" %>
-
 			<div id="item-container" class="wrap content">
 				<h2>최근 등록된 상품</h2>
 				<%@ include file="./commons/_productsBox.jsp" %>

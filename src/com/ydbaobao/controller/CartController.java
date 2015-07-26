@@ -23,7 +23,7 @@ import com.ydbaobao.service.CategoryService;
 import com.ydbaobao.service.ItemService;
 
 @Controller
-@RequestMapping("/carts")
+@RequestMapping("/shop/carts")
 public class CartController {
 	private static final Logger logger = LoggerFactory.getLogger(CartController.class);
 	@Resource

@@ -203,7 +203,7 @@ public class ProductService {
 			categoryDao.resetCount();
 			brandDao.resetCount();
 			productDao.resetAutoIncrement();
-			File directory = new File("/home/baobao/products/");
+			File directory = new File("/image/products/");
 			for (File file : directory.listFiles()) {
 				file.delete();
 			}
@@ -216,7 +216,7 @@ public class ProductService {
 		Product product = productDao.read(productId);
 		categoryDao.decreaseCount(product.getCategory().getCategoryId());
 		brandDao.decreaseCount(product.getBrand().getBrandId());
-		File file = new File("/home/baobao/products/" + product.getProductImage());
+		File file = new File("/image/products/" + product.getProductImage());
 		if (productDao.delete(product) >= 1) {
 			file.delete();
 			return true;

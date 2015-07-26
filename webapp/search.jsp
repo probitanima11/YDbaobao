@@ -11,7 +11,6 @@
 <title>${terms} 검색결과</title>
 </head>
 <body>
-
 	<div id="header">
 		<!-- 상단 navigator -->
 		<%@ include file="./commons/_topNav.jsp"%>
@@ -24,13 +23,12 @@
 	</div>
 	<div id="main-container" class="wrap content">
 		<div class="search-message"> ${select} "${terms}"에 대해 ${count} 개의 검색결과가 있습니다.</div>
+		<div id="item-container" class="wrap content">
+			<%@ include file="./commons/_productsBox.jsp"%>
+			
+			<%@ include file="./commons/_productListBar.jsp" %>
+		</div>
 	</div>
-	<div id="item-container" class="wrap content">
-		<%@ include file="./commons/_productsBox.jsp"%>
-		
-		<%@ include file="./commons/_productListBar.jsp" %>
-	</div>
-
 	<div id="footer">
 		<%@ include file="./commons/_footer.jsp"%>
 	</div>

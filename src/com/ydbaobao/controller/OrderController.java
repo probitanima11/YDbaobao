@@ -24,7 +24,7 @@ import com.ydbaobao.service.CategoryService;
 import com.ydbaobao.service.ItemService;
 
 @Controller
-@RequestMapping("/orders")
+@RequestMapping("/shop/orders")
 public class OrderController {
 	private static final Logger logger = LoggerFactory.getLogger(OrderController.class);
 

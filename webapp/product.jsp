@@ -229,7 +229,7 @@ h1 {
 			ydbaobao.ajax({
 				/* TODO productId, size, quantity 전달. */
 				method : 'post',
-				url : '/carts/',
+				url : 'shop/carts/',
 				param : param,
 				success : function(req) {
 					if(req.responseText === "fail")
@@ -252,7 +252,7 @@ h1 {
 			var param = 'productId=' + productId + '&size=' + size + '&quantity=' + quantity;
 			ydbaobao.ajax({
 				method : 'post',
-				url : '/orders/direct/',
+				url : '/shop/orders/direct/',
 				param : param,
 				success : function(req) {
 					if(req.responseText === "fail")

@@ -23,6 +23,7 @@ import com.ydbaobao.service.CategoryService;
 import com.ydbaobao.service.ProductService;
 
 @Controller
+@RequestMapping("/shop")
 public class ProductController {
 	@Resource
 	private ProductService productService;
@@ -101,7 +102,7 @@ public class ProductController {
 		model.addAttribute("selectedIndex", page);
 		model.addAttribute("range", CommonUtil.range(CommonUtil.startPage(page), CommonUtil.endPage(page, totalPage))
 				.toArray());
-		model.addAttribute("url", "/categories/" + categoryId + "/brands/" + brandId + "/products?page=");
+		model.addAttribute("url", "/shop/categories/" + categoryId + "/brands/" + brandId + "/products?page=");
 		model.addAttribute("products", products);
 		model.addAttribute("selectedBrand", brandService.readBrandByBrandId(brandId));
 		model.addAttribute("brands", brandService.readBrandsByCategoryId(categoryId));

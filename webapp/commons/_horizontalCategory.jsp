@@ -6,14 +6,14 @@
 	<c:when test="${not empty sessionAdmin }">
 	</c:when>
 	<c:otherwise>
-		<c:redirect url="loginForm" />
+		<c:redirect url="/shop/loginForm" />
 	</c:otherwise>
 </c:choose>
 <div id="horizontal-category-menu">
 	<ul>
-		<li><a href="/products/?page=1">전체상품</a></li>
+		<li><a href="/shop/products/?page=1">전체상품</a></li>
 		<c:forEach var="category" items="${categories}" varStatus="status">	
-			<li><a href="/categories/${category.categoryId}/products?page=1">
+			<li><a href="/shop/categories/${category.categoryId}/products?page=1">
 				<span><c:out value="${category.categoryName}"/></span>
 			</a></li>
 		</c:forEach>

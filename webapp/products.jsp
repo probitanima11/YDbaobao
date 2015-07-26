@@ -40,12 +40,12 @@
 				<%@ include file="./commons/_categoryBrand.jsp"%>
 			</c:otherwise>
 		</c:choose>
-	</div>
-	<div id="item-container" class="wrap content">
+		<div id="item-container" class="wrap content">
 		<!-- 상품 리스트 -->
 		<%@ include file="./commons/_productsBox.jsp" %>
 		<!-- 페이지 -->
 		<%@ include file="./commons/_productListBar.jsp" %>
+	</div>
 	</div>
 	<div id="footer">
 		<%@ include file="./commons/_footer.jsp"%>

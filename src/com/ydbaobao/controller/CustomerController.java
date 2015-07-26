@@ -33,7 +33,7 @@ import com.ydbaobao.service.CustomerService;
 import com.ydbaobao.service.ProductService;
 
 @Controller
-@RequestMapping("/customers")
+@RequestMapping("/shop/customers")
 public class CustomerController {
 	@Resource
 	private CustomerService customerService;
@@ -79,7 +79,7 @@ public class CustomerController {
 		model.addAttribute("selectedIndex", 1);
 		model.addAttribute("range", CommonUtil.range(CommonUtil.startPage(1), CommonUtil.endPage(1, totalPage))
 				.toArray());
-		model.addAttribute("url", "/index?page=");
+		model.addAttribute("url", "/shop/index?page=");
 		model.addAttribute("products", productService.readRange(1, adminConfigService.read().getAdminDisplayProducts(),
 				(SessionCustomer) session.getAttribute("sessionCustomer")));
 		model.addAttribute("categories", categoryService.readWithoutUnclassifiedCategory());
@@ -87,16 +87,6 @@ public class CustomerController {
 		model.addAttribute("firstLetterList", new Brand().getFirstLetters());
 		model.addAttribute("indexImages", new Gson().toJson(adminIndexImageService.readIndexImages()));
 		model.addAttribute("isHome", "home");
-		
-		
-		
-		
-		return "index";
-	}
-	
-	@RequestMapping(value = "/{customerId}/grade/{grade}", method = RequestMethod.PUT)
-	public ResponseEntity<Object> update(@PathVariable String customerId, @PathVariable String grade) {
-		customerService.updateGrade(customerId, grade);
-		return JSONResponseUtil.getJSONResponse("등급 변경 완료.", HttpStatus.OK);
+		return "indexmain";
 	}
 }

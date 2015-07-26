@@ -18,7 +18,7 @@ import com.ydbaobao.service.CategoryService;
 import com.ydbaobao.service.PaymentService;
 
 @Controller
-@RequestMapping("/payments")
+@RequestMapping("/shop/payments")
 public class PaymentController {
 	@Resource
 	private CategoryService categoryService;

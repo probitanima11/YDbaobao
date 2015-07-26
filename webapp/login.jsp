@@ -20,7 +20,7 @@
 	<div id="main-container">
 		<div id="first-section" class="wrap" style="height: 635px;">
 			<div class="loginBox">
-				<form:form modelAttribute="customer" method="post" action="/login">
+				<form:form modelAttribute="customer" method="post" action="/shop/login">
 					<h1>로그인</h1>
 					<label for="customerId">아이디</label>
 					<form:input path="customerId" />

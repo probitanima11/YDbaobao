@@ -56,7 +56,7 @@ public class HomeController {
 		model.addAttribute("selectedIndex", 1);
 		model.addAttribute("range", CommonUtil.range(CommonUtil.startPage(1), CommonUtil.endPage(1, totalPage))
 				.toArray());
-		model.addAttribute("url", "/index?page=");
+		model.addAttribute("url", "/shop/index?page=");
 		model.addAttribute("products", productService.readRange(1, adminConfigService.read().getAdminDisplayProducts(),
 				(SessionCustomer) session.getAttribute("sessionCustomer")));
 		model.addAttribute("categories", categoryService.readWithoutUnclassifiedCategory());
@@ -67,7 +67,7 @@ public class HomeController {
 		return "indexmain";
 	}
 
-	@RequestMapping(value = "/index", method = RequestMethod.GET)
+	@RequestMapping(value = "/shop/index", method = RequestMethod.GET)
 	public String homeWithPage(Model model, HttpSession session, @RequestParam int page) {
 		int totalPage = CommonUtil.countTotalPage(productService.count(), CommonUtil.productsPerPage);
 
@@ -75,7 +75,7 @@ public class HomeController {
 		model.addAttribute("next", CommonUtil.nextBlock(page, totalPage));
 		model.addAttribute("selectedIndex", page);
 		model.addAttribute("range", CommonUtil.range(CommonUtil.startPage(page), CommonUtil.endPage(page, totalPage)).toArray());
-		model.addAttribute("url", "/index?page=");
+		model.addAttribute("url", "/shop/index?page=");
 		model.addAttribute("products", productService.readRange(page, adminConfigService.read()
 				.getAdminDisplayProducts(), (SessionCustomer) session.getAttribute("sessionCustomer")));
 		model.addAttribute("categories", categoryService.readWithoutUnclassifiedCategory());
@@ -85,7 +85,7 @@ public class HomeController {
 		StringBuilder imgPath = new StringBuilder();
 		for (int i = 0; i < 8; i++) {
 			String filePath = "index_0" + i + ".jpg";
-			File f = new File("/home/baobao/index/" + filePath);
+			File f = new File("/image/index/" + filePath);
 			if (f.isFile()) {
 				imgPath.append(",/image/index/" + filePath);
 			}
@@ -94,7 +94,7 @@ public class HomeController {
 		return "indexmain";
 	}
 
-	@RequestMapping(value = "/loginForm", method = RequestMethod.GET)
+	@RequestMapping(value = "/shop/loginForm", method = RequestMethod.GET)
 	public String loginView(Model model) {
 		logger.debug("로그인페이지 접근");
 		model.addAttribute("customer", new Customer());
@@ -102,7 +102,7 @@ public class HomeController {
 		return "login";
 	}
 
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	@RequestMapping(value = "/shop/login", method = RequestMethod.POST)
 	protected String login(@RequestParam String customerId, @RequestParam String customerPassword, HttpSession session,
 			Model model) throws ExceptionForMessage {
 		SessionCustomer sessionCustomer = (customerService.login(customerId, customerPassword)).createSessionCustomer();
@@ -110,14 +110,14 @@ public class HomeController {
 		return "redirect:/shop";
 	}
 
-	@RequestMapping(value = "/joinForm", method = RequestMethod.GET)
+	@RequestMapping(value = "/shop/joinForm", method = RequestMethod.GET)
 	public String form(Model model) {
 		model.addAttribute("customer", new Customer());
 		model.addAttribute("categories", categoryService.readWithoutUnclassifiedCategory());
 		return "form";
 	}
 
-	@RequestMapping(value = "/join", method = RequestMethod.POST)
+	@RequestMapping(value = "/shop/join", method = RequestMethod.POST)
 	public String create(@Valid Customer customer, BindingResult result, @RequestParam String customerAgainPassword,
 			Model model) throws ExceptionForMessage {
 		if (result.hasErrors()) {

@@ -31,7 +31,7 @@ function searchBrand(target) {
 	}
 	ydbaobao.ajax({
 		method:'get',
-			url:'/brands/' + firstLetter,
+			url:'/shop/brands/' + firstLetter,
 			success: function(req) {
 				changeBrandList(JSON.parse(req.responseText));
 			}
@@ -48,7 +48,7 @@ function changeBrandList(brands) {
 	// 검색된 브랜드 리스트 출력
 	for(var i = 0, length = brands.length; i < length; i++) {
 		var li = document.createElement('li');
-		li.innerHTML += '<a href="/brands/' + brands[i].brandId + '/products?page=1"><i class="fa fa-bookmark"></i>  <span>' + brands[i].brandName +'('+brands[i].brandCount+')'+ '</span></a>';
+		li.innerHTML += '<a href="/shop/brands/' + brands[i].brandId + '/products?page=1"><i class="fa fa-bookmark"></i>  <span>' + brands[i].brandName +'('+brands[i].brandCount+')'+ '</span></a>';
 		ul.appendChild(li);
 	}
 }

@@ -19,9 +19,9 @@
 	<div id="main-container">
 		<div id="first-section" class="wrap content" style="height: 635px;">
 			<div class="joinForm">
-				<c:set var="actionUrl" value="/join" />
+				<c:set var="actionUrl" value="/shop/join" />
 				<c:if test="${isUpdate}">
-					<c:set var="actionUrl" value="/customers/update" />
+					<c:set var="actionUrl" value="/shop/customers/update" />
 				</c:if>
 
 				<form:form modelAttribute="customer" method="post" action="${actionUrl}">

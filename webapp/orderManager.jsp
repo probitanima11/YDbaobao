@@ -94,8 +94,8 @@
 						<tr data-id="${item.itemId}">
 							<td><span>${item.product.brand.brandName}</span></td>
 							<td><span class="item-customer">${item.customer.customerId}</span></td>
-							<td class="item-image-container"><a href="/products/${item.product.productId}" style="text-decoration:none"><img class="item-image" src="/image/products/${item.product.productImage}"></a></td>
-							<td class="item-name-container"><a href="/products/${item.product.productId}" style="text-decoration:none"><span class="item-name">${item.product.productName}</span></a></td>
+							<td class="item-image-container"><a href="/shop/products/${item.product.productId}" style="text-decoration:none"><img class="item-image" src="/image/products/${item.product.productImage}"></a></td>
+							<td class="item-name-container"><a href="/shop/products/${item.product.productId}" style="text-decoration:none"><span class="item-name">${item.product.productName}</span></a></td>
 							<td><span class="item-size">${item.size}</span></td>
 							<td><span class="item-price">${item.product.productPrice}</span></td>
 							<td><span>${item.quantity}</span></td>

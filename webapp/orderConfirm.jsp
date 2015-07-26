@@ -123,7 +123,7 @@
 			order(param);
 		}, false);
 		document.querySelector('#order-cancel-btn').addEventListener('click', function() {
-			window.location.href = '/carts';
+			window.location.href = 'shop/carts';
 		}, false);
 
 		addItemsPrice();
@@ -137,7 +137,7 @@
 	function order(param) {
 		ydbaobao.ajax({
 			method : 'post',
-			url : '/orders',
+			url : '/shop/orders',
 			param : param,
 			success : function(req) {
 				alert('주문요청이 완료되었습니다.');
