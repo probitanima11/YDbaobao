@@ -111,10 +111,10 @@ public class ProductService {
 		if (null == product.getProductImage()) {
 			product.setProductImage(oldStatus.getProductImage());
 		}
-		if (product.getProductPrice() != oldStatus.getProductPrice()) {
-			itemService.updateItemPriceByProductId(product.getProductId());
-		}
 		if (productDao.update(product) == 1) {
+			if (product.getProductPrice() != oldStatus.getProductPrice()) {
+				itemService.updateItemPriceByProductId(product.getProductId());
+			}
 			return true;
 		}
 		return false;

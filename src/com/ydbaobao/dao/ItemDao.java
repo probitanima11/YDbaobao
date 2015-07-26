@@ -35,7 +35,7 @@ public class ItemDao extends JdbcDaoSupport {
 	}
 
 	public List<Item> readCartItems(String customerId, String itemStatus) {
-		String sql = "select * from ITEMS A, PRODUCTS B, CUSTOMERS as C, BRANDS as D where A.itemStatus = ? AND A.customerId= ? AND A.productId = B.productId AND A.customerId = C.customerId AND B.brandId = D.brandId order by A.productId";
+		String sql = "select * from ITEMS A, PRODUCTS B, CUSTOMERS C, BRANDS D where A.itemStatus = ? AND A.customerId= ? AND A.productId = B.productId AND A.customerId = C.customerId AND B.brandId = D.brandId order by A.productId";
 		RowMapper<Item> rm = new RowMapper<Item>() {
 			@Override
 			public Item mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -172,6 +172,22 @@ public class ItemDao extends JdbcDaoSupport {
 		};
 		return getJdbcTemplate().query(sql, rm, customerId);
 	}
+
+	public List<Item> readItemsByCustomerId(String customerId) {
+		String sql = "select * from ITEMS where customerId = ?";
+		RowMapper<Item> rm = new RowMapper<Item>() {
+			@Override
+			public Item mapRow(ResultSet rs, int rowNum) throws SQLException {
+				return new Item(
+						rs.getInt("itemId"), 
+						new Customer(rs.getString("customerId")),
+						new Product(rs.getInt("productId")), rs.getString("size"), 
+						rs.getInt("quantity"), rs.getString("itemStatus"), 
+						rs.getInt("price"));
+			}
+		};
+		return getJdbcTemplate().query(sql, rm, customerId);
+	}
 	
 	public List<Item> readItemsByProductId(int productId) {
 		String sql  = "select * from ITEMS A, PRODUCTS B where A.productId = ? AND A.productId = B.productId";
@@ -190,6 +206,25 @@ public class ItemDao extends JdbcDaoSupport {
 			}
 		};
 		return getJdbcTemplate().query(sql, rm, productId);
+	}
+	
+	public List<Item> readItemsByBrandId(int brandId) {
+		String sql = "select * from ITEMS A, PRODUCTS B, BRANDS C where A.productId = B.productId AND B.brandId = C.brandId AND C.brandId = ?";
+		RowMapper<Item> rm = new RowMapper<Item>() {
+			@Override
+			public Item mapRow(ResultSet rs, int rowNum) throws SQLException {
+				return new Item(
+						rs.getInt("itemId"), 
+						new Customer(rs.getString("customerId")),
+						new Product(rs.getInt("productId"),rs.getString("productName"), 
+								rs.getInt("productPrice"), rs.getString("productImage"), 
+								rs.getString("productSize"), rs.getInt("isSoldout"), 
+						new Brand(rs.getInt("brandId"), rs.getString("brandName"))), rs.getString("size"), 
+						rs.getInt("quantity"), rs.getString("itemStatus"), 
+						rs.getInt("price"));
+			}
+		};
+		return getJdbcTemplate().query(sql, rm, brandId);
 	}
 
 	public List<Item> readOrderedItemsOrderBy(String arg) {

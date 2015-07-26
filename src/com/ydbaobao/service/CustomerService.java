@@ -18,6 +18,8 @@ import com.ydbaobao.model.Customer;
 public class CustomerService {
 	@Resource
 	private CustomerDao customerDao;
+	@Resource
+	private ItemService itemService;
 	
 	public void join(Customer customer) throws ExceptionForMessage{
 		if(customerDao.findCustomerByCustomerId(customer.getCustomerId()) != null)
@@ -51,11 +53,14 @@ public class CustomerService {
 
 	public boolean updateGrade(String customerId, String grade) {
 		Customer customer = customerDao.readCustomerById(customerId);
+		if (grade.equals("0")) {
+			delete(customerId);
+		}
 		customer.setCustomerGrade(grade);
 		if(customerDao.updateCustomerGrade(customer) == 1) {
+			itemService.updateItemPriceByCustomerId(customerId);
 			return true;
 		}
-		
 		return false;
 	}
 

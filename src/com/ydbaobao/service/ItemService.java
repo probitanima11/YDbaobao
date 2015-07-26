@@ -105,6 +105,20 @@ public class ItemService {
 		}
 	}
 	
+	public void updateItemPriceByCustomerId(String customerId) {
+		List<Item> items = itemDao.readItemsByCustomerId(customerId);
+		for (Item item : items) {
+			updateItemPrice(item.getItemId());
+		}
+	}
+	
+	public void updateItemPriceByBrandId(int brandId) {
+		List<Item> items = itemDao.readItemsByBrandId(brandId);
+		for (Item item : items) {
+			updateItemPrice(item.getItemId());
+		}
+	}
+	
 	/**
 	 * 장바구니에 담긴 아이템 조회
 	 * @param customerId

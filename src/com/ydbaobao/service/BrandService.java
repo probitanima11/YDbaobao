@@ -18,6 +18,8 @@ public class BrandService {
 	private BrandDao brandDao;
 	@Resource
 	private ProductDao productDao;
+	@Resource
+	private ItemService itemService;
 
 	public Brand readBrandByBrandId(int brandId) {
 		return brandDao.readBrandByBrandId(brandId);
@@ -34,7 +36,6 @@ public class BrandService {
 			count = productDao.countProductByBrandIdAndCategoryId(categoryId, brand.getBrandId());
 			brand.setBrandCount(count);			
 		}
-		
 		return brands;
 	}
 	
@@ -49,11 +50,24 @@ public class BrandService {
 		return brandDao.createBrand(brand);
 	}
 
+	/**
+	 * 브랜드 정보 변경
+	 * 등급 할인율 변경시 현재 주문 진행중인 모든 아이템에 새로운 가격 적용
+	 * @param brand
+	 */
 	public void updateBrand(Brand brand) {
+		Brand prevBrand = brandDao.readBrandByBrandId(brand.getBrandId());
 		if(brandDao.readBrandByBrandName(brand.getBrandName()) != null) {
 			// TODO 브랜드명 중복 예외처리
 		}
 		brandDao.updateBrand(brand);
+		if (prevBrand.getDiscount_1() != brand.getDiscount_1() || 
+			prevBrand.getDiscount_2() != brand.getDiscount_2() ||
+			prevBrand.getDiscount_3() != brand.getDiscount_3() ||
+			prevBrand.getDiscount_4() != brand.getDiscount_4() ||
+			prevBrand.getDiscount_5() != brand.getDiscount_5()) {
+			itemService.updateItemPriceByBrandId(brand.getBrandId());
+		}
 	}
 
 	public void deleteBrand(String brandId) {

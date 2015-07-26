@@ -107,7 +107,11 @@ public class CustomerDao extends JdbcDaoSupport {
 		return getJdbcTemplate().queryForObject(sql, rm, customerId);
 	}
 
-	//유저 계정 비활성화
+	/**
+	 * 유저 계정 삭제(비활성화)
+	 * 결제 내역을 보관하기 위해 유저 계정은 등급 0으로 비활성화
+	 * @param customerId
+	 */
 	public void deleteCustomer(String customerId) {
 		String sql = "update CUSTOMERS set gradeId = 0, customerPhone='', customerEmail='', customerAddress='', customerUpdateDate=? where customerId = ?";
 		getJdbcTemplate().update(sql, CommonUtil.getDatetime(), customerId);

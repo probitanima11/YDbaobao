@@ -25,6 +25,13 @@ public class PaymentController {
 	@Resource
 	private PaymentService paymentService;
 	
+	/**
+	 * 
+	 * @param session
+	 * @param model
+	 * @return payment.jsp
+	 * @throws IOException
+	 */
 	@RequestMapping(value="", method = RequestMethod.GET)
 	public String readPage(HttpSession session, Model model) throws IOException {
 		String customerId = ServletRequestUtil.getCustomerIdFromSession(session);
