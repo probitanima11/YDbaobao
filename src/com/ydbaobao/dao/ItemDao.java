@@ -112,24 +112,6 @@ public class ItemDao extends JdbcDaoSupport {
 			return null;
 		}
 	}
-
-	public Item readItemByStatus(int itemId, String itemStatus) {
-		String sql = "select * from ITEMS A, PRODUCTS B where A.itemId=? AND A.productId = B.productId AND A.itemStatus = ?";
-		RowMapper<Item> rm = new RowMapper<Item>() {
-			@Override
-			public Item mapRow(ResultSet rs, int rowNum) throws SQLException {
-				return new Item(
-						rs.getInt("itemId"), new Customer(rs.getString("customerId")),
-						new Product(rs.getInt("productId"),rs.getString("productName"), rs.getInt("productPrice"), rs.getString("productImage"), rs.getString("productSize"), rs.getInt("isSoldout"), new Brand(rs.getInt("brandId"))),
-						rs.getString("size"), rs.getInt("quantity"), rs.getString("itemStatus"), rs.getInt("price"));
-			}
-		};
-		try {
-			return getJdbcTemplate().queryForObject(sql, rm, itemId, itemStatus);
-		} catch (EmptyResultDataAccessException e) {
-			return null;
-		}
-	}
 	
 	public Item readItemByProductIdAndSizeAndItemStatus(int productId, String size, String customerId, String itemStatus) {
 		String sql = "select * from ITEMS where productId = ? and size = ? and customerId = ? and itemStatus = ?";

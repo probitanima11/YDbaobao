@@ -98,7 +98,8 @@ public class AdminCustomerController {
 	}
 	
 	/**
-	 * 관리자 페이지에서 회원목록에서 회원 삭제
+	 * 관리자 페이지에서 회원목록에서 회원계정 비활성화
+	 * 회원의 등급이 0이 되고 장바구니와 주문을 삭제 (결제 내역은 남김)
 	 * @param customerId
 	 * @return success or fail
 	 */

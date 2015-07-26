@@ -105,6 +105,11 @@ public class ItemService {
 		}
 	}
 	
+	/**
+	 * 장바구니에 담긴 아이템 조회
+	 * @param customerId
+	 * @param itemList
+	 */
 	public List<Item> readCartItems(String customerId, String itemStatus) {
 		List<Item> items = itemDao.readCartItems(customerId, itemStatus);
 		for (Item item : items) {
@@ -149,7 +154,7 @@ public class ItemService {
 	}
 
 	public boolean acceptOrder(int itemId, int quantity) {
-		Item item = itemDao.readItemByStatus(itemId, "S");
+		Item item = itemDao.readItem(itemId);
 		if (item == null || item.getQuantity() < quantity)
 			return false;
 		int price = productService.readByDiscount(item.getProduct().getProductId(), item.getCustomer()).getProductPrice();
@@ -164,7 +169,7 @@ public class ItemService {
 	}
 
 	public boolean rejectOrder(int itemId) {
-		Item item = itemDao.readItemByStatus(itemId, "S");
+		Item item = itemDao.readItem(itemId);
 		if(item == null)
 			return false;
 		itemDao.updateItemStatus(itemId, "R");
