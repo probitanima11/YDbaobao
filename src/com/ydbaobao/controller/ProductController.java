@@ -52,7 +52,7 @@ public class ProductController {
 		model.addAttribute("selectedIndex", page);
 		model.addAttribute("range", CommonUtil.range(CommonUtil.startPage(page), CommonUtil.endPage(page, totalPage))
 				.toArray());
-		model.addAttribute("url", "/products?page=");
+		model.addAttribute("url", "/shop/products?page=");
 		model.addAttribute("products", productService.readRange(page, adminConfigService.read()
 				.getAdminDisplayProducts(), (SessionCustomer) session.getAttribute("sessionCustomer")));
 		model.addAttribute("categories", categoryService.readWithoutUnclassifiedCategory());
@@ -75,7 +75,7 @@ public class ProductController {
 		model.addAttribute("next", CommonUtil.nextBlock(page, totalPage));
 		model.addAttribute("selectedIndex", page);
 		model.addAttribute("range", CommonUtil.range(CommonUtil.startPage(page), CommonUtil.endPage(page, totalPage)).toArray());
-		model.addAttribute("url", "/categories/" + categoryId + "/products?page=");
+		model.addAttribute("url", "/shop/categories/" + categoryId + "/products?page=");
 		model.addAttribute("products", productService.readListByCategoryId(categoryId, page, adminConfigService.read().getAdminDisplayProducts(), (SessionCustomer) session.getAttribute("sessionCustomer")));
 		model.addAttribute("brands", brandService.readBrandsByCategoryId(categoryId));
 		model.addAttribute("category", category);

@@ -16,7 +16,7 @@
 		<%@ include file="../commons/_topNav.jsp"%>
 	</div>
 	<div class="joinForm" style="height: 100%;">
-		<form id="customer" method="post" action="/admin/check">
+		<form id="admin" method="post" action="/admin/check">
 			<h1>관리자 로그인</h1>
 			<input type="password" name="adminPassword" placeholder="비밀번호 입력" /><br />
 			<button type="submit">확인</button>
