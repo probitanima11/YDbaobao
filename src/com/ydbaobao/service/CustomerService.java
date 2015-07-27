@@ -36,6 +36,9 @@ public class CustomerService {
 		if(!customer.isCorrectPassword(customerPassword)){
 			throw new ExceptionForMessage("비밀번호가 일치하지 않습니다.", "/login");
 		}
+		if(customer.getCustomerGrade().equals("0")){
+			throw new ExceptionForMessage("비활성 상태의 계정입니다. 관리자의 승인이 필요합니다.", "/login");
+		}
 		return customer;
 	}
 

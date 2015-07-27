@@ -49,7 +49,6 @@ public class HomeController {
 
 	@RequestMapping(value="/shop", method = RequestMethod.GET)
 	public String home(Model model, WebRequest req, HttpSession session) {
-		logger.debug("첫페이지 접근");
 		int totalPage = CommonUtil.countTotalPage(productService.count(), CommonUtil.productsPerPage);
 		model.addAttribute("prev", CommonUtil.prevBlock(1));
 		model.addAttribute("next", CommonUtil.nextBlock(1, totalPage));
@@ -96,15 +95,13 @@ public class HomeController {
 
 	@RequestMapping(value = "/shop/loginForm", method = RequestMethod.GET)
 	public String loginView(Model model) {
-		logger.debug("로그인페이지 접근");
 		model.addAttribute("customer", new Customer());
 		model.addAttribute("categories", categoryService.readWithoutUnclassifiedCategory());
 		return "login";
 	}
 
 	@RequestMapping(value = "/shop/login", method = RequestMethod.POST)
-	protected String login(@RequestParam String customerId, @RequestParam String customerPassword, HttpSession session,
-			Model model) throws ExceptionForMessage {
+	protected String login(@RequestParam String customerId, @RequestParam String customerPassword, HttpSession session, Model model) throws ExceptionForMessage {
 		SessionCustomer sessionCustomer = (customerService.login(customerId, customerPassword)).createSessionCustomer();
 		session.setAttribute("sessionCustomer", sessionCustomer);
 		return "redirect:/shop";
