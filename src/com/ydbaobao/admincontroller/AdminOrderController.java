@@ -29,10 +29,16 @@ public class AdminOrderController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "", method = RequestMethod.GET)
-	public String manageOrder(Model model) {
-		model.addAttribute("brandPacks", itemService.readOrderedItemsOrderBy());
+	@RequestMapping(value = "/brands", method = RequestMethod.GET)
+	public String manageOrderByBrands(Model model) {
+		model.addAttribute("brandPacks", itemService.readOrderedItemsOrderBy("brandId"));
 		return "orderManagerByBrand";
+	}
+	
+	@RequestMapping(value = "/customers", method = RequestMethod.GET)
+	public String manageOrderByCustomers(Model model) {
+		model.addAttribute("customerPacks", itemService.readOrderedItemsOrderBy("customerId"));
+		return "orderManagerByCustomer";
 	}
 	
 	@RequestMapping(value = "/{customerId}", method = RequestMethod.GET)

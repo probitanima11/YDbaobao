@@ -138,8 +138,12 @@ public class ItemService {
 		return itemDao.readOrderedItems();
 	}
 	
-	public List<BrandPack> readOrderedItemsOrderBy() {
-		return packageByBrand(itemDao.readOrderedItemsOrderBy("BrandId"));
+	public List<ItemPackage> readOrderedItemsOrderBy(String identifier) {
+		if (identifier.equals("brandId")) {
+			return packageByBrand(itemDao.readOrderedItemsOrderBy(identifier));			
+		} else {
+			return packageByCustomer(itemDao.readOrderedItemsOrderBy(identifier));
+		}
 	}
 	
 	public Item readItemByItemId(int itemId) {
@@ -194,15 +198,15 @@ public class ItemService {
 		return itemDao.readOrderedItemsByCustomerId(customerId);
 	}
 	
-	public List<BrandPack> packageByBrand(List<Item> items){
-		List<BrandPack> brandPacks = new ArrayList<BrandPack>();
+	public List<ItemPackage> packageByBrand(List<Item> items){
+		List<ItemPackage> brandPacks = new ArrayList<ItemPackage>();
 		HashMap<String, Integer> mapper = new HashMap<String, Integer>();
 		String prevBrandName = "";
 		int i = 0;
 		for (Item item : items) {
 			String currBrandName = item.getProduct().getBrand().getBrandName();
 			if (!prevBrandName.equals(currBrandName)) {
-				brandPacks.add(new BrandPack(currBrandName));
+				brandPacks.add(new ItemPackage(currBrandName));
 				mapper.put(currBrandName, i); i++;
 			}
 			brandPacks.get(mapper.get(currBrandName)).addItem(item);
@@ -212,17 +216,34 @@ public class ItemService {
 		return brandPacks;
 	}
 	
-	public class BrandPack {
-		private String brandName;
+	public List<ItemPackage> packageByCustomer(List<Item> items){
+		List<ItemPackage> customerPacks = new ArrayList<ItemPackage>();
+		HashMap<String, Integer> mapper = new HashMap<String, Integer>();
+		String prevCustomerId = "";
+		int i = 0;
+		for (Item item : items) {
+			String currCustomerId = item.getCustomer().getCustomerId();
+			if (!prevCustomerId.equals(currCustomerId)) {
+				customerPacks.add(new ItemPackage(currCustomerId));
+				mapper.put(currCustomerId, i); i++;
+			}
+			customerPacks.get(mapper.get(currCustomerId)).addItem(item);
+			prevCustomerId = currCustomerId;
+		}
+		return customerPacks;
+	}
+	
+	public class ItemPackage {
+		private String key;
 		private List<Item> items;
 
-		public BrandPack(String brandName) {
-			this.brandName = brandName;
+		public ItemPackage(String key) {
+			this.key = key;
 			this.items = new ArrayList<Item>();
 		}
 		
-		public String getBrandName() {
-			return brandName;
+		public String getKey() {
+			return key;
 		}
 		
 		public List<Item> getItems() {

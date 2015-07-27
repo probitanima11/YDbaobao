@@ -80,14 +80,14 @@
 	<div id="container">
 		<%@ include file="./_adminNav.jsp"%>
 		<div id="content" >
-			<h1>브랜드별 주문 관리</h1>
+			<h1>회원별 주문 관리</h1>
 			<div style="width: 800px;margin-right: 20px;">
 				<table id="cart-list" style="text-align: center; padding-top:0px;">
 					<tbody>
-					<c:forEach var="brandPack" items="${brandPacks}">
-						<tr><td colspan="9" class="brandHeader"><span>${brandPack.key}</span></td></tr>
+					<c:forEach var="customerPack" items="${customerPacks}">
+						<tr><td colspan="9" class="brandHeader"><span>${customerPack.key}</span></td></tr>
 						<tr>
-							<th>주문자</th>
+							<th>브랜드</th>
 							<th colspan="2">상품설명</th>
 							<th style="width:35px">사이즈</th>
 							<th>원가</th>
@@ -96,9 +96,9 @@
 							<th>주문금액</th>
 							<th>상태</th>
 						</tr>
-						<c:forEach var="item" items="${brandPack.items}">
+						<c:forEach var="item" items="${customerPack.items}">
 							<tr data-id="${item.itemId}">
-								<td><span class="item-customer">${item.customer.customerId}</span></td>
+								<td><span class="item-customer">${item.product.brand.brandName}</span></td>
 								<td class="item-image-container"><a href="/shop/products/${item.product.productId}" style="text-decoration:none"><img class="item-image" src="/image/products/${item.product.productImage}"></a></td>
 								<td class="item-name-container"><a href="/shop/products/${item.product.productId}" style="text-decoration:none"><span class="item-name">${item.product.productName}</span></a></td>
 								<td><span class="item-size">${item.size}</span></td>
