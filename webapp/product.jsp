@@ -124,7 +124,6 @@ h1 {
 							<ul id="quantity" style="display: inline-block; padding: 0px">
 							</ul>
 						</td>
-							<!-- <input class="qty-selector" value="1" style="width: 32px;" onkeypress="return isNumberKey(event);"> -->
 						<td>
 							<div id="btnBox">
 								<button id="plusBtn" class="plusMinus-btn" onclick="qtyControl('plus')">
@@ -140,17 +139,25 @@ h1 {
 				<c:choose>
 					<c:when test="${product.isSoldout == 1}">
 						<div class="isSoldout">품 절</div>
-						<button class="btn addtocart disabled" disabled>장바구니</button>
-						<button class="btn buyitnow disabled" disabled>바로주문</button>
 					</c:when>
+				</c:choose>
+				<c:choose>
 					<c:when test="${not empty sessionAdmin}">
-						<div class="isSoldout">관리자모드</div>
+						<a href="/admin/products/${product.productId}?page=1"><button class="btn reviseIt">상품관리</button></a>
 					</c:when>
 					<c:otherwise>
-						<div class="button-group">
-							<button class="btn addtocart">장바구니</button>
-							<button class="btn buyitnow">바로주문</button>
-						</div>
+						<c:choose>
+							<c:when test="${product.isSoldout == 1}">
+								<button class="btn addtocart disabled" disabled>장바구니</button>
+								<button class="btn buyitnow disabled" disabled>바로주문</button>
+							</c:when>
+							<c:otherwise>
+								<div class="button-group">
+									<button class="btn addtocart">장바구니</button>
+									<button class="btn buyitnow">바로주문</button>
+								</div>
+							</c:otherwise>
+						</c:choose>
 					</c:otherwise>
 				</c:choose>
 			</div>
@@ -204,7 +211,7 @@ h1 {
 			document.querySelector('.buyitnow').addEventListener('click', function(e) {
 				buyitnow(e);
 			}, false);
-
+			
 			 var image = document.querySelector("#product-photo img");
 			 if (image.naturalWidth > image.naturalHeight) {
 				 document.querySelector("#product-photo img").style.width = "100%";

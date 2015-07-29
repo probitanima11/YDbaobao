@@ -33,6 +33,7 @@ table th {
 
 tbody td {
 	padding: 10px 0;
+	text-align: center;
 }
 
 .item-name-container {

@@ -40,6 +40,10 @@ tbody td {
 	text-align: left;
 }
 
+.item-name-container a {
+	text-decoration: underline;
+}
+
 .item-image {
 	width: 50px;
 	height: 50px;
@@ -104,7 +108,8 @@ tr.border_top td {
 								</td>
 								<td><span class="item-quantity">${item.quantity}</span></td>
 								<td><span class="order-price">${item.product.productPrice * item.quantity}</span></td>
-								</tr>
+								<td><button>주문취소</button></td>
+							</tr>
 						</c:forEach>
 					</tbody>
 				</table>

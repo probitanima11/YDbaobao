@@ -15,9 +15,14 @@
 	#pay-table input{
 		width:96%;
 	}
+	
 	table th {
 		background-color:#c8c8c8;
 		color:#454545;
+	}
+	
+	table td {
+		text-align:center;
 	}
 	
 	button {

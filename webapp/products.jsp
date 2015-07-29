@@ -41,6 +41,30 @@
 			</c:otherwise>
 		</c:choose>
 		<div id="item-container" class="wrap content">
+		<h2>
+			<c:choose>
+				<c:when test="${not empty brand}">
+					${brand.brandName}
+				</c:when>
+				<c:otherwise>
+					<c:choose>
+						<c:when test="${not empty category}">
+							<c:choose>
+								<c:when test="${not empty selectedBrand}">
+									${selectedBrand.brandName} 의 ${category.categoryName}
+								</c:when>
+								<c:otherwise>
+									${category.categoryName}
+								</c:otherwise>
+							</c:choose>
+						</c:when>
+						<c:otherwise>
+							전체상품
+						</c:otherwise>
+					</c:choose>
+				</c:otherwise>
+			</c:choose>	
+		</h2>
 		<!-- 상품 리스트 -->
 		<%@ include file="./commons/_productsBox.jsp" %>
 		<!-- 페이지 -->
