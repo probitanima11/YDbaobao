@@ -36,7 +36,10 @@ public class AdminBrandController {
 			@RequestParam int discount_2, @RequestParam int discount_3, @RequestParam int discount_4,
 			@RequestParam int discount_5, @RequestParam String brandSize) {
 		Brand brand = new Brand(brandName, 0, discount_1, discount_2, discount_3, discount_4, discount_5, brandSize);
-		return JSONResponseUtil.getJSONResponse(brandService.createBrand(brand), HttpStatus.OK);
+		if (brandService.createBrand(brand) < 0) {
+			return JSONResponseUtil.getJSONResponse("fail", HttpStatus.OK);
+		}
+		return JSONResponseUtil.getJSONResponse("success", HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "", method = RequestMethod.GET)

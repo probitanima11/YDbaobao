@@ -44,6 +44,10 @@ tbody td {
 	text-decoration: underline;
 }
 
+.item-image-container, .item-index {
+	width:80px;
+}
+
 .item-image {
 	width: 50px;
 	height: 50px;
@@ -87,15 +91,15 @@ tr.border_top td {
 							<th>주문번호</th>
 							<th></th>
 							<th>상품설명</th>
-							<th>받아야 할 수량</th>
-							<th>상품금액</th>
-							<th style="width:100px">관리</th>
+							<th>주문된 수량</th>
+							<th>금액</th>
+							<th style="width:100px"></th>
 						</tr>
 					</thead>
 					<tbody>
 						<c:forEach var="item" items="${items}">
 							<tr class="border_top" data-id="${item.itemId}">
-								<td rowspan="">${item.itemId}</td>
+								<td class="item-index">${item.itemId}</td>
 								<td class="item-image-container">
 									<img class="item-image" src="/image/products/${item.product.productImage}">
 								</td>
@@ -108,7 +112,7 @@ tr.border_top td {
 								</td>
 								<td><span class="item-quantity">${item.quantity}</span></td>
 								<td><span class="order-price">${item.product.productPrice * item.quantity}</span></td>
-								<td><button>주문취소</button></td>
+								<td><button class="reject">주문취소</button></td>
 							</tr>
 						</c:forEach>
 					</tbody>
@@ -119,6 +123,27 @@ tr.border_top td {
 	<div id="footer">
 		<%@ include file="./commons/_footer.jsp"%>
 	</div>
+	<script>
+	window.addEventListener('load', function(){
+		var i;
+		var rejectBtns = document.querySelectorAll('.reject');
+		for (i = 0; i < rejectBtns.length; i++) {
+			rejectBtns[i].addEventListener('click', rejectOrder, false);
+		}
+	}, false);
+
+	function rejectOrder(e) {
+		var itemId = e.target.parentNode.parentNode.getAttribute('data-id');
+		ydbaobao.ajax({
+			method: "post",
+			url: "/shop/orders/cancel/"+itemId,
+			success: function(req){
+				alert(req.responseText);
+				window.location.href="/shop/orders";
+			}
+		});
+	}
+	</script>
 	<script src="/js/ydbaobao.js"></script>
 </body>
 </html>

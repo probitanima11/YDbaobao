@@ -234,7 +234,6 @@ h1 {
 			}
 			var param = 'productId=' + productId + '&size=' + size + '&quantity=' + quantity;
 			ydbaobao.ajax({
-				/* TODO productId, size, quantity 전달. */
 				method : 'post',
 				url : '/shop/carts/',
 				param : param,

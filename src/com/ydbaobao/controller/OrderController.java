@@ -1,7 +1,9 @@
 package com.ydbaobao.controller;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -13,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -91,5 +94,29 @@ public class OrderController {
 		String customerId = ServletRequestUtil.getCustomerIdFromSession(session);
 		itemService.requestItems(customerId, itemList);
 		return JSONResponseUtil.getJSONResponse("", HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/cancel/{itemId}", method = RequestMethod.POST)
+	public ResponseEntity<Object> cancelOrder(@PathVariable int itemId) {
+		//if(!itemService.rejectOrder(itemId))
+		//	return JSONResponseUtil.getJSONResponse("유효하지 않은 주문입니다.", HttpStatus.OK);
+		
+		Date date = new Date();
+		SimpleDateFormat ampmFormat = new SimpleDateFormat("a");
+		SimpleDateFormat hourFormat = new SimpleDateFormat("hh");
+		SimpleDateFormat minFormat = new SimpleDateFormat("mm");
+		String ampm = ampmFormat.format(date);
+		int hour = Integer.valueOf(hourFormat.format(date));
+		int min = Integer.valueOf(minFormat.format(date));
+		if (ampm.equals("오후") || ampm.equals("PM")) {
+			if ((hour == 9 && min >= 30) || (hour > 10)) {
+				return JSONResponseUtil.getJSONResponse("21:30 ~ 09:30 사이에는 주문을 취소할 수 없습니다.", HttpStatus.OK);
+			}
+		} else {
+			if ((hour == 9 && min <= 30) || (hour < 9)) {
+				return JSONResponseUtil.getJSONResponse("21:30 ~ 09:30 사이에는 주문을 취소할 수 없습니다.", HttpStatus.OK);
+			}
+		}
+		return JSONResponseUtil.getJSONResponse("주문이 취소되었습니다.", HttpStatus.OK);
 	}
 }

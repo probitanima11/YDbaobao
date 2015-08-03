@@ -160,6 +160,7 @@
 					param : 'quantity='+quantity,
 					success : function(req) {
 						alert('수량이 수정되었습니다.');
+						location.reload();
 					}
 				});
 			});

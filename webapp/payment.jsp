@@ -57,6 +57,11 @@ tr.border_top td {
   border-top:1pt solid #ccc;
 }
 
+button {
+	border: 0;
+	padding: 5px;
+}
+
 </style>
 <title>YDbaobao:: 결제조회</title>
 </head>
@@ -171,10 +176,6 @@ tr.border_top td {
 					case "P": table = document.querySelector('#purchase-table tbody');
 								totalPurchase += payment.amount;
 								lastTd = "<td><button><i class='fa fa-navicon'></i>  주문서보기</button></td>";
-								break;
-					case "I": table = document.querySelector('#pay-table tbody');
-								totalPay += payment.amount;
-								lastTd = "<td><button>수정</button>  <button>삭제</button></td>"
 								break;
 					case "C": table = document.querySelector('#recall-table tbody');
 								totalRecall += payment.amount;

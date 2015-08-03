@@ -94,7 +94,7 @@
 							<th style="width:45px;">주문수량</th>
 							<th>승인수량</th>
 							<th>주문금액</th>
-							<th>상태</th>
+							<th> </th>
 						</tr>
 						<c:forEach var="item" items="${customerPack.items}">
 							<tr data-id="${item.itemId}">
@@ -106,7 +106,7 @@
 								<td><span>${item.quantity}</span></td>
 								<td><input style="width:40px;" type="number" class ="item-quantity" name="quantity" value ="${item.quantity}"/>
 								<td><span class="order-price">${item.price}</span></td>
-								<td><input type="button" class="success" value="보내기">
+								<td><input type="button" class="success" value="승인">
 								<input type="button" class="reject" value="삭제"></td>
 							</tr>
 						</c:forEach>
@@ -138,7 +138,7 @@
 				url: "/admin/orders/accept/"+itemId,
 				success: function(req){
 					alert(req.responseText);
-					window.location.href="/admin/orders";
+					window.location.href="/admin/orders/customers";
 				}
 			});
 		}
@@ -150,7 +150,7 @@
 				url: "/admin/orders/reject/"+itemId,
 				success: function(req){
 					alert(req.responseText);
-					window.location.href="/admin/orders";
+					window.location.href="/admin/orders/customers";
 				}
 			});
 		}

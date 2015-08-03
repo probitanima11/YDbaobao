@@ -202,8 +202,13 @@
 				url : '/admin/brands/',
 				param : param,
 				success : function(req) {
-					alert('브랜드가 추가되었습니다');
-					location.reload();
+					var signal = req.responseText;
+					if (signal === "fail") {
+						alert('브랜드명이 중복되었습니다');
+					} else {
+						alert('브랜드가 추가되었습니다');
+						location.reload();
+					}
 				}
 			});
 		}
