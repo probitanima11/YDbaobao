@@ -25,23 +25,40 @@ public class AdminOrderController {
 	private ItemService itemService;
 
 	/**
-	 * 관리자 화면에서 주문 목록 리스트만 받아오기
+	 * 관리자 화면에서 모든 브랜드별 주문 리스트 받기
 	 * @param model
 	 * @return
 	 */
 	@RequestMapping(value = "/brands", method = RequestMethod.GET)
 	public String manageOrderByBrands(Model model) {
 		model.addAttribute("brandPacks", itemService.readOrderedItemsOrderBy("brandId"));
+		return "orderManagerBrandList";
+	}
+	
+	@RequestMapping(value = "/brand/{brandId}", method = RequestMethod.GET)
+	public String manageOrderByBrandId(@PathVariable int brandId, Model model) {
+		model.addAttribute("brandPacks", itemService.readOrderedItemsByBrandId(brandId));
 		return "orderManagerByBrand";
 	}
 	
+	/**
+	 * 모든 유저에 대한 주문리스트 및 페이지 요청
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/customers", method = RequestMethod.GET)
 	public String manageOrderByCustomers(Model model) {
 		model.addAttribute("customerPacks", itemService.readOrderedItemsOrderBy("customerId"));
 		return "orderManagerByCustomer";
 	}
 	
-	@RequestMapping(value = "/{customerId}", method = RequestMethod.GET)
+	/**
+	 * customerId를 받아 해당 유저의 주문목록 리스트 및 페이지 요청
+	 * @param customerId
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/customer/{customerId}", method = RequestMethod.GET)
 	public String manageCustomerOrder(@PathVariable String customerId, Model model) {
 		model.addAttribute("items", itemService.readOrderedItemsByCustomerId(customerId));
 		return "orderManager";

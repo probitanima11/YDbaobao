@@ -94,7 +94,6 @@ public class ItemService {
 	public void updateItemPrice(int itemId) {
 		Item item = itemDao.readItem(itemId);
 		int price = productService.readByDiscount(item.getProduct().getProductId(), item.getCustomer()).getProductPrice();
-		logger.debug(""+price);
 		itemDao.updateItemPrice(item.getItemId(), item.getQuantity() * price);
 	}
 	
@@ -196,6 +195,11 @@ public class ItemService {
 
 	public List<Item> readOrderedItemsByCustomerId(String customerId) {
 		return itemDao.readOrderedItemsByCustomerId(customerId);
+	}
+	
+
+	public List<ItemPackage> readOrderedItemsByBrandId(int brandId) {
+		return packageByBrand(itemDao.readOrderedItemsByBrandId(brandId));
 	}
 	
 	public List<ItemPackage> packageByBrand(List<Item> items){

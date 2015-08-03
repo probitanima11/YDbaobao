@@ -226,6 +226,25 @@ public class ItemDao extends JdbcDaoSupport {
 		};
 		return getJdbcTemplate().query(sql, rm, brandId);
 	}
+	
+	public List<Item> readOrderedItemsByBrandId(int brandId) {
+		String sql = "select * from ITEMS A, PRODUCTS B, BRANDS C where A.itemStatus = 'S' AND A.productId = B.productId AND B.brandId = C.brandId AND C.brandId = ?";
+		RowMapper<Item> rm = new RowMapper<Item>() {
+			@Override
+			public Item mapRow(ResultSet rs, int rowNum) throws SQLException {
+				return new Item(
+						rs.getInt("itemId"), 
+						new Customer(rs.getString("customerId")),
+						new Product(rs.getInt("productId"),rs.getString("productName"), 
+								rs.getInt("productPrice"), rs.getString("productImage"), 
+								rs.getString("productSize"), rs.getInt("isSoldout"), 
+						new Brand(rs.getInt("brandId"), rs.getString("brandName"))), rs.getString("size"), 
+						rs.getInt("quantity"), rs.getString("itemStatus"), 
+						rs.getInt("price"));
+			}
+		};
+		return getJdbcTemplate().query(sql, rm, brandId);
+	}
 
 	public List<Item> readOrderedItemsOrderBy(String arg) {
 		String sql = "select * from ITEMS A, PRODUCTS B, BRANDS C where A.itemStatus = 'S' AND A.productId = B.productId AND B.brandId = C.brandId";

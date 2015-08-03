@@ -146,7 +146,6 @@ li.qty {
 }
 
 input.qty-selector {
-  float: right;
   width: 75px;
 }
 
@@ -168,10 +167,6 @@ ul#quantity {
 		content: "";
 		clear: both;
 		display: block;
-}
-
-button.btn.addtocart {
-  float: right;
 }
 
 .search-message {

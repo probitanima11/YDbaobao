@@ -24,13 +24,6 @@
 	table td {
 		text-align:center;
 	}
-	
-	button {
-		border: 0;
-		padding: 5px;
-		color: #fff;
-		border-bottom:2px solid #454545;
-	}
 </style>
 </head>
 <body>
@@ -87,7 +80,7 @@
 					<tr>
 						<td><input id="paydate" type="text" placeholder="YYYY-MM-DD"></td>
 						<td><input id="payamount" type="text" ></td>
-						<td><button onclick="createNewPay()">추가</button></td>
+						<td><button class="btn" onclick="createNewPay()">추가</button></td>
 					</tr>
 				</tfoot>
 			</table>
@@ -136,11 +129,11 @@
 				switch (payment.paymentType) {
 					case "P": table = document.querySelector('#purchase-table tbody');
 								totalPurchase += payment.amount;
-								lastTd = "<td><button><i class='fa fa-navicon'></i>  주문서보기</button></td>";
+								lastTd = "<td><button class='btn'><i class='fa fa-navicon'></i>  주문서보기</button></td>";
 								break;
 					case "I": table = document.querySelector('#pay-table tbody');
 								totalPay += payment.amount;
-								lastTd = "<td><button>수정</button>  <button>삭제</button></td>"
+								lastTd = "<td><button class='btn'>수정</button>  <button class='btn'>삭제</button></td>"
 								break;
 					case "C": table = document.querySelector('#recall-table tbody');
 								totalRecall += payment.amount;

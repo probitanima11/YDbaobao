@@ -29,6 +29,11 @@
 	overflow: hidden;
 }
 
+#product-photo img {
+	width:auto;
+	height:100%;
+}
+
 #product-display {
 	position: relative;
 	min-height: 300px;
@@ -76,12 +81,10 @@ h1 {
 
 .btn.buyitnow {
 	background-color: #EA6576;
-	float: right;
 }
 
 .btn.disabled {
 	background-color: #c8c8c8;
-	float: right;
 }
 
 #product-display img {
