@@ -88,10 +88,6 @@ public class CustomerController {
 		model.addAttribute("firstLetterList", new Brand().getFirstLetters());
 		model.addAttribute("indexImages", new Gson().toJson(adminIndexImageService.readIndexImages()));
 		model.addAttribute("isHome", "home");
-		
-		
-		
-		
 		return "index";
 	}
 	
