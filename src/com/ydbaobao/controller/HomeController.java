@@ -1,7 +1,7 @@
 package com.ydbaobao.controller;
 
 import java.io.File;
-import java.util.stream.IntStream;
+import java.util.stream.Collectors;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
@@ -21,6 +21,7 @@ import com.google.gson.Gson;
 import com.support.CommonUtil;
 import com.ydbaobao.domain.Brand;
 import com.ydbaobao.domain.Customer;
+import com.ydbaobao.domain.Navigator;
 import com.ydbaobao.domain.SessionCustomer;
 import com.ydbaobao.exception.ExceptionForMessage;
 import com.ydbaobao.exception.JoinValidationException;
@@ -33,7 +34,8 @@ import com.ydbaobao.service.ProductService;
 
 @Controller
 public class HomeController {
-	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+	private static final Logger logger = LoggerFactory
+			.getLogger(HomeController.class);
 
 	@Resource
 	private CategoryService categoryService;
@@ -50,36 +52,35 @@ public class HomeController {
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Model model, WebRequest req, HttpSession session) {
-		int totalPage = CommonUtil.countTotalPage(productService.count(), CommonUtil.productsPerPage);
-		model.addAttribute("prev", CommonUtil.prevBlock(1));
-		model.addAttribute("next", CommonUtil.nextBlock(1, totalPage));
-		model.addAttribute("selectedIndex", 1);
-		model.addAttribute("range", IntStream.range(CommonUtil.startPage(1), CommonUtil.endPage(1, totalPage))
-				.toArray());
+		int lastPage = CommonUtil.countTotalPage(productService.count(),
+				CommonUtil.PRODUCT_PER_PAGE);
+		model.addAttribute("navigator", new Navigator(1, lastPage));
 		model.addAttribute("url", "/index?page=");
-		model.addAttribute("products", productService.readRange(1, adminConfigService.read().getAdminDisplayProducts(),
+		model.addAttribute("products", productService.readRange(1,
+				adminConfigService.read().getAdminDisplayProducts(),
 				(SessionCustomer) session.getAttribute("sessionCustomer")));
-		model.addAttribute("categories", categoryService.readWithoutUnclassifiedCategory());
+		model.addAttribute("categories",
+				categoryService.readWithoutUnclassifiedCategory());
 		model.addAttribute("brands", brandService.readBrands());
 		model.addAttribute("firstLetterList", new Brand().getFirstLetters());
-		model.addAttribute("indexImages", new Gson().toJson(adminIndexImageService.readIndexImages()));
+		model.addAttribute("indexImages",
+				new Gson().toJson(adminIndexImageService.readIndexImages()));
 		model.addAttribute("isHome", "home");
 		return "index";
 	}
 
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
-	public String homeWithPage(Model model, HttpSession session, @RequestParam int page) {
-		int totalPage = CommonUtil.countTotalPage(productService.count(), CommonUtil.productsPerPage);
-
-		model.addAttribute("prev", CommonUtil.prevBlock(page));
-		model.addAttribute("next", CommonUtil.nextBlock(page, totalPage));
-		model.addAttribute("selectedIndex", page);
-		model.addAttribute("range", IntStream.range(CommonUtil.startPage(page), CommonUtil.endPage(page, totalPage))
-				.toArray());
+	public String homeWithPage(Model model, HttpSession session,
+			@RequestParam int page) {
+		int lastPage = CommonUtil.countTotalPage(productService.count(),
+				CommonUtil.PRODUCT_PER_PAGE);
+		model.addAttribute("navigator", new Navigator(page, lastPage));
 		model.addAttribute("url", "/index?page=");
-		model.addAttribute("products", productService.readRange(page, adminConfigService.read()
-				.getAdminDisplayProducts(), (SessionCustomer) session.getAttribute("sessionCustomer")));
-		model.addAttribute("categories", categoryService.readWithoutUnclassifiedCategory());
+		model.addAttribute("products", productService.readRange(page,
+				adminConfigService.read().getAdminDisplayProducts(),
+				(SessionCustomer) session.getAttribute("sessionCustomer")));
+		model.addAttribute("categories",
+				categoryService.readWithoutUnclassifiedCategory());
 		model.addAttribute("brands", brandService.readBrands());
 		model.addAttribute("firstLetterList", new Brand().getFirstLetters());
 
@@ -98,14 +99,17 @@ public class HomeController {
 	@RequestMapping(value = "/loginForm", method = RequestMethod.GET)
 	public String loginView(Model model) {
 		model.addAttribute("customer", new Customer());
-		model.addAttribute("categories", categoryService.readWithoutUnclassifiedCategory());
+		model.addAttribute("categories",
+				categoryService.readWithoutUnclassifiedCategory());
 		return "login";
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	protected String login(@RequestParam String customerId, @RequestParam String customerPassword, HttpSession session,
+	protected String login(@RequestParam String customerId,
+			@RequestParam String customerPassword, HttpSession session,
 			Model model) throws ExceptionForMessage {
-		SessionCustomer sessionCustomer = (customerService.login(customerId, customerPassword)).createSessionCustomer();
+		SessionCustomer sessionCustomer = (customerService.login(customerId,
+				customerPassword)).createSessionCustomer();
 		session.setAttribute("sessionCustomer", sessionCustomer);
 		return "redirect:/";
 	}
@@ -113,15 +117,17 @@ public class HomeController {
 	@RequestMapping(value = "/joinForm", method = RequestMethod.GET)
 	public String form(Model model) {
 		model.addAttribute("customer", new Customer());
-		model.addAttribute("categories", categoryService.readWithoutUnclassifiedCategory());
+		model.addAttribute("categories",
+				categoryService.readWithoutUnclassifiedCategory());
 		return "form";
 	}
 
 	@RequestMapping(value = "/join", method = RequestMethod.POST)
-	public String create(@Valid Customer customer, BindingResult result, @RequestParam String customerAgainPassword,
-			Model model) throws ExceptionForMessage {
+	public String create(@Valid Customer customer, BindingResult result,
+			@RequestParam String customerAgainPassword, Model model)
+			throws ExceptionForMessage {
 		if (result.hasErrors()) {
-			throw new JoinValidationException(CommonUtil.extractValidationMessages(result));
+			throw new JoinValidationException(result);
 		}
 		if (!customer.getCustomerPassword().equals(customerAgainPassword)) {
 			model.addAttribute("customer", new Customer());

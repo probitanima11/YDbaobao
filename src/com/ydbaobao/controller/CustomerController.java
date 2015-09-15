@@ -1,7 +1,6 @@
 package com.ydbaobao.controller;
 
 import java.io.IOException;
-import java.util.stream.IntStream;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
@@ -23,6 +22,7 @@ import com.support.JSONResponseUtil;
 import com.support.ServletRequestUtil;
 import com.ydbaobao.domain.Brand;
 import com.ydbaobao.domain.Customer;
+import com.ydbaobao.domain.Navigator;
 import com.ydbaobao.domain.SessionCustomer;
 import com.ydbaobao.exception.ExceptionForMessage;
 import com.ydbaobao.exception.JoinValidationException;
@@ -61,7 +61,7 @@ public class CustomerController {
 	@RequestMapping(value ="/update", method = RequestMethod.POST)
 	public String update(@Valid Customer customer, BindingResult result, @RequestParam String customerAgainPassword, Model model, HttpSession session) throws ExceptionForMessage, IOException{
 		if(result.hasErrors()) {
-			throw new JoinValidationException(CommonUtil.extractValidationMessages(result));
+			throw new JoinValidationException(result);
         }
 		if(!customer.getCustomerPassword().equals(customerAgainPassword)) {
 			String customerId = ServletRequestUtil.getCustomerIdFromSession(session);
@@ -73,13 +73,8 @@ public class CustomerController {
 		customerService.update(customer);
 		// index로 넘기기 전에 모델에 상품 정보, 카테고리 등 넣기.
 		
-		int totalPage = CommonUtil.countTotalPage(productService.count(), CommonUtil.productsPerPage);
-
-		model.addAttribute("prev", CommonUtil.prevBlock(1));
-		model.addAttribute("next", CommonUtil.nextBlock(1, totalPage));
-		model.addAttribute("selectedIndex", 1);
-		model.addAttribute("range", IntStream.range(CommonUtil.startPage(1), CommonUtil.endPage(1, totalPage))
-				.toArray());
+		int lastPage = CommonUtil.countTotalPage(productService.count(), CommonUtil.PRODUCT_PER_PAGE);
+		model.addAttribute("navigator", new Navigator(1, lastPage));
 		model.addAttribute("url", "/index?page=");
 		model.addAttribute("products", productService.readRange(1, adminConfigService.read().getAdminDisplayProducts(),
 				(SessionCustomer) session.getAttribute("sessionCustomer")));

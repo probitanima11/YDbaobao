@@ -1,7 +1,5 @@
 package com.ydbaobao.controller;
 
-import java.util.stream.IntStream;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
@@ -17,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.support.CommonUtil;
 import com.support.JSONResponseUtil;
 import com.ydbaobao.domain.Brand;
+import com.ydbaobao.domain.Navigator;
 import com.ydbaobao.domain.SessionCustomer;
 import com.ydbaobao.service.BrandService;
 import com.ydbaobao.service.CategoryService;
@@ -49,14 +48,10 @@ public class BrandController {
 	@RequestMapping(value="/{brandId}/products", method=RequestMethod.GET)
 	public String readByBrandId(HttpSession session, @RequestParam int page, Model model, @PathVariable int brandId) {
 		Brand brand = brandService.readBrandByBrandId(brandId);
-		int totalPage = CommonUtil.countTotalPage(brand.getBrandCount(), CommonUtil.productsPerPage);
-		
-		model.addAttribute("prev", CommonUtil.prevBlock(page));
-		model.addAttribute("next", CommonUtil.nextBlock(page, totalPage));
-		model.addAttribute("selectedIndex", page);
-		model.addAttribute("range", IntStream.range(CommonUtil.startPage(page), CommonUtil.endPage(page, totalPage)).toArray());
+		int lastPage = CommonUtil.countTotalPage(brand.getBrandCount(), CommonUtil.PRODUCT_PER_PAGE);
+		model.addAttribute("navigator", new Navigator(page, lastPage));
 		model.addAttribute("url", "/brands/" + brandId + "/products/?page=");
-		model.addAttribute("products", productService.readListByBrandId(brandId, page, CommonUtil.productsPerPage, (SessionCustomer) session.getAttribute("sessionCustomer")));
+		model.addAttribute("products", productService.readListByBrandId(brandId, page, CommonUtil.PRODUCT_PER_PAGE, (SessionCustomer) session.getAttribute("sessionCustomer")));
 		model.addAttribute("brands", brandService.readBrands());
 		model.addAttribute("brand", brand);
 		model.addAttribute("categories", categoryService.readWithoutUnclassifiedCategory());

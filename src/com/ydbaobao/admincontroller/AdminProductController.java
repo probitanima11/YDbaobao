@@ -2,7 +2,6 @@ package com.ydbaobao.admincontroller;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.IntStream;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -24,6 +23,7 @@ import com.support.CommonUtil;
 import com.support.JSONResponseUtil;
 import com.ydbaobao.domain.Brand;
 import com.ydbaobao.domain.Category;
+import com.ydbaobao.domain.Navigator;
 import com.ydbaobao.domain.Product;
 import com.ydbaobao.domain.SessionCustomer;
 import com.ydbaobao.service.AdminConfigService;
@@ -63,13 +63,8 @@ public class AdminProductController {
 		int selectedCategoryId = -1;
 		List<Category> categories = categoryService.read();
 		categories.add(0, new Category(selectedCategoryId, "전체보기", productService.count()));
-		
-		int totalPage = CommonUtil.countTotalPage(productService.count(), adminConfigService.read().getAdminDisplayProducts());
-		
-		model.addAttribute("prev", CommonUtil.prevBlock(page));
-		model.addAttribute("next", CommonUtil.nextBlock(page, totalPage));
-		model.addAttribute("selectedIndex", page);
-		model.addAttribute("range", IntStream.range(CommonUtil.startPage(page), CommonUtil.endPage(page, totalPage)).toArray());
+		int lastPage = CommonUtil.countTotalPage(productService.count(), adminConfigService.read().getAdminDisplayProducts());
+		model.addAttribute("navigator", new Navigator(page, lastPage));
 		model.addAttribute("url", "/admin/products?page=");
 		model.addAttribute("product", new Product());
 		model.addAttribute("products", productService.readProductsForAdmin(page, adminConfigService.read().getAdminDisplayProducts()));
@@ -84,23 +79,20 @@ public class AdminProductController {
 		model.addAttribute("product", new Product());
 		int productCountPerPage = adminConfigService.read().getAdminDisplayProducts();
 		List<Product> products;
-		int totalPage;
+		int lastPage = 0;
 		if(categoryId == -1){
 			products = productService.readProductsForAdmin(page, productCountPerPage);
-			totalPage = CommonUtil.countTotalPage(productService.count(), productCountPerPage);
+			lastPage = CommonUtil.countTotalPage(productService.count(), productCountPerPage);
 		} else{
 			products = productService.readListByCategoryIdForAdmin(categoryId, page, productCountPerPage);
-			totalPage = CommonUtil.countTotalPage(categoryService.readByCategoryId(categoryId).getCategoryCount(), productCountPerPage);
+			lastPage = CommonUtil.countTotalPage(categoryService.readByCategoryId(categoryId).getCategoryCount(), productCountPerPage);
 		}
 		int selectedCategoryId = -1;
 		List<Category> categories = categoryService.read();
 		categories.add(0, new Category(selectedCategoryId, "전체보기", productService.count()));
-		model.addAttribute("prev", CommonUtil.prevBlock(page));
-		model.addAttribute("next", CommonUtil.nextBlock(page, totalPage));
-		model.addAttribute("selectedIndex", page);
-		model.addAttribute("range", IntStream.range(CommonUtil.startPage(page), CommonUtil.endPage(page, totalPage)).toArray());
+		
 		model.addAttribute("url", "/admin/products/category?categoryId=" + categoryId + "&page=");
-	
+		model.addAttribute("navigator", new Navigator(page, lastPage));
 		model.addAttribute("products", products);
 		model.addAttribute("brands", brandService.readBrands());
 		model.addAttribute("selectedCategoryId", categoryId);
@@ -117,12 +109,7 @@ public class AdminProductController {
 		List<Category> categories = categoryService.read();
 		categories.add(0, new Category(-1, "전체보기", productService.count()));
 
-		model.addAttribute("prev", CommonUtil.prevBlock(page));
-		model.addAttribute("next", CommonUtil.nextBlock(page, page));
-		model.addAttribute("selectedIndex", page);
 		model.addAttribute("url", "/admin/products/" + productId + "?page=");
-		model.addAttribute("range", IntStream.range(CommonUtil.startPage(page), CommonUtil.endPage(page, page)).toArray());
-	
 		model.addAttribute("products", products);
 		model.addAttribute("brands", brandService.readBrands());
 		model.addAttribute("categories", categories);
@@ -136,14 +123,11 @@ public class AdminProductController {
 		List<Product> products = productService.readByProductName(terms, page, adminConfigService.read().getAdminDisplayProducts(), (SessionCustomer) session.getAttribute("sessionCustomer"));
 		int count = productService.countBySearchProductName(terms);
 		model.addAttribute("searchMessage", "상품명 \'"+productName+"\'에 대한 검색 결과가 "+count+" 건 있습니다.");
-		int totalPage = CommonUtil.countTotalPage(count, CommonUtil.productsPerPage);
+		int lastPage = CommonUtil.countTotalPage(count, CommonUtil.PRODUCT_PER_PAGE);
 		List<Category> categories = categoryService.read();
 		categories.add(0, new Category(-1, "전체보기", productService.count()));
-		model.addAttribute("prev", CommonUtil.prevBlock(page));
-		model.addAttribute("next", CommonUtil.nextBlock(page, page));
-		model.addAttribute("selectedIndex", page);
+		model.addAttribute("navigator", new Navigator(page, lastPage));
 		model.addAttribute("url", "/admin/products/search?productName=" + terms + "&page=");
-		model.addAttribute("range", IntStream.range(CommonUtil.startPage(page), CommonUtil.endPage(page, totalPage)).toArray());
 		model.addAttribute("products", products);
 		model.addAttribute("brands", brandService.readBrands());
 		model.addAttribute("categories", categories);

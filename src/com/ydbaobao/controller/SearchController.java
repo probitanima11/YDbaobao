@@ -1,7 +1,6 @@
 package com.ydbaobao.controller;
 
 import java.util.List;
-import java.util.stream.IntStream;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
@@ -13,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.support.CommonUtil;
+import com.ydbaobao.domain.Navigator;
 import com.ydbaobao.domain.Product;
 import com.ydbaobao.domain.SessionCustomer;
 import com.ydbaobao.service.AdminConfigService;
@@ -41,13 +41,8 @@ public class SearchController {
 		List<Product> products = productService.readByBrandName(termsForQuery, page, adminConfigService.read()
 				.getAdminDisplayProducts(), (SessionCustomer) session.getAttribute("sessionCustomer"));
 
-		int totalPage = CommonUtil.countTotalPage(count, CommonUtil.productsPerPage);
-
-		model.addAttribute("prev", CommonUtil.prevBlock(page));
-		model.addAttribute("next", CommonUtil.nextBlock(page, totalPage));
-		model.addAttribute("selectedIndex", page);
-		model.addAttribute("range", IntStream.range(CommonUtil.startPage(page), CommonUtil.endPage(page, totalPage))
-				.toArray());
+		int lastPage = CommonUtil.countTotalPage(count, CommonUtil.PRODUCT_PER_PAGE);
+		model.addAttribute("navigator", new Navigator(page, lastPage));
 		model.addAttribute("url", "/search/brands?terms=" + terms + "&page=");
 		model.addAttribute("categories", categoryService.read());
 		model.addAttribute("products", products);
@@ -70,13 +65,8 @@ public class SearchController {
 		List<Product> products = productService.readByProductName(termsForQuery, page, adminConfigService.read()
 				.getAdminDisplayProducts(), (SessionCustomer) session.getAttribute("sessionCustomer"));
 
-		int totalPage = CommonUtil.countTotalPage(count, CommonUtil.productsPerPage);
-
-		model.addAttribute("prev", CommonUtil.prevBlock(page));
-		model.addAttribute("next", CommonUtil.nextBlock(page, totalPage));
-		model.addAttribute("selectedIndex", page);
-		model.addAttribute("range", IntStream.range(CommonUtil.startPage(page), CommonUtil.endPage(page, totalPage))
-				.toArray());
+		int lastPage = CommonUtil.countTotalPage(count, CommonUtil.PRODUCT_PER_PAGE);
+		model.addAttribute("navigator", new Navigator(page, lastPage));
 		model.addAttribute("url", "/search/products?terms=" + terms + "&page=");
 		model.addAttribute("categories", categoryService.readWithoutUnclassifiedCategory());
 		model.addAttribute("products", products);

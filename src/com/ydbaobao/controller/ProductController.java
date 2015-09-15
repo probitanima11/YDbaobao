@@ -1,7 +1,6 @@
 package com.ydbaobao.controller;
 
 import java.util.List;
-import java.util.stream.IntStream;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.support.CommonUtil;
 import com.ydbaobao.domain.Brand;
 import com.ydbaobao.domain.Category;
+import com.ydbaobao.domain.Navigator;
 import com.ydbaobao.domain.Product;
 import com.ydbaobao.domain.SessionCustomer;
 import com.ydbaobao.service.AdminConfigService;
@@ -44,14 +44,9 @@ public class ProductController {
 	}
 
 	@RequestMapping(value = "/products", method = RequestMethod.GET)
-	public String loadAll(Model model, HttpSession session, @RequestParam("page") int page) {
-		int totalPage = CommonUtil.countTotalPage(productService.count(), CommonUtil.productsPerPage);
-
-		model.addAttribute("prev", CommonUtil.prevBlock(page));
-		model.addAttribute("next", CommonUtil.nextBlock(page, totalPage));
-		model.addAttribute("selectedIndex", page);
-		model.addAttribute("range", IntStream.range(CommonUtil.startPage(page), CommonUtil.endPage(page, totalPage))
-				.toArray());
+	public String loadAll(Model model, HttpSession session, @RequestParam int page) {
+		int lastPage = CommonUtil.countTotalPage(productService.count(), CommonUtil.PRODUCT_PER_PAGE);
+		model.addAttribute("navigator", new Navigator(page, lastPage));
 		model.addAttribute("url", "/products?page=");
 		model.addAttribute("products", productService.readRange(page, adminConfigService.read()
 				.getAdminDisplayProducts(), (SessionCustomer) session.getAttribute("sessionCustomer")));
@@ -68,13 +63,10 @@ public class ProductController {
 	 *            , page
 	 */
 	@RequestMapping(value = "/categories/{categoryId}/products", method = RequestMethod.GET)
-	public String load(Model model, HttpSession session, @RequestParam("page") int page, @PathVariable int categoryId) {
+	public String load(Model model, HttpSession session, @RequestParam int page, @PathVariable int categoryId) {
 		Category category = categoryService.readByCategoryId(categoryId);
-		int totalPage = CommonUtil.countTotalPage(category.getCategoryCount(), CommonUtil.productsPerPage);
-		model.addAttribute("prev", CommonUtil.prevBlock(page));
-		model.addAttribute("next", CommonUtil.nextBlock(page, totalPage));
-		model.addAttribute("selectedIndex", page);
-		model.addAttribute("range", IntStream.range(CommonUtil.startPage(page), CommonUtil.endPage(page, totalPage)).toArray());
+		int lastPage = CommonUtil.countTotalPage(category.getCategoryCount(), CommonUtil.PRODUCT_PER_PAGE);
+		model.addAttribute("navigator", new Navigator(page, lastPage));
 		model.addAttribute("url", "/categories/" + categoryId + "/products?page=");
 		model.addAttribute("products", productService.readListByCategoryId(categoryId, page, adminConfigService.read().getAdminDisplayProducts(), (SessionCustomer) session.getAttribute("sessionCustomer")));
 		model.addAttribute("brands", brandService.readBrandsByCategoryId(categoryId));
@@ -94,14 +86,9 @@ public class ProductController {
 	public String load(HttpSession session, Model model, @RequestParam("page") int page, @PathVariable int categoryId,
 			@PathVariable int brandId) {
 		List<Product> products = productService.readByCategoryIdAndBrandId(categoryId, brandId, page,
-				CommonUtil.productsPerPage, (SessionCustomer) session.getAttribute("sessionCustomer"));
-		int totalPage = (int) CommonUtil.countTotalPage(products.size(), CommonUtil.productsPerPage);
-
-		model.addAttribute("prev", CommonUtil.prevBlock(page));
-		model.addAttribute("next", CommonUtil.nextBlock(page, totalPage));
-		model.addAttribute("selectedIndex", page);
-		model.addAttribute("range", IntStream.range(CommonUtil.startPage(page), CommonUtil.endPage(page, totalPage))
-				.toArray());
+				CommonUtil.PRODUCT_PER_PAGE, (SessionCustomer) session.getAttribute("sessionCustomer"));
+		int lastPage = (int) CommonUtil.countTotalPage(products.size(), CommonUtil.PRODUCT_PER_PAGE);
+		model.addAttribute("navigator", new Navigator(page, lastPage));
 		model.addAttribute("url", "/categories/" + categoryId + "/brands/" + brandId + "/products?page=");
 		model.addAttribute("products", products);
 		model.addAttribute("selectedBrand", brandService.readBrandByBrandId(brandId));
