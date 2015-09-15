@@ -19,11 +19,11 @@ import com.ydbaobao.dao.BrandDao;
 import com.ydbaobao.dao.CategoryDao;
 import com.ydbaobao.dao.CustomerDao;
 import com.ydbaobao.dao.ProductDao;
-import com.ydbaobao.model.Brand;
-import com.ydbaobao.model.Category;
-import com.ydbaobao.model.Customer;
-import com.ydbaobao.model.Product;
-import com.ydbaobao.model.SessionCustomer;
+import com.ydbaobao.domain.Brand;
+import com.ydbaobao.domain.Category;
+import com.ydbaobao.domain.Customer;
+import com.ydbaobao.domain.Product;
+import com.ydbaobao.domain.SessionCustomer;
 
 @Service
 @Transactional

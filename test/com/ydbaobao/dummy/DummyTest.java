@@ -11,9 +11,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.ydbaobao.model.Brand;
-import com.ydbaobao.model.Category;
-import com.ydbaobao.model.Product;
+import com.ydbaobao.domain.Brand;
+import com.ydbaobao.domain.Category;
+import com.ydbaobao.domain.Product;
 import com.ydbaobao.service.AdminConfigService;
 import com.ydbaobao.service.BrandService;
 import com.ydbaobao.service.CategoryService;

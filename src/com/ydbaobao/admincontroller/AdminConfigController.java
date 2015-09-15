@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.support.CommonUtil;
-import com.ydbaobao.model.AdminConfig;
+import com.ydbaobao.domain.AdminConfig;
 import com.ydbaobao.service.AdminConfigService;
 
 @Controller

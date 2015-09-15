@@ -1,4 +1,4 @@
-package com.ydbaobao.model;
+package com.ydbaobao.domain;
 
 public class Payment {
 	private int paymentId;
@@ -62,7 +62,7 @@ public class Payment {
 	public void setPaymentDate(String paymentDate) {
 		this.paymentDate = paymentDate;
 	}
-
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

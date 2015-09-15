@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ydbaobao.dao.AdminIndexImageDao;
-import com.ydbaobao.model.IndexImage;
+import com.ydbaobao.domain.IndexImage;
 
 @Service
 @Transactional

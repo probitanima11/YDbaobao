@@ -9,7 +9,7 @@ import javax.sql.DataSource;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.stereotype.Repository;
 
-import com.ydbaobao.model.Category;
+import com.ydbaobao.domain.Category;
 
 @Repository
 public class CategoryDao extends JdbcDaoSupport {

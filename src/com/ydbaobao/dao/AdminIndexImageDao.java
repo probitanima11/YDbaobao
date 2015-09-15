@@ -9,7 +9,7 @@ import javax.sql.DataSource;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.stereotype.Repository;
 
-import com.ydbaobao.model.IndexImage;
+import com.ydbaobao.domain.IndexImage;
 
 @Repository
 public class AdminIndexImageDao extends JdbcDaoSupport {

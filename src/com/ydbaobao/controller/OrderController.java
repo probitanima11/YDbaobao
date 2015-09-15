@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.support.JSONResponseUtil;
 import com.support.ServletRequestUtil;
-import com.ydbaobao.model.Item;
+import com.ydbaobao.domain.Item;
 import com.ydbaobao.service.CategoryService;
 import com.ydbaobao.service.ItemService;
 

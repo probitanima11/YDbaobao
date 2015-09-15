@@ -1,4 +1,4 @@
-package com.ydbaobao.model;
+package com.ydbaobao.domain;
 
 public class SessionCustomer {
 

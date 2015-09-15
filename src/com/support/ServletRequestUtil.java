@@ -7,7 +7,7 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.ydbaobao.model.SessionCustomer;
+import com.ydbaobao.domain.SessionCustomer;
 
 public class ServletRequestUtil {
 	private static final Logger logger = LoggerFactory.getLogger(ServletRequestUtil.class);

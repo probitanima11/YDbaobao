@@ -17,7 +17,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
-import com.ydbaobao.model.Brand;
+import com.ydbaobao.domain.Brand;
 
 @Repository
 public class BrandDao extends JdbcDaoSupport {

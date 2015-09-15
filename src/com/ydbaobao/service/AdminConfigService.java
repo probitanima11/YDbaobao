@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ydbaobao.dao.AdminConfigDao;
-import com.ydbaobao.model.AdminConfig;
+import com.ydbaobao.domain.AdminConfig;
 
 @Service
 @Transactional

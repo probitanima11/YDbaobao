@@ -22,10 +22,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.support.CommonUtil;
 import com.support.JSONResponseUtil;
-import com.ydbaobao.model.Brand;
-import com.ydbaobao.model.Category;
-import com.ydbaobao.model.Product;
-import com.ydbaobao.model.SessionCustomer;
+import com.ydbaobao.domain.Brand;
+import com.ydbaobao.domain.Category;
+import com.ydbaobao.domain.Product;
+import com.ydbaobao.domain.SessionCustomer;
 import com.ydbaobao.service.AdminConfigService;
 import com.ydbaobao.service.BrandService;
 import com.ydbaobao.service.CategoryService;

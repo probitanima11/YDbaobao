@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.support.JSONResponseUtil;
-import com.ydbaobao.model.Brand;
+import com.ydbaobao.domain.Brand;
 import com.ydbaobao.service.BrandService;
 
 @Controller

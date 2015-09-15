@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.support.JSONResponseUtil;
-import com.ydbaobao.model.Customer;
-import com.ydbaobao.model.Payment;
+import com.ydbaobao.domain.Customer;
+import com.ydbaobao.domain.Payment;
 import com.ydbaobao.service.PaymentService;
 
 @Controller

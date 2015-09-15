@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.support.CommonUtil;
-import com.ydbaobao.model.Customer;
+import com.ydbaobao.domain.Customer;
 import com.ydbaobao.service.CustomerService;
 
 @Controller

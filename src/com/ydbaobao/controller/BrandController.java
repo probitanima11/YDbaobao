@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.support.CommonUtil;
 import com.support.JSONResponseUtil;
-import com.ydbaobao.model.Brand;
-import com.ydbaobao.model.SessionCustomer;
+import com.ydbaobao.domain.Brand;
+import com.ydbaobao.domain.SessionCustomer;
 import com.ydbaobao.service.BrandService;
 import com.ydbaobao.service.CategoryService;
 import com.ydbaobao.service.ProductService;

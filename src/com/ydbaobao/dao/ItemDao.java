@@ -17,10 +17,10 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
-import com.ydbaobao.model.Brand;
-import com.ydbaobao.model.Customer;
-import com.ydbaobao.model.Item;
-import com.ydbaobao.model.Product;
+import com.ydbaobao.domain.Brand;
+import com.ydbaobao.domain.Customer;
+import com.ydbaobao.domain.Item;
+import com.ydbaobao.domain.Product;
 
 @Repository
 public class ItemDao extends JdbcDaoSupport {

@@ -9,8 +9,8 @@ import javax.sql.DataSource;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.stereotype.Repository;
 
-import com.ydbaobao.model.Customer;
-import com.ydbaobao.model.Payment;
+import com.ydbaobao.domain.Customer;
+import com.ydbaobao.domain.Payment;
 
 @Repository
 public class PaymentDao extends JdbcDaoSupport {

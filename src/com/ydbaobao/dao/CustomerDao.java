@@ -10,7 +10,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.stereotype.Repository;
 
-import com.ydbaobao.model.Customer;
+import com.ydbaobao.domain.Customer;
 
 @Repository
 public class CustomerDao extends JdbcDaoSupport {

@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.support.ImageFactoryUtil;
-import com.ydbaobao.model.IndexImage;
+import com.ydbaobao.domain.IndexImage;
 import com.ydbaobao.service.AdminIndexImageService;
 
 @Controller

@@ -7,7 +7,7 @@ import javax.sql.DataSource;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.stereotype.Repository;
 
-import com.ydbaobao.model.AdminConfig;
+import com.ydbaobao.domain.AdminConfig;
 
 @Repository
 public class AdminConfigDao extends JdbcDaoSupport {

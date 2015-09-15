@@ -13,9 +13,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ydbaobao.dao.ItemDao;
 import com.ydbaobao.dao.ProductDao;
-import com.ydbaobao.model.Item;
-import com.ydbaobao.model.Payment;
-import com.ydbaobao.model.Product;
+import com.ydbaobao.domain.Item;
+import com.ydbaobao.domain.Payment;
+import com.ydbaobao.domain.Product;
 
 @Service
 @Transactional

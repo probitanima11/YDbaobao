@@ -10,8 +10,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ydbaobao.dao.CustomerDao;
+import com.ydbaobao.domain.Customer;
 import com.ydbaobao.exception.ExceptionForMessage;
-import com.ydbaobao.model.Customer;
 
 @Service
 @Transactional

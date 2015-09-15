@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ydbaobao.dao.PaymentDao;
-import com.ydbaobao.model.Payment;
+import com.ydbaobao.domain.Payment;
 
 @Service
 @Transactional

@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ydbaobao.dao.BrandDao;
 import com.ydbaobao.dao.ProductDao;
-import com.ydbaobao.model.Brand;
+import com.ydbaobao.domain.Brand;
 
 @Service
 @Transactional

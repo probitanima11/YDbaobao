@@ -4,9 +4,9 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ydbaobao.domain.Customer;
 import com.ydbaobao.exception.ExceptionForMessage;
 import com.ydbaobao.exception.JoinValidationException;
-import com.ydbaobao.model.Customer;
 
 @ControllerAdvice
 public class ControllerExceptionHandler {

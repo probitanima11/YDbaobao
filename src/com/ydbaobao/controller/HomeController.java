@@ -19,11 +19,11 @@ import org.springframework.web.context.request.WebRequest;
 
 import com.google.gson.Gson;
 import com.support.CommonUtil;
+import com.ydbaobao.domain.Brand;
+import com.ydbaobao.domain.Customer;
+import com.ydbaobao.domain.SessionCustomer;
 import com.ydbaobao.exception.ExceptionForMessage;
 import com.ydbaobao.exception.JoinValidationException;
-import com.ydbaobao.model.Brand;
-import com.ydbaobao.model.Customer;
-import com.ydbaobao.model.SessionCustomer;
 import com.ydbaobao.service.AdminConfigService;
 import com.ydbaobao.service.AdminIndexImageService;
 import com.ydbaobao.service.BrandService;

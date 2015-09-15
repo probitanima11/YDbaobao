@@ -1,4 +1,4 @@
-package com.ydbaobao.model;
+package com.ydbaobao.domain;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;

@@ -1,4 +1,4 @@
-package com.ydbaobao.model;
+package com.ydbaobao.domain;
 
 import java.util.ArrayList;
 import java.util.List;
